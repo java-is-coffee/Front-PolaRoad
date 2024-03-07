@@ -1,0 +1,5 @@
+namespace: polaroad
+resources:
+  - frontend.yaml
+  - service.yaml
+  - ingress.yaml
