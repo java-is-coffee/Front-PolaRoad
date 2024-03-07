@@ -35,7 +35,7 @@
         <tr>
             <td><img src="https://contrib.rocks/image?repo=nohsa97/nohsa97" width="200px" /> </td>
             <td><img src="https://contrib.rocks/image?repo=koreaygj/koreaygj" width="200px" /> </td>
-            <td><img src="https://contrib.rocks/image?repo=gooowoon/gooowoon" width="200px" /> </td>
+            <td><img src="https://contrib.rocks/image?repo=gooowoon/Netflex" width="200px" /> </td>
         </tr>
         <tr>
             <td><a href="https://github.com/nohsa97">@nohsa97</a></td>
