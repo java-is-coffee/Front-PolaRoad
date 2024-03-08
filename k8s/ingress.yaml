@@ -13,6 +13,6 @@ spec:
         paths:
           - path: /
             pathType: Prefix
-            backend:
+            frontend:
               serviceName: frontend
               servicePort: 3000
