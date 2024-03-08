@@ -5,14 +5,14 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
   labels:
     app.kubernetes.io/managed-by: kargocd
-  name: frontend
+  name: polaroad
   namespace: default
 spec:
   rules:
     - http:
         paths:
-          - path: /
-            pathType: Prefix
-            frontend:
-              serviceName: frontend
+          - backend:
+              serviceName: polaroad
               servicePort: 3000
+              path: /
+              pathType: Prefix
