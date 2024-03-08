@@ -1,5 +1,11 @@
 # Polaroad
 
+<p align="center">
+  <br>
+  <img width="300px" src="./public/logo512.png"/>
+  <br>
+</p>
+
 ## 프로젝트 소개
 
 > 여행일기를 폴라로이드 카드로 보여주는 커뮤니티 서비스
