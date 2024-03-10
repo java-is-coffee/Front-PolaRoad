@@ -5,9 +5,8 @@ on:
     branches: [main, develop]
   pull_request:
     branches: [main, develop]
-
 jobs:
-  build-and-push:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,3 +25,32 @@ jobs:
 
       - name: Check Docker build
         run: docker build .
+
+  deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "20"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to AWS S3
+        uses: jakejarvis/s3-sync-action@v0.5.1
+        with:
+          args: --acl public-read --follow-symlinks --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          SOURCE_DIR: "build"
+          region: "ap-northeast-2"
