@@ -1,0 +1,35 @@
+.wrapper {
+  background-color: #c1c1c1;
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 8px;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: start;
+  margin-bottom: 10px;
+}
+
+.list {
+  width: 100%;
+  padding: auto;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); /* 3개의 열을 같은 너비로 설정 */
+  grid-gap: 10px; /* 그리드 아이템 간의 간격 설정 */
+}
+
+.item {
+  font-size: 1.2rem;
+  background-color: #eff1f5;
+  color: black;
+  border-radius: 5px;
+  padding: 4px 6px;
+}
+.item span {
+  font-weight: 500;
+}
