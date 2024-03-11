@@ -5,6 +5,8 @@ import Home from "./routes/home";
 import Explore from "./routes/explore";
 import MyPage from "./routes/myPage";
 
+import "./styles/globals.css";
+
 function App() {
   return (
     <div className="App">
