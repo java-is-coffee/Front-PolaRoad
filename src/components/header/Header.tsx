@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { GoBell } from "react-icons/go";
 import headerStyle from "./Header.module.css";
 import SearchToggleBtn from "../dropDown/search/SearchToggleBtn";
+
 function Header() {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
