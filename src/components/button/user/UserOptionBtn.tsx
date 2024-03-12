@@ -1,4 +1,4 @@
-import btnStyle from "./userOptionBtn.module.css";
+import btnStyle from "./UserOptionBtn.module.css";
 
 interface userOptionProps {
   name: string;

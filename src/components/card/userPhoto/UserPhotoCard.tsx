@@ -1,4 +1,4 @@
-import cardStyles from "./userPhotoCard.module.css";
+import cardStyles from "./UserPhotoCard.module.css";
 
 interface userPhotoCardProps {
   imgSrc: string;

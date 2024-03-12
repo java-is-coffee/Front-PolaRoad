@@ -1,7 +1,7 @@
 import HistoryOption from "../../../enum/historyOptionType";
-import UserImgCard from "../../card/userPhoto/userPhotoCard";
+import UserImgCard from "../../card/userPhoto/UserPhotoCard";
 
-import gridStyle from "./userPhotoGallery.module.css";
+import gridStyle from "./UserPhotoGallery.module.css";
 
 const images = [
   "/basic/photo.png",

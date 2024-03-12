@@ -1,9 +1,9 @@
 import { useState } from "react";
 import HistoryOption from "../../enum/historyOptionType";
-import UserGalleryHeader from "../../components/header/userGallery/userGalleryHeader";
-import UserPhotoGallery from "../../components/grid/userPhotoGallery/userPhotoGallery";
+import UserGalleryHeader from "../../components/header/userGallery/UserGalleryHeader";
+import UserPhotoGallery from "../../components/grid/userPhotoGallery/UserPhotoGallery";
 
-import containerStyles from "./userGallery.module.css";
+import containerStyles from "./UserGallery.module.css";
 
 function UserHistoryContainer() {
   const [optionType, setOptionType] = useState<HistoryOption>(

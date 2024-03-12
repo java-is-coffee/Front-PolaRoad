@@ -1,5 +1,5 @@
 import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
-import btnStyle from "./userActionBtn.module.css";
+import btnStyle from "./UserActionBtn.module.css";
 interface userActionBtnProps {
   name: string;
   icon: ReactJSXElement;

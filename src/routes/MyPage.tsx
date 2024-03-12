@@ -1,5 +1,5 @@
-import Header from "../components/header/header";
-import MyPageContainer from "../containers/myPage/myPageContainer";
+import Header from "../components/header/Header";
+import MyPageContainer from "../containers/myPage/MyPageContainer";
 
 function MyPage() {
   return (

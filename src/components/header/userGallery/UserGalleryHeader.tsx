@@ -1,5 +1,5 @@
 import HistoryOption from "../../../enum/historyOptionType";
-import headerStyles from "./userGalleryHeader.module.css";
+import headerStyles from "./UserGalleryHeader.module.css";
 
 interface userGalleryHeaderProps {
   option: HistoryOption;

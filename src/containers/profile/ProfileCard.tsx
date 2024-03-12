@@ -1,8 +1,8 @@
-import ProfileImg from "../../components/user/profileImg";
+import ProfileImg from "../../components/user/ProfileImg";
 import { IoIosSettings } from "react-icons/io";
-import profileStyles from "./profileCard.module.css";
-import UserOptionBtn from "../../components/button/user/userOptionBtn";
-import UserActionBtn from "../../components/button/user/userActionBtn";
+import profileStyles from "./ProfileCard.module.css";
+import UserOptionBtn from "../../components/button/user/UserOptionBtn";
+import UserActionBtn from "../../components/button/user/UserActionBtn";
 import { CgFileAdd } from "react-icons/cg";
 import { MdOutlinePhotoAlbum } from "react-icons/md";
 

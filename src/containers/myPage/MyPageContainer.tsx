@@ -1,7 +1,7 @@
-import ProfileCard from "../profile/profileCard";
-import UserHistoryContainer from "../userGallery/userGallery";
+import ProfileCard from "../profile/ProfileCard";
+import UserHistoryContainer from "../userGallery/UserGallery";
 
-import containerStyle from "./myPageContainer.module.css";
+import containerStyle from "./MyPageContainer.module.css";
 
 function MyPageContainer() {
   return (
