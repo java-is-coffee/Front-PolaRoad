@@ -1,7 +1,7 @@
 import { Button, Stack, TextField } from "@mui/material";
 import React from "react";
-import styles from "./login.module.css";
-import OauthButton from "./oauthButton";
+import styles from "./Login.module.css";
+import OauthButton from "./OauthButton";
 
 function LoginContainer({
   setOnRegister,

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import styles from "./login.module.css";
-import LoginContainer from "./loginContainer";
-import RegisterContainer from "./register";
+import styles from "./Login.module.css";
+import LoginContainer from "./LoginContainer";
+import RegisterContainer from "./Register";
 
 function Login() {
   const [onRegister, setOnRegister] = useState(false);
