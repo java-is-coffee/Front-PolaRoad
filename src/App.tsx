@@ -6,6 +6,8 @@ import Explore from "./routes/explore";
 import MyPage from "./routes/myPage";
 import PostTest from "./routes/postTest";
 
+import "./styles/globals.css";
+
 function App() {
   return (
     <div className="App">
