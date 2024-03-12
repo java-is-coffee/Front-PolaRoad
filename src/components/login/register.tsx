@@ -1,6 +1,6 @@
 import { Button, IconButton, Stack, TextField } from "@mui/material";
 import React from "react";
-import styles from "./login.module.css";
+import styles from "./Login.module.css";
 import GoogleIcon from "@mui/icons-material/Google";
 
 function RegisterContainer({

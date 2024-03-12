@@ -1,5 +1,5 @@
-import Header from "../components/header/header";
-import ExploreContainer from "../containers/explore/exploreContainer";
+import Header from "../components/header/Header";
+import ExploreContainer from "../containers/explore/ExploreContainer";
 
 function Explore() {
   return (

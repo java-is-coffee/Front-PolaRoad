@@ -1,8 +1,8 @@
 import { IoSearch } from "react-icons/io5";
 
-import searchBtnStyles from "./searchToggleBtn.module.css";
+import searchBtnStyles from "./SearchToggleBtn.module.css";
 import { useEffect, useRef, useState } from "react";
-import SearchDropdown from "./searchDropdown";
+import SearchDropdown from "./SearchDropdown";
 
 interface SearchToggleBtnProps {
   isScrolled: boolean;

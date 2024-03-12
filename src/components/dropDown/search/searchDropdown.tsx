@@ -1,4 +1,4 @@
-import dropdownStyles from "./searchDropdown.module.css";
+import dropdownStyles from "./SearchDropdown.module.css";
 
 function SearchDropdown() {
   const category: string[] = [
