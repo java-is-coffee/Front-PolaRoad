@@ -5,7 +5,7 @@ import Home from "./routes/home";
 import Explore from "./routes/explore";
 import MyPage from "./routes/myPage";
 import PostTest from "./routes/postTest";
-import Login from "./components/login/login";
+import Login from "./components/login/LoginContainer";
 
 import "./styles/globals.css";
 

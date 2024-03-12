@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styles from "./login.module.css";
-import LoginContainer from "./loginContainer";
-import RegisterContainer from "./register";
+import LoginComponent from "./LoginComponent";
+import RegisterComponent from "./registerComponent";
 
-function Login() {
+function LoginContainer() {
   const [onRegister, setOnRegister] = useState(false);
 
   return (
@@ -16,12 +16,12 @@ function Login() {
         나만의 여행일기를 <br /> 작성해보세요!
       </div>
       {onRegister ? (
-        <RegisterContainer setOnRegister={setOnRegister} />
+        <RegisterComponent setOnRegister={setOnRegister} />
       ) : (
-        <LoginContainer setOnRegister={setOnRegister} />
+        <LoginComponent setOnRegister={setOnRegister} />
       )}
     </div>
   );
 }
 
-export default Login;
+export default LoginContainer;

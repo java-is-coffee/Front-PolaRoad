@@ -1,4 +1,4 @@
-import { Button, Stack, TextField } from "@mui/material";
+import { Button, Stack, TextField, styled } from "@mui/material";
 import React from "react";
 import styles from "./login.module.css";
 import OauthButton from "./oauthButton";
@@ -8,28 +8,64 @@ function LoginContainer({
 }: {
   setOnRegister: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const InputTextField = styled(TextField)({
+    fontSize: "1.5rem",
+    backgroundColor: "#DBDBDB",
+    borderRadius: "2px",
+    "& label": {
+      // placeholder text color
+      color: "#13c4a3",
+      fontSize: "1.3rem",
+    },
+    "& label.Mui-focused": {
+      // 해당 input focus 되었을 때 placeholder text color
+      color: "#13c4a3",
+    },
+
+    "& .MuiOutlinedInput-root": {
+      fontSize: "1.5rem",
+      "& fieldset": {
+        borderColor: "#13c4a3",
+      },
+    },
+
+    "& .MuiOutlinedInput-focused": {
+      fontSize: "1.5rem",
+      "& fieldset": {
+        borderColor: "#13c4a3",
+      },
+    },
+  });
+
   return (
     <div>
       {/* 입력 필드 */}
       <Stack className={styles.inputContainer} spacing={2}>
-        <TextField
+        <InputTextField
+          className={styles.bottomButton}
           label="이메일 입력"
           required
           variant="outlined"
-          size="small"
         />
-        <TextField
-          size="small"
+        <InputTextField
           label="비밀번호 입력"
-          type="password"
+          // type="password"
           required
           variant="outlined"
+          sx={{
+            fontSize: "1.5rem",
+            borderColor: "#13c4a3",
+            ":focus": {
+              backgroundColor: "red",
+            },
+          }}
         />
         <Button
           variant="contained"
           sx={{
             backgroundColor: "#13c4a3",
-            ":hover": { backgroundColor: "#13c4a3" },
+            fontSize: "1.5rem",
+            ":hover": { backgroundColor: "#13c4a3", fontSize: "1.5rem" },
           }}
         >
           로그인
@@ -40,13 +76,18 @@ function LoginContainer({
         <OauthButton />
 
         <div className={styles.center}>
-          <Button fullWidth sx={{ color: "#13c4a3" }}>
+          <Button
+            className={styles.bottomButton}
+            fullWidth
+            sx={{ color: "#13c4a3" }}
+          >
             비밀번호를 잊으셨나요?
           </Button>
         </div>
 
         <div className={styles.center}>
           <Button
+            className={styles.bottomButton}
             variant="outlined"
             fullWidth
             onClick={() => setOnRegister(true)}
