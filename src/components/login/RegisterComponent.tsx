@@ -1,6 +1,6 @@
 import { Button, IconButton, Stack, TextField, styled } from "@mui/material";
 import React, { useState } from "react";
-import styles from "./login.module.css";
+import styles from "./Login.module.css";
 import GoogleIcon from "@mui/icons-material/Google";
 import { RegisterData } from "../../api/login/postRegister";
 import useRegister from "../../hooks/login/useRegister";

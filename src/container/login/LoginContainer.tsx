@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "../../components/login/login.module.css";
+import styles from "../../components/login/Login.module.css";
 import LoginComponent from "../../components/login/LoginComponent";
 import RegisterComponent from "../../components/login/RegisterComponent";
 

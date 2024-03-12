@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { GoBell } from "react-icons/go";
-import SearchToggleBtn from "../dropDown/search/searchToggleBtn";
+import SearchToggleBtn from "../dropDown/search/SearchToggleBtn";
 
-import headerStyle from "./header.module.css";
+import headerStyle from "./Header.module.css";
 
 function Header() {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);

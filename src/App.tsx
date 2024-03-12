@@ -1,10 +1,10 @@
 import React from "react";
 // import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./routes/home";
-import Explore from "./routes/explore";
-import MyPage from "./routes/myPage";
-import PostTest from "./routes/postTest";
+import Home from "./routes/Home";
+import Explore from "./routes/Explore";
+import MyPage from "./routes/MyPage";
+import PostTest from "./routes/PostTest";
 import Login from "./container/login/LoginContainer";
 
 import "./styles/globals.css";

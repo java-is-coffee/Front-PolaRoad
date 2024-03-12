@@ -1,6 +1,6 @@
 import { Button, Stack, TextField, styled } from "@mui/material";
 import React, { useState } from "react";
-import styles from "./login.module.css";
+import styles from "./Login.module.css";
 import OauthButton from "./OauthButton";
 // import useLogin from "../../hooks/login/useLogin";
 import { LoginData } from "../../api/login/postLogin";

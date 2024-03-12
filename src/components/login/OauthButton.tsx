@@ -1,5 +1,5 @@
 import { IconButton } from "@mui/material";
-import styles from "./login.module.css";
+import styles from "./Login.module.css";
 import GoogleIcon from "@mui/icons-material/Google";
 
 const OauthButton = () => {
