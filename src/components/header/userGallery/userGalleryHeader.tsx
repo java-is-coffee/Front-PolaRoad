@@ -1,15 +1,15 @@
 import HistoryOption from "../../../enum/historyOptionType";
-import headerStyles from "./userHistoryHeader.module.css";
+import headerStyles from "./userGalleryHeader.module.css";
 
-interface userHistoryHeaderProps {
+interface userGalleryHeaderProps {
   option: HistoryOption;
   handleOptionChange: (option: HistoryOption) => void;
 }
 
-function UserHistoryHeader({
+function UserGalleryHeader({
   option,
   handleOptionChange,
-}: userHistoryHeaderProps) {
+}: userGalleryHeaderProps) {
   return (
     <div className={headerStyles.headerWrapper}>
       <div
@@ -40,4 +40,4 @@ function UserHistoryHeader({
   );
 }
 
-export default UserHistoryHeader;
+export default UserGalleryHeader;
