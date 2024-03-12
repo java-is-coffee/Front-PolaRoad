@@ -36,14 +36,6 @@ function LoginContainer({
 
   // const useLoginHooks = useLogin();
 
-  const inputEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
-  };
-
-  const inputPassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
-
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const inputData: LoginData = {
@@ -67,7 +59,9 @@ function LoginContainer({
               variant="outlined"
               color="success"
               value={email}
-              onChange={inputEmail}
+              onChange={(value: React.ChangeEvent<HTMLInputElement>) => {
+                setEmail(value.target.value);
+              }}
             />
             <InputTextField
               label="비밀번호 입력"
@@ -76,7 +70,9 @@ function LoginContainer({
               required
               variant="outlined"
               value={password}
-              onChange={inputPassword}
+              onChange={(value: React.ChangeEvent<HTMLInputElement>) => {
+                setPassword(value.target.value);
+              }}
             />
             <Button
               type="submit"
