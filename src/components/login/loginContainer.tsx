@@ -1,19 +1,15 @@
-import { Button, IconButton, Stack, TextField } from "@mui/material";
+import { Button, Stack, TextField } from "@mui/material";
 import React from "react";
 import styles from "./login.module.css";
-import GoogleIcon from "@mui/icons-material/Google";
+import OauthButton from "./oauthButton";
 
-function LoginContainer() {
+function LoginContainer({
+  setOnRegister,
+}: {
+  setOnRegister: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   return (
-    <div className={styles.container}>
-      {/* 중앙 글씨 */}
-      <div className={styles.mainText}>TRIPPER</div>
-
-      {/* 나만의 여행일기를 작성해보세요! */}
-      <div className={styles.subText}>
-        나만의 여행일기를 <br /> 작성해보세요!
-      </div>
-
+    <div>
       {/* 입력 필드 */}
       <Stack className={styles.inputContainer} spacing={2}>
         <TextField
@@ -41,27 +37,7 @@ function LoginContainer() {
         <div className={styles.customHr}>
           <span>또는</span>
         </div>
-
-        <div className={styles.oauthButton}>
-          <span style={{ marginRight: "50px" }}>
-            <IconButton size="large" sx={{ backgroundColor: "#d9d9d9" }}>
-              <GoogleIcon />
-            </IconButton>
-            <div>Google</div>
-          </span>
-          <span>
-            <IconButton
-              size="large"
-              sx={{
-                backgroundColor: "yellow",
-                ":hover": { backgroundColor: "yellow" },
-              }}
-            >
-              <img className={styles.imgs} src="icons/kakao.png" alt="xx" />
-            </IconButton>
-            <div>Kakao</div>
-          </span>
-        </div>
+        <OauthButton />
 
         <div className={styles.center}>
           <Button fullWidth sx={{ color: "#13c4a3" }}>
@@ -70,7 +46,11 @@ function LoginContainer() {
         </div>
 
         <div className={styles.center}>
-          <Button variant="outlined" fullWidth>
+          <Button
+            variant="outlined"
+            fullWidth
+            onClick={() => setOnRegister(true)}
+          >
             계정이 있으신가요?
             <span style={{ color: "#13c4a3", marginLeft: "5PX" }}>
               가입하기
@@ -78,9 +58,6 @@ function LoginContainer() {
           </Button>
         </div>
       </Stack>
-
-      {/* 또는 & Oauth 로그인 버튼 */}
-      <div></div>
     </div>
   );
 }
