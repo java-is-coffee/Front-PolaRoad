@@ -1,5 +1,5 @@
 import React from "react";
-import LoginComponent from "../components/login/LoginContainer";
+import LoginComponent from "../container/login/LoginContainer";
 
 function login() {
   return (

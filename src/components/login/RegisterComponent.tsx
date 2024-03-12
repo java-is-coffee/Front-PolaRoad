@@ -1,4 +1,4 @@
-import { Button, IconButton, Stack, TextField } from "@mui/material";
+import { Button, IconButton, Stack, TextField, styled } from "@mui/material";
 import React from "react";
 import styles from "./login.module.css";
 import GoogleIcon from "@mui/icons-material/Google";
@@ -8,6 +8,33 @@ function RegisterContainer({
 }: {
   setOnRegister: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const InputTextField = styled(TextField)({
+    fontSize: "1.5rem",
+    backgroundColor: "#F5F5F5",
+    borderRadius: "2px",
+    "& label": {
+      color: "#13c4a3",
+      fontSize: "1.3rem",
+    },
+    "& label.Mui-focused": {
+      color: "#13c4a3",
+    },
+
+    "& .MuiOutlinedInput-root": {
+      fontSize: "1.5rem",
+      "& fieldset": {
+        borderColor: "#13c4a3",
+      },
+    },
+
+    "& .MuiOutlinedInput-focused": {
+      fontSize: "1.5rem",
+      "& fieldset": {
+        borderColor: "#13c4a3",
+      },
+    },
+  });
+
   return (
     <div>
       {/* 입력 필드 */}
@@ -36,40 +63,61 @@ function RegisterContainer({
           <span>또는</span>
         </div>
 
-        <TextField
-          label="이메일 입력"
-          required
-          variant="outlined"
-          type="email"
-          size="small"
-        />
-        <TextField
+        <div>
+          <InputTextField
+            label="이메일 입력"
+            required
+            variant="outlined"
+            type="email"
+            size="small"
+            sx={{ width: "80%" }}
+          />
+          <Button
+            variant="contained"
+            sx={{
+              width: "20%",
+              backgroundColor: "#13c4a3",
+              fontSize: "1.5rem",
+              ":hover": { backgroundColor: "#13c4a3", fontSize: "1.5rem" },
+            }}
+          >
+            인증
+          </Button>
+        </div>
+
+        <InputTextField
           size="small"
           label="인증번호 입력"
           required
           variant="outlined"
         />
-        <TextField
+        <InputTextField
           size="small"
           label="비밀번호 입력"
           type="password"
           required
           variant="outlined"
         />
-        <TextField
+        <InputTextField
           size="small"
           label="비밀번호 재입력"
           type="password"
           required
           variant="outlined"
         />
-        <TextField size="small" label="성명" required variant="outlined" />
-        <TextField size="small" label="닉네임" required variant="outlined" />
+        <InputTextField size="small" label="성명" required variant="outlined" />
+        <InputTextField
+          size="small"
+          label="닉네임"
+          required
+          variant="outlined"
+        />
         <Button
           variant="contained"
           sx={{
             backgroundColor: "#13c4a3",
-            ":hover": { backgroundColor: "#13c4a3" },
+            fontSize: "1.5rem",
+            ":hover": { backgroundColor: "#13c4a3", fontSize: "1.5rem" },
           }}
         >
           회원 가입
@@ -77,6 +125,7 @@ function RegisterContainer({
 
         <div className={styles.center}>
           <Button
+            className={styles.bottomButton}
             variant="outlined"
             fullWidth
             onClick={() => setOnRegister(false)}
