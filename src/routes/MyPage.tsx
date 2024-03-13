@@ -10,6 +10,7 @@ function MyPage() {
   useEffect(() => {
     registerModal(ModalOption.POST, <NewPostModal />);
     return () => closeModal(ModalOption.POST);
+    // eslint-disable-next-line
   }, []);
   return (
     <div>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ModalOption from "../../../enum/modalOptionTypes";
 import { useModal } from "../../../hooks/modal/ModalProvider";
-import CloseIcon from "@mui/icons-material/Close";
+// import CloseIcon from "@mui/icons-material/Close";
 import modalStyles from "./NewPostModal.module.css";
 import ActionBtn from "../../button/post/ActionBtn";
 import NewPostDetails from "../../form/post/NewPostDetails";
@@ -32,6 +32,7 @@ function NewPostModal() {
     return () => {
       document.removeEventListener("keyup", handleKeyUp);
     };
+    // eslint-disable-next-line
   }, []);
 
   const increaseFormIndex = () => {
