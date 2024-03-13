@@ -1,0 +1,6 @@
+.img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover; /* 이미지 비율을 유지하면서 그리드 셀에 맞춰줍니다. */
+}
