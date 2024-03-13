@@ -7,8 +7,8 @@ import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
 import TrainIcon from "@mui/icons-material/Train";
 import DirectionsCarFilledIcon from "@mui/icons-material/DirectionsCarFilled";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
-import { useState } from "react";
-import CategoryType from "../../enum/categoryOptionType";
+// import { useState } from "react";
+// import CategoryType from "../../enum/categoryOptionType";
 
 const MainCategory = () => {
   //   const [setCategory, setSetCategory] = useState(CategoryType.NULL);
