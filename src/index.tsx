@@ -6,6 +6,7 @@ import { CookiesProvider } from "react-cookie";
 import { Provider } from "react-redux";
 import { rootReducer } from "./redux/store/store";
 import App from "./App";
+import { ModalProvider } from "./hooks/modal/ModalProvider";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -14,7 +15,9 @@ root.render(
   <React.StrictMode>
     <Provider store={rootReducer}>
       <CookiesProvider>
-        <App />
+        <ModalProvider>
+          <App />
+        </ModalProvider>
       </CookiesProvider>
     </Provider>
   </React.StrictMode>
