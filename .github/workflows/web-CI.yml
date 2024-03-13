@@ -23,6 +23,7 @@ jobs:
           echo "REACT_APP_BUCKET_REGION=${{ secrets.BUCKET_REGION }}" >> .env
           echo "REACT_APP_BUCKET_ACCESS_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> .env
           echo "REACT_APP_BUCKET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env
+          echo "REACT_APP_BUCKET_BASEURL=https://polaroad-images.s3.ap-northeast-2.amazonaws.com" >> .env
 
       - name: Install Dependencies
         run: npm install
