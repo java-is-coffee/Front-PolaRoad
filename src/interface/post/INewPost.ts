@@ -1,5 +1,5 @@
-import conceptOptionType from "../../enum/conceptOptionType";
-import regionOptionType from "../../enum/regionOptionType";
+import conceptOptionType from "../../enum/post/conceptOptionType";
+import regionOptionType from "../../enum/post/regionOptionType";
 import INewCard from "../card/INewCard";
 
 interface INewPost {
