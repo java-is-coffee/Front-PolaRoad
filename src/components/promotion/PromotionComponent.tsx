@@ -4,24 +4,26 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import componentStyles from "./PromotionComponent.module.css";
 
-function PromotionContainer() {
-  const videoSources = [
-    `${process.env.PUBLIC_URL}/video/video_1.mp4`,
-    `${process.env.PUBLIC_URL}/video/video_2.mp4`,
-    `${process.env.PUBLIC_URL}/video/video_3.mp4`,
-    `${process.env.PUBLIC_URL}/video/video_4.mp4`,
-  ];
+const videoSources = [
+  `${process.env.PUBLIC_URL}/video/video_1.mp4`,
+  `${process.env.PUBLIC_URL}/video/video_2.mp4`,
+  `${process.env.PUBLIC_URL}/video/video_3.mp4`,
+  `${process.env.PUBLIC_URL}/video/video_4.mp4`,
+];
 
+function PromotionContainer() {
   const [currentVideo, setCurrentVideo] = useState('');
 
+  // selectRandomVideo 함수는 컴포넌트가 리렌더링될 때 재생성되지 않습니다.
+  // 의존성 배열에서 videoSources를 제거했습니다.
   const selectRandomVideo = useCallback(() => {
     const randomIndex = Math.floor(Math.random() * videoSources.length);
     setCurrentVideo(videoSources[randomIndex]);
-  }, [videoSources]);
+  }, []); // 빈 배열을 사용해 함수가 마운트 시에만 생성되도록 합니다.
 
   useEffect(() => {
     selectRandomVideo();
-  }, [selectRandomVideo]);
+  }, [selectRandomVideo]); // selectRandomVideo 함수가 변경되지 않기 때문에 여기서는 문제가 되지 않습니다.
 
   const handleVideoEnd = () => {
     selectRandomVideo();
