@@ -7,7 +7,14 @@ const useRegister = () => {
     // return true;
   };
 
-  return { checkEmail };
+  const checkPassword = (input: string) => {
+    const passwordRegEx =
+      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
+
+    return passwordRegEx.test(input);
+  };
+
+  return { checkEmail, checkPassword };
 };
 
 export default useRegister;
