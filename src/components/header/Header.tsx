@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { GoBell } from "react-icons/go";
-
 import headerStyle from "./Header.module.css";
 import SearchToggleBtn from "../dropDown/search/SearchToggleBtn";
 
@@ -9,7 +8,7 @@ function Header() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
+      if (window.scrollY > 30) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
