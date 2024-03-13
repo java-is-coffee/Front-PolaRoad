@@ -32,6 +32,29 @@ function SearchDropdown() {
 
   return (
     <div className={dropdownStyles.wrapper}>
+      {/* 정렬 및 첫 줄 */}
+      <div className={dropdownStyles.head}>
+        필터
+        <span>X</span>
+      </div>
+      <div className={dropdownStyles.line}></div>
+
+      {/* 정렬  */}
+      <div className={dropdownStyles.option}>
+        <div className={dropdownStyles.title}>정렬</div>
+        <div className={dropdownStyles.list}>
+          <div className={dropdownStyles.item}>
+            <span>최신순</span>
+          </div>
+          <div className={dropdownStyles.item}>
+            <span>인기순</span>
+          </div>
+        </div>
+      </div>
+
+      {/* 구분선 */}
+      <div className={dropdownStyles.line}></div>
+
       <div className={dropdownStyles.option}>
         <div className={dropdownStyles.title}>카테고리</div>
         <div className={dropdownStyles.list}>
@@ -42,6 +65,9 @@ function SearchDropdown() {
           ))}
         </div>
       </div>
+
+      {/* 구분선 */}
+      <div className={dropdownStyles.line}></div>
       <div className={dropdownStyles.option}>
         <div className={dropdownStyles.title}>지역</div>
         <div className={dropdownStyles.list}>

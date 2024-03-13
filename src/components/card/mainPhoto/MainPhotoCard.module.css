@@ -1,0 +1,10 @@
+.mainPhoto {
+  width: 23vw;
+  height: 40vh;
+  margin: 0px 10px;
+  border-radius: 9px;
+}
+
+.photoInfo {
+  margin: 5px 1.5rem;
+}

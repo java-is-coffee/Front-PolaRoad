@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { GoBell } from "react-icons/go";
 import headerStyle from "./Header.module.css";
 import SearchToggleBtn from "../dropDown/search/SearchToggleBtn";
+import { Avatar } from "@mui/material";
 
 function Header() {
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 30) {
+      if (window.scrollY > 20) {
         setIsScrolled(true);
       } else {
         setIsScrolled(false);
@@ -41,8 +42,8 @@ function Header() {
           </div>
           <div className={headerStyle.action}>
             <span>Home</span>
-            <span>Explore</span>
             <span>Subscribe</span>
+            <span>Map</span>
             <span>New Post</span>
           </div>
         </div>
@@ -57,8 +58,8 @@ function Header() {
               handleIsScrolled={handleIsScrolled}
             />
           </div>
-          <GoBell size={"20px"} />
-          <span>avatar</span>
+          <GoBell size={"32px"} />
+          <Avatar alt="Travis Howard" src="icons/favicon-32x32.png" />
         </div>
       </div>
       {!isScrolled && (
