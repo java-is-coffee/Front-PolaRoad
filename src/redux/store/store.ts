@@ -1,10 +1,10 @@
 // store.ts
 import { configureStore } from "@reduxjs/toolkit";
-import newPostModalReducers from "../reducers/modal/newPostModalReducers";
+import newPostReducers from "../reducers/newPost/newPostReducers";
 
 export const rootReducer = configureStore({
   reducer: {
-    newPostModal: newPostModalReducers,
+    newPost: newPostReducers,
   },
 });
 
