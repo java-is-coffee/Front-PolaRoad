@@ -1,11 +1,33 @@
 .wrapper {
-  background-color: #c1c1c1;
-  width: 50vw;
+  padding: 2rem;
+  background-color: #ffffff;
+  border: 1px solid #d9d9d9;
+  border-radius: 10px;
+  width: 40%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
   margin: 8px;
+}
+
+.head {
+  width: 100%;
+  display: flex;
+  font-size: 2rem;
+  font-weight: 700;
+  justify-content: center;
+}
+
+.line {
+  margin: auto;
+  border: 0.2rem solid #13c4a3;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.option {
+  margin: 1rem 0px;
 }
 
 .title {
@@ -23,12 +45,20 @@
   grid-gap: 10px; /* 그리드 아이템 간의 간격 설정 */
 }
 
+.list :hover {
+  background-color: #13c4a3;
+}
+
 .item {
   font-size: 1.2rem;
   background-color: #eff1f5;
   color: black;
   border-radius: 5px;
   padding: 4px 6px;
+  width: 7rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
 }
 .item span {
   font-weight: 500;

@@ -33,7 +33,7 @@ function SearchToggleBtn({
   }, []);
 
   return isScrolled ? (
-    <IoSearch size={"20px"} onClick={handleIsScrolled} />
+    <IoSearch size={"32px"} onClick={handleIsScrolled} />
   ) : (
     <div ref={dropdownRef} className={searchBtnStyles.wrapper}>
       <div

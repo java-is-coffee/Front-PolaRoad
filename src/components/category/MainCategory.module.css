@@ -1,0 +1,28 @@
+.categoryContainer {
+  display: flex;
+  flex-direction: row;
+  margin-left: 20px;
+}
+
+.categoryItem {
+  min-width: 8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+  font-size: 1.3rem;
+  color: #a09cab;
+  cursor: pointer;
+}
+
+.selected {
+  color: #12b193;
+}
+
+.categoryLabel :hover {
+  color: #12b193;
+}
+
+.categoryIcon {
+  font-size: 30px !important;
+}
