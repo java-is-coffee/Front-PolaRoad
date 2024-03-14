@@ -1,9 +1,7 @@
-
-
-body {
+/* body {
   margin: 0;
   overflow: hidden; 
-}
+} */
 
 .videoContainer {
   position: relative; /* 상대적 위치 설정 */
