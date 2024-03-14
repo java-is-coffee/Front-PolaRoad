@@ -1,4 +1,17 @@
+.outSide {
+  background-color: var(0 0 0 5);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(5px);
+}
+
 .wrapper {
+  position: fixed;
+  top: 10%;
+  left: 30%;
   padding: 2rem;
   background-color: #ffffff;
   border: 1px solid #d9d9d9;
