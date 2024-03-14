@@ -1,0 +1,20 @@
+
+
+body {
+  margin: 0;
+  overflow: hidden; 
+}
+
+.videoContainer {
+  position: relative; /* 상대적 위치 설정 */
+  width: 100vw; /* 뷰포트의 전체 너비 */
+  height: calc(100vh - 60px); /* 뷰포트의 전체 높이에서 헤더 높이만큼 뺀 값 */
+  overflow: hidden; /* 비디오가 컨테이너를 벗어나지 않도록 설정 */
+  margin-top: 60px; /* 헤더 높이만큼 여백 설정 */
+}
+
+.videoContainer video {
+  width: 100%; /* 비디오의 너비를 컨테이너의 너비에 맞춤 */
+  height: 100%; /* 비디오의 높이를 컨테이너의 높이에 맞춤 */
+  object-fit: cover; /* 비디오가 컨테이너를 꽉 채우도록 설정 */
+}
