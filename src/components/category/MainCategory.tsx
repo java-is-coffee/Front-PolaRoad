@@ -10,17 +10,17 @@ import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import TuneIcon from "@mui/icons-material/Tune";
 import { useModal } from "../../hooks/modal/ModalProvider";
 import ModalOption from "../../enum/modalOptionTypes";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store/store";
+// import { useSelector } from "react-redux";
+// import { RootState } from "../../redux/store/store";
 // import { useState } from "react";
 // import CategoryType from "../../enum/categoryOptionType";
 
 const MainCategory = () => {
   //   const [setCategory, setSetCategory] = useState(CategoryType.NULL);
 
-  const activeCategory = useSelector(
-    (state: RootState) => state.setCategory.activeCategory
-  );
+  // const activeCategory = useSelector(
+  //   (state: RootState) => state.setCategory.activeCategory
+  // );
 
   const { openModal } = useModal();
 
