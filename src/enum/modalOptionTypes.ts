@@ -3,6 +3,7 @@ enum ModalOption {
   ALBUM = "ALBUM",
   PROFILE = "PROFILE",
   SETTING = "SETTING",
+  SEARCH = "SEARCH",
 }
 
 export default ModalOption;

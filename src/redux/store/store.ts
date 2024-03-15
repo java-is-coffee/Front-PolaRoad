@@ -1,10 +1,12 @@
 // store.ts
 import { configureStore } from "@reduxjs/toolkit";
 import newPostReducers from "../reducers/newPost/newPostReducers";
+import setCategory from "../reducers/explore/setCategoryReducer";
 
 export const rootReducer = configureStore({
   reducer: {
     newPost: newPostReducers,
+    setCategory: setCategory,
   },
 });
 
