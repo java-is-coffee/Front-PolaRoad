@@ -2,9 +2,25 @@ import { useEffect } from "react";
 import ModalOption from "../../../enum/modalOptionTypes";
 import { useModal } from "../../../hooks/modal/ModalProvider";
 import dropdownStyles from "./SearchDropdown.module.css";
+import CategoryType from "../../../enum/categoryOptionType";
+import RegionOptionType from "../../../enum/filter/RegionType";
+import SortOptionType from "../../../enum/filter/SortOptionType";
+import useExploreHooks from "../../../hooks/explore/useExploreHooks";
+import { RootState } from "../../../redux/store/store";
+import { useSelector } from "react-redux";
+import {
+  switchCategory,
+  switchRegion,
+  switchSort,
+} from "../../../redux/reducers/explore/filterReducer";
 
 function SearchDropdown() {
   const { closeModal } = useModal();
+
+  const sortList = Object.values(SortOptionType);
+  const categoryList = Object.values(CategoryType);
+  const regionList = Object.values(RegionOptionType);
+
   // const FormComponent = formComponents[postFormIndex];
   // Esc 눌렀을때 모달 탈출
   const handleKeyUp = (event: KeyboardEvent) => {
@@ -26,55 +42,63 @@ function SearchDropdown() {
     };
     // eslint-disable-next-line
   }, []);
-  const category: string[] = [
-    "인기게시글",
-    "식도락",
-    "기차여행",
-    "자동차여행",
-    "도보여행",
-    "포토스팟",
-    "도시경관",
-    "자연",
-  ];
-  const local: string[] = [
-    "서울",
-    "경기",
-    "인천",
-    "강원",
-    "제주",
-    "대전",
-    "충북",
-    "충남/세종",
-    "부산",
-    "울산",
-    "경남",
-    "대구",
-    "경북",
-    "광주",
-    "전남",
-    "전주/전북",
-  ];
+
+  const { SetItem } = useExploreHooks();
+
+  const storeSort = useSelector((state: RootState) => state.filter.activeSort);
+  const storeCategory = useSelector(
+    (state: RootState) => state.filter.activeCategory
+  );
+  const storeRegion = useSelector(
+    (state: RootState) => state.filter.activeRegion
+  );
+
+  const handleClick = (inputData: any, aboutFilter: string) => {
+    if (aboutFilter === "정렬") {
+      if (inputData === storeSort) {
+        SetItem(switchSort(null));
+      } else {
+        SetItem(switchSort(inputData));
+      }
+    }
+    if (aboutFilter === "카테고리") {
+      if (inputData === storeCategory) {
+        SetItem(switchCategory(null));
+      } else {
+        SetItem(switchCategory(inputData));
+      }
+    }
+    if (aboutFilter === "지역") {
+      if (inputData === storeRegion) {
+        SetItem(switchRegion(null));
+      } else {
+        SetItem(switchRegion(inputData));
+      }
+    }
+  };
 
   return (
     <div className={dropdownStyles.outSide} onClick={handleBackdropClick}>
       <div className={dropdownStyles.wrapper}>
         {/* 정렬 및 첫 줄 */}
-        <div className={dropdownStyles.head}>
-          필터
-          <span>X</span>
-        </div>
+        <div className={dropdownStyles.head}>필터</div>
         <div className={dropdownStyles.line}></div>
 
         {/* 정렬  */}
         <div className={dropdownStyles.option}>
           <div className={dropdownStyles.title}>정렬</div>
           <div className={dropdownStyles.list}>
-            <div className={dropdownStyles.item}>
-              <span>최신순</span>
-            </div>
-            <div className={dropdownStyles.item}>
-              <span>인기순</span>
-            </div>
+            {sortList.map((item) => (
+              <div
+                className={`${dropdownStyles.item} ${
+                  storeSort === item ? dropdownStyles.selected : ""
+                }`}
+                key={item}
+                onClick={() => handleClick(item, "정렬")}
+              >
+                <span>{item}</span>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -84,8 +108,14 @@ function SearchDropdown() {
         <div className={dropdownStyles.option}>
           <div className={dropdownStyles.title}>카테고리</div>
           <div className={dropdownStyles.list}>
-            {category.map((item) => (
-              <div className={dropdownStyles.item} key={item}>
+            {categoryList.map((item) => (
+              <div
+                className={`${dropdownStyles.item} ${
+                  storeCategory === item ? dropdownStyles.selected : ""
+                }`}
+                key={item}
+                onClick={() => handleClick(item, "카테고리")}
+              >
                 <span>{item}</span>
               </div>
             ))}
@@ -97,8 +127,14 @@ function SearchDropdown() {
         <div className={dropdownStyles.option}>
           <div className={dropdownStyles.title}>지역</div>
           <div className={dropdownStyles.list}>
-            {local.map((item) => (
-              <div className={dropdownStyles.item} key={item}>
+            {regionList.map((item) => (
+              <div
+                className={`${dropdownStyles.item} ${
+                  storeRegion === item ? dropdownStyles.selected : ""
+                }`}
+                key={item}
+                onClick={() => handleClick(item, "지역")}
+              >
                 <span>{item}</span>
               </div>
             ))}
