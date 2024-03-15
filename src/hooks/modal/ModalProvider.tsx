@@ -54,6 +54,7 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
       ...prevModals,
       [modalKey]: { ...prevModals[modalKey], isOpen: true },
     }));
+    document.body.classList.add("no-scroll");
   };
 
   const closeModal = (modalKey: ModalOption) => {
@@ -61,6 +62,7 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
       ...prevModals,
       [modalKey]: { ...prevModals[modalKey], isOpen: false },
     }));
+    document.body.classList.remove("no-scroll");
   };
 
   const value = { modals, registerModal, openModal, closeModal };
