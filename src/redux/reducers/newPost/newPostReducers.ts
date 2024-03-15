@@ -1,5 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import INewPost from "../../../interface/post/INewPost";
+import conceptOptionType from "../../../enum/post/conceptOptionType";
+import regionOptionType from "../../../enum/post/regionOptionType";
 
 const initialState: INewPost = {
   title: null,
@@ -16,9 +18,15 @@ const newPost = createSlice({
   initialState,
   reducers: {
     setPostDetails: (state, PayloadAction) => {},
+    setConcept: (state, action: PayloadAction<conceptOptionType>) => {
+      state.concept = action.payload;
+    },
+    setRegion: (state, action: PayloadAction<regionOptionType>) => {
+      state.region = action.payload;
+    },
   },
 });
 
 // 액션 생성자와 리듀서 내보내기
-export const { setPostDetails } = newPost.actions;
+export const { setPostDetails, setConcept, setRegion } = newPost.actions;
 export default newPost.reducer;
