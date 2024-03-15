@@ -1,9 +1,6 @@
 import { useState } from "react";
-import putFile from "../aws/putFile";
 import useBucket from "../hooks/bucket/useBucket";
 import { IUploadImage } from "../interface/bucket/IUploadImage";
-
-const IMAGE_URL = process.env.REACT_APP_BUCKET_BASEURL;
 
 function PostTest() {
   const [input, setInput] = useState<File | null>();
@@ -51,7 +48,6 @@ function PostTest() {
   return (
     <div>
       <input id="files" type="file" onChange={handleFile} required />
-      <img src={`${IMAGE_URL}/docker.png`} />
       <button id="button" onClick={handleUpload}>
         올리기
       </button>
