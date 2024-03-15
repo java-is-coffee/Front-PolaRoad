@@ -3,8 +3,11 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import componentStyles from "./HomeComponent.module.css";
+import HomePosting from './HomePosting';
+import HomeFooter from './HomeFooter';
+import HomeModal from './HomeModal'; 
 
-function HomeContainer() {
+function HomeComponent() {
   const videoSources = [
     `${process.env.PUBLIC_URL}/video/video_1.mp4`,
     `${process.env.PUBLIC_URL}/video/video_2.mp4`,
@@ -27,10 +30,9 @@ function HomeContainer() {
     selectRandomVideo();
   };
 
-
   return (
     <>
-      <div className={componentStyles.homeContainer}>
+      <div className={componentStyles.homeComponent}>
         <div className={componentStyles.mainText}>Wherever You Want</div>
       </div>
       {currentVideo && (
@@ -41,8 +43,11 @@ function HomeContainer() {
           </video>
         </div>
       )}
+      
+      <HomePosting />
+      <HomeFooter />
     </>
   );
 }
 
-export default HomeContainer;
+export default HomeComponent;
