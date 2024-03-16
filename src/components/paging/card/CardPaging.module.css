@@ -1,0 +1,22 @@
+.paging {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 100%; /* Ensure the container takes up the full width */
+}
+
+.dots {
+  display: flex;
+  justify-content: center; /* Ensure dots are centered within their container */
+  align-items: center;
+  flex-grow: 1; /* This allows the dots container to take up as much space as possible, pushing the arrows to the sides */
+}
+
+.btn {
+  background-color: white;
+  border: 0;
+  cursor: pointer;
+  margin: 10px 20px;
+}
