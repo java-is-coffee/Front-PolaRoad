@@ -20,14 +20,16 @@
 }
 
 .modalContent {
-  width: 100%;
-  height: 50%;
+  width: auto;
+  height: auto;
+  max-width: 800px;
+  min-width: 300px;
+  max-height: 80vh;
+  min-height: 100px;
   background-color: white;
   border-radius: 8px;
-  min-width: 300px;
-  max-width: 500px;
-  max-height: 80%;
-  overflow-y: auto;
+  overflow: auto;
+  transition: all 2s ease;
 }
 
 .header {
@@ -41,17 +43,4 @@
 .header span {
   font-size: 1.6rem;
   font-weight: bold;
-}
-
-.formWrapper {
-  width: fit-content;
-  height: fit-content;
-  padding: 10px;
-  font-size: 1.4rem;
-  font-weight: 500;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
 }

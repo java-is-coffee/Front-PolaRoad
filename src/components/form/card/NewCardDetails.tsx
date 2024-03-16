@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import formStyles from "./NewCardDetails.module.css";
 
 function NewCardDetails() {
+  const formRef = useRef<HTMLDivElement>(null);
   const [uploadFiles, setUploadFiles] = useState<File>();
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +28,7 @@ function NewCardDetails() {
   }, [uploadFiles]);
 
   return (
-    <div className={formStyles.formWrapper}>
+    <div ref={formRef} className={formStyles.formWrapper}>
       {!uploadFiles && (
         <div className={formStyles.imageWrapper}>
           <img
@@ -50,14 +51,21 @@ function NewCardDetails() {
         </div>
       )}
       {uploadFiles && previewUrl && (
-        <div className={formStyles.previewWrapper}>
-          <img alt="Preview" src={previewUrl} width="300px" height="300px" />
+        <div className={formStyles.cardFormWrapper}>
+          <div className={formStyles.previewWrapper}>
+            <img alt="Preview" src={previewUrl} width="300px" height="300px" />
+          </div>
           <div className={detailWrapperClass}>
-            <input
+            <textarea
               className={formStyles.cardContent}
               placeholder="문구를 입력하세요"
-            ></input>
-            <button>위치추가</button>
+              wrap="off"
+            />
+            <button className={formStyles.uploadBtn}>위치추가</button>
+            <div>
+              <button className={formStyles.uploadBtn}>이전 카드</button>
+              <button className={formStyles.uploadBtn}>카드 추가</button>
+            </div>
           </div>
         </div>
       )}
