@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const BASE_URL =
-  "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/member/login";
+export const BASE_URL = "https://k951a463f2f5fa.user-app.krampoline.com";
 
 export interface LoginData {
   email: string;
@@ -14,10 +13,15 @@ export interface LoginDTO {
 
 const postLogin = async (inputData: LoginDTO) => {
   try {
-    const response = await axios.post(BASE_URL, inputData);
+    const loginAPI = BASE_URL + "/api/member/login";
+
+    const response = await axios.post(loginAPI, inputData, {
+      withCredentials: true,
+    });
 
     const code = response.status;
     // const result = response.data;
+    console.log(response.headers["accessToken"]);
 
     return code;
   } catch (error) {

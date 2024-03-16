@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const BASE_URL =
-  "http://ec2-54-180-2-103.ap-northeast-2.compute.amazonaws.com:8080/api/member/login";
+const BASE_URL = "https://k951a463f2f5fa.user-app.krampoline.com";
 
 export interface RegisterData {
   email: string;
@@ -17,10 +16,14 @@ export interface RegisterDTO {
 
 const postRegister = async (inputData: RegisterDTO) => {
   try {
-    const response = await axios.post(BASE_URL, inputData);
+    const API_URL = BASE_URL + "/api/member/register";
+
+    const response = await axios.post(API_URL, inputData);
 
     const code = response.status;
     // const result = response.data;
+
+    console.log(response);
 
     return code;
   } catch (error) {

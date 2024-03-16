@@ -1,3 +1,8 @@
+import postRegister, {
+  RegisterDTO,
+  RegisterData,
+} from "../../api/login/postRegister";
+
 const useRegister = () => {
   const checkEmail = (input: string) => {
     const emailRegEx =
@@ -14,7 +19,19 @@ const useRegister = () => {
     return passwordRegEx.test(input);
   };
 
-  return { checkEmail, checkPassword };
+  const register = async (inputData: RegisterData) => {
+    const inputDTO: RegisterDTO = {
+      data: inputData,
+    };
+
+    const result = await postRegister(inputDTO);
+
+    if (result === 200) {
+      return 200;
+    } else return 400;
+  };
+
+  return { checkEmail, checkPassword, register };
 };
 
 export default useRegister;
