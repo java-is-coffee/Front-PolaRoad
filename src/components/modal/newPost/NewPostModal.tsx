@@ -12,7 +12,6 @@ const formComponents = [NewPostTheme, NewCardList, NewPostDetails];
 function NewPostModal() {
   const { openModal } = useModal();
   const [postFormIndex, setPostFormIndex] = useState<number>(0);
-  const [showWarningModal, setShowWarningModal] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement>(null); // 모달 DOM에 접근하기 위한 ref
 
   // useEffect(() => {

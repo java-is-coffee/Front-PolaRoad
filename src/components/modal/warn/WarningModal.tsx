@@ -12,8 +12,8 @@ const WarningModal = () => {
   // "나가기" 버튼 클릭 시 실행될 함수
   const handleExit = () => {
     dispatch(resetPostDetails()); // 포스트 상세 정보를 리셋
-    closeModal(ModalOption.POST); // 실제 포스트 모달을 닫음
     closeModal(ModalOption.WARNING);
+    closeModal(ModalOption.POST); // 실제 포스트 모달을 닫음
   };
 
   // "취소" 버튼 클릭 시 실행될 함수
