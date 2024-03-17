@@ -17,16 +17,18 @@ const newPost = createSlice({
   name: "newPost",
   initialState,
   reducers: {
-    setPostDetails: (state, PayloadAction) => {},
     setConcept: (state, action: PayloadAction<conceptOptionType>) => {
       state.concept = action.payload;
     },
     setRegion: (state, action: PayloadAction<regionOptionType>) => {
       state.region = action.payload;
     },
+    resetPostDetails: (state) => {
+      return initialState;
+    },
   },
 });
 
 // 액션 생성자와 리듀서 내보내기
-export const { setPostDetails, setConcept, setRegion } = newPost.actions;
+export const { setConcept, setRegion, resetPostDetails } = newPost.actions;
 export default newPost.reducer;
