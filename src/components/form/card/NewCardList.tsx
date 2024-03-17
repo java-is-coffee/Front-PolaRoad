@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import formStyles from "./NewCardList.module.css";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import CardPaging from "components/paging/card/CardPaging";

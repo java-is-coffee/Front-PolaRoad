@@ -3,15 +3,12 @@ import INewCard from "interface/card/INewCard";
 import formStyles from "./CardForm.module.css";
 import { useEffect, useState } from "react";
 import useKakaoMap from "hooks/map/useKakaoMap";
-import { Hidden } from "@mui/material";
 
 declare global {
   interface Window {
     kakao: any;
   }
 }
-
-const { kakao } = window;
 
 interface CardFormProps {
   updateCard: (newCard: INewCard, cardIndex: number) => void;
@@ -31,7 +28,7 @@ function CardForm({ updateCard }: CardFormProps) {
   const { file, handleFileChange } = useFileHandler(initCard);
   const [isMapVisible, setIsMapVisible] = useState(false);
   const [searchPlace, setSearchPlace] = useState<string>("");
-  const { selectedPlace, initKakaoMap, searchPlaceByKeyword } = useKakaoMap({
+  const { initKakaoMap, searchPlaceByKeyword } = useKakaoMap({
     latitude: 37.566826,
     longitude: 126.9786567,
   });
@@ -53,11 +50,8 @@ function CardForm({ updateCard }: CardFormProps) {
     if (isMapVisible && mapContainer) {
       initKakaoMap(mapContainer);
     }
-  }, [isMapVisible]); // isMapVisible 또는 map 상태가 변경될 때마다 실행
-
-  useEffect(() => {
-    console.log(selectedPlace);
-  }, selectedPlace);
+    // eslint-disable-next-line
+  }, [isMapVisible]);
 
   return (
     <div className={formStyles.cardFormWrapper}>
