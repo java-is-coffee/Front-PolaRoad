@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 declare global {
   interface Window {
@@ -58,13 +58,18 @@ const useKakaoMap = ({ latitude, longitude }: KakaoMapProps) => {
       position: new kakao.maps.LatLng(place.y, place.x),
     });
 
-    kakao.maps.event.addListener(marker, "click", () => {
-      infoWindow.setContent(
-        `<div style="padding:5px;font-size:12px;">${place.place_name}</div>`
-      );
-      infoWindow.open(map, marker);
-      setSelectedPlace(place);
-    });
+    kakao.maps.event.addListener(
+      marker,
+      "click",
+      () => {
+        infoWindow.setContent(
+          `<div style="padding:5px;font-size:12px;">${place.place_name}</div>`
+        );
+        infoWindow.open(map, marker);
+        setSelectedPlace(place);
+      },
+      { passive: true }
+    );
   };
 
   return { selectedPlace, initKakaoMap, searchPlaceByKeyword };
