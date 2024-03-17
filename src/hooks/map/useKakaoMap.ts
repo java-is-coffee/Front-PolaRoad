@@ -16,7 +16,10 @@ interface KakaoMapProps {
 const useKakaoMap = ({ latitude, longitude }: KakaoMapProps) => {
   const [map, setMap] = useState<any | null>(null);
   const [selectedPlace, setSelectedPlace] = useState();
-  const infoWindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+  const infoWindow = new kakao.maps.InfoWindow(
+    { zIndex: 1 },
+    { passive: true }
+  );
 
   // 지도 옵션 정의
   const mapOption = {
@@ -58,7 +61,7 @@ const useKakaoMap = ({ latitude, longitude }: KakaoMapProps) => {
       position: new kakao.maps.LatLng(place.y, place.x),
     });
 
-    kakao.maps.event.addListener(
+    kakao.maps.addEventListener(
       marker,
       "click",
       () => {
