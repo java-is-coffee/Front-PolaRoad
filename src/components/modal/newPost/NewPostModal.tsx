@@ -1,44 +1,45 @@
 import { useEffect, useRef, useState } from "react";
-import ModalOption from "../../../enum/modalOptionTypes";
-import { useModal } from "../../../hooks/modal/ModalProvider";
 import modalStyles from "./NewPostModal.module.css";
 import ActionBtn from "../../button/post/ActionBtn";
 import NewPostDetails from "../../form/post/NewPostDetails";
 import NewPostTheme from "../../form/post/NewPostTheme";
-import NewCardDetails from "../../form/card/NewCardDetails";
+import NewCardList from "../../form/card/NewCardList";
+import { useModal } from "hooks/modal/ModalProvider";
+import ModalOption from "enum/modalOptionTypes";
 
-const formComponents = [NewPostTheme, NewCardDetails, NewPostDetails];
+const formComponents = [NewPostTheme, NewCardList, NewPostDetails];
 
 function NewPostModal() {
-  const { closeModal } = useModal();
+  const { openModal } = useModal();
   const [postFormIndex, setPostFormIndex] = useState<number>(0);
+  const [showWarningModal, setShowWarningModal] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement>(null); // 모달 DOM에 접근하기 위한 ref
 
-  useEffect(() => {
-    const modal = modalRef.current;
-    console.log(postFormIndex);
-    if (modal) {
-      // 모달의 최대 크기를 현재 컨텐츠 크기에 기반하여 설정
-      const contentWidth = modal.offsetWidth; // 첫 번째 자식 요소의 너비
-      const contentHeight = modal.offsetHeight; // 첫 번째 자식 요소의 높이
-      console.log(contentHeight);
-      console.log(contentWidth);
-      // modalContent의 스타일을 업데이트하여 transition 효과 적용
-      // modal.style.width = `${contentWidth}px`;
-      // modal.style.height = `${contentHeight}px`;
-    }
-  }, [postFormIndex]);
+  // useEffect(() => {
+  //   const modal = modalRef.current;
+  //   console.log(postFormIndex);
+  //   if (modal) {
+  //     // 모달의 최대 크기를 현재 컨텐츠 크기에 기반하여 설정
+  //     const contentWidth = modal.offsetWidth; // 첫 번째 자식 요소의 너비
+  //     const contentHeight = modal.offsetHeight; // 첫 번째 자식 요소의 높이
+  //     console.log(contentHeight);
+  //     console.log(contentWidth);
+  //     modalContent의 스타일을 업데이트하여 transition 효과 적용
+  //     modal.style.width = `${contentWidth}px`;
+  //     modal.style.height = `${contentHeight}px`;
+  //   }
+  // }, [postFormIndex]);
 
   // Esc 눌렀을때 모달 탈출n
   const handleKeyUp = (event: KeyboardEvent) => {
     if (event.key === "Escape") {
-      closeModal(ModalOption.POST);
+      openModal(ModalOption.WARNING);
     }
   };
   // 모달 바깥쪽 눌렀을떄 모달 탈출
   const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
-      closeModal(ModalOption.POST);
+      openModal(ModalOption.WARNING);
     }
   };
   // 컴포넌트 랜더링시에 한번만 리스너 추가
