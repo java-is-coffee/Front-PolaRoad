@@ -9,7 +9,6 @@ import PostTest from "./routes/PostTest";
 import Login from "./containers/login/LoginContainer";
 
 import "./styles/globals.css";
-import Promotion from "./routes/Promotion";
 
 function App() {
   return (
@@ -21,7 +20,6 @@ function App() {
           <Route path="/explore" element={<Explore />}></Route>
           <Route path="/my" element={<MyPage />}></Route>
           <Route path="/test" element={<PostTest />}></Route>
-          <Route path="/promotion" element={<Promotion />}></Route>
         </Routes>
       </Router>
     </div>
