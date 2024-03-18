@@ -4,6 +4,7 @@ enum ModalOption {
   PROFILE = "PROFILE",
   SETTING = "SETTING",
   SEARCH = "SEARCH",
+  WARNING = "WARNING",
 }
 
 export default ModalOption;

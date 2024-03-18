@@ -5,3 +5,8 @@
 html {
   font-size: 10px;
 }
+
+.no-scroll {
+  overflow: hidden;
+  height: 100%;
+}

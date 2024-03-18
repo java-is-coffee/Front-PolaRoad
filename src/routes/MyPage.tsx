@@ -4,12 +4,17 @@ import MyPageContainer from "../containers/myPage/MyPageContainer";
 import ModalOption from "../enum/modalOptionTypes";
 import { useModal } from "../hooks/modal/ModalProvider";
 import NewPostModal from "../components/modal/newPost/NewPostModal";
+import WarningModal from "components/modal/warn/WarningModal";
 
 function MyPage() {
   const { registerModal, closeModal } = useModal();
   useEffect(() => {
     registerModal(ModalOption.POST, <NewPostModal />);
-    return () => closeModal(ModalOption.POST);
+    registerModal(ModalOption.WARNING, <WarningModal />);
+    return () => {
+      closeModal(ModalOption.POST);
+      closeModal(ModalOption.WARNING);
+    };
     // eslint-disable-next-line
   }, []);
   return (

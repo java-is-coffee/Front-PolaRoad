@@ -1,9 +1,10 @@
 interface INewCard {
-  location: string;
-  latitude: string;
-  longitude: string;
-  image: string;
-  content: string;
+  location: string | null;
+  latitude: string | null;
+  longitude: string | null;
+  image: File | null;
+  previewUrl: string | undefined;
+  content: string | null;
 }
 
 export default INewCard;
