@@ -20,7 +20,7 @@ function HomeComponent() {
   const selectRandomVideo = useCallback(() => {
     const randomIndex = Math.floor(Math.random() * videoSources.length);
     setCurrentVideo(videoSources[randomIndex]);
-  }, []); 
+  }, [videoSources]);
 
   useEffect(() => {
     selectRandomVideo();
