@@ -21,9 +21,8 @@ const postLogin = async (inputData: LoginDTO) => {
 
     const code = response.status;
     // const result = response.data;
-    console.log(response.headers["accessToken"]);
 
-    return code;
+    return response.data;
   } catch (error) {
     return "error";
   }

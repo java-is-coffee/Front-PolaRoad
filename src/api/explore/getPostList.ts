@@ -2,18 +2,25 @@ import axios from "axios";
 
 export const BASE_URL = "https://k951a463f2f5fa.user-app.krampoline.com";
 
-export interface LoginData {
-  email: string;
-  password: string;
+export interface PostData {
+  title: string;
+  postId: number;
+  nickname: string;
+  goodNumber: number;
+  concept: string;
+  region: string;
+  image: string[];
 }
 
-export interface LoginDTO {
-  data: LoginData;
+export interface PostDTO {
+  data: PostData;
 }
 
-const getPostList = async (inputData: LoginDTO) => {
+export interface PostList {}
+
+const getPostList = async (inputData: PostDTO) => {
   try {
-    const loginAPI = BASE_URL + "/api/member/login";
+    const loginAPI = BASE_URL + "/api/post/list";
 
     const response = await axios.post(loginAPI, inputData, {
       withCredentials: true,
@@ -21,9 +28,8 @@ const getPostList = async (inputData: LoginDTO) => {
 
     const code = response.status;
     // const result = response.data;
-    console.log(response.headers["accessToken"]);
 
-    return code;
+    return response;
   } catch (error) {
     return "error";
   }

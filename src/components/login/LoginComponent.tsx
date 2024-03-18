@@ -123,7 +123,7 @@ function LoginContainer({
             fullWidth
             onClick={() => setOnRegister(true)}
           >
-            계정이 있으신가요?
+            계정이 없으신가요?
             <span style={{ color: "#13c4a3", marginLeft: "5PX" }}>
               가입하기
             </span>
