@@ -1,25 +1,60 @@
-import { useState } from "react";
 import conceptOptionType from "../../../enum/post/conceptOptionType";
+import regionOptionType from "../../../enum/post/regionOptionType";
+
+import formStyles from "./NewPostTheme.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../redux/store/store";
+import {
+  setConcept,
+  setRegion,
+} from "../../../redux/reducers/newPost/newPostReducers";
 
 function NewPostTheme() {
-  const [selected, setSelected] = useState<conceptOptionType | null>(null);
+  const selectedConcept = useSelector(
+    (state: RootState) => state.newPost.concept
+  );
+  const selectedRegion = useSelector(
+    (state: RootState) => state.newPost.region
+  );
+  const dispatch = useDispatch();
 
   const handleSelection = (option: conceptOptionType) => {
-    setSelected(option);
-    // Additional action on selection can be performed here
+    dispatch(setConcept(option));
   };
+
+  const handleSelectRegion = (option: regionOptionType) => {
+    dispatch(setRegion(option));
+  };
+
   return (
-    <div>
-      <h1>Select Your Region</h1>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+    <div className={formStyles.formWrapper}>
+      <div className={formStyles.label}>여행 테마 선택</div>
+      <div className={formStyles.optionList}>
         {Object.entries(conceptOptionType).map(([key, value]) => (
           <button
+            className={
+              selectedConcept === value
+                ? formStyles.selectedOptionBtn
+                : formStyles.optionBtn
+            }
             key={key}
             onClick={() => handleSelection(value as conceptOptionType)}
-            style={{
-              padding: "10px",
-              backgroundColor: selected === value ? "#4CAF50" : "#f8f8f8",
-            }}
+          >
+            {value}
+          </button>
+        ))}
+      </div>
+      <div className={formStyles.label}>지역을 선택해주세요</div>
+      <div className={formStyles.optionList}>
+        {Object.entries(regionOptionType).map(([key, value]) => (
+          <button
+            className={
+              selectedRegion === value
+                ? formStyles.selectedOptionBtn
+                : formStyles.optionBtn
+            }
+            key={key}
+            onClick={() => handleSelectRegion(value as regionOptionType)}
           >
             {value}
           </button>

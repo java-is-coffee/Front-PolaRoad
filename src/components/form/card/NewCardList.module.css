@@ -1,0 +1,71 @@
+.formWrapper {
+  height: max-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  transition: 0.5s all ease-in;
+}
+
+/* 오른쪽으로 이동 */
+.cardTransitionRightEnter {
+  opacity: 0;
+  transform: translateX(-100%); /* 왼쪽에서 시작 */
+  position: absolute;
+  z-index: 1;
+}
+
+.cardTransitionRightEnterActive {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+  position: relative;
+  z-index: 100;
+}
+
+.cardTransitionRightExit {
+  opacity: 1;
+  transform: translateX(0);
+  position: absolute;
+  z-index: 50;
+}
+
+.cardTransitionRightExitActive {
+  opacity: 0;
+  transform: translateX(100%); /* 오른쪽으로 사라짐 */
+  transition: opacity 300ms, transform 300ms;
+  position: absolute;
+  z-index: 0;
+}
+
+/* 왼쪽으로 이동 */
+.cardTransitionLeftEnter {
+  opacity: 0;
+  transform: translateX(100%); /* 오른쪽에서 시작 */
+  position: absolute;
+  z-index: 1;
+}
+
+.cardTransitionLeftEnterActive {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+  position: relative;
+  z-index: 100;
+}
+
+.cardTransitionLeftExit {
+  opacity: 1;
+  transform: translateX(0);
+  position: absolute;
+  z-index: 50;
+}
+
+.cardTransitionLeftExitActive {
+  opacity: 0;
+  transform: translateX(-100%); /* 왼쪽으로 사라짐 */
+  transition: opacity 300ms, transform 300ms;
+  position: absolute;
+  z-index: 0;
+}

@@ -1,0 +1,24 @@
+.homeComponent {
+  z-index: 900;
+}
+
+
+.homeComponent ::-webkit-scrollbar {
+  display: none; 
+  
+}
+
+.videoContainer {
+  position: relative; 
+  width: 100vw; 
+  height: calc(100vh - 100px); 
+  overflow: hidden; 
+  margin-top: 100px; 
+}
+
+.videoContainer video {
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+}
+
