@@ -8,10 +8,9 @@ const useLogin = () => {
 
     const result = await postLogin(inputDTO);
 
-    // 성공
     if (result === 200) {
-      console.log("로그인 성공");
-    }
+      return 200;
+    } else return 400;
   };
 
   return { Login };

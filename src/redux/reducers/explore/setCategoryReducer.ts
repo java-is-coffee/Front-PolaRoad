@@ -3,19 +3,19 @@ import CategoryType from "../../../enum/categoryOptionType";
 
 // 초기 상태의 타입 정의
 interface ActiveCategory {
-  activeCategory: CategoryType;
+  activeCategory: CategoryType | null;
 }
 
 // 초기 상태
 const initialState: ActiveCategory = {
-  activeCategory: CategoryType.NULL,
+  activeCategory: null,
 };
 
 const setCategory = createSlice({
   name: "Category",
   initialState,
   reducers: {
-    switchCategory: (state, action: PayloadAction<CategoryType>) => {
+    switchCategory: (state, action: PayloadAction<CategoryType | null>) => {
       state.activeCategory = action.payload;
     },
   },

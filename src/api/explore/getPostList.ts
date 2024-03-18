@@ -11,7 +11,7 @@ export interface LoginDTO {
   data: LoginData;
 }
 
-const postLogin = async (inputData: LoginDTO) => {
+const getPostList = async (inputData: LoginDTO) => {
   try {
     const loginAPI = BASE_URL + "/api/member/login";
 
@@ -29,4 +29,4 @@ const postLogin = async (inputData: LoginDTO) => {
   }
 };
 
-export default postLogin;
+export default getPostList;
