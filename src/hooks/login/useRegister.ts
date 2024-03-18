@@ -1,8 +1,8 @@
+import { toast } from "react-toastify";
 import postRegister, {
   RegisterDTO,
   RegisterData,
 } from "../../api/login/postRegister";
-
 const useRegister = () => {
   const checkEmail = (input: string) => {
     const emailRegEx =
@@ -27,8 +27,12 @@ const useRegister = () => {
     const result = await postRegister(inputDTO);
 
     if (result === 200) {
-      return 200;
-    } else return 400;
+      toast.success("회원가입 성공");
+      return true;
+    } else {
+      toast.error("회원가입 실패");
+      return false;
+    }
   };
 
   return { checkEmail, checkPassword, register };

@@ -1,4 +1,6 @@
 import axios from "axios";
+import CategoryType from "enum/categoryOptionType";
+import RegionOptionType from "enum/filter/RegionType";
 
 export const BASE_URL = "https://k951a463f2f5fa.user-app.krampoline.com";
 
@@ -9,27 +11,38 @@ export interface PostData {
   goodNumber: number;
   concept: string;
   region: string;
-  image: string[];
+  images: string[];
 }
 
 export interface PostDTO {
   data: PostData;
 }
 
+export interface GetListDTO {
+  paging: number;
+  pagingNumber: number;
+  searchType: string;
+  sortBy: string;
+  concept: CategoryType | null;
+  region: RegionOptionType | null;
+}
+
 export interface PostList {}
 
-const getPostList = async (inputData: PostDTO) => {
-  try {
-    const loginAPI = BASE_URL + "/api/post/list";
+const getPostList = async (inputData: GetListDTO) => {
+  const token = "Bearer " + localStorage.getItem("accessToken");
 
-    const response = await axios.post(loginAPI, inputData, {
+  try {
+    const postAPI = `${BASE_URL}/api/post/list?paging=${inputData.paging}&pagingNumber=${inputData.pagingNumber}&searchType=${inputData.searchType}&sortBy=${inputData.sortBy}`;
+
+    const response = await axios.get(postAPI, {
+      headers: {
+        Authorization: token,
+      },
       withCredentials: true,
     });
 
-    const code = response.status;
-    // const result = response.data;
-
-    return response;
+    return response.data.posts;
   } catch (error) {
     return "error";
   }

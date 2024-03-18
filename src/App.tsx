@@ -5,8 +5,9 @@ import Home from "./routes/Home";
 import Explore from "./routes/Explore";
 import MyPage from "./routes/MyPage";
 import PostTest from "./routes/PostTest";
-
 import Login from "./containers/login/LoginContainer";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import "./styles/globals.css";
 
@@ -22,6 +23,16 @@ function App() {
           <Route path="/test" element={<PostTest />}></Route>
         </Routes>
       </Router>
+      <ToastContainer
+        position="top-right"
+        limit={2}
+        closeButton={false}
+        autoClose={4000}
+        draggable={true}
+        closeOnClick={true}
+        pauseOnHover={true}
+        hideProgressBar
+      />
     </div>
   );
 }

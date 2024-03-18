@@ -21,13 +21,10 @@ const postRegister = async (inputData: RegisterDTO) => {
     const response = await axios.post(API_URL, inputData);
 
     const code = response.status;
-    // const result = response.data;
-
-    console.log(response);
 
     return code;
   } catch (error) {
-    return "error";
+    return null;
   }
 };
 

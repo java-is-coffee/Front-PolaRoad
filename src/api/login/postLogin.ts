@@ -19,12 +19,14 @@ const postLogin = async (inputData: LoginDTO) => {
       withCredentials: true,
     });
 
-    const code = response.status;
-    // const result = response.data;
+    const status = response.status;
 
-    return response.data;
+    if (status === 200) return response.data;
+    else {
+      return null;
+    }
   } catch (error) {
-    return "error";
+    return null;
   }
 };
 

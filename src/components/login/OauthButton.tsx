@@ -1,8 +1,13 @@
 import { IconButton } from "@mui/material";
 import styles from "./Login.module.css";
 import GoogleIcon from "@mui/icons-material/Google";
+import axios from "axios";
 
 const OauthButton = () => {
+  const handleOauth = async () => {
+    window.location.href =
+      "https://k951a463f2f5fa.user-app.krampoline.com/api/oauth2/login/kakao";
+  };
   return (
     <div className={styles.oauthButton}>
       <span style={{ marginRight: "50px" }}>
@@ -13,6 +18,7 @@ const OauthButton = () => {
       </span>
       <span>
         <IconButton
+          onClick={handleOauth}
           size="large"
           sx={{
             backgroundColor: "yellow",
