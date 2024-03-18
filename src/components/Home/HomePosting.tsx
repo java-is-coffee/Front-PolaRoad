@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { BsGeoAltFill } from "react-icons/bs";
 import HomeModal from './HomeModal'; 
-import { Transition } from "react-transition-group";
+// import { Transition } from "react-transition-group";
 
 const images = [
   { src: "/photo/강변.jpg", username: "User1", location: "Seoul", likes: 10, title: "Beautiful River" },

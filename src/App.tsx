@@ -20,7 +20,6 @@ function App() {
           <Route path="/explore" element={<Explore />}></Route>
           <Route path="/my" element={<MyPage />}></Route>
           <Route path="/test" element={<PostTest />}></Route>
-          <Route path="/home" element={<Home />}></Route>
         </Routes>
       </Router>
     </div>

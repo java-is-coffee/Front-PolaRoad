@@ -5,7 +5,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import componentStyles from "./HomeComponent.module.css";
 import HomePosting from './HomePosting';
 import HomeFooter from './HomeFooter';
-import HomeModal from './HomeModal'; 
+// import HomeModal from './HomeModal'; 
 
 function HomeComponent() {
   const videoSources = [
@@ -20,7 +20,7 @@ function HomeComponent() {
   const selectRandomVideo = useCallback(() => {
     const randomIndex = Math.floor(Math.random() * videoSources.length);
     setCurrentVideo(videoSources[randomIndex]);
-  }, [videoSources]);
+  }, []); 
 
   useEffect(() => {
     selectRandomVideo();
