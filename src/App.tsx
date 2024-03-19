@@ -7,7 +7,6 @@ import MyPage from "./routes/MyPage";
 import Login from "./containers/login/LoginContainer";
 
 import "./styles/globals.css";
-import Promotion from "./routes/Promotion";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -20,7 +19,6 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/explore" element={<Explore />}></Route>
           <Route path="/my" element={<MyPage />}></Route>
-          <Route path="/promotion" element={<Promotion />}></Route>
         </Routes>
       </Router>
       <ToastContainer

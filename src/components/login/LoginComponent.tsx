@@ -2,8 +2,10 @@ import { Button, Stack, TextField, styled } from "@mui/material";
 import React, { useState } from "react";
 import styles from "./Login.module.css";
 import OauthButton from "./OauthButton";
-// import useLogin from "../../hooks/login/useLogin";
+import useLogin from "../../hooks/login/useLogin";
 import { LoginData } from "../../api/login/postLogin";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 //밖으로 뺸 이유. state 변경 시 리렌더링 되는데 이때, styled도 같이 다시 선언되어 할때마다 리렌더링 되어서 포커스가 자동으로 풀림.
 const InputTextField = styled(TextField)({
@@ -34,16 +36,26 @@ function LoginContainer({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // const useLoginHooks = useLogin();
+  const move = useNavigate();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const { Login } = useLogin();
+  const [cookiess] = useCookies(["accessToken"]);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const inputData: LoginData = {
       email: email,
       password: password,
     };
-    console.log(inputData);
-    // useLoginHooks.Login(inputData);
+    const test = await Login(inputData);
+
+    // const cookies = new Cookies();
+
+    if (test === 200) {
+      console.log("로그인 성공");
+      console.log(cookiess.accessToken);
+      move("/explore");
+    }
   };
 
   return (

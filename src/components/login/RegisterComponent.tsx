@@ -51,7 +51,7 @@ function RegisterContainer({
 
   const useRegisterHooks = useRegister();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const inputData: RegisterData = {
       email: email,
@@ -60,8 +60,11 @@ function RegisterContainer({
       name: name,
       nickname: nickname,
     };
-    console.log(inputData);
-    // useLoginHooks.Login(inputData);
+    const result = await useRegisterHooks.register(inputData);
+
+    if (result === 200) {
+      console.log(result);
+    }
   };
 
   const checkPassword = () => {
