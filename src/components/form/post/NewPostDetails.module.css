@@ -1,0 +1,38 @@
+/* NewPostDetails.module.css */
+.postDetailWrapper {
+  margin-top: 20px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: row;
+}
+
+.container {
+  padding: 20px;
+  font-family: "Arial", sans-serif;
+}
+
+.inputContainer {
+  width: 200px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  box-sizing: border-box;
+  padding: 3px 0;
+  margin-bottom: 15px;
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-radius: 4px;
+  outline: 0;
+}
+
+.input:focus {
+  border: 1px solid var(--main-theme-color);
+}
+
+@media (max-width: 768px) {
+  .cardSection {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  }
+}
