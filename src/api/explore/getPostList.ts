@@ -31,7 +31,6 @@ export interface GetListDTO {
 export interface PostList {}
 
 const getPostList = async (inputData: GetListDTO) => {
-  // const token = "Bearer " + localStorage.getItem("accessToken");
   const token = "Bearer " + secureLocalStorage.getItem("accessToken");
 
   try {
