@@ -1,5 +1,4 @@
 import React from "react";
-// import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./routes/Home";
 import Explore from "./routes/Explore";
@@ -10,6 +9,8 @@ import Login from "./containers/login/LoginContainer";
 
 import "./styles/globals.css";
 import Promotion from "./routes/Promotion";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -24,6 +25,15 @@ function App() {
           <Route path="/promotion" element={<Promotion />}></Route>
         </Routes>
       </Router>
+      <ToastContainer
+        position="top-right"
+        limit={1}
+        closeButton={true}
+        autoClose={3000}
+        draggable={true}
+        closeOnClick={true}
+        pauseOnHover={true}
+      />
     </div>
   );
 }
