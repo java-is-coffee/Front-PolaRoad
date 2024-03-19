@@ -22,9 +22,9 @@ const MainCategory = () => {
     (state: RootState) => state.setCategory.activeCategory
   );
 
-  const storePostList = useSelector(
-    (state: RootState) => state.explorePost.postList
-  );
+  // const storePostList = useSelector(
+  //   (state: RootState) => state.explorePost.postList
+  // );
 
   const categoryList = Object.values(CategoryType);
 
