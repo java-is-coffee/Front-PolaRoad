@@ -1,6 +1,7 @@
 import axios from "axios";
 import CategoryType from "enum/categoryOptionType";
 import RegionOptionType from "enum/filter/RegionType";
+import secureLocalStorage from "react-secure-storage";
 
 export const BASE_URL = "https://k951a463f2f5fa.user-app.krampoline.com";
 
@@ -30,7 +31,8 @@ export interface GetListDTO {
 export interface PostList {}
 
 const getPostList = async (inputData: GetListDTO) => {
-  const token = "Bearer " + localStorage.getItem("accessToken");
+  // const token = "Bearer " + localStorage.getItem("accessToken");
+  const token = "Bearer " + secureLocalStorage.getItem("accessToken");
 
   try {
     const postAPI = `${BASE_URL}/api/post/list?paging=${inputData.paging}&pagingNumber=${inputData.pagingNumber}&searchType=${inputData.searchType}&sortBy=${inputData.sortBy}`;

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import postLogin, { LoginDTO, LoginData } from "../../api/login/postLogin";
 import { toast } from "react-toastify";
+import secureLocalStorage from "react-secure-storage";
 
 const useLogin = () => {
   const navigate = useNavigate();
@@ -13,8 +14,8 @@ const useLogin = () => {
     const result = await postLogin(inputDTO);
 
     if (result) {
-      localStorage.setItem("accessToken", result.accessToken);
-      localStorage.setItem("refreshToken", result.refreshToken);
+      secureLocalStorage.setItem("accessToken", result.accessToken);
+      secureLocalStorage.setItem("refreshToken", result.refreshToken);
       toast.success("로그인 성공");
       navigate("/explore");
     } else {
