@@ -1,8 +1,9 @@
-import { useFileHandler } from "hooks/modal/newFile/useFileChange";
+import { useSingleCard } from "hooks/modal/newFile/useSingleCard";
 import INewCard from "interface/card/INewCard";
 import formStyles from "./CardForm.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useKakaoMap from "hooks/map/useKakaoMap";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 
 declare global {
   interface Window {
@@ -11,26 +12,21 @@ declare global {
 }
 
 interface CardFormProps {
+  cardIndex: number;
+  cardDetails: INewCard;
   updateCard: (newCard: INewCard, cardIndex: number) => void;
 }
 
-// 초기 카드 상태
-const initCard: INewCard = {
-  location: null,
-  latitude: null,
-  longitude: null,
-  image: null,
-  previewUrl: undefined,
-  content: null,
-};
-
-function CardForm({ updateCard }: CardFormProps) {
-  const { file, handleFileChange } = useFileHandler(initCard);
-  const [isMapVisible, setIsMapVisible] = useState(false);
+function CardForm({ cardIndex, cardDetails, updateCard }: CardFormProps) {
+  const { newCard, handleFileChange, handleContentsChange, handlePlaceChange } =
+    useSingleCard(cardDetails);
+  const [isMapVisible, setIsMapVisible] = useState<boolean>(false);
   const [searchPlace, setSearchPlace] = useState<string>("");
-  const { initKakaoMap, searchPlaceByKeyword } = useKakaoMap({
+  const mapContainer = useRef<HTMLElement>(null);
+  const { selectedPlace, initKakaoMap, searchPlaceByKeyword } = useKakaoMap({
     latitude: 37.566826,
     longitude: 126.9786567,
+    level: 3,
   });
 
   const handleMapVisibility = (visible: boolean) => {
@@ -45,17 +41,30 @@ function CardForm({ updateCard }: CardFormProps) {
     searchPlaceByKeyword(searchPlace);
   };
 
+  const toggleMapVisibility = () => {
+    setIsMapVisible((prev) => !prev);
+  };
+
   useEffect(() => {
-    const mapContainer = document.getElementById("map");
-    if (isMapVisible && mapContainer) {
-      initKakaoMap(mapContainer);
+    if (isMapVisible && mapContainer.current) {
+      initKakaoMap(mapContainer.current);
     }
     // eslint-disable-next-line
-  }, [isMapVisible]);
+  }, [isMapVisible, mapContainer]);
+
+  useEffect(() => {
+    handlePlaceChange(selectedPlace);
+    // eslint-disable-next-line
+  }, [selectedPlace]);
+
+  useEffect(() => {
+    updateCard(newCard, cardIndex);
+    // eslint-disable-next-line
+  }, [newCard, cardIndex]);
 
   return (
     <div className={formStyles.cardFormWrapper}>
-      {!file.image ? (
+      {!newCard.image ? (
         <div className={formStyles.imageWrapper}>
           <img
             src="./icons/photo/postPhoto.png"
@@ -63,13 +72,13 @@ function CardForm({ updateCard }: CardFormProps) {
             alt="Placeholder for upload"
           />
           <span>위치사진을 입력해주세요</span>
-          <label htmlFor="file">
+          <label htmlFor={`file-${cardIndex}`}>
             <div className={formStyles.uploadBtn}>파일 업로드하기</div>
           </label>
           <input
             type="file"
-            name="file"
-            id="file"
+            name={`file-${cardIndex}`}
+            id={`file-${cardIndex}`}
             accept="image/*"
             onChange={handleFileChange}
             style={{ display: "none" }}
@@ -79,37 +88,58 @@ function CardForm({ updateCard }: CardFormProps) {
         <div className={formStyles.previewWrapper}>
           <img
             alt="Preview"
-            src={file.previewUrl}
-            width="300px"
-            height="300px"
+            src={newCard.previewUrl}
+            width="100%"
+            height="100%"
           />
         </div>
       )}
       {
         <div
+          className={formStyles.detailWrapper}
           style={{
-            width: file.image && file.previewUrl ? "100%" : "0px",
-            height: file.image && file.previewUrl ? "100%" : "0px",
+            width: newCard.image && newCard.previewUrl ? "100%" : "0px",
+            height: newCard.image && newCard.previewUrl ? "100%" : "0px",
+            padding: newCard.image && newCard.previewUrl ? "0 20px" : "0px",
             overflow: "hidden",
           }}
         >
           <textarea
             className={formStyles.cardContent}
+            cols={5}
             placeholder="문구를 입력하세요"
-            wrap="off"
+            wrap="hard"
+            onChange={handleContentsChange}
           />
-          <input
-            placeholder="위치추가"
-            onFocus={() => handleMapVisibility(true)}
-            onChange={handleSearchValueChange}
-            onKeyDown={handleSearch}
-          />
-          <button className={formStyles.uploadBtn}>현재위치</button>
+          <div className={formStyles.locationAction}>
+            <input
+              placeholder="위치추가"
+              onFocus={() => handleMapVisibility(true)}
+              onChange={handleSearchValueChange}
+              value={searchPlace}
+              onKeyDown={handleSearch}
+            />
+            <div>
+              <button className={formStyles.uploadBtn}>현재위치</button>
+
+              <button
+                className={formStyles.mapToggleBtn}
+                onClick={toggleMapVisibility}
+              >
+                {isMapVisible ? <FaChevronDown /> : <FaChevronUp />}
+              </button>
+            </div>
+          </div>
+          <p className={formStyles.selectedPlace}>
+            {selectedPlace?.place_name}
+          </p>
           <section
             id="map"
+            ref={mapContainer}
             style={{
-              display: isMapVisible ? "" : "hidden",
-              height: "200px", // 높이가 반대로 설정되어 있었음
+              opacity: isMapVisible ? "1" : "0",
+              width: "370px",
+              height: "200px",
               overflow: "hidden", // 내용이 넘칠 경우 숨김 처리
               transition: "all 0.5s ease", // 부드러운 전환 효과
             }}
