@@ -3,39 +3,32 @@ import formStyles from "./NewCardList.module.css";
 import CardPaging from "components/paging/card/CardPaging";
 import INewCard from "interface/card/INewCard";
 import CardForm from "./CardForm";
-
-const initCard: INewCard = {
-  location: null,
-  latitude: null,
-  longitude: null,
-  image: null,
-  previewUrl: undefined,
-  content: null,
-};
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "redux/store/store";
+import { stat } from "fs";
+import {
+  addCardBack,
+  addCardFront,
+} from "../../../redux/reducers/newPost/newPostReducers";
 
 const NewCardDetails = () => {
-  const [cardList, setCardList] = useState<INewCard[]>([initCard]);
+  // cardList 관련 리덕스
+  const cardList = useSelector((state: RootState) => state.newPost.cards);
+  const dispatch = useDispatch();
+  // 인덱스 & 캐러셀 설정
   const [activeIndex, setActiveIndex] = useState(0);
   const cardCarousel = useRef<HTMLDivElement>(null);
 
-  const updateCardList = (newCard: INewCard, cardIndex: number) => {
-    setCardList((currentCards) =>
-      currentCards.map((card, idx) =>
-        idx === cardIndex ? { ...card, ...newCard } : card
-      )
-    );
-  };
-
   const increaseIndex = () => {
     if (activeIndex + 1 === cardList.length) {
-      setCardList((card) => [...card, initCard]);
+      dispatch(addCardBack());
     }
     setActiveIndex((prevIndex) => prevIndex + 1);
   };
 
   const decreaseIndex = () => {
     if (activeIndex - 1 < 0) {
-      setCardList((card) => [initCard, ...card]);
+      dispatch(addCardFront());
     } else {
       setActiveIndex((prevIndex) => prevIndex - 1);
     }
@@ -55,12 +48,7 @@ const NewCardDetails = () => {
         >
           {cardList.map((card, index) => {
             return (
-              <CardForm
-                key={index}
-                cardIndex={index}
-                cardDetails={card}
-                updateCard={updateCardList}
-              />
+              <CardForm key={index} cardIndex={index} cardDetails={card} />
             );
           })}
         </div>
