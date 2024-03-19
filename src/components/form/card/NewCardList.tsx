@@ -1,11 +1,9 @@
 import { useRef, useState } from "react";
 import formStyles from "./NewCardList.module.css";
 import CardPaging from "components/paging/card/CardPaging";
-import INewCard from "interface/card/INewCard";
 import CardForm from "./CardForm";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "redux/store/store";
-import { stat } from "fs";
 import {
   addCardBack,
   addCardFront,
