@@ -1,9 +1,6 @@
-import axios from "axios";
+import { axiosInstance } from "api/token/axiosInstance";
 import CategoryType from "enum/categoryOptionType";
 import RegionOptionType from "enum/filter/RegionType";
-import secureLocalStorage from "react-secure-storage";
-
-export const BASE_URL = "https://k951a463f2f5fa.user-app.krampoline.com";
 
 export interface PostData {
   title: string;
@@ -30,23 +27,19 @@ export interface GetListDTO {
 
 export interface PostList {}
 
-const getPostList = async (inputData: GetListDTO) => {
-  const token = "Bearer " + secureLocalStorage.getItem("accessToken");
-
+const GetPostList = async (inputData: GetListDTO) => {
   try {
-    const postAPI = `${BASE_URL}/api/post/list?paging=${inputData.paging}&pagingNumber=${inputData.pagingNumber}&searchType=${inputData.searchType}&sortBy=${inputData.sortBy}`;
+    console.log("게시판 로드 테스트");
 
-    const response = await axios.get(postAPI, {
-      headers: {
-        Authorization: token,
-      },
-      withCredentials: true,
-    });
+    const postAPI = `/api/post/list?paging=${inputData.paging}&pagingNumber=${inputData.pagingNumber}&searchType=${inputData.searchType}&sortBy=${inputData.sortBy}`;
+    const response = await axiosInstance.get(postAPI);
+
+    console.log(response.data.posts);
 
     return response.data.posts;
   } catch (error) {
-    return "error";
+    return false;
   }
 };
 
-export default getPostList;
+export default GetPostList;
