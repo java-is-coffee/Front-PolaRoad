@@ -1,8 +1,6 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import formStyles from "./NewCardList.module.css";
-import { CSSTransition, TransitionGroup } from "react-transition-group";
 import CardPaging from "components/paging/card/CardPaging";
-import { useIndexChange } from "hooks/modal/newFile/useIndexChange";
 import INewCard from "interface/card/INewCard";
 import CardForm from "./CardForm";
 
@@ -17,11 +15,8 @@ const initCard: INewCard = {
 
 const NewCardDetails = () => {
   const [cardList, setCardList] = useState<INewCard[]>([initCard]);
-  const maxIndex = cardList.length - 1;
-  const { index, increaseIndex, decreaseIndex, direction } = useIndexChange(
-    0,
-    maxIndex
-  );
+  const [activeIndex, setActiveIndex] = useState(0);
+  const cardCarousel = useRef<HTMLDivElement>(null);
 
   const updateCardList = (newCard: INewCard, cardIndex: number) => {
     setCardList((currentCards) =>
@@ -31,43 +26,51 @@ const NewCardDetails = () => {
     );
   };
 
+  const increaseIndex = () => {
+    if (activeIndex + 1 === cardList.length) {
+      setCardList((card) => [...card, initCard]);
+    }
+    setActiveIndex((prevIndex) => prevIndex + 1);
+  };
+
+  const decreaseIndex = () => {
+    if (activeIndex - 1 < 0) {
+      setCardList((card) => [initCard, ...card]);
+    } else {
+      setActiveIndex((prevIndex) => prevIndex - 1);
+    }
+  };
+
   if (!cardList) return null;
+
   return (
-    <div>
-      <div className={formStyles.formWrapper}>
-        <TransitionGroup component={null}>
-          <CSSTransition
-            key={index}
-            timeout={300}
-            classNames={{
-              enter:
-                direction === "right"
-                  ? formStyles.cardTransitionRightEnter
-                  : formStyles.cardTransitionLeftEnter,
-              enterActive:
-                direction === "right"
-                  ? formStyles.cardTransitionRightEnterActive
-                  : formStyles.cardTransitionLeftEnterActive,
-              exit:
-                direction === "right"
-                  ? formStyles.cardTransitionRightExit
-                  : formStyles.cardTransitionLeftExit,
-              exitActive:
-                direction === "right"
-                  ? formStyles.cardTransitionRightExitActive
-                  : formStyles.cardTransitionLeftExitActive,
-            }}
-          >
-            <CardForm updateCard={updateCardList} />
-          </CSSTransition>
-        </TransitionGroup>
-        <CardPaging
-          totalCardNum={cardList.length}
-          curCardIndex={index}
-          handleCardLeft={decreaseIndex}
-          handleCardRight={increaseIndex}
-        />
+    <div className={formStyles.formWrapper}>
+      <div className={formStyles.cardListContainer}>
+        <div
+          className={formStyles.cardList}
+          ref={cardCarousel}
+          style={{
+            transform: `translate3d(${activeIndex * -600}px, 0, 0)`,
+          }}
+        >
+          {cardList.map((card, index) => {
+            return (
+              <CardForm
+                key={index}
+                cardIndex={index}
+                cardDetails={card}
+                updateCard={updateCardList}
+              />
+            );
+          })}
+        </div>
       </div>
+      <CardPaging
+        totalCardNum={cardList.length}
+        curCardIndex={activeIndex}
+        handleCardLeft={decreaseIndex}
+        handleCardRight={increaseIndex}
+      />
     </div>
   );
 };
