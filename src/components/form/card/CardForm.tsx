@@ -4,6 +4,12 @@ import formStyles from "./CardForm.module.css";
 import { useEffect, useRef, useState } from "react";
 import useKakaoMap from "hooks/map/useKakaoMap";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { updateCardAtIndex } from "../../../redux/reducers/newPost/newPostReducers";
+import useBucket from "hooks/bucket/useBucket";
+import { RootState } from "redux/store/store";
+import { IUploadImage } from "interface/bucket/IUploadImage";
+import { toast } from "react-toastify";
 
 declare global {
   interface Window {
@@ -14,12 +20,22 @@ declare global {
 interface CardFormProps {
   cardIndex: number;
   cardDetails: INewCard;
-  updateCard: (newCard: INewCard, cardIndex: number) => void;
 }
 
-function CardForm({ cardIndex, cardDetails, updateCard }: CardFormProps) {
-  const { newCard, handleFileChange, handleContentsChange, handlePlaceChange } =
-    useSingleCard(cardDetails);
+function CardForm({ cardIndex, cardDetails }: CardFormProps) {
+  const {
+    newCard,
+    handleImageChange,
+    handleContentsChange,
+    handlePlaceChange,
+  } = useSingleCard(cardDetails);
+  // 이미지 업로딩 관련 const
+  const { uploadImage } = useBucket();
+  const postId = useSelector((state: RootState) => state.newPost.postId);
+  // 리덕스 관련
+  const dispatch = useDispatch();
+
+  // 지도 관련
   const [isMapVisible, setIsMapVisible] = useState<boolean>(false);
   const [searchPlace, setSearchPlace] = useState<string>("");
   const mapContainer = useRef<HTMLElement>(null);
@@ -28,21 +44,42 @@ function CardForm({ cardIndex, cardDetails, updateCard }: CardFormProps) {
     longitude: 126.9786567,
     level: 3,
   });
-
+  // 지도 투명도 조절 함수
   const handleMapVisibility = (visible: boolean) => {
     setIsMapVisible(visible);
   };
-
+  // 지도 검색어 핸들러
   const handleSearchValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchPlace(e.target.value);
   };
-
+  // 지도 키워드 겁색 핸들러
   const handleSearch = () => {
     searchPlaceByKeyword(searchPlace);
   };
-
+  // 지도 토글 핸들러
   const toggleMapVisibility = () => {
     setIsMapVisible((prev) => !prev);
+  };
+
+  // 사진 업로딩
+  const handleImageUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (!event.target.files || event.target.files.length === 0 || !postId) {
+      return;
+    }
+    const newFile = event.target.files[0];
+    const imageInfo: IUploadImage = {
+      postUserId: 11,
+      postId: postId,
+      image: newFile,
+    };
+    const imageUrl = await uploadImage({ type: "POST", imageInfo });
+    if (imageUrl) {
+      handleImageChange(imageUrl);
+    } else {
+      toast.error("이미지 업로딩에 실패했습니다.");
+    }
   };
 
   useEffect(() => {
@@ -58,13 +95,13 @@ function CardForm({ cardIndex, cardDetails, updateCard }: CardFormProps) {
   }, [selectedPlace]);
 
   useEffect(() => {
-    updateCard(newCard, cardIndex);
+    dispatch(updateCardAtIndex({ index: cardIndex, newCard }));
     // eslint-disable-next-line
   }, [newCard, cardIndex]);
 
   return (
     <div className={formStyles.cardFormWrapper}>
-      {!newCard.image ? (
+      {!newCard.imageUrl ? (
         <div className={formStyles.imageWrapper}>
           <img
             src="./icons/photo/postPhoto.png"
@@ -80,7 +117,7 @@ function CardForm({ cardIndex, cardDetails, updateCard }: CardFormProps) {
             name={`file-${cardIndex}`}
             id={`file-${cardIndex}`}
             accept="image/*"
-            onChange={handleFileChange}
+            onChange={handleImageUpload}
             style={{ display: "none" }}
           />
         </div>
@@ -88,7 +125,7 @@ function CardForm({ cardIndex, cardDetails, updateCard }: CardFormProps) {
         <div className={formStyles.previewWrapper}>
           <img
             alt="Preview"
-            src={newCard.previewUrl}
+            src={`${process.env.REACT_APP_BUCKET_BASEURL}/${newCard.imageUrl}`}
             width="100%"
             height="100%"
           />
@@ -98,9 +135,9 @@ function CardForm({ cardIndex, cardDetails, updateCard }: CardFormProps) {
         <div
           className={formStyles.detailWrapper}
           style={{
-            width: newCard.image && newCard.previewUrl ? "100%" : "0px",
-            height: newCard.image && newCard.previewUrl ? "100%" : "0px",
-            padding: newCard.image && newCard.previewUrl ? "0 20px" : "0px",
+            width: newCard.imageUrl ? "100%" : "0px",
+            height: newCard.imageUrl ? "100%" : "0px",
+            padding: newCard.imageUrl ? "0 20px" : "0px",
             overflow: "hidden",
           }}
         >
@@ -121,7 +158,6 @@ function CardForm({ cardIndex, cardDetails, updateCard }: CardFormProps) {
             />
             <div>
               <button className={formStyles.uploadBtn}>현재위치</button>
-
               <button
                 className={formStyles.mapToggleBtn}
                 onClick={toggleMapVisibility}
@@ -130,9 +166,11 @@ function CardForm({ cardIndex, cardDetails, updateCard }: CardFormProps) {
               </button>
             </div>
           </div>
-          <p className={formStyles.selectedPlace}>
-            {selectedPlace?.place_name}
-          </p>
+          {selectedPlace && (
+            <p className={formStyles.selectedPlace}>
+              {selectedPlace?.place_name}
+            </p>
+          )}
           <section
             id="map"
             ref={mapContainer}

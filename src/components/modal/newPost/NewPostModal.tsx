@@ -7,10 +7,11 @@ import NewCardList from "../../form/card/NewCardList";
 import { useModal } from "hooks/modal/ModalProvider";
 import ModalOption from "enum/modalOptionTypes";
 import { Step, StepLabel, Stepper } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "redux/store/store";
 import INewPost from "interface/post/INewPost";
 import { toast } from "react-toastify";
+import { setPostId } from "../../../redux/reducers/newPost/newPostReducers";
 
 interface FormComponentsType {
   name: string;
@@ -30,6 +31,7 @@ function NewPostModal() {
     (state: RootState) => state.newPost
   );
   const modalRef = useRef<HTMLDivElement>(null); // 모달 DOM에 접근하기 위한 ref
+  const dispatch = useDispatch();
 
   // useEffect(() => {
   //   const modal = modalRef.current;
@@ -67,6 +69,12 @@ function NewPostModal() {
     // eslint-disable-next-line
   }, []);
 
+  // 모달 생성시 postId 적용
+  useEffect(() => {
+    dispatch(setPostId());
+    //eslint-disable-next-line
+  }, []);
+
   const increaseFormIndex = () => {
     if (postFormIndex < formComponents.length - 1) {
       if (postFormIndex === 0) {
@@ -76,6 +84,7 @@ function NewPostModal() {
           toast.error("theme 와 region은 필수 항목입니다.");
         }
       } else if (postFormIndex === 1) {
+        console.log(postDetails.cards);
         if (postDetails.cards) {
           setPostFormIndex((prev) => prev + 1);
         } else {
@@ -86,7 +95,6 @@ function NewPostModal() {
       }
     }
   };
-
   const decreaseFromIndex = () => {
     if (postFormIndex > 0) {
       setPostFormIndex((prev) => prev - 1);
