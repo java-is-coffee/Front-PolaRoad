@@ -1,7 +1,4 @@
-import axios from "axios";
-
-const BASE_URL = "https://k951a463f2f5fa.user-app.krampoline.com";
-
+import { axiosInstance } from "api/token/axiosInstance";
 export interface RegisterData {
   email: string;
   //   certificationNumber: string;
@@ -16,18 +13,15 @@ export interface RegisterDTO {
 
 const postRegister = async (inputData: RegisterDTO) => {
   try {
-    const API_URL = BASE_URL + "/api/member/register";
+    const API_URL = "/api/member/register";
 
-    const response = await axios.post(API_URL, inputData);
+    const response = await axiosInstance.post(API_URL, inputData);
 
     const code = response.status;
-    // const result = response.data;
-
-    console.log(response);
 
     return code;
   } catch (error) {
-    return "error";
+    return null;
   }
 };
 

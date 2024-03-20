@@ -1,32 +1,45 @@
-import axios from "axios";
+import { axiosInstance } from "api/token/axiosInstance";
+import CategoryType from "enum/categoryOptionType";
+import RegionOptionType from "enum/filter/RegionType";
 
-export const BASE_URL = "https://k951a463f2f5fa.user-app.krampoline.com";
-
-export interface LoginData {
-  email: string;
-  password: string;
+export interface PostData {
+  title: string;
+  postId: number;
+  nickname: string;
+  goodNumber: number;
+  concept: string;
+  region: string;
+  images: string[];
 }
 
-export interface LoginDTO {
-  data: LoginData;
+export interface PostDTO {
+  data: PostData;
 }
 
-const getPostList = async (inputData: LoginDTO) => {
+export interface GetListDTO {
+  paging: number;
+  pagingNumber: number;
+  searchType: string;
+  sortBy: string;
+  concept: CategoryType | null;
+  region: RegionOptionType | null;
+}
+
+export interface PostList {}
+
+const GetPostList = async (inputData: GetListDTO) => {
   try {
-    const loginAPI = BASE_URL + "/api/member/login";
+    console.log("게시판 로드 테스트");
 
-    const response = await axios.post(loginAPI, inputData, {
-      withCredentials: true,
-    });
+    const postAPI = `/api/post/list?paging=${inputData.paging}&pagingNumber=${inputData.pagingNumber}&searchType=${inputData.searchType}&sortBy=${inputData.sortBy}`;
+    const response = await axiosInstance.get(postAPI);
 
-    const code = response.status;
-    // const result = response.data;
-    console.log(response.headers["accessToken"]);
+    console.log(response.data.posts);
 
-    return code;
+    return response.data.posts;
   } catch (error) {
-    return "error";
+    return false;
   }
 };
 
-export default getPostList;
+export default GetPostList;

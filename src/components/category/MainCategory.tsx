@@ -15,138 +15,77 @@ import { RootState } from "../../redux/store/store";
 import CategoryType from "../../enum/categoryOptionType";
 import useExploreHooks from "../../hooks/explore/useExploreHooks";
 import { switchCategory } from "../../redux/reducers/explore/setCategoryReducer";
+import { GetListDTO } from "api/explore/getPostList";
 
 const MainCategory = () => {
   const storeCategory = useSelector(
     (state: RootState) => state.setCategory.activeCategory
   );
 
+  // const storePostList = useSelector(
+  //   (state: RootState) => state.explorePost.postList
+  // );
+
+  const categoryList = Object.values(CategoryType);
+
   const { SetItem } = useExploreHooks();
 
   const { openModal } = useModal();
+
+  const { initList } = useExploreHooks();
+
+  const setCategoyList: GetListDTO = {
+    paging: 0,
+    pagingNumber: 12,
+    searchType: "KEYWORD",
+    sortBy: "RECENT",
+    concept: storeCategory,
+    region: null,
+  };
 
   const showFilterModal = () => {
     openModal(ModalOption.SEARCH);
   };
 
   const handleClick = (inputData: CategoryType) => {
-    // SetCategory(inputData);
     if (inputData === storeCategory) {
       SetItem(switchCategory(null));
     } else {
       SetItem(switchCategory(inputData));
+      initList(setCategoyList);
     }
   };
+
+  const iconList = [
+    <StarIcon className={styles.categoryIcon} />,
+    <KebabDiningIcon className={styles.categoryIcon} />,
+    <ApartmentIcon className={styles.categoryIcon} />,
+    <ForestIcon className={styles.categoryIcon} />,
+    <DirectionsWalkIcon className={styles.categoryIcon} />,
+    <TrainIcon className={styles.categoryIcon} />,
+    <DirectionsCarFilledIcon className={styles.categoryIcon} />,
+    <PhotoCameraIcon className={styles.categoryIcon} />,
+  ];
 
   return (
     <div className={styles.MainCategoryTap}>
       <div className={styles.categoryContainer}>
-        <label
-          id="HOT"
-          className={`${styles.categoryLabel}`}
-          onClick={() => handleClick(CategoryType.HOT)}
-        >
-          <div
-            className={`${styles.categoryItem} ${
-              storeCategory === CategoryType.HOT ? styles.selected : ""
-            } `}
+        {categoryList.map((item, index) => (
+          <label
+            key={item}
+            className={`${styles.categoryLabel}`}
+            onClick={() => handleClick(item)}
           >
-            <StarIcon className={styles.categoryIcon} />
-            인기 게시글
-          </div>
-        </label>
-        <label
-          className={styles.categoryLabel}
-          onClick={() => handleClick(CategoryType.FOOD)}
-        >
-          <div
-            className={`${styles.categoryItem} ${
-              storeCategory === CategoryType.FOOD ? styles.selected : ""
-            } `}
-          >
-            <KebabDiningIcon className={styles.categoryIcon} />
-            식도락
-          </div>
-        </label>
-        <label
-          className={styles.categoryLabel}
-          onClick={() => handleClick(CategoryType.CITY)}
-        >
-          <div
-            className={`${styles.categoryItem} ${
-              storeCategory === CategoryType.CITY ? styles.selected : ""
-            } `}
-          >
-            <ApartmentIcon className={styles.categoryIcon} />
-            도시 경관
-          </div>
-        </label>
-        <label
-          className={styles.categoryLabel}
-          onClick={() => handleClick(CategoryType.FOREST)}
-        >
-          <div
-            className={`${styles.categoryItem} ${
-              storeCategory === CategoryType.FOREST ? styles.selected : ""
-            } `}
-          >
-            <ForestIcon className={styles.categoryIcon} />
-            자연
-          </div>
-        </label>
-
-        <label
-          className={styles.categoryLabel}
-          onClick={() => handleClick(CategoryType.WALK)}
-        >
-          <div
-            className={`${styles.categoryItem} ${
-              storeCategory === CategoryType.WALK ? styles.selected : ""
-            } `}
-          >
-            <DirectionsWalkIcon className={styles.categoryIcon} />
-            도보 여행
-          </div>
-        </label>
-        <label
-          className={styles.categoryLabel}
-          onClick={() => handleClick(CategoryType.TRAIN)}
-        >
-          <div
-            className={`${styles.categoryItem} ${
-              storeCategory === CategoryType.TRAIN ? styles.selected : ""
-            } `}
-          >
-            <TrainIcon className={styles.categoryIcon} />
-            기차 여행
-          </div>
-        </label>
-        <label
-          className={styles.categoryLabel}
-          onClick={() => handleClick(CategoryType.CAR)}
-        >
-          <div
-            className={`${styles.categoryItem} ${
-              storeCategory === CategoryType.CAR ? styles.selected : ""
-            } `}
-          >
-            <DirectionsCarFilledIcon className={styles.categoryIcon} />
-            자동차 여행
-          </div>
-        </label>
-        <label
-          className={styles.categoryLabel}
-          onClick={() => handleClick(CategoryType.PHOTO)}
-        >
-          <div
-            className={`${styles.categoryItem} ${
-              storeCategory === CategoryType.PHOTO ? styles.selected : ""
-            } `}
-          >
-            <PhotoCameraIcon className={styles.categoryIcon} />
-            포토 스팟
-          </div>
-        </label>
+            <div
+              className={`${styles.categoryItem} ${
+                storeCategory === item ? styles.selected : ""
+              } `}
+            >
+              {iconList[index]}
+              {item}
+            </div>
+          </label>
+        ))}
       </div>
       <div className={styles.filterButton} onClick={showFilterModal}>
         <TuneIcon sx={{ fontSize: "2rem", marginRight: "0.5rem" }} />

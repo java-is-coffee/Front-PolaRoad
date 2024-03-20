@@ -1,19 +1,20 @@
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import styles from "./MainPhotoCard.module.css";
 import PlaceIcon from "@mui/icons-material/Place";
+import { PostData } from "api/explore/getPostList";
 
-export interface PhotoData {
-  title: string;
-  nickname: string;
-  goodNumber: number;
-  concept: string;
-  region: string;
-  images: string[];
-}
+// export interface PhotoData {
+//   title: string;
+//   nickname: string;
+//   goodNumber: number;
+//   concept: string;
+//   region: string;
+//   image: string[];
+// }
 
-const MainPhotoCard = ({ item }: { item: PhotoData }) => {
+const MainPhotoCard = ({ item }: { item: PostData }) => {
   return (
-    <div key={item.images[0]}>
+    <div key={item.postId}>
       <img
         loading="lazy"
         alt="x"

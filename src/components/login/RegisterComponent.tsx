@@ -49,7 +49,7 @@ function RegisterContainer({
   const [dupCheck, setDupCheck] = useState(true);
   const [regPassword, setRegPassword] = useState(true);
 
-  const useRegisterHooks = useRegister();
+  const { register, checkPassword, checkEmail } = useRegister();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -60,18 +60,19 @@ function RegisterContainer({
       name: name,
       nickname: nickname,
     };
-    const result = await useRegisterHooks.register(inputData);
+    const result = await register(inputData);
 
-    if (result === 200) {
-      console.log(result);
+    //기존 로그인(useLogin 에서 바로 네비게이션 쓰기)과 달리 state변경이기에 해당 화면에서 수정
+    if (result === true) {
+      setOnRegister(false);
     }
   };
 
-  const checkPassword = () => {
-    if (!useRegisterHooks.checkPassword(password)) {
+  const checkingPassword = () => {
+    if (!checkPassword(password)) {
       setRegPassword(false);
     }
-    if (useRegisterHooks.checkPassword(password)) {
+    if (checkPassword(password)) {
       setRegPassword(true);
     }
 
@@ -80,18 +81,16 @@ function RegisterContainer({
     } else setDupCheck(false);
   };
 
-  const checkEmail = () => {
-    const test = useRegisterHooks.checkEmail(email);
-    console.log(test);
+  const checkingEmail = () => {
+    const testEmail = checkEmail(email);
 
-    if (test) {
+    if (testEmail) {
       setIsEmail(true);
     }
 
-    if (!test) {
+    if (!testEmail) {
       setIsEmail(false);
-      console.log("xx");
-      toast.error("x");
+      toast.error("이메일이 올바르지 않습니다.");
     }
   };
 
@@ -128,7 +127,7 @@ function RegisterContainer({
                   fontSize: "1.5rem",
                   ":hover": { backgroundColor: "#13c4a3", fontSize: "1.5rem" },
                 }}
-                onClick={checkEmail}
+                onClick={checkingEmail}
               >
                 인증
               </Button>
@@ -154,7 +153,7 @@ function RegisterContainer({
                 setPassword(value.target.value);
               }}
               color="success"
-              onBlur={checkPassword}
+              onBlur={checkingPassword}
               error={regPassword ? false : true}
               helperText="8~15자리 대소문자+숫자+특수문자로 이뤄진 비밀번호를 입력해주세요."
               // sx={{  fontSize: "1.5rem" }}
@@ -168,7 +167,7 @@ function RegisterContainer({
               onChange={(value: React.ChangeEvent<HTMLInputElement>) => {
                 setDupPassword(value.target.value);
               }}
-              onBlur={checkPassword}
+              onBlur={checkingPassword}
               error={dupCheck ? false : true}
             />
             <InputTextField

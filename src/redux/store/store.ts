@@ -3,12 +3,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import newPostReducers from "../reducers/newPost/newPostReducers";
 import setCategory from "../reducers/explore/setCategoryReducer";
 import filterReducer from "../reducers/explore/filterReducer";
+import explorePostReducer from "../reducers/explore/explorePostReducer";
 
 export const rootReducer = configureStore({
   reducer: {
     newPost: newPostReducers,
     setCategory: setCategory,
     filter: filterReducer,
+    explorePost: explorePostReducer,
   },
 });
 

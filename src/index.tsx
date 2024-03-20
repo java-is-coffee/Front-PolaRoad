@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import { rootReducer } from "./redux/store/store";
 import App from "./App";
 import { ModalProvider } from "./hooks/modal/ModalProvider";
+import "react-toastify/dist/ReactToastify.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
