@@ -12,6 +12,7 @@ import { RootState } from "redux/store/store";
 import INewPost from "interface/post/INewPost";
 import { toast } from "react-toastify";
 import { setPostId } from "../../../redux/reducers/newPost/newPostReducers";
+import { QontoConnector, QontoStepIcon } from "./QontoStepStyle";
 
 interface FormComponentsType {
   name: string;
@@ -32,21 +33,6 @@ function NewPostModal() {
   );
   const modalRef = useRef<HTMLDivElement>(null); // 모달 DOM에 접근하기 위한 ref
   const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   const modal = modalRef.current;
-  //   console.log(postFormIndex);
-  //   if (modal) {
-  //     // 모달의 최대 크기를 현재 컨텐츠 크기에 기반하여 설정
-  //     const contentWidth = modal.offsetWidth; // 첫 번째 자식 요소의 너비
-  //     const contentHeight = modal.offsetHeight; // 첫 번째 자식 요소의 높이
-  //     console.log(contentHeight);
-  //     console.log(contentWidth);
-  //     modalContent의 스타일을 업데이트하여 transition 효과 적용
-  //     modal.style.width = `${contentWidth}px`;
-  //     modal.style.height = `${contentHeight}px`;
-  //   }
-  // }, [postFormIndex]);
 
   // Esc 눌렀을때 모달 탈출n
   const handleKeyUp = (event: KeyboardEvent) => {
@@ -124,10 +110,24 @@ function NewPostModal() {
               <ActionBtn name="업로드" handleClick={handleUploadPost} />
             )}
           </div>
-          <Stepper alternativeLabel activeStep={postFormIndex}>
+          <Stepper
+            alternativeLabel
+            activeStep={postFormIndex}
+            connector={<QontoConnector />}
+          >
             {formComponents.map((Component, index) => (
               <Step key={index}>
-                <StepLabel>{Component.name}</StepLabel>
+                <StepLabel
+                  StepIconComponent={QontoStepIcon}
+                  sx={{
+                    ".MuiStepLabel-label": {
+                      fontWeight: "500",
+                      fontSize: "1.4rem",
+                    },
+                  }}
+                >
+                  {Component.name}
+                </StepLabel>
               </Step>
             ))}
           </Stepper>
