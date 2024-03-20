@@ -13,13 +13,19 @@ import {
   switchRegion,
   switchSort,
 } from "../../../redux/reducers/explore/filterReducer";
+import { Button } from "@mui/material";
+import { GetListDTO } from "api/explore/getPostList";
 
 function SearchDropdown() {
   const { closeModal } = useModal();
+  const { setPostList } = useExploreHooks();
 
   const sortList = Object.values(SortOptionType);
   const categoryList = Object.values(CategoryType);
   const regionList = Object.values(RegionOptionType);
+  const sortKeys = Object.keys(SortOptionType);
+  const categoryKeys = Object.keys(CategoryType);
+  const regionKeys = Object.keys(RegionOptionType);
 
   // const FormComponent = formComponents[postFormIndex];
   // Esc 눌렀을때 모달 탈출
@@ -75,6 +81,27 @@ function SearchDropdown() {
         SetItem(switchRegion(inputData));
       }
     }
+  };
+
+  const handleSubmit = () => {
+    const sortNumber = storeSort ? sortList.indexOf(storeSort) : null;
+    const categoryNumber = storeCategory
+      ? categoryList.indexOf(storeCategory)
+      : null;
+    const regionNumber = storeRegion ? regionList.indexOf(storeRegion) : null;
+    console.log(regionNumber + regionKeys[0]);
+    console.log(categoryNumber + categoryKeys[0]);
+
+    const setCategoyList: GetListDTO = {
+      paging: 1,
+      pagingNumber: 12,
+      searchType: "KEYWORD",
+      sortBy: sortNumber !== null ? sortKeys[sortNumber] : "RECENT",
+      concept: categoryNumber !== null ? categoryKeys[categoryNumber] : null,
+      region: regionNumber !== null ? regionKeys[regionNumber] : null,
+    };
+
+    setPostList(setCategoyList);
   };
 
   return (
@@ -139,6 +166,20 @@ function SearchDropdown() {
               </div>
             ))}
           </div>
+        </div>
+
+        <div className={dropdownStyles.bottomBtn}>
+          <Button
+            variant="contained"
+            sx={{
+              fontSize: "1.5rem",
+              backgroundColor: "#13c4a3",
+              ":hover": { backgroundColor: "#13c4a3", fontSize: "1.5rem" },
+            }}
+            onClick={handleSubmit}
+          >
+            적용하기
+          </Button>
         </div>
       </div>
     </div>

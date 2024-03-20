@@ -1,6 +1,4 @@
 import { axiosInstance } from "api/token/axiosInstance";
-import CategoryType from "enum/categoryOptionType";
-import RegionOptionType from "enum/filter/RegionType";
 
 export interface PostData {
   title: string;
@@ -21,8 +19,8 @@ export interface GetListDTO {
   pagingNumber: number;
   searchType: string;
   sortBy: string;
-  concept: CategoryType | null;
-  region: RegionOptionType | null;
+  concept: string | null;
+  region: string | null;
 }
 
 export interface PostList {}
@@ -30,11 +28,19 @@ export interface PostList {}
 const GetPostList = async (inputData: GetListDTO) => {
   try {
     console.log("게시판 로드 테스트");
+    console.log(inputData);
 
-    const postAPI = `/api/post/list?paging=${inputData.paging}&pagingNumber=${inputData.pagingNumber}&searchType=${inputData.searchType}&sortBy=${inputData.sortBy}`;
+    let postAPI = `/api/post/list?paging=${inputData.paging}&pagingNumber=${inputData.pagingNumber}&searchType=${inputData.searchType}&sortBy=${inputData.sortBy}`;
+
+    if (inputData.concept !== null) {
+      postAPI = postAPI.concat(`&concept=${inputData.concept}`);
+    }
+
+    if (inputData.region !== null) {
+      postAPI = postAPI.concat(`&region=${inputData.region}`);
+    }
+
     const response = await axiosInstance.get(postAPI);
-
-    console.log(response.data.posts);
 
     return response.data.posts;
   } catch (error) {

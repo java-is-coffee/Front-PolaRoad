@@ -16,43 +16,45 @@ import CategoryType from "../../enum/categoryOptionType";
 import useExploreHooks from "../../hooks/explore/useExploreHooks";
 import { switchCategory } from "../../redux/reducers/explore/setCategoryReducer";
 import { GetListDTO } from "api/explore/getPostList";
+import { initPostList } from "components/grid/explorePhotoList/ExplorePhotoList";
 
 const MainCategory = () => {
   const storeCategory = useSelector(
     (state: RootState) => state.setCategory.activeCategory
   );
 
-  // const storePostList = useSelector(
-  //   (state: RootState) => state.explorePost.postList
-  // );
-
   const categoryList = Object.values(CategoryType);
+  const categoryKeys = Object.keys(CategoryType);
 
   const { SetItem } = useExploreHooks();
 
   const { openModal } = useModal();
 
-  const { initList } = useExploreHooks();
-
-  const setCategoyList: GetListDTO = {
-    paging: 0,
-    pagingNumber: 12,
-    searchType: "KEYWORD",
-    sortBy: "RECENT",
-    concept: storeCategory,
-    region: null,
-  };
+  const { setPostList } = useExploreHooks();
 
   const showFilterModal = () => {
     openModal(ModalOption.SEARCH);
   };
 
   const handleClick = (inputData: CategoryType) => {
+    const number = categoryList.indexOf(inputData);
+    const setCategoyList: GetListDTO = {
+      paging: 1,
+      pagingNumber: 12,
+      searchType: "KEYWORD",
+      sortBy: "RECENT",
+      concept: categoryKeys[number],
+      region: "SEOUL",
+    };
+
+    //이전 버튼과 같은 값일 경우 다시 원상 복귀 initPostList는 ExplorePhotoList에 있는 초기 값 가져와서 사용
+
     if (inputData === storeCategory) {
       SetItem(switchCategory(null));
+      setPostList(initPostList);
     } else {
       SetItem(switchCategory(inputData));
-      initList(setCategoyList);
+      setPostList(setCategoyList);
     }
   };
 

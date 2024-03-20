@@ -22,6 +22,7 @@
   align-items: flex-start;
   gap: 10px;
   margin: 8px;
+  align-items: center;
 }
 
 .head {
@@ -80,4 +81,8 @@
 }
 .item span {
   font-weight: 500;
+}
+
+.bottomBtn {
+  float: right;
 }

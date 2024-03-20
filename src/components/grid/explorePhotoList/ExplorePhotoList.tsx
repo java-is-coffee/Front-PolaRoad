@@ -107,7 +107,7 @@ import { CircularProgress } from "@mui/material";
 //     images: ["https://images.unsplash.com/photo-1589118949245-7d38baf380d6"],
 //   },
 // ];
-const initPostList: GetListDTO = {
+export const initPostList: GetListDTO = {
   paging: 1,
   pagingNumber: 12,
   searchType: "KEYWORD",
@@ -117,16 +117,16 @@ const initPostList: GetListDTO = {
 };
 
 const ExplorePhotoList = () => {
-  const { initList } = useExploreHooks();
+  const { setPostList } = useExploreHooks();
   const storePostList = useSelector(
     (state: RootState) => state.explorePost.postList
   );
 
   useEffect(() => {
     if (storePostList === null) {
-      initList(initPostList);
+      setPostList(initPostList);
     }
-  }, [storePostList, initList]);
+  }, [storePostList, setPostList]);
 
   return (
     <div className={styles.photoZone}>

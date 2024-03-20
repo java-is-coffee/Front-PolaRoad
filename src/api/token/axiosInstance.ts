@@ -10,7 +10,6 @@ export const axiosInstance = axios.create({
 export const BASE_URL = axiosInstance.defaults.baseURL;
 
 axiosInstance.interceptors.request.use((config) => {
-  console.log("헤더 붙여넣기 테스트");
   const token = "Bearer " + secureLocalStorage.getItem("accessToken");
   if (token) {
     config.headers.Authorization = token;
@@ -26,8 +25,10 @@ axiosInstance.interceptors.response.use(
     console.log("에러테스트");
     console.log(error);
 
-    if (error.response.status === 401) {
+    //토큰 오류일때.
+    if (error.response.data.message === "유효하지 않은 토큰입니다.") {
       try {
+        console.log("토큰 재발급");
         const storeRefreshToken = secureLocalStorage.getItem("refreshToken");
         if (typeof storeRefreshToken === "string") {
           const refreshTokenData: RefreshData = {
@@ -38,10 +39,13 @@ axiosInstance.interceptors.response.use(
           secureLocalStorage.clear();
           secureLocalStorage.setItem("accessToken", result.accessToken);
           secureLocalStorage.setItem("refreshToken", result.accessToken);
+          window.location.reload();
         }
       } catch (error) {
         console.log(error);
       }
+    } else {
+      console.log("단순 실수");
     }
 
     return Promise.reject(error);
