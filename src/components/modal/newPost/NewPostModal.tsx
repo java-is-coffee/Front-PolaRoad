@@ -6,13 +6,32 @@ import NewPostTheme from "../../form/post/NewPostTheme";
 import NewCardList from "../../form/card/NewCardList";
 import { useModal } from "hooks/modal/ModalProvider";
 import ModalOption from "enum/modalOptionTypes";
+import { Step, StepLabel, Stepper } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "redux/store/store";
+import INewPost from "interface/post/INewPost";
+import { toast } from "react-toastify";
+import { setPostId } from "../../../redux/reducers/newPost/newPostReducers";
 
-const formComponents = [NewPostTheme, NewCardList, NewPostDetails];
+interface FormComponentsType {
+  name: string;
+  component: React.ElementType;
+}
+
+const formComponents: FormComponentsType[] = [
+  { name: "테마 선정", component: NewPostTheme },
+  { name: "카드 리스트", component: NewCardList },
+  { name: "포스트 상세", component: NewPostDetails },
+];
 
 function NewPostModal() {
   const { openModal } = useModal();
   const [postFormIndex, setPostFormIndex] = useState<number>(0);
+  const postDetails: INewPost = useSelector(
+    (state: RootState) => state.newPost
+  );
   const modalRef = useRef<HTMLDivElement>(null); // 모달 DOM에 접근하기 위한 ref
+  const dispatch = useDispatch();
 
   // useEffect(() => {
   //   const modal = modalRef.current;
@@ -50,12 +69,32 @@ function NewPostModal() {
     // eslint-disable-next-line
   }, []);
 
+  // 모달 생성시 postId 적용
+  useEffect(() => {
+    dispatch(setPostId());
+    //eslint-disable-next-line
+  }, []);
+
   const increaseFormIndex = () => {
     if (postFormIndex < formComponents.length - 1) {
-      setPostFormIndex((prev) => prev + 1);
+      if (postFormIndex === 0) {
+        if (postDetails.concept && postDetails.region) {
+          setPostFormIndex((prev) => prev + 1);
+        } else {
+          toast.error("theme 와 region은 필수 항목입니다.");
+        }
+      } else if (postFormIndex === 1) {
+        console.log(postDetails.cards);
+        if (postDetails.cards) {
+          setPostFormIndex((prev) => prev + 1);
+        } else {
+          toast.error("최소 하나의 카드를 입력해주세요");
+        }
+      } else {
+        setPostFormIndex((prev) => prev + 1);
+      }
     }
   };
-
   const decreaseFromIndex = () => {
     if (postFormIndex > 0) {
       setPostFormIndex((prev) => prev - 1);
@@ -85,7 +124,14 @@ function NewPostModal() {
               <ActionBtn name="업로드" handleClick={handleUploadPost} />
             )}
           </div>
-          {formComponents.map((Component, index) => (
+          <Stepper alternativeLabel activeStep={postFormIndex}>
+            {formComponents.map((Component, index) => (
+              <Step key={index}>
+                <StepLabel>{Component.name}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+          {formComponents.map(({ component: Component }, index) => (
             <div
               key={index}
               style={{ display: index === postFormIndex ? "block" : "none" }}
