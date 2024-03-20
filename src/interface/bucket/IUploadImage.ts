@@ -1,5 +1,5 @@
 export interface IUploadImage {
   postUserId: number;
-  postId: number;
+  postId: string;
   image: File;
 }
