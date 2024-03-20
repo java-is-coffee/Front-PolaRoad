@@ -94,6 +94,7 @@ function SearchDropdown() {
       paging: 1,
       pagingNumber: 12,
       searchType: "KEYWORD",
+      keyword: null,
       sortBy: sortNumber !== null ? sortKeys[sortNumber] : "RECENT",
       concept: categoryNumber !== null ? categoryKeys[categoryNumber] : null,
       region: regionNumber !== null ? regionKeys[regionNumber] : null,

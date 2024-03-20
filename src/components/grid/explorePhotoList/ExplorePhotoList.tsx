@@ -111,6 +111,7 @@ export const initPostList: GetListDTO = {
   paging: 1,
   pagingNumber: 12,
   searchType: "KEYWORD",
+  keyword: null,
   sortBy: "RECENT",
   concept: null,
   region: null,

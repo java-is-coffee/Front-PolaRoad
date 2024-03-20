@@ -6,11 +6,17 @@ import { Avatar, IconButton, InputAdornment, TextField } from "@mui/material";
 // import { IoSearch } from "react-icons/io5";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { GetListDTO } from "api/explore/getPostList";
+import useExploreHooks from "hooks/explore/useExploreHooks";
 
 function Header() {
   // const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
   const navigate = useNavigate();
+
+  const [searchInput, setSearchInput] = useState("");
+  const { setPostList } = useExploreHooks();
 
   // useEffect(() => {
   //   const handleScroll = () => {
@@ -33,6 +39,22 @@ function Header() {
   // const handleIsScrolled = () => {
   //   setIsScrolled(false);
   // };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const setCategoyList: GetListDTO = {
+      paging: 1,
+      pagingNumber: 12,
+      searchType: "KEYWORD",
+      keyword: searchInput,
+      sortBy: "RECENT",
+      concept: null,
+      region: null,
+    };
+
+    setPostList(setCategoyList);
+  };
 
   return (
     <div
@@ -61,12 +83,16 @@ function Header() {
               isScrolled={isScrolled}
               handleIsScrolled={handleIsScrolled}
             /> */}
-            <form action="post">
+            <form action="post" onSubmit={handleSubmit}>
               <TextField
                 id="outlined-basic"
                 variant="outlined"
                 placeholder="ex)도보여행, #글램핑, #빵지순례"
                 fullWidth
+                value={searchInput}
+                onChange={(value: React.ChangeEvent<HTMLInputElement>) => {
+                  setSearchInput(value.target.value);
+                }}
                 required
                 sx={{
                   ".MuiOutlinedInput-root": { fontSize: "1.3rem" },

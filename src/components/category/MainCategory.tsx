@@ -42,6 +42,7 @@ const MainCategory = () => {
       paging: 1,
       pagingNumber: 12,
       searchType: "KEYWORD",
+      keyword: null,
       sortBy: "RECENT",
       concept: categoryKeys[number],
       region: "SEOUL",

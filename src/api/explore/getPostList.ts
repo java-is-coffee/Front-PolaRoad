@@ -18,6 +18,7 @@ export interface GetListDTO {
   paging: number;
   pagingNumber: number;
   searchType: string;
+  keyword: string | null;
   sortBy: string;
   concept: string | null;
   region: string | null;
@@ -38,6 +39,10 @@ const GetPostList = async (inputData: GetListDTO) => {
 
     if (inputData.region !== null) {
       postAPI = postAPI.concat(`&region=${inputData.region}`);
+    }
+
+    if (inputData.keyword !== null) {
+      postAPI = postAPI.concat(`&keyword=${inputData.keyword}`);
     }
 
     const response = await axiosInstance.get(postAPI);
