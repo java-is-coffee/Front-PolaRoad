@@ -11,7 +11,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "redux/store/store";
 import INewPost from "interface/post/INewPost";
 import { toast } from "react-toastify";
-import { setPostId } from "../../../redux/reducers/newPost/newPostReducers";
+import {
+  filterCardNoneImage,
+  setPostId,
+} from "../../../redux/reducers/newPost/newPostReducers";
 import { QontoConnector, QontoStepIcon } from "./QontoStepStyle";
 
 interface FormComponentsType {
@@ -72,6 +75,7 @@ function NewPostModal() {
       } else if (postFormIndex === 1) {
         console.log(postDetails.cards);
         if (postDetails.cards) {
+          dispatch(filterCardNoneImage());
           setPostFormIndex((prev) => prev + 1);
         } else {
           toast.error("최소 하나의 카드를 입력해주세요");

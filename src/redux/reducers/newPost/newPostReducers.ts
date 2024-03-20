@@ -47,6 +47,9 @@ const newPost = createSlice({
         state.cards[index] = { ...state.cards[index], ...newCard };
       }
     },
+    filterCardNoneImage: (state) => {
+      state.cards = state.cards.filter((card) => card.imageUrl);
+    },
     addCardFront: (state) => {
       state.cards.unshift({ ...initCard });
     },
@@ -71,6 +74,7 @@ export const {
   setConcept,
   setRegion,
   updateCardAtIndex,
+  filterCardNoneImage,
   addCardFront,
   addCardBack,
   addHashTags,

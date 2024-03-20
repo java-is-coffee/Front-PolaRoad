@@ -119,6 +119,7 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
             accept="image/*"
             onChange={handleImageUpload}
             style={{ display: "none" }}
+            required
           />
         </div>
       ) : (
