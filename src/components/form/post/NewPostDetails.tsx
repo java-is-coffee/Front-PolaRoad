@@ -4,8 +4,11 @@ import { RootState } from "redux/store/store";
 
 import formStyles from "./NewPostDetails.module.css";
 import { useState } from "react";
-import { addHashTags } from "../../../redux/reducers/newPost/newPostReducers";
-import { Cancel } from "@mui/icons-material";
+import {
+  addHashTags,
+  removeHashTags,
+} from "../../../redux/reducers/newPost/newPostReducers";
+import { IoCloseSharp } from "react-icons/io5";
 
 function NewPostDetails() {
   const cardList = useSelector((state: RootState) => state.newPost.cards);
@@ -17,6 +20,9 @@ function NewPostDetails() {
   const handleAddHashTag = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(addHashTags(newHashTag));
+  };
+  const handleRemoveHashTag = (tag: string) => {
+    dispatch(removeHashTags(tag));
   };
   return (
     <div className={formStyles.postDetailWrapper}>
@@ -37,14 +43,20 @@ function NewPostDetails() {
             />
             <button type="submit">추가</button>
           </form>
-          {hashTags.map((tags, index) => {
-            return (
-              <span key={index}>
-                {`# ${tags}`}
-                <Cancel />
-              </span>
-            );
-          })}
+          <section className={formStyles.hashTagContainer}>
+            {hashTags.map((tag, index) => {
+              return (
+                <div key={index} className={formStyles.hashTag}>
+                  <span>{`#${tag}`}</span>
+                  <IoCloseSharp
+                    className={formStyles.deleteHashTag}
+                    size={"14px"}
+                    onClick={() => handleRemoveHashTag(tag)}
+                  />
+                </div>
+              );
+            })}
+          </section>
         </div>
       </div>
     </div>

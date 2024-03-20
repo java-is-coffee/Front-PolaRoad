@@ -60,7 +60,9 @@ const newPost = createSlice({
       state.hashtags.push(action.payload);
     },
     removeHashTags: (state, action: PayloadAction<string>) => {
-      state.hashtags.filter((hashTag) => hashTag !== action.payload);
+      state.hashtags = state.hashtags.filter(
+        (hashTag) => hashTag !== action.payload
+      );
     },
     resetPostDetails: (state) => {
       return initialState;
