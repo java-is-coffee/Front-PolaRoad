@@ -89,8 +89,6 @@ function SearchDropdown() {
       ? categoryList.indexOf(storeCategory)
       : null;
     const regionNumber = storeRegion ? regionList.indexOf(storeRegion) : null;
-    console.log(regionNumber + regionKeys[0]);
-    console.log(categoryNumber + categoryKeys[0]);
 
     const setCategoyList: GetListDTO = {
       paging: 1,
