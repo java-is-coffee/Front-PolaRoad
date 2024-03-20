@@ -16,7 +16,6 @@ const useLogin = () => {
     if (result) {
       secureLocalStorage.setItem("accessToken", result.accessToken);
       secureLocalStorage.setItem("refreshToken", result.refreshToken);
-      toast.success("로그인 성공");
       navigate("/explore");
     } else {
       toast.error("로그인 실패");

@@ -27,7 +27,6 @@ const useRegister = () => {
     const result = await postRegister(inputDTO);
 
     if (result === 200) {
-      toast.success("회원가입 성공");
       return true;
     } else {
       toast.error("회원가입 실패");
