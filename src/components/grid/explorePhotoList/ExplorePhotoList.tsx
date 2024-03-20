@@ -131,10 +131,17 @@ const ExplorePhotoList = () => {
   return (
     <div className={styles.photoZone}>
       {storePostList ? (
-        storePostList.map((item) => (
-          <MainPhotoCard key={item.postId} item={item} />
-        ))
+        storePostList.length === 0 ? (
+          <div className={styles.nonePost}>
+            적합한 게시글이 존재하지 않아요 ㅠ ㅅ ㅠ
+          </div>
+        ) : (
+          storePostList.map((item) => (
+            <MainPhotoCard key={item.postId} item={item} />
+          ))
+        )
       ) : (
+        //로딩창
         <CircularProgress color="success" />
       )}
     </div>
