@@ -18,6 +18,7 @@ const CardGrid = ({ cards }: CardProps) => {
   const imgStyle = {
     width: "100%",
     height: "auto",
+    aspectRatio: "1 / 1",
     borderRadius: "8px",
     boxShadow: "0 2px 5px rgba(0,0,0,0.2)",
   };
