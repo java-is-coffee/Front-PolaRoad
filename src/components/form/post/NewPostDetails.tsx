@@ -7,20 +7,24 @@ import { useState } from "react";
 import {
   addHashTags,
   removeHashTags,
+  setTitle,
 } from "../../../redux/reducers/newPost/newPostReducers";
 import { IoCloseSharp } from "react-icons/io5";
 
 function NewPostDetails() {
-  const cardList = useSelector(
-    (state: RootState) => state.newPost.postDetail.cards
-  );
   // post redux dispatch
   const dispatch = useDispatch();
   const hashTags = useSelector(
     (state: RootState) => state.newPost.postDetail.hashtags
   );
-
+  const cardList = useSelector(
+    (state: RootState) => state.newPost.postDetail.cards
+  );
   const [newHashTag, setNewHashTag] = useState<string>("");
+
+  const handleTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setTitle(event.target.value));
+  };
   const handleAddHashTag = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(addHashTags(newHashTag));
@@ -35,8 +39,9 @@ function NewPostDetails() {
         <input
           id="title"
           className={`${formStyles.input} ${formStyles.inputTitle}`}
+          onChange={handleTitle}
           placeholder="타이틀을 입력하세요..."
-        ></input>
+        />
         <div>
           <form onSubmit={handleAddHashTag}>
             <input
