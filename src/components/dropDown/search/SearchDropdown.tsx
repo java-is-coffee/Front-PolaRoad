@@ -102,6 +102,7 @@ function SearchDropdown() {
     };
 
     setPostList(setCategoyList);
+    closeModal(ModalOption.SEARCH);
   };
 
   return (
