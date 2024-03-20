@@ -1,6 +1,4 @@
-import axios from "axios";
-
-export const BASE_URL = "https://k951a463f2f5fa.user-app.krampoline.com";
+import { axiosInstance } from "api/token/axiosInstance";
 
 export interface LoginData {
   email: string;
@@ -13,19 +11,20 @@ export interface LoginDTO {
 
 const postLogin = async (inputData: LoginDTO) => {
   try {
-    const loginAPI = BASE_URL + "/api/member/login";
+    const loginAPI = "/api/member/login";
 
-    const response = await axios.post(loginAPI, inputData, {
+    const response = await axiosInstance.post(loginAPI, inputData, {
       withCredentials: true,
     });
 
-    const code = response.status;
-    // const result = response.data;
-    console.log(response.headers["accessToken"]);
+    const status = response.status;
 
-    return code;
+    if (status === 200) return response.data;
+    else {
+      return null;
+    }
   } catch (error) {
-    return "error";
+    return null;
   }
 };
 

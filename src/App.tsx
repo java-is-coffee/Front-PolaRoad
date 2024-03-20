@@ -3,10 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./routes/Home";
 import Explore from "./routes/Explore";
 import MyPage from "./routes/MyPage";
-
 import Login from "./containers/login/LoginContainer";
-
-import "./styles/globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

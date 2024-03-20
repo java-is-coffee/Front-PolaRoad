@@ -5,9 +5,12 @@ import headerStyle from "./Header.module.css";
 import { Avatar, IconButton, InputAdornment, TextField } from "@mui/material";
 // import { IoSearch } from "react-icons/io5";
 import SearchIcon from "@mui/icons-material/Search";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
   // const [isScrolled, setIsScrolled] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   // useEffect(() => {
   //   const handleScroll = () => {
@@ -88,7 +91,9 @@ function Header() {
             {/* <IoSearch size={"20px"} /> */}
           </div>
           <GoBell size={"32px"} />
-          <Avatar alt="Travis Howard" src="icons/favicon-32x32.png" />
+          <span onClick={() => navigate("/login")}>
+            <Avatar alt="Travis Howard" src="icons/favicon-32x32.png" />
+          </span>
         </div>
       </div>
     </div>
