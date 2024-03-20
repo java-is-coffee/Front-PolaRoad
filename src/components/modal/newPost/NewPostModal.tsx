@@ -32,7 +32,7 @@ function NewPostModal() {
   const { openModal } = useModal();
   const [postFormIndex, setPostFormIndex] = useState<number>(0);
   const postDetails: INewPost = useSelector(
-    (state: RootState) => state.newPost
+    (state: RootState) => state.newPost.postDetail
   );
   const modalRef = useRef<HTMLDivElement>(null); // 모달 DOM에 접근하기 위한 ref
   const dispatch = useDispatch();

@@ -11,10 +11,14 @@ import {
 import { IoCloseSharp } from "react-icons/io5";
 
 function NewPostDetails() {
-  const cardList = useSelector((state: RootState) => state.newPost.cards);
+  const cardList = useSelector(
+    (state: RootState) => state.newPost.postDetail.cards
+  );
   // post redux dispatch
   const dispatch = useDispatch();
-  const hashTags = useSelector((state: RootState) => state.newPost.hashtags);
+  const hashTags = useSelector(
+    (state: RootState) => state.newPost.postDetail.hashtags
+  );
 
   const [newHashTag, setNewHashTag] = useState<string>("");
   const handleAddHashTag = (event: React.FormEvent<HTMLFormElement>) => {

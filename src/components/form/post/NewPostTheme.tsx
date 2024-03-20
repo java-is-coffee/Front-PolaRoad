@@ -11,10 +11,10 @@ import {
 
 function NewPostTheme() {
   const selectedConcept = useSelector(
-    (state: RootState) => state.newPost.concept
+    (state: RootState) => state.newPost.postDetail.concept
   );
   const selectedRegion = useSelector(
-    (state: RootState) => state.newPost.region
+    (state: RootState) => state.newPost.postDetail.region
   );
   const dispatch = useDispatch();
 

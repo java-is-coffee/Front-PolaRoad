@@ -10,7 +10,9 @@ import { RootState } from "redux/store/store";
 const WarningModal = () => {
   const { closeModal } = useModal();
   const { deleteImage } = useBucket();
-  const cardList = useSelector((state: RootState) => state.newPost.cards);
+  const cardList = useSelector(
+    (state: RootState) => state.newPost.postDetail.cards
+  );
   const dispatch = useDispatch();
 
   // "나가기" 버튼 클릭 시 실행될 함수

@@ -11,7 +11,9 @@ import {
 
 const NewCardDetails = () => {
   // cardList 관련 리덕스
-  const cardList = useSelector((state: RootState) => state.newPost.cards);
+  const cardList = useSelector(
+    (state: RootState) => state.newPost.postDetail.cards
+  );
   const dispatch = useDispatch();
   // 인덱스 & 캐러셀 설정
   const [activeIndex, setActiveIndex] = useState(0);

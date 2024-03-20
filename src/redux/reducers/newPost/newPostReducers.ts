@@ -6,6 +6,7 @@ import INewCard from "interface/card/INewCard";
 import uuid from "react-uuid";
 
 const initCard: INewCard = {
+  cardIndex: null,
   location: null,
   latitude: null,
   longitude: null,
@@ -13,15 +14,22 @@ const initCard: INewCard = {
   content: null,
 };
 
-const initialState: INewPost = {
+interface PostDetailType {
+  postId: string | null;
+  postDetail: INewPost;
+}
+
+const initialState: PostDetailType = {
   postId: null,
-  title: null,
-  routePoint: null,
-  thumbnailIndex: null,
-  concept: null,
-  region: null,
-  cards: [initCard],
-  hashtags: [],
+  postDetail: {
+    title: null,
+    routePoint: null,
+    thumbnailIndex: null,
+    concept: null,
+    region: null,
+    cards: [initCard],
+    hashtags: [],
+  },
 };
 
 const newPost = createSlice({
@@ -33,34 +41,39 @@ const newPost = createSlice({
       console.log(state.postId);
     },
     setConcept: (state, action: PayloadAction<conceptOptionType>) => {
-      state.concept = action.payload;
+      state.postDetail.concept = action.payload;
     },
     setRegion: (state, action: PayloadAction<regionOptionType>) => {
-      state.region = action.payload;
+      state.postDetail.region = action.payload;
     },
     updateCardAtIndex: (
       state,
       action: PayloadAction<{ index: number; newCard: INewCard }>
     ) => {
       const { index, newCard } = action.payload;
-      if (index >= 0 && index < state.cards.length) {
-        state.cards[index] = { ...state.cards[index], ...newCard };
+      if (index >= 0 && index < state.postDetail.cards.length) {
+        state.postDetail.cards[index] = {
+          ...state.postDetail.cards[index],
+          ...newCard,
+        };
       }
     },
     filterCardNoneImage: (state) => {
-      state.cards = state.cards.filter((card) => card.imageUrl);
+      state.postDetail.cards = state.postDetail.cards.filter(
+        (card) => card.imageUrl
+      );
     },
     addCardFront: (state) => {
-      state.cards.unshift({ ...initCard });
+      state.postDetail.cards.unshift({ ...initCard });
     },
     addCardBack: (state) => {
-      state.cards.push({ ...initCard });
+      state.postDetail.cards.push({ ...initCard });
     },
     addHashTags: (state, action: PayloadAction<string>) => {
-      state.hashtags.push(action.payload);
+      state.postDetail.hashtags.push(action.payload);
     },
     removeHashTags: (state, action: PayloadAction<string>) => {
-      state.hashtags = state.hashtags.filter(
+      state.postDetail.hashtags = state.postDetail.hashtags.filter(
         (hashTag) => hashTag !== action.payload
       );
     },
