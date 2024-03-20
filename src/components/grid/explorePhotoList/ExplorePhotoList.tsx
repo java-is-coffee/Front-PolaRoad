@@ -108,7 +108,7 @@ import { CircularProgress } from "@mui/material";
 //   },
 // ];
 const initPostList: GetListDTO = {
-  paging: 0,
+  paging: 1,
   pagingNumber: 12,
   searchType: "KEYWORD",
   sortBy: "RECENT",
