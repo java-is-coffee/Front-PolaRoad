@@ -56,7 +56,8 @@ const ExplorePhotoList = () => {
 
       addPostList(addData);
     }
-  }, []);
+    // eslint-disable-next-line
+  }, [inView]);
 
   return (
     <div className={styles.photoZone}>
