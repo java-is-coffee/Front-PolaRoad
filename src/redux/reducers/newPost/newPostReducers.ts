@@ -62,6 +62,9 @@ const newPost = createSlice({
       const regionKey = getEnumKeyByEnumValue(regionOptionType, action.payload);
       state.postDetail.region = regionKey;
     },
+    setThumbnail: (state, action: PayloadAction<number>) => {
+      state.postDetail.thumbnailIndex = action.payload;
+    },
     setRoutePoint: (state) => {
       const routePointDate = state.postDetail.cards
         .filter((card) => card.latitude && card.longitude)
@@ -118,6 +121,7 @@ export const {
   setPostId,
   setTitle,
   setConcept,
+  setThumbnail,
   setRegion,
   setRoutePoint,
   updateCardAtIndex,
