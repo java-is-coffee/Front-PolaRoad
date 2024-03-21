@@ -14,8 +14,10 @@ import { toast } from "react-toastify";
 import {
   filterCardNoneImage,
   setPostId,
+  setRoutePoint,
 } from "../../../redux/reducers/newPost/newPostReducers";
 import { QontoConnector, QontoStepIcon } from "./QontoStepStyle";
+import postNewPost from "api/post/postNewPost";
 
 interface FormComponentsType {
   name: string;
@@ -91,7 +93,14 @@ function NewPostModal() {
     }
   };
 
-  const handleUploadPost = () => {};
+  const handleUploadPost = () => {
+    dispatch(setRoutePoint());
+    uploadPost();
+  };
+
+  const uploadPost = async () => {
+    await postNewPost(postDetails);
+  };
 
   return (
     <div className={modalStyles.modalBackdrop} onClick={handleBackdropClick}>
