@@ -88,6 +88,11 @@ const newPost = createSlice({
         (card) => card.image
       );
     },
+    removeCardByIndex: (state, action: PayloadAction<number>) => {
+      state.postDetail.cards = state.postDetail.cards.filter(
+        (card, index) => index !== action.payload
+      );
+    },
     addCardFront: (state) => {
       state.postDetail.cards.unshift({ ...initCard });
     },
@@ -117,6 +122,7 @@ export const {
   setRoutePoint,
   updateCardAtIndex,
   filterCardNoneImage,
+  removeCardByIndex,
   addCardFront,
   addCardBack,
   addHashTags,
