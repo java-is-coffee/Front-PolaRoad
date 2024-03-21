@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import formStyles from "./NewCardList.module.css";
 import CardPaging from "components/paging/card/CardPaging";
 import CardForm from "./CardForm";
@@ -8,6 +8,7 @@ import {
   addCardBack,
   addCardFront,
 } from "../../../redux/reducers/newPost/newPostReducers";
+import uuid from "react-uuid";
 
 const NewCardDetails = () => {
   // cardList 관련 리덕스
@@ -28,13 +29,20 @@ const NewCardDetails = () => {
 
   const decreaseIndex = () => {
     if (activeIndex - 1 < 0) {
+      console.log("add front");
       dispatch(addCardFront());
     } else {
       setActiveIndex((prevIndex) => prevIndex - 1);
     }
   };
 
-  if (!cardList) return null;
+  if (!cardList) {
+    dispatch(addCardBack());
+  }
+  useEffect(() => {
+    if (cardList.length - 1 < activeIndex) setActiveIndex(cardList.length - 1);
+    console.log(activeIndex);
+  }, [cardList]);
 
   return (
     <div className={formStyles.formWrapper}>
@@ -48,7 +56,11 @@ const NewCardDetails = () => {
         >
           {cardList.map((card, index) => {
             return (
-              <CardForm key={index} cardIndex={index} cardDetails={card} />
+              <CardForm
+                key={card.cardId}
+                cardIndex={index}
+                cardDetails={card}
+              />
             );
           })}
         </div>

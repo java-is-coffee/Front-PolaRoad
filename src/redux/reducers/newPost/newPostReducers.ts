@@ -6,6 +6,7 @@ import INewCard from "interface/card/INewCard";
 import uuid from "react-uuid";
 
 const initCard: INewCard = {
+  cardId: "",
   cardIndex: null,
   location: null,
   latitude: null,
@@ -94,10 +95,10 @@ const newPost = createSlice({
       );
     },
     addCardFront: (state) => {
-      state.postDetail.cards.unshift({ ...initCard });
+      state.postDetail.cards.unshift({ ...initCard, cardId: uuid() });
     },
     addCardBack: (state) => {
-      state.postDetail.cards.push({ ...initCard });
+      state.postDetail.cards.push({ ...initCard, cardId: uuid() });
     },
     addHashTags: (state, action: PayloadAction<string>) => {
       state.postDetail.hashtags.push(action.payload);

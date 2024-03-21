@@ -18,18 +18,22 @@ const CardGrid = ({ cards }: CardProps) => {
     <section className={gridStyles.section}>
       {cards.map((card, index) => (
         <div key={index} className={gridStyles.card}>
-          <span className={gridStyles.index}>{index + 1}</span>
-          <IoMdCloseCircle
-            className={gridStyles.deleteBtn}
-            size={"20px"}
-            onClick={() => handleRemoveCard(index)}
-          />
-          <img
-            id={`card-${index}`}
-            className={gridStyles.img}
-            src={`${process.env.REACT_APP_BUCKET_BASEURL}/${card.image}`}
-            alt={`Card ${index}`}
-          />
+          <div className={gridStyles.imgContainer}>
+            <img
+              id={`card-${index}`}
+              className={gridStyles.img}
+              src={`${process.env.REACT_APP_BUCKET_BASEURL}/${card.image}`}
+              alt={`Card ${index}`}
+            />
+            <div className={gridStyles.overlay}>
+              <span className={gridStyles.index}>{index + 1}</span>
+              <IoMdCloseCircle
+                className={gridStyles.deleteBtn}
+                size={"20px"}
+                onClick={() => handleRemoveCard(index)}
+              />
+            </div>
+          </div>
         </div>
       ))}
     </section>
