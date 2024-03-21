@@ -35,7 +35,8 @@ const ExplorePhotoList = () => {
     if (storePostList === null) {
       setPostList(initPostList);
     }
-  }, [storePostList, setPostList]);
+    // eslint-disable-next-line
+  }, []);
 
   useEffect(() => {
     console.log("무한 스크롤 방지 테스트 ");
@@ -68,7 +69,7 @@ const ExplorePhotoList = () => {
           </div>
         ) : (
           storePostList.map((item) => (
-            <div className={styles.card}>
+            <div key={item.postId} className={styles.card}>
               <MainPhotoCard key={item.postId} item={item} />
             </div>
           ))
