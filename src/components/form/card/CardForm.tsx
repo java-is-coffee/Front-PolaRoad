@@ -172,8 +172,10 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
               value={searchPlace}
               onKeyDown={handleSearch}
             />
-            <div>
-              <button className={formStyles.uploadBtn}>현재위치</button>
+            <div className={formStyles.mapAction}>
+              <button className={formStyles.uploadBtn} onClick={handleSearch}>
+                검색
+              </button>
               <button
                 className={formStyles.mapToggleBtn}
                 onClick={toggleMapVisibility}

@@ -52,7 +52,7 @@ const NewCardDetails = () => {
           className={formStyles.cardList}
           ref={cardCarousel}
           style={{
-            transform: `translate3d(${activeIndex * -600}px, 0, 0)`,
+            transform: `translate3d(${activeIndex * -750}px, 0, 0)`,
           }}
         >
           {cardList.map((card, index) => {
