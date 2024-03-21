@@ -19,8 +19,8 @@ const WarningModal = () => {
   const handleExit = () => {
     dispatch(resetPostDetails()); // 포스트 상세 정보를 리셋
     cardList.forEach((card) => {
-      if (card.imageUrl) {
-        deleteImage(card.imageUrl);
+      if (card.image) {
+        deleteImage(card.image);
       }
     });
     closeModal(ModalOption.WARNING);

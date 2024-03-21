@@ -30,7 +30,7 @@ const CardGrid = ({ cards }: CardProps) => {
           key={index}
           id={`card-${index}`}
           style={imgStyle}
-          src={`${process.env.REACT_APP_BUCKET_BASEURL}/${card.imageUrl}`}
+          src={`${process.env.REACT_APP_BUCKET_BASEURL}/${card.image}`}
           alt={`Card ${index}`}
         />
       ))}
