@@ -13,11 +13,13 @@ import INewPost from "interface/post/INewPost";
 import { toast } from "react-toastify";
 import {
   filterCardNoneImage,
+  resetPostDetails,
   setPostId,
   setRoutePoint,
 } from "../../../redux/reducers/newPost/newPostReducers";
 import { QontoConnector, QontoStepIcon } from "./QontoStepStyle";
 import postNewPost from "api/post/postNewPost";
+import { validateCardList } from "utils/card/validateCardDetails";
 
 interface FormComponentsType {
   name: string;
@@ -31,7 +33,7 @@ const formComponents: FormComponentsType[] = [
 ];
 
 function NewPostModal() {
-  const { openModal } = useModal();
+  const { openModal, closeModal } = useModal();
   const [postFormIndex, setPostFormIndex] = useState<number>(0);
   const postDetails: INewPost = useSelector(
     (state: RootState) => state.newPost.postDetail
@@ -75,10 +77,11 @@ function NewPostModal() {
           toast.error("theme 와 region은 필수 항목입니다.");
         }
       } else if (postFormIndex === 1) {
-        console.log(postDetails.cards);
         if (postDetails.cards) {
           dispatch(filterCardNoneImage());
-          setPostFormIndex((prev) => prev + 1);
+          if (validateCardList(postDetails.cards)) {
+            setPostFormIndex((prev) => prev + 1);
+          }
         } else {
           toast.error("최소 하나의 카드를 입력해주세요");
         }
@@ -99,7 +102,11 @@ function NewPostModal() {
   };
 
   const uploadPost = async () => {
-    await postNewPost(postDetails);
+    const result = await postNewPost(postDetails);
+    if (result) {
+      dispatch(resetPostDetails());
+      closeModal(ModalOption.POST);
+    }
   };
 
   return (

@@ -47,7 +47,6 @@ const newPost = createSlice({
   reducers: {
     setPostId: (state) => {
       state.postId = uuid();
-      console.log(state.postId);
     },
     setTitle: (state, action: PayloadAction<string>) => {
       state.postDetail.title = action.payload;

@@ -8,7 +8,7 @@ import {
   addCardBack,
   addCardFront,
 } from "../../../redux/reducers/newPost/newPostReducers";
-import uuid from "react-uuid";
+import { validateCardDetails } from "utils/card/validateCardDetails";
 
 const NewCardDetails = () => {
   // cardList 관련 리덕스
@@ -21,6 +21,7 @@ const NewCardDetails = () => {
   const cardCarousel = useRef<HTMLDivElement>(null);
 
   const increaseIndex = () => {
+    if (!validateCardDetails(cardList[activeIndex])) return;
     if (activeIndex + 1 === cardList.length) {
       dispatch(addCardBack());
     }
@@ -28,8 +29,8 @@ const NewCardDetails = () => {
   };
 
   const decreaseIndex = () => {
+    if (!validateCardDetails(cardList[activeIndex])) return;
     if (activeIndex - 1 < 0) {
-      console.log("add front");
       dispatch(addCardFront());
     } else {
       setActiveIndex((prevIndex) => prevIndex - 1);
@@ -41,8 +42,8 @@ const NewCardDetails = () => {
   }
   useEffect(() => {
     if (cardList.length - 1 < activeIndex) setActiveIndex(cardList.length - 1);
-    console.log(activeIndex);
-  }, [cardList]);
+    //eslint-disable-next-line
+  }, [cardList.length]);
 
   return (
     <div className={formStyles.formWrapper}>
