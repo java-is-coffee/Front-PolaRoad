@@ -33,7 +33,7 @@ function NewPostTheme() {
         {Object.entries(conceptOptionType).map(([key, value]) => (
           <button
             className={
-              selectedConcept === value
+              selectedConcept === key
                 ? formStyles.selectedOptionBtn
                 : formStyles.optionBtn
             }
@@ -49,7 +49,7 @@ function NewPostTheme() {
         {Object.entries(regionOptionType).map(([key, value]) => (
           <button
             className={
-              selectedRegion === value
+              selectedRegion === key
                 ? formStyles.selectedOptionBtn
                 : formStyles.optionBtn
             }

@@ -6,8 +6,8 @@ interface INewPost {
   title: string | null;
   routePoint: string | null;
   thumbnailIndex: number | null;
-  concept: conceptOptionType | null;
-  region: regionOptionType | null;
+  concept: string | null;
+  region: string | null;
   cards: INewCard[];
   hashtags: string[];
 }

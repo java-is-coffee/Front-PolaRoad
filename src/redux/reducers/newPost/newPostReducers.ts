@@ -10,7 +10,7 @@ const initCard: INewCard = {
   location: null,
   latitude: null,
   longitude: null,
-  imageUrl: undefined,
+  image: undefined,
   content: null,
 };
 
@@ -32,6 +32,14 @@ const initialState: PostDetailType = {
   },
 };
 
+function getEnumKeyByEnumValue<T extends { [index: string]: string }>(
+  myEnum: T,
+  enumValue: string
+): string | null {
+  let keys = Object.keys(myEnum).filter((x) => myEnum[x] === enumValue);
+  return keys.length > 0 ? keys[0] : null;
+}
+
 const newPost = createSlice({
   name: "newPost",
   initialState,
@@ -40,11 +48,28 @@ const newPost = createSlice({
       state.postId = uuid();
       console.log(state.postId);
     },
+    setTitle: (state, action: PayloadAction<string>) => {
+      state.postDetail.title = action.payload;
+    },
     setConcept: (state, action: PayloadAction<conceptOptionType>) => {
-      state.postDetail.concept = action.payload;
+      const conceptKey = getEnumKeyByEnumValue(
+        conceptOptionType,
+        action.payload
+      );
+      state.postDetail.concept = conceptKey;
     },
     setRegion: (state, action: PayloadAction<regionOptionType>) => {
-      state.postDetail.region = action.payload;
+      const regionKey = getEnumKeyByEnumValue(regionOptionType, action.payload);
+      state.postDetail.region = regionKey;
+    },
+    setRoutePoint: (state) => {
+      const routePointDate = state.postDetail.cards
+        .filter((card) => card.latitude && card.longitude)
+        .map((card) => ({
+          latitude: card.latitude,
+          longitude: card.longitude,
+        }));
+      state.postDetail.routePoint = JSON.stringify(routePointDate);
     },
     updateCardAtIndex: (
       state,
@@ -60,7 +85,7 @@ const newPost = createSlice({
     },
     filterCardNoneImage: (state) => {
       state.postDetail.cards = state.postDetail.cards.filter(
-        (card) => card.imageUrl
+        (card) => card.image
       );
     },
     addCardFront: (state) => {
@@ -86,8 +111,10 @@ const newPost = createSlice({
 // 액션 생성자와 리듀서 내보내기
 export const {
   setPostId,
+  setTitle,
   setConcept,
   setRegion,
+  setRoutePoint,
   updateCardAtIndex,
   filterCardNoneImage,
   addCardFront,
