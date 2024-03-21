@@ -126,6 +126,7 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
         <div className={formStyles.previewWrapper}>
           <img
             alt="Preview"
+            className={formStyles.previewImg}
             src={`${process.env.REACT_APP_BUCKET_BASEURL}/${newCard.image}`}
             width="100%"
             height="100%"
@@ -180,7 +181,6 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
               width: "370px",
               height: "200px",
               overflow: "hidden", // 내용이 넘칠 경우 숨김 처리
-              transition: "all 0.5s ease", // 부드러운 전환 효과
             }}
           />
         </div>
