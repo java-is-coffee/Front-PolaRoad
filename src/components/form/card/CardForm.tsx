@@ -131,11 +131,6 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
         </div>
       ) : (
         <div className={formStyles.previewWrapper}>
-          <IoMdCloseCircle
-            className={formStyles.deleteBtn}
-            size={"20px"}
-            onClick={handleDeleteImg}
-          />
           <img
             alt="Preview"
             className={formStyles.previewImg}
@@ -143,6 +138,13 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
             width="100%"
             height="100%"
           />
+          <div className={formStyles.overlay}>
+            <IoMdCloseCircle
+              className={formStyles.deleteBtn}
+              size={"20px"}
+              onClick={handleDeleteImg}
+            />
+          </div>
         </div>
       )}
       {
