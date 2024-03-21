@@ -101,7 +101,7 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
 
   return (
     <div className={formStyles.cardFormWrapper}>
-      {!newCard.imageUrl ? (
+      {!newCard.image ? (
         <div className={formStyles.imageWrapper}>
           <img
             src="./icons/photo/postPhoto.png"
@@ -126,7 +126,7 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
         <div className={formStyles.previewWrapper}>
           <img
             alt="Preview"
-            src={`${process.env.REACT_APP_BUCKET_BASEURL}/${newCard.imageUrl}`}
+            src={`${process.env.REACT_APP_BUCKET_BASEURL}/${newCard.image}`}
             width="100%"
             height="100%"
           />
@@ -136,9 +136,9 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
         <div
           className={formStyles.detailWrapper}
           style={{
-            width: newCard.imageUrl ? "100%" : "0px",
-            height: newCard.imageUrl ? "100%" : "0px",
-            padding: newCard.imageUrl ? "0 20px" : "0px",
+            width: newCard.image ? "100%" : "0px",
+            height: newCard.image ? "100%" : "0px",
+            padding: newCard.image ? "0 20px" : "0px",
             overflow: "hidden",
           }}
         >
