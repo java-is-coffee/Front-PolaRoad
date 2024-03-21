@@ -50,7 +50,9 @@ function NewPostDetails() {
               onChange={(e) => setNewHashTag(e.target.value)}
               className={`${formStyles.input} ${formStyles.inputHashTag}`}
             />
-            <button type="submit">추가</button>
+            <button className={formStyles.addBtn} type="submit">
+              추가
+            </button>
           </form>
           <section className={formStyles.hashTagContainer}>
             {hashTags.map((tag, index) => {
