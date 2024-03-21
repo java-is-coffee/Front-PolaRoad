@@ -15,8 +15,8 @@ import { RootState } from "../../redux/store/store";
 import CategoryType from "../../enum/categoryOptionType";
 import useExploreHooks from "../../hooks/explore/useExploreHooks";
 import { switchCategory } from "../../redux/reducers/explore/setCategoryReducer";
-import { GetListDTO } from "api/explore/getPostList";
 import { initPostList } from "components/grid/explorePhotoList/ExplorePhotoList";
+import { GetListDTO } from "interface/explore/ExplorePost";
 
 const MainCategory = () => {
   const storeCategory = useSelector(

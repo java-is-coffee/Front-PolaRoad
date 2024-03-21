@@ -14,7 +14,7 @@ import {
   switchSort,
 } from "../../../redux/reducers/explore/filterReducer";
 import { Button } from "@mui/material";
-import { GetListDTO } from "api/explore/getPostList";
+import { GetListDTO } from "interface/explore/ExplorePost";
 
 function SearchDropdown() {
   const { closeModal } = useModal();

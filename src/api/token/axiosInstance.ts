@@ -1,5 +1,6 @@
 import getAccessToken, { RefreshData } from "api/token/getAccessToken";
 import axios from "axios";
+// import { useNavigate } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
 
 export const axiosInstance = axios.create({
@@ -29,6 +30,7 @@ axiosInstance.interceptors.response.use(
     if (error.response.data.message === "유효하지 않은 토큰입니다.") {
       try {
         console.log("토큰 재발급");
+
         const storeRefreshToken = secureLocalStorage.getItem("refreshToken");
         if (typeof storeRefreshToken === "string") {
           const refreshTokenData: RefreshData = {
@@ -42,7 +44,8 @@ axiosInstance.interceptors.response.use(
           window.location.reload();
         }
       } catch (error) {
-        console.log(error);
+        console.log("토큰 발급 에러");
+        // navigate("/login");
       }
     } else {
       console.log("단순 실수");

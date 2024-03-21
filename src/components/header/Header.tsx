@@ -7,8 +7,8 @@ import { Avatar, IconButton, InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { GetListDTO } from "api/explore/getPostList";
 import useExploreHooks from "hooks/explore/useExploreHooks";
+import { GetListDTO } from "interface/explore/ExplorePost";
 
 function Header() {
   // const [isScrolled, setIsScrolled] = useState<boolean>(false);
