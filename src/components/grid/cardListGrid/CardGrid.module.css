@@ -1,0 +1,38 @@
+/* CardForm.module.css */
+.section {
+  width: 400px;
+  height: 280px;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+}
+
+.img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.deleteBtn {
+  top: 0;
+  right: 0;
+  position: absolute;
+  font-size: 24px;
+  color: tomato;
+  border: none;
+  cursor: pointer;
+}
+
+.deleteBtn:hover {
+  transform: scale(1.2);
+  transition: transform 0.2s ease-in-out;
+}
