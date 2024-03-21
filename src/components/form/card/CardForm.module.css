@@ -48,6 +48,21 @@
   object-fit: cover;
 }
 
+.deleteBtn {
+  position: absolute;
+  size: 24px;
+  top: 10px;
+  left: 260px;
+  color: tomato; /* 텍스트 색상, 필요에 따라 조정 */
+  border: none;
+  cursor: pointer;
+}
+
+.deleteBtn:hover {
+  transform: scale(1.2);
+  transition: transform 0.2s ease-in-out;
+}
+
 .cardFormWrapper {
   box-sizing: border-box;
   flex-shrink: 0;

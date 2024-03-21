@@ -10,6 +10,7 @@ import useBucket from "hooks/bucket/useBucket";
 import { RootState } from "redux/store/store";
 import { IUploadImage } from "interface/bucket/IUploadImage";
 import { toast } from "react-toastify";
+import { IoMdCloseCircle } from "react-icons/io";
 
 declare global {
   interface Window {
@@ -28,9 +29,10 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
     handleImageChange,
     handleContentsChange,
     handlePlaceChange,
+    handleImageRemove,
   } = useSingleCard(cardDetails);
   // 이미지 업로딩 관련 const
-  const { uploadImage } = useBucket();
+  const { uploadImage, deleteImage } = useBucket();
   const postId = useSelector((state: RootState) => state.newPost.postId);
   // 리덕스 관련
   const dispatch = useDispatch();
@@ -82,6 +84,11 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
     }
   };
 
+  const handleDeleteImg = () => {
+    deleteImage(`${process.env.REACT_APP_BUCKET_BASEURL}/${newCard.image}`);
+    handleImageRemove();
+  };
+
   useEffect(() => {
     if (isMapVisible && mapContainer.current) {
       initKakaoMap(mapContainer.current);
@@ -124,6 +131,11 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
         </div>
       ) : (
         <div className={formStyles.previewWrapper}>
+          <IoMdCloseCircle
+            className={formStyles.deleteBtn}
+            size={"20px"}
+            onClick={handleDeleteImg}
+          />
           <img
             alt="Preview"
             className={formStyles.previewImg}

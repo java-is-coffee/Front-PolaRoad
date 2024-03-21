@@ -8,6 +8,10 @@ export const useSingleCard = (initialCard: INewCard) => {
     setNewCard({ ...newCard, image: imageUrl });
   };
 
+  const handleImageRemove = () => {
+    setNewCard({ ...newCard, image: undefined });
+  };
+
   const handlePlaceChange = (place: any) => {
     if (!place) return;
     setNewCard({
@@ -29,5 +33,6 @@ export const useSingleCard = (initialCard: INewCard) => {
     handleImageChange,
     handleContentsChange,
     handlePlaceChange,
+    handleImageRemove,
   };
 };
