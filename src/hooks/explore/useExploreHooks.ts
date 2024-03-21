@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { PayloadAction } from "@reduxjs/toolkit";
 import getPostList from "api/explore/getPostList";
@@ -7,14 +7,9 @@ import {
   setExplorePostList,
 } from "../../redux/reducers/explore/explorePostReducer";
 import { GetListDTO } from "interface/explore/ExplorePost";
-import { RootState } from "redux/store/store";
 
 const useExploreHooks = () => {
   const dispatch = useDispatch();
-
-  const storePostList = useSelector(
-    (state: RootState) => state.explorePost.postList
-  );
 
   //모든 페이로드 액션 테스트
   const SetItem = (action: PayloadAction<any>) => {

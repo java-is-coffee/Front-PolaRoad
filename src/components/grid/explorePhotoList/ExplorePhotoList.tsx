@@ -38,6 +38,7 @@ const ExplorePhotoList = () => {
   }, [storePostList, setPostList]);
 
   useEffect(() => {
+    console.log("무한 스크롤 방지 테스트 ");
     if (inView) {
       setCurPage(curPage + 1);
 
@@ -55,7 +56,7 @@ const ExplorePhotoList = () => {
 
       addPostList(addData);
     }
-  }, [inView]);
+  }, []);
 
   return (
     <div className={styles.photoZone}>
