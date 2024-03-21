@@ -97,8 +97,12 @@ function NewPostModal() {
   };
 
   const handleUploadPost = () => {
-    dispatch(setRoutePoint());
-    uploadPost();
+    if (postDetails.title) {
+      dispatch(setRoutePoint());
+      uploadPost();
+    } else {
+      toast.error("제목은 필수항목입니다.");
+    }
   };
 
   const uploadPost = async () => {
