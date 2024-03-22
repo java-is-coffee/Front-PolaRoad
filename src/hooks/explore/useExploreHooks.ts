@@ -2,26 +2,33 @@ import { useDispatch } from "react-redux";
 
 import { PayloadAction } from "@reduxjs/toolkit";
 import getPostList from "api/explore/getPostList";
-import { GetListDTO } from "../../api/explore/getPostList";
-import { setExplorePostList } from "../../redux/reducers/explore/explorePostReducer";
+import {
+  addExplorePostList,
+  setExplorePostList,
+} from "../../redux/reducers/explore/explorePostReducer";
+import { GetListDTO } from "interface/explore/ExplorePost";
 
 const useExploreHooks = () => {
   const dispatch = useDispatch();
 
   //모든 페이로드 액션 테스트
   const SetItem = (action: PayloadAction<any>) => {
-    console.log("테스트 + " + action.payload);
     dispatch(action);
   };
 
-  const initList = async (inputDTO: GetListDTO) => {
-    console.log(inputDTO);
+  const setPostList = async (inputDTO: GetListDTO) => {
     const result = await getPostList(inputDTO);
 
     dispatch(setExplorePostList(result));
   };
 
-  return { SetItem, initList };
+  const addPostList = async (inputDTO: GetListDTO) => {
+    const result = await getPostList(inputDTO);
+
+    dispatch(addExplorePostList(result));
+  };
+
+  return { SetItem, setPostList, addPostList };
 };
 
 export default useExploreHooks;
