@@ -24,7 +24,14 @@ const useExploreHooks = () => {
   const addPostList = async (inputDTO: GetListDTO) => {
     const result = await getPostList(inputDTO);
 
-    dispatch(addExplorePostList(result));
+    // console.log(result);
+    if (result.length === 0) {
+      console.log("끝");
+      return 0;
+    } else {
+      dispatch(addExplorePostList(result));
+      return 1;
+    }
   };
 
   return { SetItem, setPostList, addPostList };

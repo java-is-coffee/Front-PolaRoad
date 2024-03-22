@@ -4,11 +4,13 @@ import { PostData } from "interface/explore/ExplorePost";
 // 초기 상태의 타입 정의
 interface postList {
   postList: PostData[] | null;
+  curPage: number;
 }
 
 // 초기 상태
 const initialState: postList = {
   postList: null,
+  curPage: 1,
 };
 
 const explorePost = createSlice({
@@ -22,9 +24,13 @@ const explorePost = createSlice({
       if (state.postList && action.payload)
         state.postList = state.postList?.concat(action.payload);
     },
+    setCurPage: (state, action: PayloadAction<number>) => {
+      state.curPage = action.payload;
+    },
   },
 });
 
 // 액션 생성자와 리듀서 내보내기
-export const { setExplorePostList, addExplorePostList } = explorePost.actions;
+export const { setExplorePostList, addExplorePostList, setCurPage } =
+  explorePost.actions;
 export default explorePost.reducer;

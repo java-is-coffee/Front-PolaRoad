@@ -4,11 +4,12 @@ import { useEffect, useState } from "react";
 import MainPhotoCard from "../../card/mainPhoto/MainPhotoCard";
 import styles from "./ExplorePhotoList.module.css";
 import useExploreHooks from "../../../hooks/explore/useExploreHooks";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "redux/store/store";
 import { CircularProgress } from "@mui/material";
-import { GetListDTO } from "interface/explore/ExplorePost";
+import { categorySet, GetListDTO } from "interface/explore/ExplorePost";
 import { useInView } from "react-intersection-observer";
+import { setCurPage } from "../../../redux/reducers/explore/explorePostReducer";
 
 export const initPostList: GetListDTO = {
   paging: 1,
@@ -23,30 +24,68 @@ export const initPostList: GetListDTO = {
 const ExplorePhotoList = () => {
   const { setPostList, addPostList } = useExploreHooks();
 
-  const [curPage, setCurPage] = useState(1);
+  // const [curPage, setCurPage] = useState(1);
+  const [endPoint, setEndPoint] = useState(false);
+  const dispatch = useDispatch();
 
   const storePostList = useSelector(
     (state: RootState) => state.explorePost.postList
   );
 
-  const [ref, inView] = useInView();
+  const storeCategory = useSelector(
+    (state: RootState) => state.filter.activeCategory
+  );
+  // const storeRegion = useSelector(
+  //   (state: RootState) => state.filter.activeRegion
+  // );
+  // const storeSort = useSelector((state: RootState) => state.filter.activeSort);
+  const curPage = useSelector((state: RootState) => state.explorePost.curPage);
+
+  //화면이 전부 나와야하며, 1초 딜레이
+  const [ref, inView] = useInView({
+    threshold: 1,
+  });
 
   useEffect(() => {
     if (storePostList === null) {
       setPostList(initPostList);
     }
+
     // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     console.log("무한 스크롤 방지 테스트 ");
-    if (inView) {
-      setCurPage(curPage + 1);
+    console.log(curPage);
 
-      console.log("테스트 " + curPage);
+    if (inView && !endPoint) {
+      dispatch(setCurPage(curPage + 1));
 
+      addPostFunc(curPage);
+    }
+    // eslint-disable-next-line
+  }, [inView]);
+
+  const addPostFunc = async (value: number) => {
+    if (storeCategory) {
+      const number = categorySet.values.indexOf(storeCategory);
       const addData: GetListDTO = {
-        paging: curPage,
+        paging: value + 1,
+        pagingNumber: 8,
+        searchType: "KEYWORD",
+        keyword: null,
+        sortBy: "RECENT",
+        concept: categorySet.key[number],
+        region: null,
+      };
+
+      const result = await addPostList(addData);
+      if (result === 0) {
+        setEndPoint(true);
+      }
+    } else {
+      const addData: GetListDTO = {
+        paging: value + 1,
         pagingNumber: 8,
         searchType: "KEYWORD",
         keyword: null,
@@ -55,10 +94,12 @@ const ExplorePhotoList = () => {
         region: null,
       };
 
-      addPostList(addData);
+      const result = await addPostList(addData);
+      if (result === 0) {
+        setEndPoint(true);
+      }
     }
-    // eslint-disable-next-line
-  }, [inView]);
+  };
 
   return (
     <div className={styles.photoZone}>
@@ -69,8 +110,8 @@ const ExplorePhotoList = () => {
           </div>
         ) : (
           storePostList.map((item) => (
-            <div key={item.postId} className={styles.card}>
-              <MainPhotoCard key={item.postId} item={item} />
+            <div key={item.postId + "xx"} className={styles.card}>
+              <MainPhotoCard item={item} />
             </div>
           ))
         )
@@ -80,7 +121,7 @@ const ExplorePhotoList = () => {
       )}
 
       <div ref={ref} className={styles.wait}>
-        <CircularProgress color="success" />
+        테스트?ActionBtn
       </div>
     </div>
   );

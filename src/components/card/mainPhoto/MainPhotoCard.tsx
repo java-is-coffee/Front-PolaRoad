@@ -18,7 +18,7 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
       <img
         loading="lazy"
         alt="카드 이미지"
-        src={item.images[0]}
+        src="한옥.jpg"
         className={styles.mainPhoto}
       />
       <div className={styles.photoInfo}>

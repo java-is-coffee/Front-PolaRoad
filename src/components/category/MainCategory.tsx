@@ -10,21 +10,24 @@ import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import TuneIcon from "@mui/icons-material/Tune";
 import { useModal } from "../../hooks/modal/ModalProvider";
 import ModalOption from "../../enum/modalOptionTypes";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
 import CategoryType from "../../enum/categoryOptionType";
 import useExploreHooks from "../../hooks/explore/useExploreHooks";
-import { switchCategory } from "../../redux/reducers/explore/setCategoryReducer";
+import { switchCategory } from "../../redux/reducers/explore/filterReducer";
 import { initPostList } from "components/grid/explorePhotoList/ExplorePhotoList";
-import { GetListDTO } from "interface/explore/ExplorePost";
+import { categorySet, GetListDTO } from "interface/explore/ExplorePost";
+
+import { setCurPage } from "../../redux/reducers/explore/explorePostReducer";
 
 const MainCategory = () => {
   const storeCategory = useSelector(
-    (state: RootState) => state.setCategory.activeCategory
+    (state: RootState) => state.filter.activeCategory
   );
 
   const categoryList = Object.values(CategoryType);
-  const categoryKeys = Object.keys(CategoryType);
+  // const categoryKeys = Object.keys(CategoryType);
+  const curPage = useSelector((state: RootState) => state.explorePost.curPage);
 
   const { SetItem } = useExploreHooks();
 
@@ -36,26 +39,34 @@ const MainCategory = () => {
     openModal(ModalOption.SEARCH);
   };
 
+  const dispatch = useDispatch();
+
   const handleClick = (inputData: CategoryType) => {
     const number = categoryList.indexOf(inputData);
     const setCategoyList: GetListDTO = {
-      paging: 1,
-      pagingNumber: 12,
+      paging: curPage,
+      pagingNumber: 8,
       searchType: "KEYWORD",
       keyword: null,
       sortBy: "RECENT",
-      concept: categoryKeys[number],
-      region: "SEOUL",
+      concept: categorySet.key[number],
+      region: null,
     };
+
+    // if (categoryNumber)
+    console.log("메인");
+    console.log(setCategoyList);
 
     //이전 버튼과 같은 값일 경우 다시 원상 복귀 initPostList는 ExplorePhotoList에 있는 초기 값 가져와서 사용
 
     if (inputData === storeCategory) {
       SetItem(switchCategory(null));
       setPostList(initPostList);
+      dispatch(setCurPage(1));
     } else {
       SetItem(switchCategory(inputData));
       setPostList(setCategoyList);
+      dispatch(setCurPage(1));
     }
   };
 

@@ -1,6 +1,6 @@
-import { useEffect } from "react";
-import ModalOption from "../../../enum/modalOptionTypes";
-import { useModal } from "../../../hooks/modal/ModalProvider";
+// import { useEffect } from "react";
+// import ModalOption from "../../../enum/modalOptionTypes";
+// import { useModal } from "../../../hooks/modal/ModalProvider";
 import dropdownStyles from "./UserInfoDropDown.module.css";
 import useLogin from "hooks/login/useLogin";
 
@@ -21,7 +21,7 @@ function UserInfoDropdown({
   };
 
   return (
-    <div className={dropdownStyles.outSide}>
+    <div className={dropdownStyles.outSide} onClick={handleBackdropClick}>
       <div className={dropdownStyles.item} onClick={MyPage}>
         마이 페이지
       </div>
