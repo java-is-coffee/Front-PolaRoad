@@ -96,16 +96,16 @@ function NewPostModal() {
     }
   };
 
-  const handleUploadPost = () => {
+  const handleUploadButtonClick = () => {
     if (postDetails.title) {
       dispatch(setRoutePoint());
-      uploadPost();
+      submitPostToServer();
     } else {
       toast.error("제목은 필수항목입니다.");
     }
   };
 
-  const uploadPost = async () => {
+  const submitPostToServer = async () => {
     const result = await postNewPost(postDetails);
     if (result) {
       dispatch(resetPostDetails());
@@ -131,7 +131,7 @@ function NewPostModal() {
             {postFormIndex < formComponents.length - 1 ? (
               <ActionBtn name="다음" handleClick={increaseFormIndex} />
             ) : (
-              <ActionBtn name="업로드" handleClick={handleUploadPost} />
+              <ActionBtn name="업로드" handleClick={handleUploadButtonClick} />
             )}
           </div>
           <Stepper
