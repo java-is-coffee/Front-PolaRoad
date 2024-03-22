@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+// import { useState } from "react";
 import { GoBell } from "react-icons/go";
 import headerStyle from "./Header.module.css";
 // import SearchToggleBtn from "../dropDown/search/SearchToggleBtn";
@@ -12,6 +12,7 @@ import { GetListDTO } from "interface/explore/ExplorePost";
 import UserInfoDropdown from "components/dropDown/header/UserInfoDropDown";
 
 function Header() {
+  // const [isScrolled, setIsScrolled] = useState<boolean>(false);
   // const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
   const [searchInput, setSearchInput] = useState("");
@@ -28,14 +29,14 @@ function Header() {
   //     }
   //   };
 
-    // 스크롤 이벤트 리스너 추가
-    window.addEventListener("scroll", handleScroll);
+  //   // 스크롤 이벤트 리스너 추가
+  //   window.addEventListener("scroll", handleScroll);
 
-    // 컴포넌트 언마운트 시 이벤트 리스너 제거
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  //   // 컴포넌트 언마운트 시 이벤트 리스너 제거
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
 
   // const handleIsScrolled = () => {
   //   setIsScrolled(false);
@@ -64,9 +65,10 @@ function Header() {
 
   return (
     <div
-      className={`${headerStyle.header} ${
-        isScrolled ? headerStyle.scrolled : ""
-      }`}
+      className={headerStyle.header}
+      // className={`${headerStyle.header} ${
+      //   isScrolled ? headerStyle.scrolled : ""
+      // }`}
     >
       <div className={headerStyle.navigator}>
         <div className={headerStyle.headerLeft}>
@@ -75,21 +77,51 @@ function Header() {
           </div>
           <div className={headerStyle.action}>
             <span>Home</span>
-            <span>Explore</span>
             <span>Subscribe</span>
+            <span>Map</span>
             <span>New Post</span>
           </div>
         </div>
         <div className={headerStyle.userAction}>
           <div
-            className={`${headerStyle.searchToggleWrapper} ${
-              isScrolled ? headerStyle.searchVisible : ""
-            }`}
+            className={`${headerStyle.searchToggleWrapper} ${headerStyle.searchVisible}`}
           >
-            <SearchToggleBtn
+            {/* <SearchToggleBtn
               isScrolled={isScrolled}
               handleIsScrolled={handleIsScrolled}
-            />
+            /> */}
+            <form action="post" onSubmit={handleSubmit}>
+              <TextField
+                id="outlined-basic"
+                variant="outlined"
+                placeholder="ex)도보여행, #글램핑, #빵지순례"
+                fullWidth
+                value={searchInput}
+                onChange={(value: React.ChangeEvent<HTMLInputElement>) => {
+                  setSearchInput(value.target.value);
+                }}
+                required
+                sx={{
+                  ".MuiOutlinedInput-root": { fontSize: "1.3rem" },
+                  width: "20vw",
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        type="submit"
+                        edge="end"
+                        sx={{ backgroundColor: "#13c4a3", marginRight: "-1px" }}
+                      >
+                        <SearchIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </form>
+            {/* <IoSearch size={"20px"} /> */}
           </div>
           <GoBell size={"32px"} />
           <span onClick={handleModal}>
@@ -100,14 +132,6 @@ function Header() {
           </div>
         </div>
       </div>
-      {!isScrolled && (
-        <div className={headerStyle.searchToggleBtnOutside}>
-          <SearchToggleBtn
-            isScrolled={isScrolled}
-            handleIsScrolled={handleIsScrolled}
-          />
-        </div>
-      )}
     </div>
   );
 }

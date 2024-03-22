@@ -1,18 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { CookiesProvider } from "react-cookie";
+import { Provider } from "react-redux";
+import { rootReducer } from "./redux/store/store";
+import App from "./App";
+import { ModalProvider } from "./hooks/modal/ModalProvider";
+import "react-toastify/dist/ReactToastify.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <CookiesProvider>
-      <App />
-    </CookiesProvider>
+    <Provider store={rootReducer}>
+      <CookiesProvider>
+        <ModalProvider>
+          <App />
+        </ModalProvider>
+      </CookiesProvider>
+    </Provider>
   </React.StrictMode>
 );
 

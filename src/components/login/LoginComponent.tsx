@@ -2,7 +2,7 @@ import { Button, Stack, TextField, styled } from "@mui/material";
 import React, { useState } from "react";
 import styles from "./Login.module.css";
 import OauthButton from "./OauthButton";
-// import useLogin from "../../hooks/login/useLogin";
+import useLogin from "../../hooks/login/useLogin";
 import { LoginData } from "../../api/login/postLogin";
 
 //밖으로 뺸 이유. state 변경 시 리렌더링 되는데 이때, styled도 같이 다시 선언되어 할때마다 리렌더링 되어서 포커스가 자동으로 풀림.
@@ -34,16 +34,15 @@ function LoginContainer({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // const useLoginHooks = useLogin();
+  const { Login } = useLogin();
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const inputData: LoginData = {
       email: email,
       password: password,
     };
-    console.log(inputData);
-    // useLoginHooks.Login(inputData);
+    Login(inputData);
   };
 
   return (
@@ -111,7 +110,7 @@ function LoginContainer({
             fullWidth
             onClick={() => setOnRegister(true)}
           >
-            계정이 있으신가요?
+            계정이 없으신가요?
             <span style={{ color: "#13c4a3", marginLeft: "5PX" }}>
               가입하기
             </span>

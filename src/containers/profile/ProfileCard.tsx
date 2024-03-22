@@ -5,6 +5,7 @@ import UserOptionBtn from "../../components/button/user/UserOptionBtn";
 import UserActionBtn from "../../components/button/user/UserActionBtn";
 import { CgFileAdd } from "react-icons/cg";
 import { MdOutlinePhotoAlbum } from "react-icons/md";
+import ModalOption from "../../enum/modalOptionTypes";
 
 function ProfileCard() {
   const postNum = 10;
@@ -33,10 +34,15 @@ function ProfileCard() {
         <span>{`팔로우 ${followeesNum}`}</span>
       </div>
       <div className={profileStyles.username}>{username}</div>
-      <UserActionBtn name="New post" icon={<CgFileAdd size={"24px"} />} />
+      <UserActionBtn
+        name="New post"
+        icon={<CgFileAdd size={"24px"} />}
+        type={ModalOption.POST}
+      />
       <UserActionBtn
         name="New album"
         icon={<MdOutlinePhotoAlbum size={"24px"} />}
+        type={ModalOption.ALBUM}
       />
     </div>
   );
