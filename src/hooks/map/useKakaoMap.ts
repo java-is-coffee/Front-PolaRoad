@@ -55,7 +55,6 @@ const useKakaoMap = ({ latitude, longitude, level }: KakaoMapProps) => {
     if (!mapRef.current) return;
     const places = new kakao.maps.services.Places();
     places.setMap(mapRef);
-    console.log(places.set);
     places.keywordSearch(keyword, searchResult);
   };
 

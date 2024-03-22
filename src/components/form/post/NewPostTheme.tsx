@@ -11,10 +11,10 @@ import {
 
 function NewPostTheme() {
   const selectedConcept = useSelector(
-    (state: RootState) => state.newPost.concept
+    (state: RootState) => state.newPost.postDetail.concept
   );
   const selectedRegion = useSelector(
-    (state: RootState) => state.newPost.region
+    (state: RootState) => state.newPost.postDetail.region
   );
   const dispatch = useDispatch();
 
@@ -33,7 +33,7 @@ function NewPostTheme() {
         {Object.entries(conceptOptionType).map(([key, value]) => (
           <button
             className={
-              selectedConcept === value
+              selectedConcept === key
                 ? formStyles.selectedOptionBtn
                 : formStyles.optionBtn
             }
@@ -49,7 +49,7 @@ function NewPostTheme() {
         {Object.entries(regionOptionType).map(([key, value]) => (
           <button
             className={
-              selectedRegion === value
+              selectedRegion === key
                 ? formStyles.selectedOptionBtn
                 : formStyles.optionBtn
             }

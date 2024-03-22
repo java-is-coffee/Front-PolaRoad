@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import formStyles from "./NewCardList.module.css";
 import CardPaging from "components/paging/card/CardPaging";
 import CardForm from "./CardForm";
@@ -8,16 +8,20 @@ import {
   addCardBack,
   addCardFront,
 } from "../../../redux/reducers/newPost/newPostReducers";
+import { validateCardDetails } from "utils/card/validateCardDetails";
 
 const NewCardDetails = () => {
   // cardList 관련 리덕스
-  const cardList = useSelector((state: RootState) => state.newPost.cards);
+  const cardList = useSelector(
+    (state: RootState) => state.newPost.postDetail.cards
+  );
   const dispatch = useDispatch();
   // 인덱스 & 캐러셀 설정
   const [activeIndex, setActiveIndex] = useState(0);
   const cardCarousel = useRef<HTMLDivElement>(null);
 
   const increaseIndex = () => {
+    if (!validateCardDetails(cardList[activeIndex])) return;
     if (activeIndex + 1 === cardList.length) {
       dispatch(addCardBack());
     }
@@ -25,6 +29,7 @@ const NewCardDetails = () => {
   };
 
   const decreaseIndex = () => {
+    if (!validateCardDetails(cardList[activeIndex])) return;
     if (activeIndex - 1 < 0) {
       dispatch(addCardFront());
     } else {
@@ -32,7 +37,13 @@ const NewCardDetails = () => {
     }
   };
 
-  if (!cardList) return null;
+  if (!cardList) {
+    dispatch(addCardBack());
+  }
+  useEffect(() => {
+    if (cardList.length - 1 < activeIndex) setActiveIndex(cardList.length - 1);
+    //eslint-disable-next-line
+  }, [cardList.length]);
 
   return (
     <div className={formStyles.formWrapper}>
@@ -41,12 +52,16 @@ const NewCardDetails = () => {
           className={formStyles.cardList}
           ref={cardCarousel}
           style={{
-            transform: `translate3d(${activeIndex * -600}px, 0, 0)`,
+            transform: `translate3d(${activeIndex * -750}px, 0, 0)`,
           }}
         >
           {cardList.map((card, index) => {
             return (
-              <CardForm key={index} cardIndex={index} cardDetails={card} />
+              <CardForm
+                key={card.cardId}
+                cardIndex={index}
+                cardDetails={card}
+              />
             );
           })}
         </div>

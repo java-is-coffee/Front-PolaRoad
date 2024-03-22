@@ -5,14 +5,18 @@ export const useSingleCard = (initialCard: INewCard) => {
   const [newCard, setNewCard] = useState<INewCard>(initialCard);
 
   const handleImageChange = (imageUrl: string) => {
-    setNewCard({ ...newCard, imageUrl: imageUrl });
+    setNewCard({ ...newCard, image: imageUrl });
+  };
+
+  const handleImageRemove = () => {
+    setNewCard({ ...newCard, image: undefined });
   };
 
   const handlePlaceChange = (place: any) => {
     if (!place) return;
     setNewCard({
       ...newCard,
-      location: place.addressName,
+      location: place.address_name,
       latitude: place.x,
       longitude: place.y,
     });
@@ -29,5 +33,6 @@ export const useSingleCard = (initialCard: INewCard) => {
     handleImageChange,
     handleContentsChange,
     handlePlaceChange,
+    handleImageRemove,
   };
 };

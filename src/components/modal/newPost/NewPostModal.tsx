@@ -11,7 +11,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "redux/store/store";
 import INewPost from "interface/post/INewPost";
 import { toast } from "react-toastify";
-import { setPostId } from "../../../redux/reducers/newPost/newPostReducers";
+import {
+  filterCardNoneImage,
+  resetPostDetails,
+  setPostId,
+  setRoutePoint,
+} from "../../../redux/reducers/newPost/newPostReducers";
+import { QontoConnector, QontoStepIcon } from "./QontoStepStyle";
+import postNewPost from "api/post/postNewPost";
+import { validateCardList } from "utils/card/validateCardDetails";
 
 interface FormComponentsType {
   name: string;
@@ -25,28 +33,13 @@ const formComponents: FormComponentsType[] = [
 ];
 
 function NewPostModal() {
-  const { openModal } = useModal();
+  const { openModal, closeModal } = useModal();
   const [postFormIndex, setPostFormIndex] = useState<number>(0);
   const postDetails: INewPost = useSelector(
-    (state: RootState) => state.newPost
+    (state: RootState) => state.newPost.postDetail
   );
   const modalRef = useRef<HTMLDivElement>(null); // 모달 DOM에 접근하기 위한 ref
   const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   const modal = modalRef.current;
-  //   console.log(postFormIndex);
-  //   if (modal) {
-  //     // 모달의 최대 크기를 현재 컨텐츠 크기에 기반하여 설정
-  //     const contentWidth = modal.offsetWidth; // 첫 번째 자식 요소의 너비
-  //     const contentHeight = modal.offsetHeight; // 첫 번째 자식 요소의 높이
-  //     console.log(contentHeight);
-  //     console.log(contentWidth);
-  //     modalContent의 스타일을 업데이트하여 transition 효과 적용
-  //     modal.style.width = `${contentWidth}px`;
-  //     modal.style.height = `${contentHeight}px`;
-  //   }
-  // }, [postFormIndex]);
 
   // Esc 눌렀을때 모달 탈출n
   const handleKeyUp = (event: KeyboardEvent) => {
@@ -84,9 +77,11 @@ function NewPostModal() {
           toast.error("theme 와 region은 필수 항목입니다.");
         }
       } else if (postFormIndex === 1) {
-        console.log(postDetails.cards);
         if (postDetails.cards) {
-          setPostFormIndex((prev) => prev + 1);
+          dispatch(filterCardNoneImage());
+          if (validateCardList(postDetails.cards)) {
+            setPostFormIndex((prev) => prev + 1);
+          }
         } else {
           toast.error("최소 하나의 카드를 입력해주세요");
         }
@@ -101,7 +96,22 @@ function NewPostModal() {
     }
   };
 
-  const handleUploadPost = () => {};
+  const handleUploadButtonClick = () => {
+    if (postDetails.title) {
+      dispatch(setRoutePoint());
+      submitPostToServer();
+    } else {
+      toast.error("제목은 필수항목입니다.");
+    }
+  };
+
+  const submitPostToServer = async () => {
+    const result = await postNewPost(postDetails);
+    if (result) {
+      dispatch(resetPostDetails());
+      closeModal(ModalOption.POST);
+    }
+  };
 
   return (
     <div className={modalStyles.modalBackdrop} onClick={handleBackdropClick}>
@@ -121,13 +131,27 @@ function NewPostModal() {
             {postFormIndex < formComponents.length - 1 ? (
               <ActionBtn name="다음" handleClick={increaseFormIndex} />
             ) : (
-              <ActionBtn name="업로드" handleClick={handleUploadPost} />
+              <ActionBtn name="업로드" handleClick={handleUploadButtonClick} />
             )}
           </div>
-          <Stepper alternativeLabel activeStep={postFormIndex}>
+          <Stepper
+            alternativeLabel
+            activeStep={postFormIndex}
+            connector={<QontoConnector />}
+          >
             {formComponents.map((Component, index) => (
               <Step key={index}>
-                <StepLabel>{Component.name}</StepLabel>
+                <StepLabel
+                  StepIconComponent={QontoStepIcon}
+                  sx={{
+                    ".MuiStepLabel-label": {
+                      fontWeight: "500",
+                      fontSize: "1.4rem",
+                    },
+                  }}
+                >
+                  {Component.name}
+                </StepLabel>
               </Step>
             ))}
           </Stepper>
