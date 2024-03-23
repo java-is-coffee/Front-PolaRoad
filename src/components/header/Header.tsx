@@ -2,23 +2,32 @@
 import { GoBell } from "react-icons/go";
 import headerStyle from "./Header.module.css";
 // import SearchToggleBtn from "../dropDown/search/SearchToggleBtn";
-import { Avatar, IconButton, InputAdornment, TextField } from "@mui/material";
+import {
+  Avatar,
+  Button,
+  IconButton,
+  InputAdornment,
+  TextField,
+} from "@mui/material";
 // import { IoSearch } from "react-icons/io5";
 import SearchIcon from "@mui/icons-material/Search";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useExploreHooks from "hooks/explore/useExploreHooks";
 import { GetListDTO } from "interface/explore/ExplorePost";
 import UserInfoDropdown from "components/dropDown/header/UserInfoDropDown";
+import secureLocalStorage from "react-secure-storage";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
-  // const [isScrolled, setIsScrolled] = useState<boolean>(false);
-  // const [isScrolled, setIsScrolled] = useState<boolean>(false);
-
   const [searchInput, setSearchInput] = useState("");
   const { setPostList } = useExploreHooks();
 
   const [openModal, setOpenModal] = useState(false);
+
+  const [isLogin, setIsLogin] = useState(false);
+
+  const navigate = useNavigate();
 
   // useEffect(() => {
   //   const handleScroll = () => {
@@ -42,6 +51,15 @@ function Header() {
   //   setIsScrolled(false);
   // };
 
+  useEffect(() => {
+    if (secureLocalStorage.getItem("accessToken")) {
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+    //eslint-disable-next-line
+  }, []);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -61,6 +79,10 @@ function Header() {
   const handleModal = () => {
     if (openModal === true) setOpenModal(false);
     else setOpenModal(true);
+  };
+
+  const goLogin = () => {
+    navigate("/login");
   };
 
   return (
@@ -123,10 +145,24 @@ function Header() {
             </form>
             {/* <IoSearch size={"20px"} /> */}
           </div>
-          <GoBell size={"32px"} />
-          <span onClick={handleModal}>
-            <Avatar alt="Travis Howard" src="icons/favicon-32x32.png" />
-          </span>
+
+          {isLogin ? (
+            <>
+              <GoBell size={"32px"} />
+              <span onClick={handleModal}>
+                <Avatar alt="Travis Howard" src="icons/favicon-32x32.png" />
+              </span>
+            </>
+          ) : (
+            <Button
+              variant="text"
+              sx={{ fontSize: "1.5rem", color: "#13c4a3" }}
+              onClick={goLogin}
+            >
+              로그인
+            </Button>
+          )}
+
           <div style={{ position: "static" }}>
             {openModal ? <UserInfoDropdown setOpenModal={setOpenModal} /> : ""}
           </div>
