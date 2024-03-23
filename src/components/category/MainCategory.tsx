@@ -15,10 +15,12 @@ import { RootState } from "../../redux/store/store";
 import CategoryType from "../../enum/categoryOptionType";
 import useExploreHooks from "../../hooks/explore/useExploreHooks";
 import { switchCategory } from "../../redux/reducers/explore/filterReducer";
-import { initPostList } from "components/grid/explorePhotoList/ExplorePhotoList";
 import { categorySet, GetListDTO } from "interface/explore/ExplorePost";
 
-import { setCurPage } from "../../redux/reducers/explore/explorePostReducer";
+import {
+  setCurPage,
+  setEndPoint,
+} from "../../redux/reducers/explore/explorePostReducer";
 
 const MainCategory = () => {
   const storeCategory = useSelector(
@@ -26,8 +28,6 @@ const MainCategory = () => {
   );
 
   const categoryList = Object.values(CategoryType);
-  // const categoryKeys = Object.keys(CategoryType);
-  const curPage = useSelector((state: RootState) => state.explorePost.curPage);
 
   const { SetItem } = useExploreHooks();
 
@@ -41,10 +41,20 @@ const MainCategory = () => {
 
   const dispatch = useDispatch();
 
+  const initPostDTO: GetListDTO = {
+    paging: 1,
+    pagingNumber: 8,
+    searchType: "KEYWORD",
+    keyword: null,
+    sortBy: "RECENT",
+    concept: null,
+    region: null,
+  };
+
   const handleClick = (inputData: CategoryType) => {
     const number = categoryList.indexOf(inputData);
     const setCategoyList: GetListDTO = {
-      paging: curPage,
+      paging: 1,
       pagingNumber: 8,
       searchType: "KEYWORD",
       keyword: null,
@@ -60,13 +70,16 @@ const MainCategory = () => {
     //이전 버튼과 같은 값일 경우 다시 원상 복귀 initPostList는 ExplorePhotoList에 있는 초기 값 가져와서 사용
 
     if (inputData === storeCategory) {
+      //카테고리 미선택 상태
       SetItem(switchCategory(null));
-      setPostList(initPostList);
+      setPostList(initPostDTO);
       dispatch(setCurPage(1));
+      dispatch(setEndPoint(false));
     } else {
       SetItem(switchCategory(inputData));
       setPostList(setCategoyList);
       dispatch(setCurPage(1));
+      dispatch(setEndPoint(false));
     }
   };
 

@@ -5,12 +5,14 @@ import { PostData } from "interface/explore/ExplorePost";
 interface postList {
   postList: PostData[] | null;
   curPage: number;
+  endPoint: boolean;
 }
 
 // 초기 상태
 const initialState: postList = {
   postList: null,
   curPage: 1,
+  endPoint: false,
 };
 
 const explorePost = createSlice({
@@ -27,10 +29,17 @@ const explorePost = createSlice({
     setCurPage: (state, action: PayloadAction<number>) => {
       state.curPage = action.payload;
     },
+    setEndPoint: (state, action: PayloadAction<boolean>) => {
+      state.endPoint = action.payload;
+    },
   },
 });
 
 // 액션 생성자와 리듀서 내보내기
-export const { setExplorePostList, addExplorePostList, setCurPage } =
-  explorePost.actions;
+export const {
+  setExplorePostList,
+  addExplorePostList,
+  setCurPage,
+  setEndPoint,
+} = explorePost.actions;
 export default explorePost.reducer;

@@ -1,15 +1,23 @@
 // import { ImageList, ImageListItem, ImageListItemBar } from "@mui/material";
 // import MainPhotoCard from "../../card/mainPhoto/MainPhotoCard";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import MainPhotoCard from "../../card/mainPhoto/MainPhotoCard";
 import styles from "./ExplorePhotoList.module.css";
 import useExploreHooks from "../../../hooks/explore/useExploreHooks";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "redux/store/store";
 import { CircularProgress } from "@mui/material";
-import { categorySet, GetListDTO } from "interface/explore/ExplorePost";
+import {
+  categorySet,
+  GetListDTO,
+  regionSet,
+  sortSet,
+} from "interface/explore/ExplorePost";
 import { useInView } from "react-intersection-observer";
-import { setCurPage } from "../../../redux/reducers/explore/explorePostReducer";
+import {
+  setCurPage,
+  setEndPoint,
+} from "../../../redux/reducers/explore/explorePostReducer";
 
 export const initPostList: GetListDTO = {
   paging: 1,
@@ -25,21 +33,26 @@ const ExplorePhotoList = () => {
   const { setPostList, addPostList } = useExploreHooks();
 
   // const [curPage, setCurPage] = useState(1);
-  const [endPoint, setEndPoint] = useState(false);
   const dispatch = useDispatch();
 
   const storePostList = useSelector(
     (state: RootState) => state.explorePost.postList
   );
 
+  const storeEndPoint = useSelector(
+    (state: RootState) => state.explorePost.endPoint
+  );
+
   const storeCategory = useSelector(
     (state: RootState) => state.filter.activeCategory
   );
-  // const storeRegion = useSelector(
-  //   (state: RootState) => state.filter.activeRegion
-  // );
-  // const storeSort = useSelector((state: RootState) => state.filter.activeSort);
-  const curPage = useSelector((state: RootState) => state.explorePost.curPage);
+  const storeRegion = useSelector(
+    (state: RootState) => state.filter.activeRegion
+  );
+  const storeSort = useSelector((state: RootState) => state.filter.activeSort);
+  const storeCurPage = useSelector(
+    (state: RootState) => state.explorePost.curPage
+  );
 
   //화면이 전부 나와야하며, 1초 딜레이
   const [ref, inView] = useInView({
@@ -56,48 +69,42 @@ const ExplorePhotoList = () => {
 
   useEffect(() => {
     console.log("무한 스크롤 방지 테스트 ");
-    console.log(curPage);
+    console.log(storeCurPage);
 
-    if (inView && !endPoint) {
-      dispatch(setCurPage(curPage + 1));
+    if (inView && !storeEndPoint) {
+      dispatch(setCurPage(storeCurPage + 1));
 
-      addPostFunc(curPage);
+      addPostFunc(storeCurPage);
     }
     // eslint-disable-next-line
-  }, [inView]);
+  }, [inView, storeEndPoint]);
 
   const addPostFunc = async (value: number) => {
-    if (storeCategory) {
-      const number = categorySet.values.indexOf(storeCategory);
-      const addData: GetListDTO = {
-        paging: value + 1,
-        pagingNumber: 8,
-        searchType: "KEYWORD",
-        keyword: null,
-        sortBy: "RECENT",
-        concept: categorySet.key[number],
-        region: null,
-      };
+    console.log(storeRegion);
 
-      const result = await addPostList(addData);
-      if (result === 0) {
-        setEndPoint(true);
-      }
-    } else {
-      const addData: GetListDTO = {
-        paging: value + 1,
-        pagingNumber: 8,
-        searchType: "KEYWORD",
-        keyword: null,
-        sortBy: "RECENT",
-        concept: null,
-        region: null,
-      };
+    const categoryNumber = storeCategory
+      ? categorySet.values.indexOf(storeCategory)
+      : null;
+    const regionNumber = storeRegion
+      ? regionSet.values.indexOf(storeRegion)
+      : null;
+    const sortNumber = storeSort ? sortSet.values.indexOf(storeSort) : null;
 
-      const result = await addPostList(addData);
-      if (result === 0) {
-        setEndPoint(true);
-      }
+    console.log(regionNumber);
+
+    const addData: GetListDTO = {
+      paging: value + 1,
+      pagingNumber: 8,
+      searchType: "KEYWORD",
+      keyword: null,
+      sortBy: sortNumber !== null ? sortSet.key[sortNumber] : "RECENT",
+      concept: categoryNumber !== null ? categorySet.key[categoryNumber] : null,
+      region: regionNumber !== null ? regionSet.key[regionNumber] : null,
+    };
+
+    const result = await addPostList(addData);
+    if (result === 0) {
+      dispatch(setEndPoint(true));
     }
   };
 

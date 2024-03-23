@@ -7,7 +7,7 @@ import RegionOptionType from "../../../enum/filter/RegionType";
 import SortOptionType from "../../../enum/filter/SortOptionType";
 import useExploreHooks from "../../../hooks/explore/useExploreHooks";
 import { RootState } from "../../../redux/store/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   switchCategory,
   switchRegion,
@@ -15,6 +15,10 @@ import {
 } from "../../../redux/reducers/explore/filterReducer";
 import { Button } from "@mui/material";
 import { GetListDTO } from "interface/explore/ExplorePost";
+import {
+  setCurPage,
+  setEndPoint,
+} from "../../../redux/reducers/explore/explorePostReducer";
 
 function SearchDropdown() {
   const { closeModal } = useModal();
@@ -69,6 +73,8 @@ function SearchDropdown() {
     (state: RootState) => state.filter.activeRegion
   );
 
+  const dispatch = useDispatch();
+
   const handleClick = (inputData: any, aboutFilter: string) => {
     if (aboutFilter === "정렬") {
       if (inputData === storeSort) {
@@ -104,7 +110,7 @@ function SearchDropdown() {
 
     const setCategoyList: GetListDTO = {
       paging: 1,
-      pagingNumber: 12,
+      pagingNumber: 8,
       searchType: "KEYWORD",
       keyword: null,
       sortBy: sortNumber !== null ? sortSet.key[sortNumber] : "RECENT",
@@ -113,6 +119,8 @@ function SearchDropdown() {
     };
 
     setPostList(setCategoyList);
+    dispatch(setCurPage(1));
+    dispatch(setEndPoint(false));
     closeModal(ModalOption.SEARCH);
   };
 
