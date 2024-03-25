@@ -16,8 +16,6 @@ function Header() {
   const [searchInput, setSearchInput] = useState("");
   const { setPostList } = useExploreHooks();
 
-  const navigate = useNavigate();
-
   // useEffect(() => {
   //   const handleScroll = () => {
   //     if (window.scrollY > 20) {

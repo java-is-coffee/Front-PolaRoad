@@ -16,7 +16,6 @@ import CategoryType from "../../enum/categoryOptionType";
 import useExploreHooks from "../../hooks/explore/useExploreHooks";
 import { switchCategory } from "../../redux/reducers/explore/filterReducer";
 import { categorySet, GetListDTO } from "interface/explore/ExplorePost";
-
 import {
   setCurPage,
   setEndPoint,
