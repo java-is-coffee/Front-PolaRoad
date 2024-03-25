@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import ModalOption from "../../../enum/modalOptionTypes";
 import { useModal } from "../../../hooks/modal/ModalProvider";
 import dropdownStyles from "./SearchDropdown.module.css";
@@ -7,7 +7,7 @@ import RegionOptionType from "../../../enum/filter/RegionType";
 import SortOptionType from "../../../enum/filter/SortOptionType";
 import useExploreHooks from "../../../hooks/explore/useExploreHooks";
 import { RootState } from "../../../redux/store/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   switchCategory,
   switchRegion,
@@ -15,19 +15,33 @@ import {
 } from "../../../redux/reducers/explore/filterReducer";
 import { Button } from "@mui/material";
 import { GetListDTO } from "interface/explore/ExplorePost";
+import {
+  setCurPage,
+  setEndPoint,
+} from "../../../redux/reducers/explore/explorePostReducer";
 
 function SearchDropdown() {
   const { closeModal } = useModal();
   const { setPostList } = useExploreHooks();
 
-  const sortList = Object.values(SortOptionType);
-  const categoryList = Object.values(CategoryType);
-  const regionList = Object.values(RegionOptionType);
-  const sortKeys = Object.keys(SortOptionType);
-  const categoryKeys = Object.keys(CategoryType);
-  const regionKeys = Object.keys(RegionOptionType);
+  const { sortSet, categorySet, regionSet } = useMemo(
+    () => ({
+      sortSet: {
+        key: Object.keys(SortOptionType),
+        values: Object.values(SortOptionType),
+      },
+      categorySet: {
+        key: Object.keys(CategoryType),
+        values: Object.values(CategoryType),
+      },
+      regionSet: {
+        key: Object.keys(RegionOptionType),
+        values: Object.values(RegionOptionType),
+      },
+    }),
+    []
+  );
 
-  // const FormComponent = formComponents[postFormIndex];
   // Esc 눌렀을때 모달 탈출
   const handleKeyUp = (event: KeyboardEvent) => {
     if (event.key === "Escape") {
@@ -59,6 +73,8 @@ function SearchDropdown() {
     (state: RootState) => state.filter.activeRegion
   );
 
+  const dispatch = useDispatch();
+
   const handleClick = (inputData: any, aboutFilter: string) => {
     if (aboutFilter === "정렬") {
       if (inputData === storeSort) {
@@ -84,23 +100,27 @@ function SearchDropdown() {
   };
 
   const handleSubmit = () => {
-    const sortNumber = storeSort ? sortList.indexOf(storeSort) : null;
+    const sortNumber = storeSort ? sortSet.values.indexOf(storeSort) : null;
     const categoryNumber = storeCategory
-      ? categoryList.indexOf(storeCategory)
+      ? categorySet.values.indexOf(storeCategory)
       : null;
-    const regionNumber = storeRegion ? regionList.indexOf(storeRegion) : null;
+    const regionNumber = storeRegion
+      ? regionSet.values.indexOf(storeRegion)
+      : null;
 
     const setCategoyList: GetListDTO = {
       paging: 1,
-      pagingNumber: 12,
+      pagingNumber: 8,
       searchType: "KEYWORD",
       keyword: null,
-      sortBy: sortNumber !== null ? sortKeys[sortNumber] : "RECENT",
-      concept: categoryNumber !== null ? categoryKeys[categoryNumber] : null,
-      region: regionNumber !== null ? regionKeys[regionNumber] : null,
+      sortBy: sortNumber !== null ? sortSet.key[sortNumber] : "RECENT",
+      concept: categoryNumber !== null ? categorySet.key[categoryNumber] : null,
+      region: regionNumber !== null ? regionSet.key[regionNumber] : null,
     };
 
     setPostList(setCategoyList);
+    dispatch(setCurPage(1));
+    dispatch(setEndPoint(false));
     closeModal(ModalOption.SEARCH);
   };
 
@@ -115,7 +135,7 @@ function SearchDropdown() {
         <div className={dropdownStyles.option}>
           <div className={dropdownStyles.title}>정렬</div>
           <div className={dropdownStyles.list}>
-            {sortList.map((item) => (
+            {sortSet.values.map((item) => (
               <div
                 className={`${dropdownStyles.item} ${
                   storeSort === item ? dropdownStyles.selected : ""
@@ -135,7 +155,7 @@ function SearchDropdown() {
         <div className={dropdownStyles.option}>
           <div className={dropdownStyles.title}>카테고리</div>
           <div className={dropdownStyles.list}>
-            {categoryList.map((item) => (
+            {categorySet.values.map((item) => (
               <div
                 className={`${dropdownStyles.item} ${
                   storeCategory === item ? dropdownStyles.selected : ""
@@ -154,7 +174,7 @@ function SearchDropdown() {
         <div className={dropdownStyles.option}>
           <div className={dropdownStyles.title}>지역</div>
           <div className={dropdownStyles.list}>
-            {regionList.map((item) => (
+            {regionSet.values.map((item) => (
               <div
                 className={`${dropdownStyles.item} ${
                   storeRegion === item ? dropdownStyles.selected : ""

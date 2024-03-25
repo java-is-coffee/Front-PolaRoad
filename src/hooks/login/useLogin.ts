@@ -22,7 +22,16 @@ const useLogin = () => {
     }
   };
 
-  return { Login };
+  const LogOut = () => {
+    secureLocalStorage.clear();
+    navigate("/login");
+  };
+
+  const MyPage = () => {
+    navigate("/my");
+  };
+
+  return { Login, LogOut, MyPage };
 };
 
 export default useLogin;
