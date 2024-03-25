@@ -6,23 +6,40 @@ import INewCard from "interface/card/INewCard";
 import uuid from "react-uuid";
 
 const initCard: INewCard = {
+  cardId: "",
+  cardIndex: null,
   location: null,
   latitude: null,
   longitude: null,
-  imageUrl: undefined,
+  image: undefined,
   content: null,
 };
 
-const initialState: INewPost = {
+interface PostDetailType {
+  postId: string | null;
+  postDetail: INewPost;
+}
+
+const initialState: PostDetailType = {
   postId: null,
-  title: null,
-  routePoint: null,
-  thumbnailIndex: null,
-  concept: null,
-  region: null,
-  cards: [initCard],
-  hashtags: [],
+  postDetail: {
+    title: null,
+    routePoint: null,
+    thumbnailIndex: null,
+    concept: null,
+    region: null,
+    cards: [initCard],
+    hashtags: [],
+  },
 };
+
+function getEnumKeyByEnumValue<T extends { [index: string]: string }>(
+  myEnum: T,
+  enumValue: string
+): string | null {
+  let keys = Object.keys(myEnum).filter((x) => myEnum[x] === enumValue);
+  return keys.length > 0 ? keys[0] : null;
+}
 
 const newPost = createSlice({
   name: "newPost",
@@ -30,34 +47,68 @@ const newPost = createSlice({
   reducers: {
     setPostId: (state) => {
       state.postId = uuid();
-      console.log(state.postId);
+    },
+    setTitle: (state, action: PayloadAction<string>) => {
+      state.postDetail.title = action.payload;
     },
     setConcept: (state, action: PayloadAction<conceptOptionType>) => {
-      state.concept = action.payload;
+      const conceptKey = getEnumKeyByEnumValue(
+        conceptOptionType,
+        action.payload
+      );
+      state.postDetail.concept = conceptKey;
     },
     setRegion: (state, action: PayloadAction<regionOptionType>) => {
-      state.region = action.payload;
+      const regionKey = getEnumKeyByEnumValue(regionOptionType, action.payload);
+      state.postDetail.region = regionKey;
+    },
+    setThumbnail: (state, action: PayloadAction<number>) => {
+      state.postDetail.thumbnailIndex = action.payload;
+    },
+    setRoutePoint: (state) => {
+      const routePointDate = state.postDetail.cards
+        .filter((card) => card.latitude && card.longitude)
+        .map((card) => ({
+          latitude: card.latitude,
+          longitude: card.longitude,
+        }));
+      state.postDetail.routePoint = JSON.stringify(routePointDate);
     },
     updateCardAtIndex: (
       state,
       action: PayloadAction<{ index: number; newCard: INewCard }>
     ) => {
       const { index, newCard } = action.payload;
-      if (index >= 0 && index < state.cards.length) {
-        state.cards[index] = { ...state.cards[index], ...newCard };
+      if (index >= 0 && index < state.postDetail.cards.length) {
+        state.postDetail.cards[index] = {
+          ...state.postDetail.cards[index],
+          ...newCard,
+        };
       }
     },
+    filterCardNoneImage: (state) => {
+      state.postDetail.cards = state.postDetail.cards.filter(
+        (card) => card.image
+      );
+    },
+    removeCardByIndex: (state, action: PayloadAction<number>) => {
+      state.postDetail.cards = state.postDetail.cards.filter(
+        (card, index) => index !== action.payload
+      );
+    },
     addCardFront: (state) => {
-      state.cards.unshift({ ...initCard });
+      state.postDetail.cards.unshift({ ...initCard, cardId: uuid() });
     },
     addCardBack: (state) => {
-      state.cards.push({ ...initCard });
+      state.postDetail.cards.push({ ...initCard, cardId: uuid() });
     },
     addHashTags: (state, action: PayloadAction<string>) => {
-      state.hashtags.push(action.payload);
+      state.postDetail.hashtags.push(action.payload);
     },
     removeHashTags: (state, action: PayloadAction<string>) => {
-      state.hashtags.filter((hashTag) => hashTag !== action.payload);
+      state.postDetail.hashtags = state.postDetail.hashtags.filter(
+        (hashTag) => hashTag !== action.payload
+      );
     },
     resetPostDetails: (state) => {
       return initialState;
@@ -68,9 +119,14 @@ const newPost = createSlice({
 // 액션 생성자와 리듀서 내보내기
 export const {
   setPostId,
+  setTitle,
   setConcept,
+  setThumbnail,
   setRegion,
+  setRoutePoint,
   updateCardAtIndex,
+  filterCardNoneImage,
+  removeCardByIndex,
   addCardFront,
   addCardBack,
   addHashTags,

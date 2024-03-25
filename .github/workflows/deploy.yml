@@ -1,12 +1,13 @@
-name: web CI
+name: Deploy
 
 on:
   push:
-    branches: [main, develop]
+    branches: [main]
   pull_request:
-    branches: [main, develop]
+    branches: [main]
+
 jobs:
-  build-and-test:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,27 +25,6 @@ jobs:
           echo "REACT_APP_BUCKET_ACCESS_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> .env
           echo "REACT_APP_BUCKET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env
           echo "REACT_APP_BUCKET_BASEURL=https://polaroad-images.s3.ap-northeast-2.amazonaws.com" >> .env
-
-      - name: Install Dependencies
-        run: npm install
-
-      - name: Build
-        run: npm run build
-
-      - name: Check Docker build
-        run: docker build .
-
-  deploy:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: "20"
 
       - name: Install Dependencies
         run: npm install

@@ -9,12 +9,14 @@ import { GetListDTO } from "interface/explore/ExplorePost";
 import { useNavigate } from "react-router-dom";
 
 function Header() {
-  // const [isScrolled, setIsScrolled] = useState<boolean>(false);
-
-  const navigate = useNavigate();
-
   const [searchInput, setSearchInput] = useState("");
   const { setPostList } = useExploreHooks();
+
+  const [openModal, setOpenModal] = useState(false);
+
+  const [isLogin, setIsLogin] = useState(false);
+
+  const navigate = useNavigate();
 
   // useEffect(() => {
   //   const handleScroll = () => {

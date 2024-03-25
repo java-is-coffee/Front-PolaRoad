@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export interface RefreshData {
-  refreshToken: string;
+  refreshToken: string | number | boolean | object | null;
 }
 
 export interface RefreshDTO {

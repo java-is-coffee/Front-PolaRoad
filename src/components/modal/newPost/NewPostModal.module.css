@@ -29,7 +29,7 @@
   background-color: white;
   border-radius: 8px;
   overflow: auto;
-  transition: all 2s ease;
+  transition: all 0.2s ease;
   border: 1px solid #ccc;
 }
 

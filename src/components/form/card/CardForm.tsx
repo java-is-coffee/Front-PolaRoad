@@ -10,6 +10,7 @@ import useBucket from "hooks/bucket/useBucket";
 import { RootState } from "redux/store/store";
 import { IUploadImage } from "interface/bucket/IUploadImage";
 import { toast } from "react-toastify";
+import { IoMdCloseCircle } from "react-icons/io";
 
 declare global {
   interface Window {
@@ -28,9 +29,10 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
     handleImageChange,
     handleContentsChange,
     handlePlaceChange,
+    handleImageRemove,
   } = useSingleCard(cardDetails);
   // 이미지 업로딩 관련 const
-  const { uploadImage } = useBucket();
+  const { uploadImage, deleteImage } = useBucket();
   const postId = useSelector((state: RootState) => state.newPost.postId);
   // 리덕스 관련
   const dispatch = useDispatch();
@@ -82,6 +84,11 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
     }
   };
 
+  const handleDeleteImg = () => {
+    deleteImage(`${process.env.REACT_APP_BUCKET_BASEURL}/${newCard.image}`);
+    handleImageRemove();
+  };
+
   useEffect(() => {
     if (isMapVisible && mapContainer.current) {
       initKakaoMap(mapContainer.current);
@@ -101,7 +108,7 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
 
   return (
     <div className={formStyles.cardFormWrapper}>
-      {!newCard.imageUrl ? (
+      {!newCard.image ? (
         <div className={formStyles.imageWrapper}>
           <img
             src="./icons/photo/postPhoto.png"
@@ -119,25 +126,34 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
             accept="image/*"
             onChange={handleImageUpload}
             style={{ display: "none" }}
+            required
           />
         </div>
       ) : (
         <div className={formStyles.previewWrapper}>
           <img
             alt="Preview"
-            src={`${process.env.REACT_APP_BUCKET_BASEURL}/${newCard.imageUrl}`}
+            className={formStyles.previewImg}
+            src={`${process.env.REACT_APP_BUCKET_BASEURL}/${newCard.image}`}
             width="100%"
             height="100%"
           />
+          <div className={formStyles.overlay}>
+            <IoMdCloseCircle
+              className={formStyles.deleteBtn}
+              size={"20px"}
+              onClick={handleDeleteImg}
+            />
+          </div>
         </div>
       )}
       {
         <div
           className={formStyles.detailWrapper}
           style={{
-            width: newCard.imageUrl ? "100%" : "0px",
-            height: newCard.imageUrl ? "100%" : "0px",
-            padding: newCard.imageUrl ? "0 20px" : "0px",
+            width: newCard.image ? "100%" : "0px",
+            height: newCard.image ? "100%" : "0px",
+            padding: newCard.image ? "0 20px" : "0px",
             overflow: "hidden",
           }}
         >
@@ -156,8 +172,10 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
               value={searchPlace}
               onKeyDown={handleSearch}
             />
-            <div>
-              <button className={formStyles.uploadBtn}>현재위치</button>
+            <div className={formStyles.mapAction}>
+              <button className={formStyles.uploadBtn} onClick={handleSearch}>
+                검색
+              </button>
               <button
                 className={formStyles.mapToggleBtn}
                 onClick={toggleMapVisibility}
@@ -179,7 +197,6 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
               width: "370px",
               height: "200px",
               overflow: "hidden", // 내용이 넘칠 경우 숨김 처리
-              transition: "all 0.5s ease", // 부드러운 전환 효과
             }}
           />
         </div>

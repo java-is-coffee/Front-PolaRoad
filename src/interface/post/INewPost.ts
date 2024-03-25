@@ -3,12 +3,11 @@ import regionOptionType from "../../enum/post/regionOptionType";
 import INewCard from "../card/INewCard";
 
 interface INewPost {
-  postId: string | null;
   title: string | null;
   routePoint: string | null;
   thumbnailIndex: number | null;
-  concept: conceptOptionType | null;
-  region: regionOptionType | null;
+  concept: string | null;
+  region: string | null;
   cards: INewCard[];
   hashtags: string[];
 }
