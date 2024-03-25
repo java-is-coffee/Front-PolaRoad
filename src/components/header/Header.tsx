@@ -12,33 +12,7 @@ function Header() {
   const [searchInput, setSearchInput] = useState("");
   const { setPostList } = useExploreHooks();
 
-  const [openModal, setOpenModal] = useState(false);
-
-  const [isLogin, setIsLogin] = useState(false);
-
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     if (window.scrollY > 20) {
-  //       setIsScrolled(true);
-  //     } else {
-  //       setIsScrolled(false);
-  //     }
-  //   };
-
-  //   // 스크롤 이벤트 리스너 추가
-  //   window.addEventListener("scroll", handleScroll);
-
-  //   // 컴포넌트 언마운트 시 이벤트 리스너 제거
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
-
-  // const handleIsScrolled = () => {
-  //   setIsScrolled(false);
-  // };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -56,12 +30,8 @@ function Header() {
     setPostList(setCategoyList);
   };
 
-  const goMyPage = () => {
-    navigate("/my");
-  };
-
-  const goExplore = () => {
-    navigate("/explore");
+  const navigation = (input: string) => {
+    navigate(`/${input}`);
   };
 
   return (
@@ -69,10 +39,24 @@ function Header() {
       <div className={headerStyle.navigator}>
         <div className={headerStyle.headerLeft}>
           <div className={headerStyle.logoWrapper}>
-            <span className={headerStyle.logo}>PolaRoad</span>
+            {/* 임시적으로 부여 */}
+            <span
+              className={headerStyle.logo}
+              onClick={() => {
+                navigation("login");
+              }}
+            >
+              PolaRoad
+            </span>
           </div>
           <div className={headerStyle.action}>
-            <span onClick={goExplore}>Home</span>
+            <span
+              onClick={() => {
+                navigation("explore");
+              }}
+            >
+              Home
+            </span>
             <span>Subscribe</span>
             <span>Map</span>
             <span>New Post</span>
@@ -117,7 +101,11 @@ function Header() {
           </div>
 
           <GoBell size={"32px"} />
-          <span onClick={goMyPage}>
+          <span
+            onClick={() => {
+              navigation("my");
+            }}
+          >
             <Avatar alt="Travis Howard" src="icons/favicon-32x32.png" />
           </span>
         </div>
@@ -127,3 +115,26 @@ function Header() {
 }
 
 export default Header;
+
+//혹시 모르니 나중을 위해
+// useEffect(() => {
+//   const handleScroll = () => {
+//     if (window.scrollY > 20) {
+//       setIsScrolled(true);
+//     } else {
+//       setIsScrolled(false);
+//     }
+//   };
+
+//   // 스크롤 이벤트 리스너 추가
+//   window.addEventListener("scroll", handleScroll);
+
+//   // 컴포넌트 언마운트 시 이벤트 리스너 제거
+//   return () => {
+//     window.removeEventListener("scroll", handleScroll);
+//   };
+// }, []);
+
+// const handleIsScrolled = () => {
+//   setIsScrolled(false);
+// };
