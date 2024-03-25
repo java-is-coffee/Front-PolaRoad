@@ -7,25 +7,30 @@ import { useState } from "react";
 import useExploreHooks from "hooks/explore/useExploreHooks";
 import { GetListDTO } from "interface/explore/ExplorePost";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setSearchText } from "../../redux/reducers/explore/explorePostReducer";
 
 function Header() {
   const [searchInput, setSearchInput] = useState("");
   const { setPostList } = useExploreHooks();
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const setCategoyList: GetListDTO = {
       paging: 1,
-      pagingNumber: 12,
+      pagingNumber: 8,
       searchType: "KEYWORD",
       keyword: searchInput,
       sortBy: "RECENT",
       concept: null,
       region: null,
     };
+
+    dispatch(setSearchText(searchInput));
 
     setPostList(setCategoyList);
   };

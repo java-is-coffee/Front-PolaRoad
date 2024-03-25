@@ -54,6 +54,10 @@ const ExplorePhotoList = () => {
     (state: RootState) => state.explorePost.curPage
   );
 
+  const storeSearchText = useSelector(
+    (state: RootState) => state.explorePost.searchText
+  );
+
   //화면이 전부 나와야하며, 1초 딜레이
   const [ref, inView] = useInView({
     threshold: 1,
@@ -96,7 +100,7 @@ const ExplorePhotoList = () => {
       paging: value + 1,
       pagingNumber: 8,
       searchType: "KEYWORD",
-      keyword: null,
+      keyword: storeSearchText,
       sortBy: sortNumber !== null ? sortSet.key[sortNumber] : "RECENT",
       concept: categoryNumber !== null ? categorySet.key[categoryNumber] : null,
       region: regionNumber !== null ? regionSet.key[regionNumber] : null,
