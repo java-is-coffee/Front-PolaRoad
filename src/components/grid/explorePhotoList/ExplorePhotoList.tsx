@@ -117,7 +117,7 @@ const ExplorePhotoList = () => {
           </div>
         ) : (
           storePostList.map((item) => (
-            <div key={item.postId + "xx"} className={styles.card}>
+            <div key={item.postId} className={styles.card}>
               <MainPhotoCard item={item} />
             </div>
           ))
