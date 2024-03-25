@@ -1,7 +1,7 @@
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import styles from "./MainPhotoCard.module.css";
 import PlaceIcon from "@mui/icons-material/Place";
-import { PostData } from "api/explore/getPostList";
+import { PostData } from "interface/explore/ExplorePost";
 
 // export interface PhotoData {
 //   title: string;
@@ -17,8 +17,8 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
     <div key={item.postId}>
       <img
         loading="lazy"
-        alt="x"
-        src={item.images[0]}
+        alt="카드 이미지"
+        src="한옥.jpg"
         className={styles.mainPhoto}
       />
       <div className={styles.photoInfo}>

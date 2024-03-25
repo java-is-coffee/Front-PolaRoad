@@ -1,8 +1,7 @@
 import axios from "axios";
-import { axiosInstance } from "./axiosInstance";
 
 export interface RefreshData {
-  refreshToken: string;
+  refreshToken: string | number | boolean | object | null;
 }
 
 export interface RefreshDTO {
@@ -11,7 +10,8 @@ export interface RefreshDTO {
 
 const getAccessToken = async (refreshToken: RefreshData) => {
   try {
-    const loginAPI = axiosInstance.defaults.baseURL + "/api/member/refresh";
+    const loginAPI =
+      "https://k951a463f2f5fa.user-app.krampoline.com/api/member/refresh";
 
     const refreshTokenDTO: RefreshDTO = {
       data: refreshToken,
@@ -24,11 +24,8 @@ const getAccessToken = async (refreshToken: RefreshData) => {
     const status = response.status;
 
     if (status === 200) return response.data;
-    else {
-      return null;
-    }
   } catch (error) {
-    return null;
+    return error;
   }
 };
 

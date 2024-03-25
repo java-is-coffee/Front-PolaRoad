@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import CategoryType from "../../../enum/categoryOptionType";
 import SortOptionType from "../../../enum/filter/SortOptionType";
-import { RegionType } from "aws-sdk/clients/directoryservice";
+import RegionOptionType from "enum/filter/RegionType";
+import RegionType from "enum/filter/RegionType";
 
 // 초기 상태의 타입 정의
 interface filterList {
@@ -27,7 +28,7 @@ const filter = createSlice({
     switchCategory: (state, action: PayloadAction<CategoryType | null>) => {
       state.activeCategory = action.payload;
     },
-    switchRegion: (state, action: PayloadAction<RegionType | null>) => {
+    switchRegion: (state, action: PayloadAction<RegionOptionType | null>) => {
       state.activeRegion = action.payload;
     },
   },
