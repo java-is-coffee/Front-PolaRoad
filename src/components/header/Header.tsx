@@ -1,14 +1,12 @@
-// import { useState } from "react";
 import { GoBell } from "react-icons/go";
 import headerStyle from "./Header.module.css";
-// import SearchToggleBtn from "../dropDown/search/SearchToggleBtn";
 import { Avatar, IconButton, InputAdornment, TextField } from "@mui/material";
-// import { IoSearch } from "react-icons/io5";
 import SearchIcon from "@mui/icons-material/Search";
-import { useNavigate } from "react-router-dom";
+
 import { useState } from "react";
 import useExploreHooks from "hooks/explore/useExploreHooks";
 import { GetListDTO } from "interface/explore/ExplorePost";
+import { useNavigate } from "react-router-dom";
 
 function Header() {
   // const [isScrolled, setIsScrolled] = useState<boolean>(false);
@@ -17,6 +15,8 @@ function Header() {
 
   const [searchInput, setSearchInput] = useState("");
   const { setPostList } = useExploreHooks();
+
+  const navigate = useNavigate();
 
   // useEffect(() => {
   //   const handleScroll = () => {
@@ -56,20 +56,23 @@ function Header() {
     setPostList(setCategoyList);
   };
 
+  const goMyPage = () => {
+    navigate("/my");
+  };
+
+  const goExplore = () => {
+    navigate("/explore");
+  };
+
   return (
-    <div
-      className={headerStyle.header}
-      // className={`${headerStyle.header} ${
-      //   isScrolled ? headerStyle.scrolled : ""
-      // }`}
-    >
+    <div className={headerStyle.header}>
       <div className={headerStyle.navigator}>
         <div className={headerStyle.headerLeft}>
           <div className={headerStyle.logoWrapper}>
             <span className={headerStyle.logo}>PolaRoad</span>
           </div>
           <div className={headerStyle.action}>
-            <span>Home</span>
+            <span onClick={goExplore}>Home</span>
             <span>Subscribe</span>
             <span>Map</span>
             <span>New Post</span>
@@ -79,10 +82,6 @@ function Header() {
           <div
             className={`${headerStyle.searchToggleWrapper} ${headerStyle.searchVisible}`}
           >
-            {/* <SearchToggleBtn
-              isScrolled={isScrolled}
-              handleIsScrolled={handleIsScrolled}
-            /> */}
             <form action="post" onSubmit={handleSubmit}>
               <TextField
                 id="outlined-basic"
@@ -116,8 +115,9 @@ function Header() {
             </form>
             {/* <IoSearch size={"20px"} /> */}
           </div>
+
           <GoBell size={"32px"} />
-          <span onClick={() => navigate("/login")}>
+          <span onClick={goMyPage}>
             <Avatar alt="Travis Howard" src="icons/favicon-32x32.png" />
           </span>
         </div>
