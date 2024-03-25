@@ -1,0 +1,12 @@
+.wrapper {
+  width: 50vw;
+  min-width: 600px;
+  height: 100%;
+  overflow: hidden;
+}
+
+.cardCarousel {
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease-in-out; /* 부드러운 전환 효과를 위해 */
+}
