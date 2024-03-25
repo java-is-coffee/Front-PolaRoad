@@ -10,12 +10,12 @@ const getPostDetails = async (postId: string): Promise<IPostDTO | null> => {
 
     const { status, data } = response;
     if (status === 200) {
-      console.log("불러오기 성공");
+      console.log("postDetails fetch success");
       return data as IPostDTO;
     }
     return null;
   } catch (error) {
-    console.log("불러오기 오류 실패했습니다.");
+    console.log("postDetails fetch fail");
     console.error(error);
     return null;
   }
