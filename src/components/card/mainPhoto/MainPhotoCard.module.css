@@ -1,0 +1,12 @@
+.mainPhoto {
+  width: 100%;
+  height: 40vh;
+  margin: 0px 10px;
+  border-radius: 9px;
+  min-height: 40vh;
+  min-width: 100%;
+}
+
+.photoInfo {
+  margin: 5px 1.5rem;
+}

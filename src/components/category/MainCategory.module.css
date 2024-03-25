@@ -1,0 +1,50 @@
+.MainCategoryTap {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.categoryContainer {
+  display: flex;
+  flex-direction: row;
+  margin-left: 20px;
+}
+
+.categoryItem {
+  min-width: 8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+  font-size: 1.3rem;
+  color: #a09cab;
+  cursor: pointer;
+}
+
+.selected {
+  color: #12b193;
+}
+
+.categoryLabel :hover {
+  color: #12b193;
+}
+
+.categoryIcon {
+  font-size: 30px !important;
+}
+
+.filterButton {
+  /* border: 1px #12b193 solid; */
+  border-radius: 10px;
+  /* padding: 0.5rem 2.5rem; */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-right: 3rem;
+  font-size: 2rem;
+  color: #a09cab;
+}
+
+.filterButton:hover {
+  color: #12b193;
+}

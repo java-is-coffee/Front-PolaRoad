@@ -1,0 +1,15 @@
+.formWrapper {
+  overflow: hidden;
+  /* 활성화된 카드의 너비와 일치하도록 설정합니다. */
+  margin: 0 auto;
+}
+
+.cardListContainer {
+  width: 750px;
+}
+
+.cardList {
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease-in-out; /* 부드러운 전환 효과를 위해 */
+}

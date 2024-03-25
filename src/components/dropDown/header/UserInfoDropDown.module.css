@@ -1,0 +1,29 @@
+.outSide {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background-color: white;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+}
+
+.item {
+  display: flex;
+  font-size: 1.5rem;
+  padding: 15px;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.item:hover {
+  cursor: pointer;
+  background-color: #eeecec;
+}
+
+.item:nth-child(1) {
+  border-bottom: 1px solid black;
+}
+
+.item:nth-child(2) {
+  color: red;
+}
