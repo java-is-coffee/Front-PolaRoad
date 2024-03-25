@@ -1,0 +1,75 @@
+import conceptOptionType from "enum/post/conceptOptionType";
+import regionOptionType from "enum/post/regionOptionType";
+import useBucket from "hooks/bucket/useBucket";
+import { useEffect, useState } from "react";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import cardStyles from "./ThumbnailCard.module.css";
+
+interface ThumbnailCardProps {
+  title: string;
+  goodNumber: number;
+  thumbnailImageURL: string | undefined;
+  concept: conceptOptionType;
+  region: regionOptionType;
+  hashTags: string[];
+  memberGood: boolean;
+}
+
+function ThumbnailCard({
+  title,
+  goodNumber,
+  thumbnailImageURL,
+  concept,
+  region,
+  hashTags,
+  memberGood,
+}: ThumbnailCardProps) {
+  const { getImage } = useBucket();
+  const [isActiveHeart, setIsActiveHeart] = useState<boolean>(memberGood);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      if (thumbnailImageURL) {
+        const result = await getImage(thumbnailImageURL);
+        setImageUrl(result);
+      }
+    };
+    fetchImage();
+    //eslint-disable-next-line
+  }, [thumbnailImageURL]);
+
+  return (
+    <article className={cardStyles.thumbnailCard}>
+      {imageUrl && (
+        <img src={imageUrl} alt="썸네일" width="100%" height="100%" />
+      )}
+      <div className={cardStyles.header}>
+        <h2>{title}</h2>
+        <div onClick={() => setIsActiveHeart((prev) => !prev)}>
+          {isActiveHeart ? (
+            <img
+              src={"/icons/like/selected-heart.png"}
+              style={{ width: "24px", height: "24px" }}
+            />
+          ) : (
+            <img
+              src={"/icons/like/default-heart.png"}
+              style={{ width: "24px", height: "24px" }}
+            />
+          )}
+        </div>
+      </div>
+      <span className={cardStyles.good}>{goodNumber}</span>
+      <span className={cardStyles.concept}>{concept}</span>
+      <span className={cardStyles.region}>{region}</span>
+      <section className={cardStyles.hashTags}>
+        {hashTags.map((hashTag) => (
+          <span>hashTag</span>
+        ))}
+      </section>
+    </article>
+  );
+}
+
+export default ThumbnailCard;
