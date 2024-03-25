@@ -20,19 +20,35 @@ function Header() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const setCategoyList: GetListDTO = {
-      paging: 1,
-      pagingNumber: 8,
-      searchType: "KEYWORD",
-      keyword: searchInput,
-      sortBy: "RECENT",
-      concept: null,
-      region: null,
-    };
+    if (searchInput.includes("#")) {
+      const setCategoyList: GetListDTO = {
+        paging: 1,
+        pagingNumber: 8,
+        searchType: "HASHTAG",
+        keyword: searchInput,
+        sortBy: "RECENT",
+        concept: null,
+        region: null,
+      };
 
-    dispatch(setSearchText(searchInput));
+      dispatch(setSearchText(searchInput));
 
-    setPostList(setCategoyList);
+      setPostList(setCategoyList);
+    } else {
+      const setCategoyList: GetListDTO = {
+        paging: 1,
+        pagingNumber: 8,
+        searchType: "KEYWORD",
+        keyword: searchInput,
+        sortBy: "RECENT",
+        concept: null,
+        region: null,
+      };
+
+      dispatch(setSearchText(searchInput));
+
+      setPostList(setCategoyList);
+    }
   };
 
   const navigation = (input: string) => {
