@@ -1,7 +1,9 @@
 import { ICommentDTO } from "./../../interface/comments/ICommentsDTO";
 import { axiosInstance } from "api/token/axiosInstance";
 
-const getPostComments = async (postId: string): Promise<ICommentDTO | null> => {
+const getPostComments = async (
+  postId: string
+): Promise<ICommentDTO[] | null> => {
   try {
     const API_URL = `/api/review/post/${postId}`;
 
@@ -11,7 +13,7 @@ const getPostComments = async (postId: string): Promise<ICommentDTO | null> => {
     console.log(data);
     if (status === 200) {
       console.log("postDetails fetch success");
-      return data as ICommentDTO;
+      return data as ICommentDTO[];
     }
     return null;
   } catch (error) {
