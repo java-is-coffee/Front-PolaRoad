@@ -6,12 +6,13 @@ import { IPostDTO } from "interface/post/IPostDTO";
 import secureLocalStorage from "react-secure-storage";
 import useError from "hooks/error/useErrorHandler";
 import PostComments from "./comments/PostComments";
-import PostCardList from "./postCardList/PostCardsList";
+import PostCardList from "./postCardList/web/PostCardList";
 
 function PostDetail() {
   const { postId } = useParams();
   const [postDetails, setPostDetails] = useState<IPostDTO | null>(null);
   const { navigateOnError } = useError();
+
   const getPostData = async () => {
     if (!postId) {
       navigateOnError({ errorType: "PATH" });
