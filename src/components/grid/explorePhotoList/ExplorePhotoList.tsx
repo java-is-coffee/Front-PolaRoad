@@ -32,7 +32,6 @@ export const initPostList: GetListDTO = {
 const ExplorePhotoList = () => {
   const { setPostList, addPostList } = useExploreHooks();
 
-  // const [curPage, setCurPage] = useState(1);
   const dispatch = useDispatch();
 
   const storePostList = useSelector(

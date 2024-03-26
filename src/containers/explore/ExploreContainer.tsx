@@ -4,6 +4,7 @@ import ExplorePhotoList from "../../components/grid/explorePhotoList/ExplorePhot
 import MainPhoto from "../../components/mainPhoto/MainPhoto";
 import exploreContainerStyles from "./ExploreContainer.module.css";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import secureLocalStorage from "react-secure-storage";
 
 function ExploreContainer() {
   const [tokens] = useSearchParams();
@@ -13,14 +14,22 @@ function ExploreContainer() {
   useEffect(() => {
     const accessToken = tokens.get("access_token");
     const refreshToken = tokens.get("refresh_token");
+    // 리프레쉬 토큰조차 없을 경우, 다시 발급받아야함.
+    const storedRefreshToken = secureLocalStorage.getItem("refreshToken");
+    const storedAccessToken = secureLocalStorage.getItem("accessToken");
 
     if (accessToken && refreshToken) {
       return () => {
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
+        secureLocalStorage.setItem("accessToken", accessToken);
+        secureLocalStorage.setItem("refreshToken", refreshToken);
         navigate("/explore");
       };
     }
+
+    if (storedRefreshToken === null && storedAccessToken === null) {
+      navigate("/login");
+    }
+
     // eslint-disable-next-line
   }, []);
 
