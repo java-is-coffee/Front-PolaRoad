@@ -1,7 +1,7 @@
 .wrapper {
   position: relative;
   width: 50vw;
-  min-width: 600px;
+  max-width: 1000px;
   height: 100%;
   overflow: hidden;
 }
@@ -14,12 +14,14 @@
 
 .singleCard {
   display: flex;
+  align-items: center;
   flex: 0 0 auto; /* 카드가 flex 컨테이너 안에서 확장/축소되지 않도록 설정 */
   width: 50vw;
 }
 
 .singleCard:last-child {
   margin-right: 0;
+  max-height: 1000px;
 }
 
 .navButtonPrev,
