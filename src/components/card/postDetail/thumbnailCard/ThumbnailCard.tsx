@@ -2,7 +2,6 @@ import conceptOptionType from "enum/post/conceptOptionType";
 import regionOptionType from "enum/post/regionOptionType";
 import useBucket from "hooks/bucket/useBucket";
 import { useEffect, useState } from "react";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import cardStyles from "./ThumbnailCard.module.css";
 
 interface ThumbnailCardProps {
@@ -41,31 +40,33 @@ function ThumbnailCard({
 
   return (
     <article className={cardStyles.thumbnailCard}>
-      {imageUrl && (
-        <img src={imageUrl} alt="썸네일" width="100%" height="100%" />
-      )}
+      {imageUrl && <img src={imageUrl} alt="썸네일" />}
       <div className={cardStyles.header}>
-        <h2>{title}</h2>
+        <div className={cardStyles.title}>{title}</div>
         <div onClick={() => setIsActiveHeart((prev) => !prev)}>
           {isActiveHeart ? (
             <img
               src={"/icons/like/selected-heart.png"}
               style={{ width: "24px", height: "24px" }}
+              alt="active-heart"
             />
           ) : (
             <img
               src={"/icons/like/default-heart.png"}
               style={{ width: "24px", height: "24px" }}
+              alt="default-heart"
             />
           )}
         </div>
       </div>
-      <span className={cardStyles.good}>{goodNumber}</span>
-      <span className={cardStyles.concept}>{concept}</span>
-      <span className={cardStyles.region}>{region}</span>
+      <span className={cardStyles.good}>{`좋아요 ${goodNumber}개`}</span>
+      <div className={cardStyles.category}>
+        <span className={cardStyles.concept}>{concept}</span>
+        <span className={cardStyles.region}>{region}</span>
+      </div>
       <section className={cardStyles.hashTags}>
         {hashTags.map((hashTag) => (
-          <span>hashTag</span>
+          <span>{`#${hashTag}`}</span>
         ))}
       </section>
     </article>
