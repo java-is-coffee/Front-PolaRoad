@@ -6,6 +6,7 @@ import { IMemberInfo } from "interface/member/IMemberInfo";
 export interface IPostDTO {
   title: string;
   memberInfo: IMemberInfo;
+  thumbnailIndex: number;
   routePoint: string;
   goodNumber: number;
   concept: conceptOptionType;
