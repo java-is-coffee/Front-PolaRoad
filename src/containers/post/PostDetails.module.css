@@ -5,3 +5,11 @@
   flex-direction: row;
   margin-top: 75px;
 }
+
+.sideComponent {
+  flex: 1; /* 양쪽 사이드 컴포넌트의 크기를 같게 설정 */
+}
+
+.mainComponent {
+  flex: 2; /* 가운데 주요 컴포넌트의 크기를 사이드 컴포넌트보다 크게 설정 */
+}

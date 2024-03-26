@@ -1,12 +1,12 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import containerStyles from "./PostDetails.module.css";
 import { useEffect, useState } from "react";
 import getPostDetails from "api/post/getPostDetails";
 import { IPostDTO } from "interface/post/IPostDTO";
-import { toast } from "react-toastify";
-import PostCardList from "./postCardList/PostCardsList";
 import secureLocalStorage from "react-secure-storage";
 import useError from "hooks/error/useErrorHandler";
+import PostComments from "./comments/PostComments";
+import PostCardList from "./postCardList/PostCardsList";
 
 function PostDetail() {
   const { postId } = useParams();
@@ -31,9 +31,13 @@ function PostDetail() {
   }, []);
   return postDetails ? (
     <section className={containerStyles.container}>
-      <article>맵</article>
-      <PostCardList postDetails={postDetails} />
-      <article>댓글</article>
+      <article className={containerStyles.sideComponent}>맵</article>
+      <article className={containerStyles.mainComponent}>
+        <PostCardList postDetails={postDetails} />
+      </article>
+      <article className={containerStyles.sideComponent}>
+        <PostComments postId={postId} />
+      </article>
     </section>
   ) : (
     <div>정보를 불러올수 없습니다.</div>
