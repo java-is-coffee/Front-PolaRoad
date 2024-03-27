@@ -53,6 +53,41 @@ const useBucket = () => {
       return null;
     }
   };
+  const getImage = async (filePath: string): Promise<string | null> => {
+    if (!ALBUM_BUCKET_NAME || !REGION || !ACCESS_KEY_ID || !SECRET_ACCESS_KEY) {
+      console.log("버킷 설정을 확인해주세요");
+      return null;
+    }
+    try {
+      const data = await S3.getObject({
+        Bucket: ALBUM_BUCKET_NAME,
+        Key: filePath,
+      }).promise();
+      console.log("이미지 불러오기 성공");
+
+      // data.Body가 Uint8Array라고 가정하고 ArrayBuffer로 변환
+      if (data.Body instanceof Uint8Array) {
+        const arrayBuffer = data.Body.buffer;
+        const blob = new Blob([arrayBuffer], {
+          type: data.ContentType || "application/octet-stream",
+        });
+        const urlCreator = window.URL || window.webkitURL;
+        const imageUrl = urlCreator.createObjectURL(blob);
+        return imageUrl;
+      } else {
+        throw new Error(
+          "The body of the S3 object is not in the expected format."
+        );
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        console.log("There was an error getting your photo: ", err.message);
+      } else {
+        console.log("There was an error getting your photo");
+      }
+    }
+    return null;
+  };
 
   const deleteImage = async (filePath: string) => {
     if (!ALBUM_BUCKET_NAME || !REGION || !ACCESS_KEY_ID || !SECRET_ACCESS_KEY) {
@@ -76,7 +111,7 @@ const useBucket = () => {
     }
   };
 
-  return { uploadImage, deleteImage };
+  return { uploadImage, getImage, deleteImage };
 };
 
 export default useBucket;

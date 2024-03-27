@@ -1,0 +1,36 @@
+.cardWrapper {
+  width: 100%;
+  display: block;
+  background: white;
+  color: #333;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 16px;
+  overflow: hidden;
+}
+
+.cardWrapper img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.cardWrapper h2 {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 0.5em;
+}
+
+.cardWrapper .hashtags {
+  padding: 0.5em;
+  background: #f7f7f7;
+}
+
+.cardWrapper .hashtags span {
+  display: inlineBlock;
+  background: #e0e0e0;
+  border-radius: 2px;
+  padding: 0.3em 0.6em;
+  margin-right: 0.25em;
+  font-size: 0.75em;
+}

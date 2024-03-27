@@ -1,0 +1,71 @@
+.thumbnailCard {
+  width: 100%;
+  display: block;
+  background: white;
+  color: #333;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 16px;
+  overflow: hidden;
+}
+
+.thumbnailCard .header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 5px 0;
+}
+
+.thumbnailCard img {
+  display: block;
+  width: 100%;
+  height: auto; /* 이미지의 원래 비율을 유지하면서 너비를 맞춤 */
+  object-fit: cover; /* 이미지가 div를 꽉 채우도록 조정 */
+}
+
+.thumbnailCard .title {
+  font-size: 1.6em;
+  font-weight: bold;
+}
+
+.thumbnailCard .good {
+  display: inlineBlock;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.thumbnailCard .category {
+  margin: 5px 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  grid-gap: 5px;
+}
+
+.thumbnailCard .concept,
+.thumbnailCard .region {
+  display: inlineBlock;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 3px 4px;
+  background-color: var(--main-theme-color);
+  color: white;
+  border-radius: 6px;
+}
+
+.thumbnailCard .hashtags {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 0.5em;
+  background: #f7f7f7;
+}
+
+.thumbnailCard .hashtags span {
+  display: inlineBlock;
+  background: #e0e0e0;
+  border-radius: 2px;
+  padding: 0.3em 0.6em;
+  margin-right: 0.25em;
+  font-size: 0.75em;
+}

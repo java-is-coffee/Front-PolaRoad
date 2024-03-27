@@ -41,11 +41,7 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
   const [isMapVisible, setIsMapVisible] = useState<boolean>(false);
   const [searchPlace, setSearchPlace] = useState<string>("");
   const mapContainer = useRef<HTMLElement>(null);
-  const { selectedPlace, initKakaoMap, searchPlaceByKeyword } = useKakaoMap({
-    latitude: 37.566826,
-    longitude: 126.9786567,
-    level: 3,
-  });
+  const { selectedPlace, initKakaoMap, searchPlaceByKeyword } = useKakaoMap();
   // 지도 투명도 조절 함수
   const handleMapVisibility = (visible: boolean) => {
     setIsMapVisible(visible);
@@ -91,7 +87,7 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
 
   useEffect(() => {
     if (isMapVisible && mapContainer.current) {
-      initKakaoMap(mapContainer.current);
+      initKakaoMap(mapContainer.current, 37.566826, 126.9786567, 3);
     }
     // eslint-disable-next-line
   }, [isMapVisible, mapContainer]);
