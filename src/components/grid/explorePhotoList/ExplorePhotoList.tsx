@@ -83,8 +83,6 @@ const ExplorePhotoList = () => {
   }, [inView, storeEndPoint]);
 
   const addPostFunc = async (value: number) => {
-    console.log(storeRegion);
-
     const categoryNumber = storeCategory
       ? categorySet.values.indexOf(storeCategory)
       : null;
@@ -92,8 +90,6 @@ const ExplorePhotoList = () => {
       ? regionSet.values.indexOf(storeRegion)
       : null;
     const sortNumber = storeSort ? sortSet.values.indexOf(storeSort) : null;
-
-    console.log(regionNumber);
 
     const addData: GetListDTO = {
       paging: value + 1,
@@ -130,9 +126,7 @@ const ExplorePhotoList = () => {
         <CircularProgress color="success" />
       )}
 
-      <div ref={ref} className={styles.wait}>
-        테스트?ActionBtn
-      </div>
+      <div ref={ref} className={styles.wait}></div>
     </div>
   );
 };

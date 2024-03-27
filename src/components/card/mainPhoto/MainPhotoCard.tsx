@@ -11,11 +11,11 @@ import CircleIcon from "@mui/icons-material/Circle";
 const testImgs = ["한옥.jpg", "다리.jpg"];
 
 const MainPhotoCard = ({ item }: { item: PostData }) => {
-  const [activeImgIndex, setActiveImgIndex] = useState(0);
-
+  const [activeImgIndex, setActiveImgIndex] = useState<number>(0);
   const handleNext = () => {
-    if (activeImgIndex < testImgs.length - 1)
+    if (activeImgIndex < testImgs.length - 1) {
       setActiveImgIndex((prevActiveStep) => prevActiveStep + 1);
+    }
   };
 
   const handleBack = () => {
@@ -23,15 +23,28 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
       setActiveImgIndex((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const exampleStyle = {
+    transition: "all 400ms",
+    transform: `translateX(-${0 + activeImgIndex * 100}%)`,
+    opacity: 1,
+  };
+
   return (
     <div key={item.postId}>
       <div className={styles.cardImg}>
-        <img
-          loading="lazy"
-          alt="카드 이미지"
-          src={testImgs[activeImgIndex]}
-          className={styles.mainPhoto}
-        />
+        <div className={`${styles.carousel}`}>
+          {testImgs.map((item, index) => (
+            <img
+              key={item}
+              style={exampleStyle}
+              loading="lazy"
+              alt="카드 이미지"
+              src={testImgs[index]}
+              className={styles.mainPhoto}
+            />
+          ))}
+        </div>
+
         <div className={styles.photoButtonSet}>
           <IconButton
             aria-label="delete"
