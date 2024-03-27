@@ -11,15 +11,16 @@ import CircleIcon from "@mui/icons-material/Circle";
 const testImgs = ["한옥.jpg", "다리.jpg"];
 
 const MainPhotoCard = ({ item }: { item: PostData }) => {
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeImgIndex, setActiveImgIndex] = useState(0);
 
   const handleNext = () => {
-    if (activeStep < testImgs.length - 1)
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if (activeImgIndex < testImgs.length - 1)
+      setActiveImgIndex((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
-    if (activeStep !== 0) setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    if (activeImgIndex !== 0)
+      setActiveImgIndex((prevActiveStep) => prevActiveStep - 1);
   };
 
   return (
@@ -28,7 +29,7 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
         <img
           loading="lazy"
           alt="카드 이미지"
-          src={testImgs[activeStep]}
+          src={testImgs[activeImgIndex]}
           className={styles.mainPhoto}
         />
         <div className={styles.photoButtonSet}>
@@ -58,7 +59,7 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
 
         <div className={styles.index}>
           {testImgs.map((card, index) =>
-            index === activeStep ? (
+            index === activeImgIndex ? (
               <CircleIcon key={card + item.postId} sx={{ color: "#13c4a3" }} />
             ) : (
               <CircleIcon key={card + item.postId} sx={{ color: "white" }} />
