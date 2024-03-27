@@ -32,7 +32,6 @@ export const initPostList: GetListDTO = {
 const ExplorePhotoList = () => {
   const { setPostList, addPostList } = useExploreHooks();
 
-  // const [curPage, setCurPage] = useState(1);
   const dispatch = useDispatch();
 
   const storePostList = useSelector(
@@ -52,6 +51,10 @@ const ExplorePhotoList = () => {
   const storeSort = useSelector((state: RootState) => state.filter.activeSort);
   const storeCurPage = useSelector(
     (state: RootState) => state.explorePost.curPage
+  );
+
+  const storeSearchText = useSelector(
+    (state: RootState) => state.explorePost.searchText
   );
 
   //화면이 전부 나와야하며, 1초 딜레이
@@ -80,8 +83,6 @@ const ExplorePhotoList = () => {
   }, [inView, storeEndPoint]);
 
   const addPostFunc = async (value: number) => {
-    console.log(storeRegion);
-
     const categoryNumber = storeCategory
       ? categorySet.values.indexOf(storeCategory)
       : null;
@@ -90,13 +91,11 @@ const ExplorePhotoList = () => {
       : null;
     const sortNumber = storeSort ? sortSet.values.indexOf(storeSort) : null;
 
-    console.log(regionNumber);
-
     const addData: GetListDTO = {
       paging: value + 1,
       pagingNumber: 8,
       searchType: "KEYWORD",
-      keyword: null,
+      keyword: storeSearchText,
       sortBy: sortNumber !== null ? sortSet.key[sortNumber] : "RECENT",
       concept: categoryNumber !== null ? categorySet.key[categoryNumber] : null,
       region: regionNumber !== null ? regionSet.key[regionNumber] : null,
@@ -127,9 +126,7 @@ const ExplorePhotoList = () => {
         <CircularProgress color="success" />
       )}
 
-      <div ref={ref} className={styles.wait}>
-        테스트?ActionBtn
-      </div>
+      <div ref={ref} className={styles.wait}></div>
     </div>
   );
 };

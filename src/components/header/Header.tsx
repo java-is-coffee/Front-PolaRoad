@@ -1,104 +1,83 @@
-// import { useState } from "react";
 import { GoBell } from "react-icons/go";
 import headerStyle from "./Header.module.css";
-// import SearchToggleBtn from "../dropDown/search/SearchToggleBtn";
-import {
-  Avatar,
-  Button,
-  IconButton,
-  InputAdornment,
-  TextField,
-} from "@mui/material";
-// import { IoSearch } from "react-icons/io5";
+import { Avatar, IconButton, InputAdornment, TextField } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useExploreHooks from "hooks/explore/useExploreHooks";
 import { GetListDTO } from "interface/explore/ExplorePost";
-import UserInfoDropdown from "components/dropDown/header/UserInfoDropDown";
-import secureLocalStorage from "react-secure-storage";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setSearchText } from "../../redux/reducers/explore/explorePostReducer";
 
 function Header() {
   const [searchInput, setSearchInput] = useState("");
   const { setPostList } = useExploreHooks();
 
-  const [openModal, setOpenModal] = useState(false);
-
-  const [isLogin, setIsLogin] = useState(false);
-
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     if (window.scrollY > 20) {
-  //       setIsScrolled(true);
-  //     } else {
-  //       setIsScrolled(false);
-  //     }
-  //   };
-
-  //   // 스크롤 이벤트 리스너 추가
-  //   window.addEventListener("scroll", handleScroll);
-
-  //   // 컴포넌트 언마운트 시 이벤트 리스너 제거
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
-
-  // const handleIsScrolled = () => {
-  //   setIsScrolled(false);
-  // };
-
-  useEffect(() => {
-    if (secureLocalStorage.getItem("accessToken")) {
-      setIsLogin(true);
-    } else {
-      setIsLogin(false);
-    }
-    //eslint-disable-next-line
-  }, []);
+  const dispatch = useDispatch();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const setCategoyList: GetListDTO = {
-      paging: 1,
-      pagingNumber: 12,
-      searchType: "KEYWORD",
-      keyword: searchInput,
-      sortBy: "RECENT",
-      concept: null,
-      region: null,
-    };
+    if (searchInput.includes("#")) {
+      const setCategoyList: GetListDTO = {
+        paging: 1,
+        pagingNumber: 8,
+        searchType: "HASHTAG",
+        keyword: searchInput,
+        sortBy: "RECENT",
+        concept: null,
+        region: null,
+      };
 
-    setPostList(setCategoyList);
+      dispatch(setSearchText(searchInput));
+
+      setPostList(setCategoyList);
+    } else {
+      const setCategoyList: GetListDTO = {
+        paging: 1,
+        pagingNumber: 8,
+        searchType: "KEYWORD",
+        keyword: searchInput,
+        sortBy: "RECENT",
+        concept: null,
+        region: null,
+      };
+
+      dispatch(setSearchText(searchInput));
+
+      setPostList(setCategoyList);
+    }
   };
 
-  const handleModal = () => {
-    if (openModal === true) setOpenModal(false);
-    else setOpenModal(true);
-  };
-
-  const goLogin = () => {
-    navigate("/login");
+  const navigation = (input: string) => {
+    navigate(`/${input}`);
   };
 
   return (
-    <div
-      className={headerStyle.header}
-      // className={`${headerStyle.header} ${
-      //   isScrolled ? headerStyle.scrolled : ""
-      // }`}
-    >
+    <div className={headerStyle.header}>
       <div className={headerStyle.navigator}>
         <div className={headerStyle.headerLeft}>
           <div className={headerStyle.logoWrapper}>
-            <span className={headerStyle.logo}>PolaRoad</span>
+            {/* 임시적으로 부여 */}
+            <span
+              className={headerStyle.logo}
+              onClick={() => {
+                navigation("login");
+              }}
+            >
+              PolaRoad
+            </span>
           </div>
           <div className={headerStyle.action}>
-            <span>Home</span>
+            <span
+              onClick={() => {
+                navigation("explore");
+              }}
+            >
+              Home
+            </span>
             <span>Subscribe</span>
             <span>Map</span>
             <span>New Post</span>
@@ -108,10 +87,6 @@ function Header() {
           <div
             className={`${headerStyle.searchToggleWrapper} ${headerStyle.searchVisible}`}
           >
-            {/* <SearchToggleBtn
-              isScrolled={isScrolled}
-              handleIsScrolled={handleIsScrolled}
-            /> */}
             <form action="post" onSubmit={handleSubmit}>
               <TextField
                 id="outlined-basic"
@@ -146,26 +121,14 @@ function Header() {
             {/* <IoSearch size={"20px"} /> */}
           </div>
 
-          {isLogin ? (
-            <>
-              <GoBell size={"32px"} />
-              <span onClick={handleModal}>
-                <Avatar alt="Travis Howard" src="icons/favicon-32x32.png" />
-              </span>
-            </>
-          ) : (
-            <Button
-              variant="text"
-              sx={{ fontSize: "1.5rem", color: "#13c4a3" }}
-              onClick={goLogin}
-            >
-              로그인
-            </Button>
-          )}
-
-          <div style={{ position: "static" }}>
-            {openModal ? <UserInfoDropdown setOpenModal={setOpenModal} /> : ""}
-          </div>
+          <GoBell size={"32px"} />
+          <span
+            onClick={() => {
+              navigation("my");
+            }}
+          >
+            <Avatar alt="Travis Howard" src="icons/favicon-32x32.png" />
+          </span>
         </div>
       </div>
     </div>
@@ -173,3 +136,26 @@ function Header() {
 }
 
 export default Header;
+
+//혹시 모르니 나중을 위해
+// useEffect(() => {
+//   const handleScroll = () => {
+//     if (window.scrollY > 20) {
+//       setIsScrolled(true);
+//     } else {
+//       setIsScrolled(false);
+//     }
+//   };
+
+//   // 스크롤 이벤트 리스너 추가
+//   window.addEventListener("scroll", handleScroll);
+
+//   // 컴포넌트 언마운트 시 이벤트 리스너 제거
+//   return () => {
+//     window.removeEventListener("scroll", handleScroll);
+//   };
+// }, []);
+
+// const handleIsScrolled = () => {
+//   setIsScrolled(false);
+// };

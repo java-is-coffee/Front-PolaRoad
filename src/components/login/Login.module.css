@@ -58,7 +58,13 @@
 
 .oauthButton {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+}
+
+.oauthButton div {
+  width: 100%;
+  margin: 10px 0px;
 }
 
 .center {
@@ -69,4 +75,9 @@
 
 .bottomButton {
   font-size: 1.5rem !important;
+}
+
+.kakaoLogo {
+  width: 2rem;
+  height: 2rem;
 }

@@ -4,6 +4,8 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import getPostList from "api/explore/getPostList";
 import {
   addExplorePostList,
+  setCurPage,
+  setEndPoint,
   setExplorePostList,
 } from "../../redux/reducers/explore/explorePostReducer";
 import { GetListDTO } from "interface/explore/ExplorePost";
@@ -19,12 +21,13 @@ const useExploreHooks = () => {
   const setPostList = async (inputDTO: GetListDTO) => {
     const result = await getPostList(inputDTO);
     dispatch(setExplorePostList(result));
+    dispatch(setCurPage(1));
+    dispatch(setEndPoint(false));
   };
 
   const addPostList = async (inputDTO: GetListDTO) => {
     const result = await getPostList(inputDTO);
 
-    // console.log(result);
     if (result.length === 0) {
       console.log("끝");
       return 0;

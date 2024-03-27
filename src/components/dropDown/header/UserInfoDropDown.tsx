@@ -9,7 +9,7 @@ function UserInfoDropdown({
 }: {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
-  const { LogOut, MyPage } = useLogin();
+  const { MyPage } = useLogin();
 
   // const FormComponent = formComponents[postFormIndex];
 
@@ -24,9 +24,6 @@ function UserInfoDropdown({
     <div className={dropdownStyles.outSide} onClick={handleBackdropClick}>
       <div className={dropdownStyles.item} onClick={MyPage}>
         마이 페이지
-      </div>
-      <div className={dropdownStyles.item} onClick={LogOut}>
-        로그 아웃
       </div>
     </div>
   );
