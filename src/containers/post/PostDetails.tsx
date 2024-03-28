@@ -7,6 +7,7 @@ import secureLocalStorage from "react-secure-storage";
 import useError from "hooks/error/useErrorHandler";
 import PostComments from "./comments/PostComments";
 import PostCardList from "./postCardList/web/PostCardList";
+import PostMap from "components/map/PostMap";
 
 function PostDetail() {
   const { postId } = useParams();
@@ -32,7 +33,9 @@ function PostDetail() {
   }, []);
   return postDetails ? (
     <section className={containerStyles.container}>
-      <article className={containerStyles.sideComponent}>맵</article>
+      <article className={containerStyles.sideComponent}>
+        <PostMap cards={postDetails.cards} />
+      </article>
       <article className={containerStyles.mainComponent}>
         <PostCardList postDetails={postDetails} />
       </article>
