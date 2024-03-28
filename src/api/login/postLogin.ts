@@ -1,4 +1,5 @@
 import { axiosInstance } from "api/token/axiosInstance";
+import secureLocalStorage from "react-secure-storage";
 
 export interface LoginData {
   email: string;
@@ -17,9 +18,10 @@ const postLogin = async (inputData: LoginDTO) => {
       withCredentials: true,
     });
 
+    secureLocalStorage.setItem("accessToken", response.data.accessToken);
+    secureLocalStorage.setItem("refreshToken", response.data.refreshToken);
     const status = response.status;
-
-    if (status === 200) return response.data;
+    if (status === 200) return response.status;
     else {
       return null;
     }

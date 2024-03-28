@@ -13,9 +13,7 @@ const useLogin = () => {
 
     const result = await postLogin(inputDTO);
 
-    if (result) {
-      secureLocalStorage.setItem("accessToken", result.accessToken);
-      secureLocalStorage.setItem("refreshToken", result.refreshToken);
+    if (result === 200) {
       navigate("/explore");
     } else {
       toast.error("로그인 실패");
