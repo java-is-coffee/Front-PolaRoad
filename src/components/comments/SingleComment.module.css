@@ -1,0 +1,31 @@
+.singleCommentWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.profileImg {
+  border-radius: 50%;
+  overflow: hidden;
+  object-fit: cover;
+  width: 24px;
+  height: 24px;
+}
+
+.profileImg img {
+  width: 24px;
+}
+
+.commentDetail {
+  margin-left: 10px;
+}
+
+.name {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.contents {
+  font-size: 1.2rem;
+}
