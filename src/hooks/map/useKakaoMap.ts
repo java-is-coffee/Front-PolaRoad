@@ -74,7 +74,12 @@ const useKakaoMap = () => {
     });
   };
 
-  return { selectedPlace, initKakaoMap, searchPlaceByKeyword };
+  // 위도 경도 계산하는 메서드
+  const getLatLng = (y: number, x: number) => {
+    return new kakao.maps.LatLng(y, x);
+  };
+
+  return { selectedPlace, initKakaoMap, searchPlaceByKeyword, getLatLng };
 };
 
 export default useKakaoMap;
