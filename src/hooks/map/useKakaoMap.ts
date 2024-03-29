@@ -15,22 +15,21 @@ interface Place {
   // 필요에 따라 추가 프로퍼티 선언
 }
 
-interface KakaoMapProps {
-  latitude: number;
-  longitude: number;
-  level: number;
-}
-
-const useKakaoMap = ({ latitude, longitude, level }: KakaoMapProps) => {
+const useKakaoMap = () => {
   const mapRef = useRef<any>(null); // map 인스턴스를 저장하기 위한 ref
   const infoWindowRef = useRef<any>(null); // infoWindow 인스턴스를 저장하기 위한 ref
   const [selectedPlace, setSelectedPlace] = useState<Place>();
 
-  const initKakaoMap = (mapContainer: HTMLElement) => {
+  const initKakaoMap = (
+    mapContainer: HTMLElement,
+    initLatitude: number,
+    initLongitude: number,
+    initLevel: number
+  ) => {
     if (mapRef.current && infoWindowRef.current) return;
     const mapOption = {
-      center: new kakao.maps.LatLng(latitude, longitude),
-      level: level,
+      center: new kakao.maps.LatLng(initLatitude, initLongitude),
+      level: initLevel,
     };
     const newMap = new kakao.maps.Map(mapContainer, mapOption);
     const newInfoWindow = new kakao.maps.InfoWindow({ zIndex: 1 });

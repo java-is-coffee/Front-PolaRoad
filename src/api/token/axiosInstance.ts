@@ -48,7 +48,7 @@ axiosInstance.interceptors.response.use(
           const result = await getAccessToken(refreshTokenData);
           secureLocalStorage.clear();
           secureLocalStorage.setItem("accessToken", result.accessToken);
-          secureLocalStorage.setItem("refreshToken", result.accessToken);
+          secureLocalStorage.setItem("refreshToken", result.refreshToken);
           console.log("토큰 재발급");
           return axiosInstance(config);
         }
