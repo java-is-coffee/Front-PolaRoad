@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import componentStyles from './HomeModal.module.css';
 
 interface HomeModalProps {
