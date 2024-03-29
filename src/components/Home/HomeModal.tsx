@@ -55,3 +55,4 @@ const HomeModal: React.FC<HomeModalProps> = ({ open, handleClose, children }) =>
 };
 
 export default HomeModal;
+
