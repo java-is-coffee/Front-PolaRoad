@@ -1,4 +1,6 @@
+import { Routes } from "react-router-dom";
 import { useRef, useState } from "react";
+import { IRoutesPointType } from "interface/map/IRoutesPointType";
 
 declare global {
   interface Window {
@@ -79,7 +81,67 @@ const useKakaoMap = () => {
     return new kakao.maps.LatLng(y, x);
   };
 
-  return { selectedPlace, initKakaoMap, searchPlaceByKeyword, getLatLng };
+  const calculateCenterPoint = (routePointData: IRoutesPointType[]) => {
+    if (routePointData.length === 0) return { lat: 0, lng: 0 };
+
+    const sum = routePointData.reduce(
+      (acc, curr) => {
+        acc.lat += curr.latitude ? curr.latitude : 0;
+        acc.lng += curr.longitude ? curr.longitude : 0;
+        return acc;
+      },
+      { lat: 0, lng: 0 }
+    );
+
+    return {
+      lat: sum.lat / routePointData.length,
+      lng: sum.lng / routePointData.length,
+    };
+  };
+
+  const renderOverlay = (routes: IRoutesPointType[]) => {
+    renderPolyline(routes);
+    renderMarker(routes);
+  };
+
+  const renderPolyline = (routes: IRoutesPointType[]) => {
+    if (routes.length <= 1) return;
+    const polyLine = new kakao.maps.Polyline({
+      path: routes,
+      strokeWeight: 2,
+      strokeColor: "#13C4A3",
+      strokeStyle: "dashed",
+    });
+    console.log(mapRef.current);
+    polyLine.setMap(mapRef.current);
+  };
+
+  const renderMarker = (routes: IRoutesPointType[]) => {
+    routes.forEach((route, index) => {
+      const content = `<div style="width: 35px; height: 35px; background-color: #13C4A3; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size:1.4rem; font-weight:bold">${
+        index + 1
+      }</div>`;
+
+      // 커스텀 오버레이 생성
+      const customOverlay = new window.kakao.maps.CustomOverlay({
+        position: new window.kakao.maps.LatLng(route.latitude, route.longitude),
+        content: content,
+        yAnchor: 1,
+      });
+
+      // 지도에 오버레이 추가
+      customOverlay.setMap(mapRef.current);
+    });
+  };
+
+  return {
+    selectedPlace,
+    initKakaoMap,
+    searchPlaceByKeyword,
+    getLatLng,
+    calculateCenterPoint,
+    renderOverlay,
+  };
 };
 
 export default useKakaoMap;
