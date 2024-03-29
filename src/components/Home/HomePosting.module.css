@@ -25,8 +25,6 @@
 .galleryContainer {
   display: flex;
   overflow-x: auto;
-  scroll-behavior: smooth;
-  scroll-snap-type: x mandatory;
   white-space: nowrap;
   margin: 20px; 
 }

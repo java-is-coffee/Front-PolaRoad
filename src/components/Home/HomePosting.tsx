@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { BsGeoAltFill } from "react-icons/bs";
 import HomeModal from './HomeModal'; 
-// import { Transition } from "react-transition-group";
 
 const images = [
   { src: "/photo/강변.jpg", username: "User1", location: "Seoul", likes: 10, title: "Beautiful River" },
@@ -25,65 +24,44 @@ interface Image {
   title: string;
 }
 
+
 function HomePostingContainer() {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollStartX, setScrollStartX] = useState(0);
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
+  // 여기서 useState로 설정해주셨는데
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [imageList, setImageList] = useState(images); 
 
   useEffect(() => {
-    const scrollStep = -0.5; // 음수 값으로 스크롤 속도를 조절하여 왼쪽으로 이동
-    let animationFrameId: number; 
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) return;
   
-    const animateScroll = () => {
-      if (scrollRef.current) {
-        let newScrollPosition = scrollRef.current.scrollLeft + scrollStep;
-        scrollRef.current.scrollLeft = newScrollPosition;
+    let isAutoScrolling = true;
   
-        // 스크롤이 시작 위치에 도달하면 끝으로 이동
-        if (newScrollPosition <= 0) {
-          scrollRef.current.scrollLeft = scrollRef.current.scrollWidth - scrollRef.current.clientWidth;
-        }
+    const autoScroll = () => {
+      if (!isAutoScrolling) return;
+  
+      // 스크롤 위치를 조금씩 이동
+      scrollContainer.scrollLeft += 1;
+  
+      // 스크롤이 끝에 거의 도달하면 이미지 목록을 추가
+      if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth - 1) {
+        setImageList((prevImages) => [...prevImages, ...images]);
       }
-      animationFrameId = requestAnimationFrame(animateScroll);
+    
+
+      requestAnimationFrame(autoScroll);
     };
-  
-    animateScroll();
+
+    autoScroll();
   
     return () => {
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
+      isAutoScrolling = false;
     };
   }, []);
 
-  const onMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragging(true);
-    setStartX(e.pageX);
-    if (scrollRef.current) {
-      setScrollStartX(scrollRef.current.scrollLeft);
-    }
-  };
 
-  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDragging || !scrollRef.current) return;
-    e.preventDefault();
-    const currentX = e.pageX;
-    const deltaX = currentX - startX;
-    scrollRef.current.scrollLeft = scrollStartX - deltaX;
-  };
-
-  const onMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  const onMouseLeave = () => {
-    setIsDragging(false);
-  };
 
   const onImageClick = (image: React.SetStateAction<Image | null>) => {
     setSelectedImage(image);
@@ -109,12 +87,9 @@ function HomePostingContainer() {
         <div 
           ref={scrollRef} 
           className={componentStyles.galleryContainer} 
-          onMouseDown={onMouseDown}
-          onMouseMove={onMouseMove} 
-          onMouseUp={onMouseUp} 
-          onMouseLeave={onMouseLeave}
+          style={{ overflowX: 'auto' }}
         >
-          {images.map((item, index) => (
+          {imageList.map((item, index) => (
             <div key={index} className={componentStyles.galleryImageWrapper} onClick={() => onImageClick(item)}>
               <img src={item.src} alt={item.title} className={componentStyles.galleryImage} />
               <div className={componentStyles.imageInfo}>
@@ -122,10 +97,8 @@ function HomePostingContainer() {
                 <div className={componentStyles.title}>{item.title}</div>
                 <div className={componentStyles.likes}><FontAwesomeIcon icon={faHeart} />{item.likes}</div>
                 <div className={componentStyles.location}><BsGeoAltFill />{item.location}</div>
-
-                
               </div>
-
+{/*   */}
             </div>
           ))}
           <div className={componentStyles.galleryImageWrapper}>
