@@ -112,12 +112,13 @@ const useKakaoMap = () => {
       strokeColor: "#13C4A3",
       strokeStyle: "dashed",
     });
-    console.log(mapRef.current);
     polyLine.setMap(mapRef.current);
   };
 
   const renderMarker = (routes: IRoutesPointType[]) => {
+    const bounds = new kakao.maps.LatLngBounds();
     routes.forEach((route, index) => {
+      bounds.extend(new kakao.maps.LatLng(route.latitude, route.longitude));
       const content = `<div style="width: 35px; height: 35px; background-color: #13C4A3; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size:1.4rem; font-weight:bold">${
         index + 1
       }</div>`;
@@ -128,7 +129,7 @@ const useKakaoMap = () => {
         content: content,
         yAnchor: 1,
       });
-
+      mapRef.current.setBounds(bounds);
       // 지도에 오버레이 추가
       customOverlay.setMap(mapRef.current);
     });
