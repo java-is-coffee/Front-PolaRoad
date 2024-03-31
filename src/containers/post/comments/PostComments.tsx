@@ -126,6 +126,7 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
     if (addComments && addComments.content) {
       setCommentList((prev) => [...prev, ...addComments.content]);
       setPage(nextPage);
+      setHasNext(addComments.hasNext);
     }
   };
 
@@ -150,11 +151,13 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
         commentList.map((comment, index) => (
           <SingleComment key={comment.reviewId} commentDetails={comment} />
         ))}
-      <IoMdAddCircleOutline
-        size={"24px"}
-        style={{ cursor: "pointer" }}
-        onClick={() => getMoreComment()}
-      />
+      {hasNext && (
+        <IoMdAddCircleOutline
+          size={"24px"}
+          style={{ cursor: "pointer" }}
+          onClick={() => getMoreComment()}
+        />
+      )}
       {imagePreviews.map((src, index) => (
         <div
           key={index}
