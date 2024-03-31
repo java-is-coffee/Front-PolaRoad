@@ -9,11 +9,14 @@ interface PostMapProps {
 }
 
 function PostMap({ cards }: PostMapProps) {
-  const { initKakaoMap, calculateCenterPoint, renderOverlay } = useKakaoMap();
+  const { initKakaoMap, calculateCenterPoint, renderOverlay, mapReload } =
+    useKakaoMap();
   const containerRef = useRef<HTMLDivElement | null>(null);
 
+  // 지도 초기화 및 오버레이 렌더링 로직
   useEffect(() => {
     if (!containerRef.current) return;
+
     const routePointData: IRoutesPointType[] = cards
       .filter(
         (card) =>
@@ -23,10 +26,24 @@ function PostMap({ cards }: PostMapProps) {
         latitude: card.latitude,
         longitude: card.longitude,
       }));
+
     const centerPoint = calculateCenterPoint(routePointData);
-    initKakaoMap(containerRef.current, centerPoint.lat, centerPoint.lng, 1);
+    initKakaoMap(containerRef.current, centerPoint.lat, centerPoint.lng, 3);
     renderOverlay(routePointData);
-  }, [containerRef.current]);
+  }, [cards]); // cards가 변할 때마다 지도 초기화
+
+  useEffect(() => {
+    const observer = new ResizeObserver((entries) => {
+      mapReload();
+    });
+
+    if (containerRef.current) observer.observe(containerRef.current);
+
+    return () => {
+      if (containerRef.current) observer.unobserve(containerRef.current);
+    };
+  }, [mapReload]);
+
   return (
     <div className={mapStyles.wrapper}>
       <h2>상세경로</h2>

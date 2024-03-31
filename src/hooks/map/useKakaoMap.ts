@@ -103,6 +103,12 @@ const useKakaoMap = () => {
     renderMarker(routes);
   };
 
+  const mapReload = () => {
+    if (mapRef.current) {
+      mapRef.current.relayout();
+    }
+  };
+
   const renderPolyline = (routes: IRoutesPointType[]) => {
     if (routes.length <= 1) return;
     const polyLine = new kakao.maps.Polyline({
@@ -141,6 +147,7 @@ const useKakaoMap = () => {
     getLatLng,
     calculateCenterPoint,
     renderOverlay,
+    mapReload,
   };
 };
 
