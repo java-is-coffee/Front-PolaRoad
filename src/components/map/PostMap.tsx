@@ -30,18 +30,21 @@ function PostMap({ cards }: PostMapProps) {
     const centerPoint = calculateCenterPoint(routePointData);
     initKakaoMap(containerRef.current, centerPoint.lat, centerPoint.lng, 3);
     renderOverlay(routePointData);
+    // eslint-disable-next-line
   }, [cards]); // cards가 변할 때마다 지도 초기화
 
   useEffect(() => {
+    const currentContainer = containerRef.current;
     const observer = new ResizeObserver((entries) => {
       mapReload();
     });
 
-    if (containerRef.current) observer.observe(containerRef.current);
+    if (currentContainer) observer.observe(currentContainer);
 
     return () => {
-      if (containerRef.current) observer.unobserve(containerRef.current);
+      if (currentContainer) observer.unobserve(currentContainer);
     };
+    // eslint-disable-next-line
   }, [mapReload]);
 
   return (
