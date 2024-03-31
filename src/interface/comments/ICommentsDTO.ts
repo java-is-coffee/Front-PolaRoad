@@ -6,7 +6,7 @@ export interface INewComment {
 }
 
 export interface ICommentDTO {
-  contents: CommentDetails[];
+  content: CommentDetails[];
   hasNext: boolean;
 }
 
