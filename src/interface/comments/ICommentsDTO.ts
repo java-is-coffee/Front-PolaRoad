@@ -1,4 +1,9 @@
 export interface ICommentDTO {
+  contents: CommentDetails[];
+  hasNext: boolean;
+}
+
+export interface CommentDetails {
   reviewId: number; // 리뷰 Id
   postId: number; // 포스트 Id
   memberId: number; // 멤버 Id
