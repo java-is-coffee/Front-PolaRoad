@@ -1,3 +1,10 @@
+export interface INewComment {
+  postId: number;
+  memberId: number;
+  content: string;
+  reviewPhotoList: string[];
+}
+
 export interface ICommentDTO {
   contents: CommentDetails[];
   hasNext: boolean;
