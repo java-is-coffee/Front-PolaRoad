@@ -10,7 +10,7 @@ interface ThumbnailCardProps {
   thumbnailImageURL: string | undefined;
   concept: conceptOptionType;
   region: regionOptionType;
-  hashTags: string[];
+  hashTags: { hashTagId: number; tagName: string }[];
   memberGood: boolean;
 }
 
@@ -66,7 +66,7 @@ function ThumbnailCard({
       </div>
       <section className={cardStyles.hashTags}>
         {hashTags.map((hashTag) => (
-          <span>{`#${hashTag}`}</span>
+          <span>{`#${hashTag.tagName}`}</span>
         ))}
       </section>
     </article>
