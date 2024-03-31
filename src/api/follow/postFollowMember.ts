@@ -1,4 +1,3 @@
-import getMemberInfo from "api/member/getMemberInfo";
 import { axiosInstance } from "api/token/axiosInstance";
 import { toast } from "react-toastify";
 

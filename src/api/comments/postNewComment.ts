@@ -1,13 +1,13 @@
 import getMemberInfo from "api/member/getMemberInfo";
 import {
-  ICommentDTO,
+  CommentDetails,
   INewComment,
 } from "../../interface/comments/ICommentsDTO";
 import { axiosInstance } from "api/token/axiosInstance";
 
 const postNewComment = async (
   newComment: INewComment
-): Promise<ICommentDTO[] | null> => {
+): Promise<CommentDetails | null> => {
   try {
     const API_URL = `/api/review/write/${newComment.postId}`;
 
@@ -22,7 +22,7 @@ const postNewComment = async (
     const { status, data } = response;
     if (status === 200) {
       console.log("postDetails fetch success");
-      return data as ICommentDTO[];
+      return data as CommentDetails;
     }
     return null;
   } catch (error) {
