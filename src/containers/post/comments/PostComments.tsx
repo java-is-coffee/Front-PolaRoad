@@ -6,7 +6,7 @@ import {
   ICommentDTO,
   INewComment,
 } from "interface/comments/ICommentsDTO";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { IUploadImage } from "interface/bucket/IUploadImage";
 import useBucket from "hooks/bucket/useBucket";
 import { toast } from "react-toastify";
@@ -31,8 +31,7 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { uploadImage } = useBucket();
-  // 무한 스크롤용 ref
-  const endCommentRef = useRef<HTMLDivElement>();
+
   const [page, setPage] = useState<number>(1);
 
   useEffect(() => {
