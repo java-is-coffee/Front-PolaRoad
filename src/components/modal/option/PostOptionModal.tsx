@@ -3,15 +3,23 @@ import modalStyles from "./PostOptionModal.module.css";
 import { useModal } from "../../../hooks/modal/ModalProvider";
 import ModalOption from "../../../enum/modalOptionTypes";
 import { resetPostDetails } from "../../../redux/reducers/newPost/newPostReducers";
+import postFollowMember from "api/follow/postFollowMember";
 
-const PostOptionModal = () => {
+interface PostOptionModalProps {
+  memberId: number;
+}
+
+const PostOptionModal = ({ memberId }: PostOptionModalProps) => {
   const { closeModal } = useModal();
   // "취소" 버튼 클릭 시 실행될 함수
   const handleCancel = () => {
     closeModal(ModalOption.POSTOPTION); // 경고 모달을 닫음
   };
 
-  const handleFollow = async () => {};
+  const handleFollow = async () => {
+    const result = await postFollowMember(memberId);
+    if (result) closeModal(ModalOption.POSTOPTION);
+  };
 
   return (
     <div className={modalStyles.backdrop} onClick={handleCancel}>

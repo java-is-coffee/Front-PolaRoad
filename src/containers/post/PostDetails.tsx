@@ -8,6 +8,10 @@ import useError from "hooks/error/useErrorHandler";
 import PostComments from "./comments/PostComments";
 import PostCardList from "./postCardList/web/PostCardList";
 import PostMap from "components/map/PostMap";
+import { useModal } from "hooks/modal/ModalProvider";
+import ModalOption from "enum/modalOptionTypes";
+import PostOptionModal from "components/modal/option/PostOptionModal";
+import { IoReturnDownBack } from "react-icons/io5";
 
 function PostDetail() {
   const { postId } = useParams();
@@ -29,6 +33,20 @@ function PostDetail() {
     }
     // eslint-disable-next-line
   }, []);
+
+  // 포스트 옵션 모달 설정
+  const { registerModal, closeModal } = useModal();
+  useEffect(() => {
+    if (!postDetails) return;
+    registerModal(
+      ModalOption.POSTOPTION,
+      <PostOptionModal memberId={postDetails?.memberInfo.memberId} />
+    );
+    return () => {
+      closeModal(ModalOption.POSTOPTION);
+    };
+    // eslint-disable-next-line
+  }, [postDetails]);
   return postDetails ? (
     <section className={containerStyles.container}>
       <article className={containerStyles.sideComponent}>
