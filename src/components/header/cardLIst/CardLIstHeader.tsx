@@ -41,7 +41,11 @@ function CardListHeader({ memberInfo }: CarsListHeaderProps) {
         </div>
         <span>{memberInfo.nickname}</span>
       </div>
-      <IoIosMore size={"24px"} onClick={handleOptionClick} />
+      <IoIosMore
+        size={"24px"}
+        onClick={handleOptionClick}
+        style={{ cursor: "pointer" }}
+      />
     </div>
   );
 }
