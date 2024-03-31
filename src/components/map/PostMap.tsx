@@ -1,6 +1,6 @@
 import useKakaoMap from "hooks/map/useKakaoMap";
 import mapStyles from "./PostMap.module.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import INewCard from "interface/card/INewCard";
 import { IRoutesPointType } from "interface/map/IRoutesPointType";
 
@@ -9,7 +9,6 @@ interface PostMapProps {
 }
 
 function PostMap({ cards }: PostMapProps) {
-  const [routesPoints, setRoutesPoints] = useState<IRoutesPointType[]>([]);
   const { initKakaoMap, calculateCenterPoint, renderOverlay } = useKakaoMap();
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -24,7 +23,6 @@ function PostMap({ cards }: PostMapProps) {
         latitude: card.latitude,
         longitude: card.longitude,
       }));
-    setRoutesPoints(routePointData);
     const centerPoint = calculateCenterPoint(routePointData);
     initKakaoMap(containerRef.current, centerPoint.lat, centerPoint.lng, 1);
     renderOverlay(routePointData);
