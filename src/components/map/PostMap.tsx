@@ -33,6 +33,17 @@ function PostMap({ cards }: PostMapProps) {
     <div className={mapStyles.wrapper}>
       <h2>상세경로</h2>
       <div ref={containerRef} className={mapStyles.mapContainer}></div>
+      <article className={mapStyles.mapContents}>
+        <div>
+          {cards &&
+            cards.map((card, index) => (
+              <div key={index} className={mapStyles.mapItem}>
+                <span className={mapStyles.itemIndex}>{index + 1}</span>
+                <span className={mapStyles.itemLocation}>{card.location}</span>
+              </div>
+            ))}
+        </div>
+      </article>
     </div>
   );
 }
