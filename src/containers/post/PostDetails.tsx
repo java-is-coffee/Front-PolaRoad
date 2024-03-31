@@ -13,7 +13,6 @@ function PostDetail() {
   const { postId } = useParams();
   const [postDetails, setPostDetails] = useState<IPostDTO | null>(null);
   const { navigateOnError } = useError();
-
   const getPostData = async () => {
     if (!postId) {
       navigateOnError({ errorType: "PATH" });
@@ -40,7 +39,10 @@ function PostDetail() {
         <PostCardList postDetails={postDetails} />
       </article>
       <article className={containerStyles.sideComponent}>
-        <PostComments postId={postId} />
+        <PostComments
+          postId={postId}
+          memberId={postDetails.memberInfo.memberId}
+        />
       </article>
     </section>
   ) : (
