@@ -77,8 +77,8 @@ function ThumbnailCard({
         <span className={cardStyles.region}>{region}</span>
       </div>
       <section className={cardStyles.hashTags}>
-        {hashTags.map((hashTag) => (
-          <span>{`#${hashTag.tagName}`}</span>
+        {hashTags.map((hashTag, index) => (
+          <span key={index}>{`#${hashTag.tagName}`}</span>
         ))}
       </section>
     </article>
