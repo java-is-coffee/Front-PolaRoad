@@ -6,12 +6,13 @@ import {
   ICommentDTO,
   INewComment,
 } from "interface/comments/ICommentsDTO";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IUploadImage } from "interface/bucket/IUploadImage";
 import useBucket from "hooks/bucket/useBucket";
 import { toast } from "react-toastify";
 import containerStyles from "./PostComments.module.css";
 import postNewComment from "api/comments/postNewComment";
+import { IoMdAddCircleOutline } from "react-icons/io";
 
 interface PostCommentsProps {
   postId: string | undefined;
@@ -19,14 +20,21 @@ interface PostCommentsProps {
 }
 
 function PostComments({ postId, memberId }: PostCommentsProps) {
+  // 불러온 댓글
   const [commentList, setCommentList] = useState<CommentDetails[]>([]);
   const [hasNext, setHasNext] = useState<boolean>(false);
+  //새로운 코멘트용 state
   const [commentImgUrls, setCommentImgUrls] = useState<string[]>([]);
-  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [commentContent, setCommentContent] = useState<string>("");
+  // 이미지 프로뷰 state
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { uploadImage } = useBucket();
+  // 무한 스크롤용 ref
+  const endCommentRef = useRef<HTMLDivElement>();
+  const [page, setPage] = useState<number>(1);
+
   useEffect(() => {
     const fetchComments = async () => {
       if (postId) {
@@ -53,8 +61,10 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
       reviewPhotoList: commentImgUrls,
     };
     const result: CommentDetails | null = await postNewComment(newComment);
-    if (result) setCommentList((prev) => [...prev, result]);
-    setCommentContent("");
+    if (result) {
+      setCommentList((prev) => [...prev, result]);
+      setCommentContent(() => "");
+    }
   };
 
   const handleImageUpload = async (
@@ -108,6 +118,17 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
     setIsModalOpen(false);
   };
 
+  const getMoreComment = async () => {
+    // 다음 코멘트가 없는 경우 그냥 리턴
+    if (!hasNext || !postId) return;
+    const nextPage = page + 1;
+    const addComments = await getPostComments(postId, nextPage);
+    if (addComments && addComments.content) {
+      setCommentList((prev) => [...prev, ...addComments.content]);
+      setPage(nextPage);
+    }
+  };
+
   return (
     <div className={containerStyles.wrapper}>
       {isModalOpen && (
@@ -126,11 +147,14 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
       )}
       <h2>댓글</h2>
       {commentList &&
-        commentList.map((comment) => {
-          return (
-            <SingleComment key={comment.reviewId} commentDetails={comment} />
-          );
-        })}
+        commentList.map((comment, index) => (
+          <SingleComment key={comment.reviewId} commentDetails={comment} />
+        ))}
+      <IoMdAddCircleOutline
+        size={"24px"}
+        style={{ cursor: "pointer" }}
+        onClick={() => getMoreComment()}
+      />
       {imagePreviews.map((src, index) => (
         <div
           key={index}
