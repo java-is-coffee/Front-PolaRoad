@@ -11,7 +11,6 @@ import PostMap from "components/map/PostMap";
 import { useModal } from "hooks/modal/ModalProvider";
 import ModalOption from "enum/modalOptionTypes";
 import PostOptionModal from "components/modal/option/PostOptionModal";
-import { IoReturnDownBack } from "react-icons/io5";
 
 function PostDetail() {
   const { postId } = useParams();

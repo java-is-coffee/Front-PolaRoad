@@ -23,6 +23,7 @@ function CardListHeader({ memberInfo }: CarsListHeaderProps) {
       if (result) setProfileImg(result);
     };
     fetchUserProfileImg();
+    // eslint-disable-next-line
   }, []);
 
   const handleOptionClick = () => {

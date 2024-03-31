@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 import { IUploadImage } from "interface/bucket/IUploadImage";
 import useBucket from "hooks/bucket/useBucket";
 import { toast } from "react-toastify";
-import { IoMdClose } from "react-icons/io";
 import containerStyles from "./PostComments.module.css";
 import postNewComment from "api/comments/postNewComment";
 
@@ -27,7 +26,7 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [commentContent, setCommentContent] = useState<string>("");
-  const { uploadImage, deleteImage } = useBucket();
+  const { uploadImage } = useBucket();
   useEffect(() => {
     const fetchComments = async () => {
       if (postId) {
@@ -44,7 +43,7 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
     //eslint-disable-next-line
   }, [postId]);
 
-  const handleSubmitComment = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitComment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!postId) return;
     const newComment: INewComment = {
@@ -53,7 +52,9 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
       content: commentContent,
       reviewPhotoList: commentImgUrls,
     };
-    postNewComment(newComment);
+    const result: CommentDetails | null = await postNewComment(newComment);
+    if (result) setCommentList((prev) => [...prev, result]);
+    setCommentContent("");
   };
 
   const handleImageUpload = async (
@@ -136,15 +137,10 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
           className={containerStyles.previewImgWrapper}
           onClick={() => openModal(src)}
         >
-          <img
-            src={src}
-            alt="Image preview"
-            className={containerStyles.previewImg}
-          />
+          <img src={src} alt="preview" className={containerStyles.previewImg} />
         </div>
       ))}
       <form onSubmit={handleSubmitComment}>
-        <input placeholder="댓글 작성" onChange={handleCommentChange} />
         <label htmlFor={`file-${postId}`}>
           <AiOutlineCloudUpload size={"24px"} />
         </label>
@@ -156,6 +152,11 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
           style={{ display: "none" }}
           multiple
           onChange={handleImageUpload}
+        />
+        <input
+          placeholder="댓글 작성"
+          onChange={handleCommentChange}
+          required
         />
         <button type="submit">작성</button>
       </form>

@@ -2,7 +2,6 @@ import React from "react";
 import modalStyles from "./PostOptionModal.module.css";
 import { useModal } from "../../../hooks/modal/ModalProvider";
 import ModalOption from "../../../enum/modalOptionTypes";
-import { resetPostDetails } from "../../../redux/reducers/newPost/newPostReducers";
 import postFollowMember from "api/follow/postFollowMember";
 
 interface PostOptionModalProps {
