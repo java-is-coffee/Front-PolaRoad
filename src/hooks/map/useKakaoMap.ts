@@ -1,4 +1,3 @@
-import { Routes } from "react-router-dom";
 import { useRef, useState } from "react";
 import { IRoutesPointType } from "interface/map/IRoutesPointType";
 
