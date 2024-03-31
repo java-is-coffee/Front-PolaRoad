@@ -19,7 +19,6 @@ function PostDetail() {
       return;
     }
     const result = await getPostDetails(postId);
-    console.log(result);
     setPostDetails(result);
   };
   useEffect(() => {

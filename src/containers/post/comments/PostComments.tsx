@@ -32,7 +32,6 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
     const fetchComments = async () => {
       if (postId) {
         const result: ICommentDTO | null = await getPostComments(postId, 1);
-        console.log(result?.content);
         if (result) {
           setCommentList(result.content);
           setHasNext(result.hasNext);
