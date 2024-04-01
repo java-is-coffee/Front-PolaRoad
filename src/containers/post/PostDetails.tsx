@@ -7,19 +7,21 @@ import secureLocalStorage from "react-secure-storage";
 import useError from "hooks/error/useErrorHandler";
 import PostComments from "./comments/PostComments";
 import PostCardList from "./postCardList/web/PostCardList";
+import PostMap from "components/map/PostMap";
+import { useModal } from "hooks/modal/ModalProvider";
+import ModalOption from "enum/modalOptionTypes";
+import PostOptionModal from "components/modal/option/PostOptionModal";
 
 function PostDetail() {
   const { postId } = useParams();
   const [postDetails, setPostDetails] = useState<IPostDTO | null>(null);
   const { navigateOnError } = useError();
-
   const getPostData = async () => {
     if (!postId) {
       navigateOnError({ errorType: "PATH" });
       return;
     }
     const result = await getPostDetails(postId);
-    console.log(result);
     setPostDetails(result);
   };
   useEffect(() => {
@@ -30,14 +32,33 @@ function PostDetail() {
     }
     // eslint-disable-next-line
   }, []);
+
+  // 포스트 옵션 모달 설정
+  const { registerModal, closeModal } = useModal();
+  useEffect(() => {
+    if (!postDetails) return;
+    registerModal(
+      ModalOption.POSTOPTION,
+      <PostOptionModal memberId={postDetails?.memberInfo.memberId} />
+    );
+    return () => {
+      closeModal(ModalOption.POSTOPTION);
+    };
+    // eslint-disable-next-line
+  }, [postDetails]);
   return postDetails ? (
     <section className={containerStyles.container}>
-      <article className={containerStyles.sideComponent}>맵</article>
+      <article className={containerStyles.sideComponent}>
+        <PostMap cards={postDetails.cards} />
+      </article>
       <article className={containerStyles.mainComponent}>
         <PostCardList postDetails={postDetails} />
       </article>
       <article className={containerStyles.sideComponent}>
-        <PostComments postId={postId} />
+        <PostComments
+          postId={postId}
+          memberId={postDetails.memberInfo.memberId}
+        />
       </article>
     </section>
   ) : (

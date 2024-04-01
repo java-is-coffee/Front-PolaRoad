@@ -12,6 +12,6 @@ export interface IPostDTO {
   concept: conceptOptionType;
   region: regionOptionType;
   cards: INewCard[];
-  postHashtags: string[];
+  postHashtags: { hashTagId: number; tagName: string }[];
   memberGood: boolean;
 }

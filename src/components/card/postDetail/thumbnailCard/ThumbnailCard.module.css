@@ -53,19 +53,17 @@
   border-radius: 6px;
 }
 
-.thumbnailCard .hashtags {
+.thumbnailCard .hashTags {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  padding: 0.5em;
-  background: #f7f7f7;
 }
 
-.thumbnailCard .hashtags span {
+.thumbnailCard .hashTags span {
   display: inlineBlock;
   background: #e0e0e0;
   border-radius: 2px;
-  padding: 0.3em 0.6em;
-  margin-right: 0.25em;
-  font-size: 0.75em;
+  padding: 2px 4px;
+  margin-right: 4px;
+  font-size: 1.4rem;
 }
