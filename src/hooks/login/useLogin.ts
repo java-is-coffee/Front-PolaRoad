@@ -14,7 +14,7 @@ const useLogin = () => {
     const result = await postLogin(inputDTO);
 
     if (result === 200) {
-      navigate("/explore");
+      navigate(-1);
     } else {
       toast.error("로그인 실패");
     }
