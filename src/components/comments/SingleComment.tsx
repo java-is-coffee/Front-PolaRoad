@@ -1,10 +1,10 @@
 import useBucket from "hooks/bucket/useBucket";
-import { ICommentDTO } from "interface/comments/ICommentsDTO";
+import { CommentDetails } from "interface/comments/ICommentsDTO";
 import { useEffect, useState } from "react";
 import commentStyles from "./SingleComment.module.css";
 
 interface SingleCommentProps {
-  commentDetails: ICommentDTO;
+  commentDetails: CommentDetails;
 }
 
 function SingleComment({ commentDetails }: SingleCommentProps) {
