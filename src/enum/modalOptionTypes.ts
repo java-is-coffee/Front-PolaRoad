@@ -6,6 +6,7 @@ enum ModalOption {
   SEARCH = "SEARCH",
   WARNING = "WARNING",
   POSTOPTION = "POSTOPTION",
+  EDITPROFILEIMG = "EDITPROFILEIMG",
 }
 
 export default ModalOption;
