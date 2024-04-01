@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import { CookiesProvider } from "react-cookie";
 import { Provider } from "react-redux";
 import { rootReducer } from "./redux/store/store";
 import App from "./App";
@@ -15,11 +14,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={rootReducer}>
-      <CookiesProvider>
-        <ModalProvider>
-          <App />
-        </ModalProvider>
-      </CookiesProvider>
+      <ModalProvider>
+        <App />
+      </ModalProvider>
     </Provider>
   </React.StrictMode>
 );
