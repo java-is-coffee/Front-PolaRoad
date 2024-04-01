@@ -1,22 +1,33 @@
 import { IconButton, InputAdornment, TextField } from "@mui/material";
-import useExploreHooks from "hooks/explore/useExploreHooks";
-import { GetListDTO } from "interface/explore/ExplorePost";
+
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { setSearchText } from "../../../redux/reducers/explore/explorePostReducer";
+
 import SearchIcon from "@mui/icons-material/Search";
-import { redirect, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import useStoreValue from "hooks/storeValue/useStoreValue";
+import { setSearchText } from "../../../redux/reducers/explore/filterReducer";
 
 const HeaderSearch = () => {
   const [searchInput, setSearchInput] = useState("");
-  const { setPostList } = useExploreHooks();
+  // const { setPostList } = useExploreHooks();
 
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+
+  const { setValue } = useStoreValue();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    navigate(`?search=${searchInput}`);
+    setValue(setSearchText(searchInput));
+
+    // if (storeRegion !== null) {
+    //   navigate(`/explore/${searchInput}?region=${storeRegion}`);
+    // } else {
+    //   navigate(`/explore/${searchInput}`);
+    // }
   };
 
   return (

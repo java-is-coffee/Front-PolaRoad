@@ -4,8 +4,7 @@ import { useEffect } from "react";
 import MainPhotoCard from "../../card/mainPhoto/MainPhotoCard";
 import styles from "./ExplorePhotoList.module.css";
 import useExploreHooks from "../../../hooks/explore/useExploreHooks";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "redux/store/store";
+import { useDispatch } from "react-redux";
 import { CircularProgress, useMediaQuery } from "@mui/material";
 import {
   categorySet,
@@ -19,6 +18,8 @@ import {
   setEndPoint,
 } from "../../../redux/reducers/explore/explorePostReducer";
 import { useSearchParams } from "react-router-dom";
+import useStoreValue from "hooks/storeValue/useStoreValue";
+import { setSearchText } from "../../../redux/reducers/explore/filterReducer";
 
 const ExplorePhotoList = () => {
   const { setPostList, addPostList } = useExploreHooks();
@@ -27,74 +28,97 @@ const ExplorePhotoList = () => {
 
   const dispatch = useDispatch();
 
-  const [params] = useSearchParams();
+  // const [params] = useSearchParams();
 
-  const storePostList = useSelector(
-    (state: RootState) => state.explorePost.postList
-  );
+  const [query, setQuery] = useSearchParams();
 
-  const storeEndPoint = useSelector(
-    (state: RootState) => state.explorePost.endPoint
-  );
-
-  const storeCategory = useSelector(
-    (state: RootState) => state.filter.activeCategory
-  );
-  const storeRegion = useSelector(
-    (state: RootState) => state.filter.activeRegion
-  );
-  const storeSort = useSelector((state: RootState) => state.filter.activeSort);
-  const storeCurPage = useSelector(
-    (state: RootState) => state.explorePost.curPage
-  );
-
-  const storeSearchText = useSelector(
-    (state: RootState) => state.explorePost.searchText
-  );
+  const {
+    storePostList,
+    storeEndPoint,
+    storeCurPage,
+    storeCategory,
+    storeRegion,
+    storeSort,
+    setValue,
+  } = useStoreValue();
 
   //화면이 전부 나와야하며, 1초 딜레이
   const [ref, inView] = useInView({
-    threshold: 1,
+    threshold: 0.8,
   });
 
   useEffect(() => {
+    console.log("시작");
     if (storePostList === null) {
+      setValue(setSearchText(query.get("search")));
       const initPostList: GetListDTO = {
         paging: 1,
         pagingNumber: 8,
         searchType: "KEYWORD",
-        keyword: storeSearchText,
+        keyword: query.get("search"),
         sortBy: "RECENT",
-        concept: null,
-        region: null,
+        concept: query.get("concept"),
+        region: query.get("region"),
       };
-
       setPostList(initPostList);
-    } else if (inView && !storeEndPoint) {
-      dispatch(setCurPage(storeCurPage + 1));
+    }
+    // eslint-disable-next-line
+  }, []);
 
+  useEffect(() => {
+    //렌더링 시작 시, 해당 view가 바로 포착되어서 .
+    if (inView && !storeEndPoint && storePostList !== null) {
+      console.log("추가 로딩");
+      dispatch(setCurPage(storeCurPage + 1));
       addPostFunc(storeCurPage);
     }
     // eslint-disable-next-line
   }, [inView]);
+  useEffect(() => {
+    if (storeRegion !== null) {
+      const regionNumber = storeRegion
+        ? regionSet.values.indexOf(storeRegion)
+        : null;
+      query.set("region", regionNumber ? regionSet.key[regionNumber] : "");
+      setQuery(query);
+    }
+
+    // eslint-disable-next-line
+  }, [storeRegion]);
+
+  useEffect(() => {
+    if (storeCategory !== null) {
+      const categoryNumber = storeCategory
+        ? categorySet.values.indexOf(storeCategory)
+        : null;
+      query.set(
+        "concept",
+        categoryNumber ? categorySet.key[categoryNumber] : ""
+      );
+      setQuery(query);
+    }
+
+    // eslint-disable-next-line
+  }, [storeCategory]);
 
   const addPostFunc = async (value: number) => {
-    const categoryNumber = storeCategory
-      ? categorySet.values.indexOf(storeCategory)
-      : null;
-    const regionNumber = storeRegion
-      ? regionSet.values.indexOf(storeRegion)
-      : null;
+    // const categoryNumber = storeCategory
+    //   ? categorySet.values.indexOf(storeCategory)
+    //   : null;
+    // const regionNumber = storeRegion
+    //   ? regionSet.values.indexOf(storeRegion)
+    //   : null;
     const sortNumber = storeSort ? sortSet.values.indexOf(storeSort) : null;
 
     const addData: GetListDTO = {
       paging: value + 1,
       pagingNumber: 8,
       searchType: "KEYWORD",
-      keyword: params.get("search"),
+      keyword: query.get("search") ? query.get("search") : null,
       sortBy: sortNumber !== null ? sortSet.key[sortNumber] : "RECENT",
-      concept: categoryNumber !== null ? categorySet.key[categoryNumber] : null,
-      region: regionNumber !== null ? regionSet.key[regionNumber] : null,
+      concept: query.get("concept") ? query.get("concept") : null,
+      // region: regionNumber !== null ? regionSet.key[regionNumber] : null,
+      region: query.get("region") ? query.get("region") : null,
     };
 
     const result = await addPostList(addData);

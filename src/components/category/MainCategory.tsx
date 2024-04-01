@@ -20,6 +20,7 @@ import { useState } from "react";
 import ScrollButtonLeft from "components/button/explore/ScrollButtonLeft";
 import ScrollButtonRight from "components/button/explore/ScrollButtonRight";
 import { useMediaQuery } from "@mui/material";
+import { useSearchParams } from "react-router-dom";
 
 const MainCategory = () => {
   const storeCategory = useSelector(
@@ -29,6 +30,8 @@ const MainCategory = () => {
   const categoryList = Object.values(CategoryType);
 
   const { SetItem } = useExploreHooks();
+
+  const [test, setTest] = useSearchParams();
 
   const { openModal } = useModal();
 
@@ -57,6 +60,13 @@ const MainCategory = () => {
     const number = categoryList.indexOf(inputData);
     //중복 체크 (중복으로 눌려졌는지)
     const checkDup = inputData === storeCategory;
+    if (!checkDup) {
+      test.set("concept", inputData);
+      setTest(test);
+    } else {
+      test.delete("concept");
+      setTest(test);
+    }
     const setCategoyList: GetListDTO = {
       paging: 1,
       pagingNumber: 8,

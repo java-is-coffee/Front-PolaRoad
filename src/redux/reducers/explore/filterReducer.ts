@@ -9,6 +9,7 @@ interface filterList {
   activeSort: SortOptionType | null;
   activeCategory: CategoryType | null;
   activeRegion: RegionType | null;
+  searchText: string | null;
 }
 
 // 초기 상태
@@ -16,6 +17,7 @@ const initialState: filterList = {
   activeSort: null,
   activeCategory: null,
   activeRegion: null,
+  searchText: null,
 };
 
 const filter = createSlice({
@@ -31,9 +33,13 @@ const filter = createSlice({
     switchRegion: (state, action: PayloadAction<RegionOptionType | null>) => {
       state.activeRegion = action.payload;
     },
+    setSearchText: (state, action: PayloadAction<string | null>) => {
+      state.searchText = action.payload;
+    },
   },
 });
 
 // 액션 생성자와 리듀서 내보내기
-export const { switchSort, switchCategory, switchRegion } = filter.actions;
+export const { switchSort, switchCategory, switchRegion, setSearchText } =
+  filter.actions;
 export default filter.reducer;

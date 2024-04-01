@@ -8,7 +8,6 @@ import { PostData } from "interface/explore/ExplorePost";
 //
 interface postList {
   postList: PostData[] | null;
-  searchText: string | null;
   curPage: number;
   endPoint: boolean;
 }
@@ -16,7 +15,6 @@ interface postList {
 // 초기 상태
 const initialState: postList = {
   postList: null,
-  searchText: null,
   curPage: 1,
   endPoint: false,
 };
@@ -31,9 +29,6 @@ const explorePost = createSlice({
     addExplorePostList: (state, action: PayloadAction<PostData[] | null>) => {
       if (state.postList && action.payload)
         state.postList = state.postList?.concat(action.payload);
-    },
-    setSearchText: (state, action: PayloadAction<string>) => {
-      state.searchText = action.payload;
     },
     setCurPage: (state, action: PayloadAction<number>) => {
       state.curPage = action.payload;
@@ -50,6 +45,5 @@ export const {
   addExplorePostList,
   setCurPage,
   setEndPoint,
-  setSearchText,
 } = explorePost.actions;
 export default explorePost.reducer;
