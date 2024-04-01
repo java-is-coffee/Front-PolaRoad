@@ -1,4 +1,16 @@
+export interface INewComment {
+  postId: number;
+  memberId: number;
+  content: string;
+  reviewPhotoList: string[];
+}
+
 export interface ICommentDTO {
+  content: CommentDetails[];
+  hasNext: boolean;
+}
+
+export interface CommentDetails {
   reviewId: number; // 리뷰 Id
   postId: number; // 포스트 Id
   memberId: number; // 멤버 Id

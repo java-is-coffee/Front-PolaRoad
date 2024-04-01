@@ -2,6 +2,7 @@ import SingleCardDetails from "components/card/postDetail/SingleCardDetails";
 import { IPostDTO } from "interface/post/IPostDTO";
 import containerStyles from "./PostCardList.module.css";
 import ThumbnailCard from "components/card/postDetail/thumbnailCard/ThumbnailCard";
+import CardListHeader from "components/header/cardLIst/CardLIstHeader";
 
 interface PostCardListProps {
   postDetails: IPostDTO;
@@ -10,7 +11,6 @@ interface PostCardListProps {
 function PostCardList({ postDetails }: PostCardListProps) {
   const cards = [
     <ThumbnailCard
-      key="thumbnail"
       title={postDetails.title}
       goodNumber={postDetails.goodNumber}
       thumbnailImageURL={postDetails.cards[postDetails.thumbnailIndex].image}
@@ -26,6 +26,7 @@ function PostCardList({ postDetails }: PostCardListProps) {
 
   return (
     <section className={containerStyles.wrapper}>
+      <CardListHeader memberInfo={postDetails.memberInfo} />
       {cards.map((card, index) => (
         <div className={containerStyles.singleCard} key={index}>
           {card}
