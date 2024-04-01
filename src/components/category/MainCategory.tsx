@@ -16,6 +16,10 @@ import CategoryType from "../../enum/categoryOptionType";
 import useExploreHooks from "../../hooks/explore/useExploreHooks";
 import { switchCategory } from "../../redux/reducers/explore/filterReducer";
 import { categorySet, GetListDTO } from "interface/explore/ExplorePost";
+import { useState } from "react";
+import ScrollButtonLeft from "components/button/explore/ScrollButtonLeft";
+import ScrollButtonRight from "components/button/explore/ScrollButtonRight";
+import { useMediaQuery } from "@mui/material";
 
 const MainCategory = () => {
   const storeCategory = useSelector(
@@ -29,6 +33,25 @@ const MainCategory = () => {
   const { openModal } = useModal();
 
   const { setPostList } = useExploreHooks();
+
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const handleNext = () => {
+    if (activeIndex !== 1)
+      setActiveIndex((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    if (activeIndex !== 0)
+      setActiveIndex((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const scrollStyle = {
+    transition: "all 400ms",
+    transform: `translateX(-${0 + activeIndex * 50}%)`,
+    opacity: 1,
+  };
+
+  const isSmallScreen = useMediaQuery("(max-width: 950px)");
 
   const handleClick = (inputData: CategoryType) => {
     const number = categoryList.indexOf(inputData);
@@ -60,24 +83,41 @@ const MainCategory = () => {
 
   return (
     <div className={styles.MainCategoryTap}>
-      <div className={styles.categoryContainer}>
-        {categoryList.map((item, index) => (
-          <label
-            key={item}
-            className={`${styles.categoryLabel}`}
-            onClick={() => handleClick(item)}
-          >
-            <div
-              className={`${styles.categoryItem} ${
-                storeCategory === item ? styles.selected : ""
-              } `}
+      <div className={styles.scrollContainer}>
+        {activeIndex !== 0 && isSmallScreen ? (
+          <div className={styles.ScrollButtonLeft}>
+            <ScrollButtonLeft handleBack={handleBack} />
+          </div>
+        ) : (
+          ""
+        )}
+        <div className={styles.categoryContainer} style={scrollStyle}>
+          {categoryList.map((item, index) => (
+            <label
+              key={item}
+              className={`${styles.categoryLabel}`}
+              onClick={() => handleClick(item)}
             >
-              {iconList[index]}
-              {item}
-            </div>
-          </label>
-        ))}
+              <div
+                className={`${styles.categoryItem} ${
+                  storeCategory === item ? styles.selected : ""
+                } `}
+              >
+                {iconList[index]}
+                {item}
+              </div>
+            </label>
+          ))}
+        </div>
+        {activeIndex !== 1 && isSmallScreen ? (
+          <div className={styles.ScrollButtonRight}>
+            <ScrollButtonRight handleNext={handleNext} />
+          </div>
+        ) : (
+          ""
+        )}
       </div>
+
       <div
         className={styles.filterButton}
         onClick={() => {

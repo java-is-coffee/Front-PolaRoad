@@ -1,4 +1,4 @@
-import Header from "components/header/Header";
+import Header from "components/header/web/WebHeader";
 import PostDetail from "containers/post/PostDetails";
 
 function Post() {

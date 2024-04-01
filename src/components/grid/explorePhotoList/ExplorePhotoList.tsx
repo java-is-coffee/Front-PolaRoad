@@ -6,7 +6,7 @@ import styles from "./ExplorePhotoList.module.css";
 import useExploreHooks from "../../../hooks/explore/useExploreHooks";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "redux/store/store";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, useMediaQuery } from "@mui/material";
 import {
   categorySet,
   GetListDTO,
@@ -18,21 +18,16 @@ import {
   setCurPage,
   setEndPoint,
 } from "../../../redux/reducers/explore/explorePostReducer";
-
-export const initPostList: GetListDTO = {
-  paging: 1,
-  pagingNumber: 8,
-  searchType: "KEYWORD",
-  keyword: null,
-  sortBy: "RECENT",
-  concept: null,
-  region: null,
-};
+import { useSearchParams } from "react-router-dom";
 
 const ExplorePhotoList = () => {
   const { setPostList, addPostList } = useExploreHooks();
 
+  const isSmallScreen = useMediaQuery("(max-width : 767px)");
+
   const dispatch = useDispatch();
+
+  const [params] = useSearchParams();
 
   const storePostList = useSelector(
     (state: RootState) => state.explorePost.postList
@@ -64,23 +59,24 @@ const ExplorePhotoList = () => {
 
   useEffect(() => {
     if (storePostList === null) {
+      const initPostList: GetListDTO = {
+        paging: 1,
+        pagingNumber: 8,
+        searchType: "KEYWORD",
+        keyword: storeSearchText,
+        sortBy: "RECENT",
+        concept: null,
+        region: null,
+      };
+
       setPostList(initPostList);
-    }
-
-    // eslint-disable-next-line
-  }, []);
-
-  useEffect(() => {
-    console.log("무한 스크롤 방지 테스트 ");
-    console.log(storeCurPage);
-
-    if (inView && !storeEndPoint) {
+    } else if (inView && !storeEndPoint) {
       dispatch(setCurPage(storeCurPage + 1));
 
       addPostFunc(storeCurPage);
     }
     // eslint-disable-next-line
-  }, [inView, storeEndPoint]);
+  }, [inView]);
 
   const addPostFunc = async (value: number) => {
     const categoryNumber = storeCategory
@@ -95,7 +91,7 @@ const ExplorePhotoList = () => {
       paging: value + 1,
       pagingNumber: 8,
       searchType: "KEYWORD",
-      keyword: storeSearchText,
+      keyword: params.get("search"),
       sortBy: sortNumber !== null ? sortSet.key[sortNumber] : "RECENT",
       concept: categoryNumber !== null ? categorySet.key[categoryNumber] : null,
       region: regionNumber !== null ? regionSet.key[regionNumber] : null,
@@ -108,7 +104,7 @@ const ExplorePhotoList = () => {
   };
 
   return (
-    <div className={styles.photoZone}>
+    <div className={`${styles.photoZone} ${isSmallScreen ? styles.mt : ""}`}>
       {storePostList ? (
         storePostList.length === 0 ? (
           <div className={styles.nonePost}>

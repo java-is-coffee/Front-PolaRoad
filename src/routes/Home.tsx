@@ -1,7 +1,6 @@
-import Header from "../components/header/Header";
+import Header from "../components/header/web/WebHeader";
 import HomeComponent from "../components/Home/HomeComponent";
 import HomeContainer from "../containers/home/HomeContainer";
-
 
 function Home() {
   return (

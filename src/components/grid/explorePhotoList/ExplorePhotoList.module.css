@@ -5,6 +5,10 @@
   justify-content: center;
 }
 
+.mt {
+  margin-top: 100px;
+}
+
 .nonePost {
   margin-top: 50px;
   font-size: 2.5rem;
@@ -33,7 +37,11 @@
 
 @media (max-width: 767px) {
   .card {
-    width: 50%;
+    width: 90%;
     margin: 5px;
   }
+}
+
+.wait {
+  margin-top: 100px;
 }

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Header from "../components/header/Header";
+import Header from "../components/header/web/WebHeader";
 import MyPageContainer from "../containers/myPage/MyPageContainer";
 import ModalOption from "../enum/modalOptionTypes";
 import { useModal } from "../hooks/modal/ModalProvider";
