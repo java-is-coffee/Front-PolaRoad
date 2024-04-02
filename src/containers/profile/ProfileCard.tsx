@@ -39,11 +39,7 @@ function ProfileCard({ memberInfo }: ProfileCardProps) {
         className={profileStyles.imgContainer}
         onClick={handleEditProfileImg}
       >
-        {memberInfo.profileImage ? (
-          <img src={profileImgURL} alt="profile"></img>
-        ) : (
-          <ProfileImg size={"200px"} />
-        )}
+        <ProfileImg size={"200px"} imgUrl={profileImgURL} />
       </div>
       <div className={profileStyles.header}>
         <span>{memberInfo.nickname}</span>
