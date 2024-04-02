@@ -16,3 +16,11 @@
   height: 100%;
   object-fit: cover;
 }
+
+.photoLayer {
+  position: absolute;
+  top: 10px; /* 조정 가능한 값 */
+  right: 10px; /* 조정 가능한 값 */
+  z-index: 1; /* 사진 위에 레이어 아이콘이 올라오도록 함 */
+  color: white;
+}
