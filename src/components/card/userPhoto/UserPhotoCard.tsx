@@ -2,8 +2,9 @@ import { ISinglePost } from "interface/post/ISinglePost";
 import cardStyles from "./UserPhotoCard.module.css";
 import useBucket from "hooks/bucket/useBucket";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { IoIosPhotos } from "react-icons/io";
+import { useModal } from "hooks/modal/ModalProvider";
+import ModalOption from "enum/modalOptionTypes";
 
 interface userPhotoCardProps {
   singlePostData?: ISinglePost;
@@ -12,7 +13,7 @@ interface userPhotoCardProps {
 function UserPhotoCard({ singlePostData }: userPhotoCardProps) {
   const { getImage } = useBucket();
   const [thumbnailUrl, setThumbnailUrl] = useState<string>("");
-  const nav = useNavigate();
+  const { openModal } = useModal();
   useEffect(() => {
     if (singlePostData) {
       const getImgUrl = async () => {
@@ -25,7 +26,7 @@ function UserPhotoCard({ singlePostData }: userPhotoCardProps) {
     // eslint-disable-next-line
   }, []);
   const handleClickCard = () => {
-    nav(`/post/${singlePostData?.postId}`);
+    openModal(ModalOption.POST_PREVIEW, { postId: singlePostData?.postId });
   };
   return (
     <div className={cardStyles.imgContainer} onClick={handleClickCard}>
