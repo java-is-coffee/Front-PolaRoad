@@ -1,13 +1,33 @@
+import { ISinglePost } from "interface/post/ISinglePost";
 import cardStyles from "./UserPhotoCard.module.css";
+import useBucket from "hooks/bucket/useBucket";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface userPhotoCardProps {
-  imgSrc: string;
+  singlePostData?: ISinglePost;
 }
 
-function UserPhotoCard({ imgSrc }: userPhotoCardProps) {
+function UserPhotoCard({ singlePostData }: userPhotoCardProps) {
+  const { getImage } = useBucket();
+  const [thumbnailUrl, setThumbnailUrl] = useState<string>("");
+  const nav = useNavigate();
+  useEffect(() => {
+    if (singlePostData) {
+      const getImgUrl = async () => {
+        const url = await getImage(singlePostData?.images[0]);
+        if (!url) setThumbnailUrl("/basic/photo.png");
+        else setThumbnailUrl(url);
+      };
+      getImgUrl();
+    }
+  }, []);
+  const handleClickCard = () => {
+    nav(`/post/${singlePostData?.postId}`);
+  };
   return (
-    <div className={cardStyles.img}>
-      <img className={cardStyles.img} src={imgSrc} alt="userImg" />
+    <div className={cardStyles.imgContainer} onClick={handleClickCard}>
+      <img className={cardStyles.img} src={thumbnailUrl} alt="userImg" />
     </div>
   );
 }

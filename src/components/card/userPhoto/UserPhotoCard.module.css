@@ -1,6 +1,18 @@
+.imgContainer {
+  position: relative; /* 컨테이너 내에서 절대 위치 지정을 위한 기준점 */
+  width: 100%; /* 혹은 원하는 특정 너비, 예: 200px */
+  padding-top: 100%; /* 너비와 동일한 비율로 높이를 설정, 정사각형 형태 */
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .img {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover; /* 이미지 비율을 유지하면서 그리드 셀에 맞춰줍니다. */
+  height: 100%;
+  object-fit: cover;
 }
