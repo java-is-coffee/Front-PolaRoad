@@ -21,6 +21,7 @@ function UserPhotoCard({ singlePostData }: userPhotoCardProps) {
       };
       getImgUrl();
     }
+    // eslint-disable-next-line
   }, []);
   const handleClickCard = () => {
     nav(`/post/${singlePostData?.postId}`);

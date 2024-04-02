@@ -1,5 +1,4 @@
 import { axiosInstance } from "api/token/axiosInstance";
-import { IMemberEditInfoDTO } from "interface/member/IMemberInfoDetails";
 import { ISinglePost } from "interface/post/ISinglePost";
 
 interface PostListDTO {

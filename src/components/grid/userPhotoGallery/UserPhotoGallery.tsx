@@ -31,8 +31,10 @@ function UserPhotoGallery({ option }: userPhotoGalleryProps) {
     if (option === HistoryOption.WISH) {
     }
   };
+
   useEffect(() => {
     patchGalleryData();
+    // eslint-disable-next-line
   }, []);
 
   const renderGallery = () => {
