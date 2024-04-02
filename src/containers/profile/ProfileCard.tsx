@@ -22,8 +22,10 @@ function ProfileCard({ memberInfo }: ProfileCardProps) {
 
   useEffect(() => {
     const fetchProfileImg = async () => {
-      const imgUrl = await getImage(memberInfo.profileImage);
-      if (imgUrl) setProfileImgURL(imgUrl);
+      if (memberInfo.profileImage) {
+        const imgUrl = await getImage(memberInfo.profileImage);
+        if (imgUrl) setProfileImgURL(imgUrl);
+      }
     };
     fetchProfileImg();
     // eslint-disable-next-line
