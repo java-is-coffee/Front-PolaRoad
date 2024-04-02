@@ -12,10 +12,10 @@ import { useModal } from "../../hooks/modal/ModalProvider";
 import ModalOption from "../../enum/modalOptionTypes";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
-import CategoryType from "../../enum/categoryOptionType";
+import CategoryType from "../../enum/ConceptOptionType";
 import useExploreHooks from "../../hooks/explore/useExploreHooks";
-import { switchCategory } from "../../redux/reducers/explore/filterReducer";
-import { categorySet, GetListDTO } from "interface/explore/ExplorePost";
+import { switchConcept } from "../../redux/reducers/explore/filterReducer";
+import { conceptSet, GetListDTO } from "interface/explore/ExplorePost";
 import { useState } from "react";
 import ScrollButtonLeft from "components/button/explore/ScrollButtonLeft";
 import ScrollButtonRight from "components/button/explore/ScrollButtonRight";
@@ -24,14 +24,14 @@ import { useSearchParams } from "react-router-dom";
 
 const MainCategory = () => {
   const storeCategory = useSelector(
-    (state: RootState) => state.filter.activeCategory
+    (state: RootState) => state.filter.activeConcept
   );
 
   const categoryList = Object.values(CategoryType);
 
   const { SetItem } = useExploreHooks();
 
-  const [test, setTest] = useSearchParams();
+  const [param, setParam] = useSearchParams();
 
   const { openModal } = useModal();
 
@@ -61,11 +61,11 @@ const MainCategory = () => {
     //중복 체크 (중복으로 눌려졌는지)
     const checkDup = inputData === storeCategory;
     if (!checkDup) {
-      test.set("concept", inputData);
-      setTest(test);
+      param.set("concept", inputData);
+      setParam(param);
     } else {
-      test.delete("concept");
-      setTest(test);
+      param.delete("concept");
+      setParam(param);
     }
     const setCategoyList: GetListDTO = {
       paging: 1,
@@ -73,10 +73,10 @@ const MainCategory = () => {
       searchType: "KEYWORD",
       keyword: null,
       sortBy: "RECENT",
-      concept: checkDup ? null : categorySet.key[number],
+      concept: checkDup ? null : conceptSet.key[number],
       region: null,
     };
-    SetItem(switchCategory(checkDup ? null : inputData));
+    SetItem(switchConcept(checkDup ? null : inputData));
     setPostList(setCategoyList);
   };
 

@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import CategoryType from "../../../enum/categoryOptionType";
 import SortOptionType from "../../../enum/filter/SortOptionType";
 import RegionOptionType from "enum/filter/RegionType";
 import RegionType from "enum/filter/RegionType";
+import ConceptType from "../../../enum/ConceptOptionType";
 
 // 초기 상태의 타입 정의
 interface filterList {
   activeSort: SortOptionType | null;
-  activeCategory: CategoryType | null;
+  activeConcept: ConceptType | null;
   activeRegion: RegionType | null;
   searchText: string | null;
 }
@@ -15,7 +15,7 @@ interface filterList {
 // 초기 상태
 const initialState: filterList = {
   activeSort: null,
-  activeCategory: null,
+  activeConcept: null,
   activeRegion: null,
   searchText: null,
 };
@@ -27,8 +27,8 @@ const filter = createSlice({
     switchSort: (state, action: PayloadAction<SortOptionType | null>) => {
       state.activeSort = action.payload;
     },
-    switchCategory: (state, action: PayloadAction<CategoryType | null>) => {
-      state.activeCategory = action.payload;
+    switchConcept: (state, action: PayloadAction<ConceptType | null>) => {
+      state.activeConcept = action.payload;
     },
     switchRegion: (state, action: PayloadAction<RegionOptionType | null>) => {
       state.activeRegion = action.payload;
@@ -40,6 +40,6 @@ const filter = createSlice({
 });
 
 // 액션 생성자와 리듀서 내보내기
-export const { switchSort, switchCategory, switchRegion, setSearchText } =
+export const { switchSort, switchConcept, switchRegion, setSearchText } =
   filter.actions;
 export default filter.reducer;

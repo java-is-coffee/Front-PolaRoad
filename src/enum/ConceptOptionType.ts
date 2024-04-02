@@ -1,4 +1,4 @@
-enum CategoryType {
+enum ConceptType {
   HOT = "인기 게시글",
   FOOD = "식도락",
   CITY = "도시 경관",
@@ -9,4 +9,4 @@ enum CategoryType {
   PHOTO = "포토 스팟",
 }
 
-export default CategoryType;
+export default ConceptType;

@@ -1,4 +1,4 @@
-import axios from "axios";
+import { axiosInstance } from "./axiosInstance";
 
 export interface RefreshData {
   refreshToken: string | number | boolean | object | null;
@@ -10,16 +10,13 @@ export interface RefreshDTO {
 
 const getAccessToken = async (refreshToken: RefreshData) => {
   try {
-    const loginAPI =
-      "https://k951a463f2f5fa.user-app.krampoline.com/api/member/refresh";
+    const refreshAPI = "/api/member/refresh";
 
     const refreshTokenDTO: RefreshDTO = {
       data: refreshToken,
     };
 
-    const response = await axios.post(loginAPI, refreshTokenDTO, {
-      withCredentials: true,
-    });
+    const response = await axiosInstance.post(refreshAPI, refreshTokenDTO);
 
     const status = response.status;
 

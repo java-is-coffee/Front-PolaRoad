@@ -8,6 +8,7 @@ import secureLocalStorage from "react-secure-storage";
 import { useMediaQuery } from "@mui/material";
 import useStoreValue from "hooks/storeValue/useStoreValue";
 import { setSearchText } from "../../redux/reducers/explore/filterReducer";
+import MobileSearchForm from "components/form/explore/mobile/MobileSearchForm";
 
 function ExploreContainer() {
   const [tokens] = useSearchParams();
@@ -16,7 +17,8 @@ function ExploreContainer() {
   const isSmallScreen = useMediaQuery("(max-width: 767px)");
 
   // 커스텀 훅
-  const { setValue } = useStoreValue();
+
+  const { isMobileSearch, setValue } = useStoreValue();
 
   //oauth를 통해 들어왔을 경우. param에 토큰들이 저장되어 들어옴
   useEffect(() => {
@@ -47,8 +49,7 @@ function ExploreContainer() {
     <div className={isSmallScreen ? exploreContainerStyles.wrapper : ""}>
       {!isSmallScreen ? <MainPhoto /> : ""}
       {!isSmallScreen ? <MainCategory /> : ""}
-
-      <ExplorePhotoList />
+      {isMobileSearch ? <MobileSearchForm /> : <ExplorePhotoList />}
     </div>
   );
 }

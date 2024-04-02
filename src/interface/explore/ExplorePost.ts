@@ -1,4 +1,4 @@
-import CategoryType from "enum/categoryOptionType";
+import ConceptType from "enum/ConceptOptionType";
 import RegionOptionType from "enum/filter/RegionType";
 import SortOptionType from "enum/filter/SortOptionType";
 
@@ -21,19 +21,19 @@ export interface GetListDTO {
   pagingNumber: number;
   searchType: string;
   keyword: string | null;
-  sortBy: string;
+  sortBy: string | null;
   concept: string | null;
   region: string | null;
 }
 
-export const { sortSet, categorySet, regionSet } = {
+export const { sortSet, conceptSet, regionSet } = {
   sortSet: {
     key: Object.keys(SortOptionType),
     values: Object.values(SortOptionType),
   },
-  categorySet: {
-    key: Object.keys(CategoryType),
-    values: Object.values(CategoryType),
+  conceptSet: {
+    key: Object.keys(ConceptType),
+    values: Object.values(ConceptType),
   },
   regionSet: {
     key: Object.keys(RegionOptionType),

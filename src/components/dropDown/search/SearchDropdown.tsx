@@ -2,23 +2,25 @@ import { useEffect, useMemo } from "react";
 import ModalOption from "../../../enum/modalOptionTypes";
 import { useModal } from "../../../hooks/modal/ModalProvider";
 import dropdownStyles from "./SearchDropdown.module.css";
-import CategoryType from "../../../enum/categoryOptionType";
+import CategoryType from "../../../enum/ConceptOptionType";
 import RegionOptionType from "../../../enum/filter/RegionType";
 import SortOptionType from "../../../enum/filter/SortOptionType";
 import useExploreHooks from "../../../hooks/explore/useExploreHooks";
-import { RootState } from "../../../redux/store/store";
-import { useSelector } from "react-redux";
+
 import {
-  switchCategory,
+  switchConcept,
   switchRegion,
   switchSort,
 } from "../../../redux/reducers/explore/filterReducer";
 import { Button } from "@mui/material";
 import { GetListDTO } from "interface/explore/ExplorePost";
+import useStoreValue from "hooks/storeValue/useStoreValue";
 
 function SearchDropdown() {
   const { closeModal } = useModal();
   const { setPostList } = useExploreHooks();
+  const { SetItem } = useExploreHooks();
+  const { storeSort, storeCategory, storeRegion } = useStoreValue();
 
   const { sortSet, categorySet, regionSet } = useMemo(
     () => ({
@@ -59,16 +61,6 @@ function SearchDropdown() {
     // eslint-disable-next-line
   }, []);
 
-  const { SetItem } = useExploreHooks();
-
-  const storeSort = useSelector((state: RootState) => state.filter.activeSort);
-  const storeCategory = useSelector(
-    (state: RootState) => state.filter.activeCategory
-  );
-  const storeRegion = useSelector(
-    (state: RootState) => state.filter.activeRegion
-  );
-
   const handleClick = (inputData: any, aboutFilter: string) => {
     if (aboutFilter === "정렬") {
       if (inputData === storeSort) {
@@ -79,9 +71,9 @@ function SearchDropdown() {
     }
     if (aboutFilter === "카테고리") {
       if (inputData === storeCategory) {
-        SetItem(switchCategory(null));
+        SetItem(switchConcept(null));
       } else {
-        SetItem(switchCategory(inputData));
+        SetItem(switchConcept(inputData));
       }
     }
     if (aboutFilter === "지역") {

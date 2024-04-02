@@ -7,7 +7,7 @@ import useExploreHooks from "../../../hooks/explore/useExploreHooks";
 import { useDispatch } from "react-redux";
 import { CircularProgress, useMediaQuery } from "@mui/material";
 import {
-  categorySet,
+  conceptSet,
   GetListDTO,
   regionSet,
   sortSet,
@@ -20,6 +20,7 @@ import {
 import { useSearchParams } from "react-router-dom";
 import useStoreValue from "hooks/storeValue/useStoreValue";
 import { setSearchText } from "../../../redux/reducers/explore/filterReducer";
+import useCustomParam from "hooks/explore/useCustomParam";
 
 const ExplorePhotoList = () => {
   const { setPostList, addPostList } = useExploreHooks();
@@ -27,8 +28,6 @@ const ExplorePhotoList = () => {
   const isSmallScreen = useMediaQuery("(max-width : 767px)");
 
   const dispatch = useDispatch();
-
-  // const [params] = useSearchParams();
 
   const [query, setQuery] = useSearchParams();
 
@@ -47,8 +46,14 @@ const ExplorePhotoList = () => {
     threshold: 0.8,
   });
 
+  const { getContent } = useCustomParam();
+
   useEffect(() => {
     console.log("시작");
+    if (query.get("region") !== null) getContent("region");
+    if (query.get("concept") !== null) getContent("concept");
+    if (query.get("sort") !== null) getContent("sort");
+
     if (storePostList === null) {
       setValue(setSearchText(query.get("search")));
       const initPostList: GetListDTO = {
@@ -63,7 +68,7 @@ const ExplorePhotoList = () => {
       setPostList(initPostList);
     }
     // eslint-disable-next-line
-  }, []);
+  }, [storePostList]);
 
   useEffect(() => {
     //렌더링 시작 시, 해당 view가 바로 포착되어서 .
@@ -74,12 +79,19 @@ const ExplorePhotoList = () => {
     }
     // eslint-disable-next-line
   }, [inView]);
+
   useEffect(() => {
     if (storeRegion !== null) {
       const regionNumber = storeRegion
         ? regionSet.values.indexOf(storeRegion)
         : null;
-      query.set("region", regionNumber ? regionSet.key[regionNumber] : "");
+      query.set(
+        "region",
+        regionNumber !== null ? regionSet.key[regionNumber] : ""
+      );
+      setQuery(query);
+    } else {
+      query.delete("region");
       setQuery(query);
     }
 
@@ -89,35 +101,44 @@ const ExplorePhotoList = () => {
   useEffect(() => {
     if (storeCategory !== null) {
       const categoryNumber = storeCategory
-        ? categorySet.values.indexOf(storeCategory)
+        ? conceptSet.values.indexOf(storeCategory)
         : null;
       query.set(
         "concept",
-        categoryNumber ? categorySet.key[categoryNumber] : ""
+        categoryNumber !== null ? conceptSet.key[categoryNumber] : ""
       );
+      setQuery(query);
+    } else {
+      query.delete("concept");
       setQuery(query);
     }
 
     // eslint-disable-next-line
   }, [storeCategory]);
 
-  const addPostFunc = async (value: number) => {
-    // const categoryNumber = storeCategory
-    //   ? categorySet.values.indexOf(storeCategory)
-    //   : null;
-    // const regionNumber = storeRegion
-    //   ? regionSet.values.indexOf(storeRegion)
-    //   : null;
-    const sortNumber = storeSort ? sortSet.values.indexOf(storeSort) : null;
+  useEffect(() => {
+    if (storeSort !== null) {
+      const sortNumber = storeSort ? sortSet.values.indexOf(storeSort) : null;
+      query.set(
+        "sort",
+        sortNumber !== null ? sortSet.key[sortNumber] : "RECENT"
+      );
+      setQuery(query);
+    } else {
+      query.delete("sort");
+      setQuery(query);
+    }
+    // eslint-disable-next-line
+  }, [storeSort]);
 
+  const addPostFunc = async (value: number) => {
     const addData: GetListDTO = {
       paging: value + 1,
       pagingNumber: 8,
       searchType: "KEYWORD",
       keyword: query.get("search") ? query.get("search") : null,
-      sortBy: sortNumber !== null ? sortSet.key[sortNumber] : "RECENT",
+      sortBy: query.get("sort") ? query.get("sort") : "RECENT",
       concept: query.get("concept") ? query.get("concept") : null,
-      // region: regionNumber !== null ? regionSet.key[regionNumber] : null,
       region: query.get("region") ? query.get("region") : null,
     };
 
@@ -146,7 +167,9 @@ const ExplorePhotoList = () => {
         <CircularProgress color="success" />
       )}
 
-      <div ref={ref} className={styles.wait}></div>
+      <div ref={ref} className={styles.wait}>
+        Footer
+      </div>
     </div>
   );
 };

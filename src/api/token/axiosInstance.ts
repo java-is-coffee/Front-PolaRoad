@@ -30,15 +30,13 @@ axiosInstance.interceptors.response.use(
   },
   async (error) => {
     console.log("에러테스트");
-
     const { config } = error;
 
     //토큰 오류일때.
     if (error.response.data.message === "유효하지 않은 토큰입니다.") {
       try {
-        console.log(error);
+        console.log("재발급 시작");
         const storeRefreshToken = secureLocalStorage.getItem("refreshToken");
-
         if (storeRefreshToken) {
           const refreshTokenData: RefreshData = {
             refreshToken: storeRefreshToken,
@@ -46,7 +44,6 @@ axiosInstance.interceptors.response.use(
           console.log("토큰 재발급 테스트");
 
           const result = await getAccessToken(refreshTokenData);
-          secureLocalStorage.clear();
           secureLocalStorage.setItem("accessToken", result.accessToken);
           secureLocalStorage.setItem("refreshToken", result.refreshToken);
           console.log("토큰 재발급");

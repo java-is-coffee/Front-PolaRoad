@@ -3,11 +3,19 @@ import headerStyle from "./WebHeader.module.css";
 import { Avatar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import HeaderSearch from "components/form/header/HeaderSearch";
+import useStoreValue from "hooks/storeValue/useStoreValue";
 
 function WebHeader() {
   const navigate = useNavigate();
+  const { resetValue } = useStoreValue();
+
   const navigation = (input: string) => {
     navigate(`/${input}`);
+  };
+
+  const resetPage = () => {
+    resetValue();
+    navigate("/explore");
   };
   //true = pc화면 / false = 모바일 화면 767이하
 
@@ -17,12 +25,7 @@ function WebHeader() {
         <div className={headerStyle.headerLeft}>
           <div className={headerStyle.logoWrapper}>
             {/* 임시적으로 부여 */}
-            <span
-              className={headerStyle.logo}
-              onClick={() => {
-                navigation("login");
-              }}
-            >
+            <span className={headerStyle.logo} onClick={resetPage}>
               PolaRoad
             </span>
           </div>

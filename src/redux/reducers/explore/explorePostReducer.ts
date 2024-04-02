@@ -10,6 +10,7 @@ interface postList {
   postList: PostData[] | null;
   curPage: number;
   endPoint: boolean;
+  isMobileSearch: boolean;
 }
 
 // 초기 상태
@@ -17,6 +18,7 @@ const initialState: postList = {
   postList: null,
   curPage: 1,
   endPoint: false,
+  isMobileSearch: false,
 };
 
 const explorePost = createSlice({
@@ -36,6 +38,9 @@ const explorePost = createSlice({
     setEndPoint: (state, action: PayloadAction<boolean>) => {
       state.endPoint = action.payload;
     },
+    setIsMobileSearch: (state, action: PayloadAction<boolean>) => {
+      state.isMobileSearch = action.payload;
+    },
   },
 });
 
@@ -45,5 +50,7 @@ export const {
   addExplorePostList,
   setCurPage,
   setEndPoint,
+  setIsMobileSearch,
 } = explorePost.actions;
+
 export default explorePost.reducer;

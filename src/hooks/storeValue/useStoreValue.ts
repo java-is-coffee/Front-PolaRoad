@@ -1,6 +1,12 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  switchConcept,
+  switchRegion,
+  switchSort,
+} from "../../redux/reducers/explore/filterReducer";
 import { RootState } from "redux/store/store";
+import { setExplorePostList } from "../../redux/reducers/explore/explorePostReducer";
 
 const useStoreValue = () => {
   const dispatch = useDispatch();
@@ -14,7 +20,7 @@ const useStoreValue = () => {
   );
 
   const storeCategory = useSelector(
-    (state: RootState) => state.filter.activeCategory
+    (state: RootState) => state.filter.activeConcept
   );
   const storeRegion = useSelector(
     (state: RootState) => state.filter.activeRegion
@@ -28,8 +34,19 @@ const useStoreValue = () => {
     (state: RootState) => state.filter.searchText
   );
 
+  const isMobileSearch = useSelector(
+    (state: RootState) => state.explorePost.isMobileSearch
+  );
+
   const setValue = (action: PayloadAction<any>) => {
     dispatch(action);
+  };
+
+  const resetValue = () => {
+    dispatch(switchRegion(null));
+    dispatch(switchSort(null));
+    dispatch(switchConcept(null));
+    dispatch(setExplorePostList(null));
   };
 
   return {
@@ -40,7 +57,9 @@ const useStoreValue = () => {
     storeSort,
     storeCurPage,
     storeSearchText,
+    isMobileSearch,
     setValue,
+    resetValue,
   };
 };
 

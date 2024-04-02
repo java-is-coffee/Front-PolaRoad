@@ -9,7 +9,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 import "./styles/globals.css";
 import Post from "routes/Post";
-import ExploreSearch from "routes/ExploreSearch";
 
 function App() {
   return (
@@ -19,16 +18,6 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/" element={<Home />}></Route>
           <Route path="/explore" element={<Explore />}></Route>
-          <Route path="/explore/:search" element={<ExploreSearch />}></Route>
-          <Route
-            path="/explore/:search/:region"
-            element={<ExploreSearch />}
-          ></Route>
-          <Route
-            path="/explore/:search/:region/:concept"
-            element={<ExploreSearch />}
-          ></Route>
-
           <Route path="/my" element={<MyPage />}></Route>
           <Route path="/post/:postId" element={<Post />}></Route>
         </Routes>
