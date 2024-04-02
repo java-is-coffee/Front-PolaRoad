@@ -5,13 +5,17 @@ import { ReactJSXElement } from "@emotion/react/types/jsx-namespace";
 export const useModal = () => useContext(ModalContext);
 
 interface ModalConfig {
-  [key: string]: any;
+  [key: string]: {
+    component: JSX.Element;
+    isOpen: boolean;
+    props?: { [key: string]: any }; // 열 때 전달될 props를 저장할 필드
+  };
 }
 
 interface ModalContextType {
   modals: ModalConfig;
   registerModal: (modalKey: ModalOption, modalComponent: JSX.Element) => void;
-  openModal: (modalKey: ModalOption) => void;
+  openModal: (modalKey: ModalOption, props?: { [key: string]: any }) => void;
   closeModal: (modalKey: ModalOption) => void;
 }
 
@@ -49,10 +53,10 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
     }));
   };
 
-  const openModal = (modalKey: ModalOption) => {
+  const openModal = (modalKey: ModalOption, props?: { [key: string]: any }) => {
     setModals((prevModals) => ({
       ...prevModals,
-      [modalKey]: { ...prevModals[modalKey], isOpen: true },
+      [modalKey]: { ...prevModals[modalKey], isOpen: true, props },
     }));
     document.body.classList.add("no-scroll");
   };
@@ -71,7 +75,13 @@ export const ModalProvider = ({ children }: ModalProviderProps) => {
     <ModalContext.Provider value={value}>
       {children}{" "}
       {Object.keys(modals).map((key) =>
-        modals[key].isOpen ? <div key={key}>{modals[key].component}</div> : null
+        modals[key].isOpen ? (
+          <div key={key}>
+            {React.cloneElement(modals[key].component, {
+              ...modals[key].props,
+            })}
+          </div>
+        ) : null
       )}
     </ModalContext.Provider>
   );
