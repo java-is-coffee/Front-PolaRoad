@@ -19,7 +19,7 @@ const useStoreValue = () => {
     (state: RootState) => state.explorePost.endPoint
   );
 
-  const storeCategory = useSelector(
+  const storeConcept = useSelector(
     (state: RootState) => state.filter.activeConcept
   );
   const storeRegion = useSelector(
@@ -52,7 +52,7 @@ const useStoreValue = () => {
   return {
     storePostList,
     storeEndPoint,
-    storeCategory,
+    storeConcept,
     storeRegion,
     storeSort,
     storeCurPage,

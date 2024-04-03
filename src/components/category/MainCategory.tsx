@@ -54,7 +54,7 @@ const MainCategory = () => {
     opacity: 1,
   };
 
-  const isSmallScreen = useMediaQuery("(max-width: 950px)");
+  const isSmallScreen = useMediaQuery("(max-width: 767px)");
 
   const handleClick = (inputData: CategoryType) => {
     const number = categoryList.indexOf(inputData);

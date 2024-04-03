@@ -9,6 +9,7 @@ import { useMediaQuery } from "@mui/material";
 import useStoreValue from "hooks/storeValue/useStoreValue";
 import { setSearchText } from "../../redux/reducers/explore/filterReducer";
 import MobileSearchForm from "components/form/explore/mobile/MobileSearchForm";
+import { setIsMobileSearch } from "../../redux/reducers/explore/explorePostReducer";
 
 function ExploreContainer() {
   const [tokens] = useSearchParams();
@@ -45,11 +46,24 @@ function ExploreContainer() {
     // eslint-disable-next-line
   }, [tokens]);
 
+  //크기가 다시 커졌을 경우, 검색 창이 안보이도록
+  useEffect(() => {
+    if (isSmallScreen === false) {
+      setValue(setIsMobileSearch(false));
+    }
+    // eslint-disable-next-line
+  }, [isSmallScreen]);
+
   return (
     <div className={isSmallScreen ? exploreContainerStyles.wrapper : ""}>
       {!isSmallScreen ? <MainPhoto /> : ""}
       {!isSmallScreen ? <MainCategory /> : ""}
-      {isMobileSearch ? <MobileSearchForm /> : <ExplorePhotoList />}
+      {/* 모바일 화면 + 설정 되어있을때.  */}
+      {isMobileSearch && isSmallScreen ? (
+        <MobileSearchForm />
+      ) : (
+        <ExplorePhotoList />
+      )}
     </div>
   );
 }

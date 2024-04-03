@@ -8,8 +8,12 @@ import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
 import TrainIcon from "@mui/icons-material/Train";
 import DirectionsCarFilledIcon from "@mui/icons-material/DirectionsCarFilled";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
+import { useState } from "react";
+import useStoreValue from "hooks/storeValue/useStoreValue";
 
 const MobileSearchForm = () => {
+  const { storeSort, storeConcept, storeRegion } = useStoreValue();
+
   const iconList = [
     <StarIcon className={styles.categoryIcon} />,
     <KebabDiningIcon className={styles.categoryIcon} />,
@@ -27,11 +31,17 @@ const MobileSearchForm = () => {
         <h1>여행 테마</h1>
         <div className={styles.conceptBox}>
           {conceptSet.values.map((item, index) => (
-            <div key={index} className={styles.conceptList}>
+            <div
+              key={index}
+              className={`${styles.conceptList} ${
+                storeConcept === item ? styles.selected : ""
+              }`}
+            >
               <div>{iconList[index]}</div>
               {item}
             </div>
           ))}
+          {/* <SearchDropdown /> */}
         </div>
       </div>
     </div>

@@ -35,7 +35,7 @@ const ExplorePhotoList = () => {
     storePostList,
     storeEndPoint,
     storeCurPage,
-    storeCategory,
+    storeConcept,
     storeRegion,
     storeSort,
     setValue,
@@ -99,9 +99,9 @@ const ExplorePhotoList = () => {
   }, [storeRegion]);
 
   useEffect(() => {
-    if (storeCategory !== null) {
-      const categoryNumber = storeCategory
-        ? conceptSet.values.indexOf(storeCategory)
+    if (storeConcept !== null) {
+      const categoryNumber = storeConcept
+        ? conceptSet.values.indexOf(storeConcept)
         : null;
       query.set(
         "concept",
@@ -114,7 +114,7 @@ const ExplorePhotoList = () => {
     }
 
     // eslint-disable-next-line
-  }, [storeCategory]);
+  }, [storeConcept]);
 
   useEffect(() => {
     if (storeSort !== null) {

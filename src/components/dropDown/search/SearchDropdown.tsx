@@ -20,7 +20,7 @@ function SearchDropdown() {
   const { closeModal } = useModal();
   const { setPostList } = useExploreHooks();
   const { SetItem } = useExploreHooks();
-  const { storeSort, storeCategory, storeRegion } = useStoreValue();
+  const { storeSort, storeConcept, storeRegion } = useStoreValue();
 
   const { sortSet, categorySet, regionSet } = useMemo(
     () => ({
@@ -70,7 +70,7 @@ function SearchDropdown() {
       }
     }
     if (aboutFilter === "카테고리") {
-      if (inputData === storeCategory) {
+      if (inputData === storeConcept) {
         SetItem(switchConcept(null));
       } else {
         SetItem(switchConcept(inputData));
@@ -87,8 +87,8 @@ function SearchDropdown() {
 
   const handleSubmit = () => {
     const sortNumber = storeSort ? sortSet.values.indexOf(storeSort) : null;
-    const categoryNumber = storeCategory
-      ? categorySet.values.indexOf(storeCategory)
+    const categoryNumber = storeConcept
+      ? categorySet.values.indexOf(storeConcept)
       : null;
     const regionNumber = storeRegion
       ? regionSet.values.indexOf(storeRegion)
@@ -142,7 +142,7 @@ function SearchDropdown() {
             {categorySet.values.map((item) => (
               <div
                 className={`${dropdownStyles.item} ${
-                  storeCategory === item ? dropdownStyles.selected : ""
+                  storeConcept === item ? dropdownStyles.selected : ""
                 }`}
                 key={item}
                 onClick={() => handleClick(item, "카테고리")}
