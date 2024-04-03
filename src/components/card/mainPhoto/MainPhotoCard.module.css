@@ -22,16 +22,25 @@
   position: relative;
 }
 
-.photoButtonSet {
+.photoButtonRight {
   position: absolute;
   display: none;
-  justify-content: space-between;
-  width: 95%;
+  top: 40%;
+  right: 1rem;
+}
+
+.photoButtonLeft {
+  position: absolute;
+  display: none;
   top: 40%;
   left: 1rem;
 }
 
-.cardImg:hover .photoButtonSet {
+.cardImg:hover .photoButtonRight {
+  display: flex !important;
+}
+
+.cardImg:hover .photoButtonLeft {
   display: flex !important;
 }
 

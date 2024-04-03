@@ -1,0 +1,15 @@
+.conceptBox {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.conceptList {
+  background-color: #d4d4d4;
+  margin: 10px;
+  width: 40vw;
+  padding: 15px;
+  border-radius: 12px;
+  font-size: 1.5rem;
+}

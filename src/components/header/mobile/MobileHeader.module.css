@@ -1,0 +1,24 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  background: white;
+}
+
+.input {
+  width: 90%;
+  padding: 15px 20px;
+  margin: auto;
+  border-radius: 30px;
+  background-color: #f6f3f3;
+  display: flex;
+  color: #bbbbbb;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 2rem;
+}

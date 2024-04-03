@@ -2,13 +2,12 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import styles from "./MainPhotoCard.module.css";
 import PlaceIcon from "@mui/icons-material/Place";
 import { PostData } from "interface/explore/ExplorePost";
-import { IconButton } from "@mui/material";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { useState } from "react";
 import CircleIcon from "@mui/icons-material/Circle";
+import ScrollButtonLeft from "components/button/explore/ScrollButtonLeft";
+import ScrollButtonRight from "components/button/explore/ScrollButtonRight";
 
-const testImgs = ["한옥.jpg", "다리.jpg"];
+const testImgs = ["/한옥.jpg", "/다리.jpg"];
 
 const MainPhotoCard = ({ item }: { item: PostData }) => {
   const [activeImgIndex, setActiveImgIndex] = useState<number>(0);
@@ -33,42 +32,33 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
     <div key={item.postId}>
       <div className={styles.cardImg}>
         <div className={`${styles.carousel}`}>
-          {testImgs.map((item, index) => (
+          {testImgs.map((item) => (
             <img
               key={item}
               style={exampleStyle}
               loading="lazy"
               alt="카드 이미지"
-              src={testImgs[index]}
+              src={item}
               className={styles.mainPhoto}
             />
           ))}
         </div>
 
-        <div className={styles.photoButtonSet}>
-          <IconButton
-            aria-label="delete"
-            size="large"
-            sx={{
-              backgroundColor: "white",
-              ":hover": { backgroundColor: "white" },
-            }}
-            onClick={handleBack}
-          >
-            <KeyboardArrowLeftIcon sx={{ fontSize: "2rem" }} />
-          </IconButton>
-          <IconButton
-            aria-label="delete"
-            size="large"
-            sx={{
-              backgroundColor: "white",
-              ":hover": { backgroundColor: "white" },
-            }}
-            onClick={handleNext}
-          >
-            <KeyboardArrowRightIcon sx={{ fontSize: "2rem" }} />
-          </IconButton>
-        </div>
+        {activeImgIndex === 0 ? (
+          ""
+        ) : (
+          <div className={styles.photoButtonLeft}>
+            <ScrollButtonLeft handleBack={handleBack} />
+          </div>
+        )}
+
+        {activeImgIndex === testImgs.length - 1 ? (
+          ""
+        ) : (
+          <div className={styles.photoButtonRight}>
+            <ScrollButtonRight handleNext={handleNext} />
+          </div>
+        )}
 
         <div className={styles.index}>
           {testImgs.map((card, index) =>

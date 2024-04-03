@@ -12,38 +12,71 @@ import { useModal } from "../../hooks/modal/ModalProvider";
 import ModalOption from "../../enum/modalOptionTypes";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store/store";
-import CategoryType from "../../enum/categoryOptionType";
+import CategoryType from "../../enum/ConceptOptionType";
 import useExploreHooks from "../../hooks/explore/useExploreHooks";
-import { switchCategory } from "../../redux/reducers/explore/filterReducer";
-import { categorySet, GetListDTO } from "interface/explore/ExplorePost";
+import { switchConcept } from "../../redux/reducers/explore/filterReducer";
+import { conceptSet, GetListDTO } from "interface/explore/ExplorePost";
+import { useState } from "react";
+import ScrollButtonLeft from "components/button/explore/ScrollButtonLeft";
+import ScrollButtonRight from "components/button/explore/ScrollButtonRight";
+import { useMediaQuery } from "@mui/material";
+import { useSearchParams } from "react-router-dom";
 
 const MainCategory = () => {
   const storeCategory = useSelector(
-    (state: RootState) => state.filter.activeCategory
+    (state: RootState) => state.filter.activeConcept
   );
 
   const categoryList = Object.values(CategoryType);
 
   const { SetItem } = useExploreHooks();
 
+  const [param, setParam] = useSearchParams();
+
   const { openModal } = useModal();
 
   const { setPostList } = useExploreHooks();
+
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const handleNext = () => {
+    if (activeIndex !== 1)
+      setActiveIndex((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    if (activeIndex !== 0)
+      setActiveIndex((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const scrollStyle = {
+    transition: "all 400ms",
+    transform: `translateX(-${0 + activeIndex * 50}%)`,
+    opacity: 1,
+  };
+
+  const isSmallScreen = useMediaQuery("(max-width: 950px)");
 
   const handleClick = (inputData: CategoryType) => {
     const number = categoryList.indexOf(inputData);
     //중복 체크 (중복으로 눌려졌는지)
     const checkDup = inputData === storeCategory;
+    if (!checkDup) {
+      param.set("concept", inputData);
+      setParam(param);
+    } else {
+      param.delete("concept");
+      setParam(param);
+    }
     const setCategoyList: GetListDTO = {
       paging: 1,
       pagingNumber: 8,
       searchType: "KEYWORD",
       keyword: null,
       sortBy: "RECENT",
-      concept: checkDup ? null : categorySet.key[number],
+      concept: checkDup ? null : conceptSet.key[number],
       region: null,
     };
-    SetItem(switchCategory(checkDup ? null : inputData));
+    SetItem(switchConcept(checkDup ? null : inputData));
     setPostList(setCategoyList);
   };
 
@@ -60,24 +93,41 @@ const MainCategory = () => {
 
   return (
     <div className={styles.MainCategoryTap}>
-      <div className={styles.categoryContainer}>
-        {categoryList.map((item, index) => (
-          <label
-            key={item}
-            className={`${styles.categoryLabel}`}
-            onClick={() => handleClick(item)}
-          >
-            <div
-              className={`${styles.categoryItem} ${
-                storeCategory === item ? styles.selected : ""
-              } `}
+      <div className={styles.scrollContainer}>
+        {activeIndex !== 0 && isSmallScreen ? (
+          <div className={styles.ScrollButtonLeft}>
+            <ScrollButtonLeft handleBack={handleBack} />
+          </div>
+        ) : (
+          ""
+        )}
+        <div className={styles.categoryContainer} style={scrollStyle}>
+          {categoryList.map((item, index) => (
+            <label
+              key={item}
+              className={`${styles.categoryLabel}`}
+              onClick={() => handleClick(item)}
             >
-              {iconList[index]}
-              {item}
-            </div>
-          </label>
-        ))}
+              <div
+                className={`${styles.categoryItem} ${
+                  storeCategory === item ? styles.selected : ""
+                } `}
+              >
+                {iconList[index]}
+                {item}
+              </div>
+            </label>
+          ))}
+        </div>
+        {activeIndex !== 1 && isSmallScreen ? (
+          <div className={styles.ScrollButtonRight}>
+            <ScrollButtonRight handleNext={handleNext} />
+          </div>
+        ) : (
+          ""
+        )}
       </div>
+
       <div
         className={styles.filterButton}
         onClick={() => {
