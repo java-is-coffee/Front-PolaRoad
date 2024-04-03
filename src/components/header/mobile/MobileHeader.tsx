@@ -19,7 +19,9 @@ function MobileHeader() {
         <div>
           <SearchIcon sx={{ color: "#bbbbbb", fontSize: "2rem" }} />
         </div>
-        <div>Search</div>
+        <div>
+          <input />
+        </div>
         <div onClick={handleComponent}>
           <TuneIcon sx={{ color: "#bbbbbb", fontSize: "2rem" }} />
         </div>

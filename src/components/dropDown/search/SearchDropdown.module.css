@@ -61,6 +61,10 @@
   grid-gap: 10px; /* 그리드 아이템 간의 간격 설정 */
 }
 
+.list :hover {
+  background-color: #13c4a3;
+}
+
 .selected {
   background-color: #13c4a3 !important;
 }

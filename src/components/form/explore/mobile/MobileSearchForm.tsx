@@ -1,4 +1,4 @@
-import { conceptSet } from "interface/explore/ExplorePost";
+import { conceptSet, regionSet } from "interface/explore/ExplorePost";
 import styles from "./MobileSearchForm.module.css";
 import StarIcon from "@mui/icons-material/Star";
 import KebabDiningIcon from "@mui/icons-material/KebabDining";
@@ -8,11 +8,20 @@ import DirectionsWalkIcon from "@mui/icons-material/DirectionsWalk";
 import TrainIcon from "@mui/icons-material/Train";
 import DirectionsCarFilledIcon from "@mui/icons-material/DirectionsCarFilled";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
-import { useState } from "react";
 import useStoreValue from "hooks/storeValue/useStoreValue";
+import CloseIcon from "@mui/icons-material/Close";
+import useExploreHooks from "hooks/explore/useExploreHooks";
+import {
+  switchConcept,
+  switchRegion,
+  switchSort,
+} from "../../../../redux/reducers/explore/filterReducer";
+import { IconButton } from "@mui/material";
+import { setIsMobileSearch } from "../../../../redux/reducers/explore/explorePostReducer";
 
 const MobileSearchForm = () => {
-  const { storeSort, storeConcept, storeRegion } = useStoreValue();
+  const { storeSort, storeConcept, storeRegion, setValue } = useStoreValue();
+  const { SetItem } = useExploreHooks();
 
   const iconList = [
     <StarIcon className={styles.categoryIcon} />,
@@ -25,9 +34,42 @@ const MobileSearchForm = () => {
     <PhotoCameraIcon className={styles.categoryIcon} />,
   ];
 
+  const handleClick = (inputData: any, aboutFilter: string) => {
+    if (aboutFilter === "정렬") {
+      if (inputData === storeSort) {
+        SetItem(switchSort(null));
+      } else {
+        SetItem(switchSort(inputData));
+      }
+    }
+    if (aboutFilter === "concept") {
+      if (inputData === storeConcept) {
+        SetItem(switchConcept(null));
+      } else {
+        SetItem(switchConcept(inputData));
+      }
+    }
+    if (aboutFilter === "region") {
+      if (inputData === storeRegion) {
+        SetItem(switchRegion(null));
+      } else {
+        SetItem(switchRegion(inputData));
+      }
+    }
+  };
+
   return (
     <div>
       <div>
+        <IconButton
+          aria-label="delete"
+          size="large"
+          onClick={() => {
+            setValue(setIsMobileSearch(false));
+          }}
+        >
+          <CloseIcon fontSize="inherit" />
+        </IconButton>
         <h1>여행 테마</h1>
         <div className={styles.conceptBox}>
           {conceptSet.values.map((item, index) => (
@@ -36,12 +78,26 @@ const MobileSearchForm = () => {
               className={`${styles.conceptList} ${
                 storeConcept === item ? styles.selected : ""
               }`}
+              onClick={() => handleClick(item, "concept")}
             >
               <div>{iconList[index]}</div>
               {item}
             </div>
           ))}
-          {/* <SearchDropdown /> */}
+        </div>
+        <h1>지역</h1>
+        <div className={styles.conceptBox}>
+          {regionSet.values.map((item, index) => (
+            <div
+              key={index}
+              className={`${styles.conceptList} ${
+                storeRegion === item ? styles.selected : ""
+              }`}
+              onClick={() => handleClick(item, "region")}
+            >
+              {item}
+            </div>
+          ))}
         </div>
       </div>
     </div>
