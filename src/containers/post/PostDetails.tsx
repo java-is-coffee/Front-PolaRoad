@@ -6,11 +6,11 @@ import { IPostDTO } from "interface/post/IPostDTO";
 import secureLocalStorage from "react-secure-storage";
 import useError from "hooks/error/useErrorHandler";
 import PostComments from "./comments/PostComments";
-import PostCardList from "./postCardList/web/PostCardList";
 import PostMap from "components/map/PostMap";
 import { useModal } from "hooks/modal/ModalProvider";
 import ModalOption from "enum/modalOptionTypes";
 import PostOptionModal from "components/modal/option/PostOptionModal";
+import PostCardList from "./postCardList/web/PostCardList";
 
 function PostDetail() {
   const { postId } = useParams();
