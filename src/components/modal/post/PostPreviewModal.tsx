@@ -48,7 +48,7 @@ function PostPreviewModal({ postId }: PostPreviewModalProps) {
   };
 
   return postDetails ? (
-    <div className={modalStyle.overlay} onClick={handleCancel}>
+    <div className={modalStyle.backdrop} onClick={handleCancel}>
       <div className={modalStyle.modal} onClick={(e) => e.stopPropagation()}>
         <section className={modalStyle.container}>
           <article className={modalStyle.mainComponent}>
