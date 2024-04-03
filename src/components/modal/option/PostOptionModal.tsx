@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import modalStyles from "./PostOptionModal.module.css";
 import { useModal } from "../../../hooks/modal/ModalProvider";
 import ModalOption from "../../../enum/modalOptionTypes";
 import postFollowMember from "api/follow/postFollowMember";
 import { toast } from "react-toastify";
+import ShareModal from "../shareModal/ShareModal";
 
 interface PostOptionModalProps {
   memberId: number;
@@ -13,7 +14,7 @@ interface PostOptionModalProps {
 const BASE_URL = "http://polaroad.s3-website.ap-northeast-2.amazonaws.com";
 
 const PostOptionModal = ({ memberId, postId }: PostOptionModalProps) => {
-  const { closeModal } = useModal();
+  const { registerModal, openModal, closeModal } = useModal();
 
   // "취소" 버튼 클릭 시 실행될 함수
   const handleCancel = () => {
@@ -35,6 +36,18 @@ const PostOptionModal = ({ memberId, postId }: PostOptionModalProps) => {
     }
   };
 
+  const handleShare = () => {
+    console.log("openshareModal");
+    openModal(ModalOption.SHARE);
+  };
+
+  useEffect(() => {
+    if (postId)
+      registerModal(ModalOption.SHARE, <ShareModal postId={postId} />);
+    return closeModal(ModalOption.SHARE);
+    //eslint-disable-next-line
+  }, []);
+
   return (
     <div className={modalStyles.backdrop} onClick={handleCancel}>
       <div
@@ -46,7 +59,9 @@ const PostOptionModal = ({ memberId, postId }: PostOptionModalProps) => {
           팔로우
         </button>
         <button className={modalStyles.option}>저장</button>
-        <button className={modalStyles.option}>공유</button>
+        <button className={modalStyles.option} onClick={handleShare}>
+          공유
+        </button>
         <button className={modalStyles.option} onClick={handleCopyLink}>
           링크 복사
         </button>
