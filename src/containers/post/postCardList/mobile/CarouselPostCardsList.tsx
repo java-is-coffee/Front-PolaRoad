@@ -33,7 +33,7 @@ function CarouselPostCardsList({ postDetails }: CarouselPostCardsListProps) {
   useEffect(() => {
     const updateCardWidth = () => {
       const wrapperWidth = wrapperRef.current?.offsetWidth ?? 0;
-      setCardWidth(wrapperWidth - 20); // 예: 부모 컨테이너 너비에서 100px을 빼서 설정
+      setCardWidth(wrapperWidth); // 예: 부모 컨테이너 너비에서 100px을 빼서 설정
     };
 
     updateCardWidth();
@@ -72,7 +72,7 @@ function CarouselPostCardsList({ postDetails }: CarouselPostCardsListProps) {
         <section
           className={containerStyles.cardCarousel}
           style={{
-            transform: `translate3d(${curIndex * -cardWidth}px, 0, 0)`,
+            transform: `translate3d(${curIndex * -cardWidth - 20}px, 0, 0)`,
           }}
         >
           {cards.map((card, index) => (
