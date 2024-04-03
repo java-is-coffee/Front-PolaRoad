@@ -46,13 +46,16 @@ function PostDetail() {
     };
     // eslint-disable-next-line
   }, [postDetails]);
+
+  if (!postId) return <div></div>;
+
   return postDetails ? (
     <section className={containerStyles.container}>
       <article className={containerStyles.sideComponent}>
         <PostMap cards={postDetails.cards} />
       </article>
       <article className={containerStyles.mainComponent}>
-        <PostCardList postDetails={postDetails} />
+        <PostCardList postDetails={postDetails} postId={Number(postId)} />
       </article>
       <article className={containerStyles.sideComponent}>
         <PostComments

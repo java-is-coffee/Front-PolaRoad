@@ -52,7 +52,10 @@ function PostPreviewModal({ postId }: PostPreviewModalProps) {
       <div className={modalStyle.modal} onClick={(e) => e.stopPropagation()}>
         <section className={modalStyle.container}>
           <article className={modalStyle.mainComponent}>
-            <CarouselPostCardsList postDetails={postDetails} />
+            <CarouselPostCardsList
+              postDetails={postDetails}
+              postId={Number(postId)}
+            />
           </article>
           <article className={modalStyle.sideComponent}>
             <ToggleButtonGroup

@@ -6,9 +6,10 @@ import CardListHeader from "components/header/cardLIst/CardLIstHeader";
 
 interface PostCardListProps {
   postDetails: IPostDTO;
+  postId: number;
 }
 
-function PostCardList({ postDetails }: PostCardListProps) {
+function PostCardList({ postDetails, postId }: PostCardListProps) {
   const cards = [
     <ThumbnailCard
       title={postDetails.title}
@@ -26,7 +27,7 @@ function PostCardList({ postDetails }: PostCardListProps) {
 
   return (
     <section className={containerStyles.wrapper}>
-      <CardListHeader memberInfo={postDetails.memberInfo} />
+      <CardListHeader memberInfo={postDetails.memberInfo} postId={postId} />
       {cards.map((card, index) => (
         <div className={containerStyles.singleCard} key={index}>
           {card}

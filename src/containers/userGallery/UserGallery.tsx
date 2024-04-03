@@ -10,6 +10,7 @@ import PostOptionModal from "components/modal/option/PostOptionModal";
 
 interface UserHistoryContainerProps {
   memberId: number;
+  postId?: number;
 }
 
 function UserHistoryContainer({ memberId }: UserHistoryContainerProps) {

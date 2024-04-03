@@ -8,9 +8,13 @@ import CardListHeader from "components/header/cardLIst/CardLIstHeader";
 
 interface CarouselPostCardsListProps {
   postDetails: IPostDTO;
+  postId: number;
 }
 
-function CarouselPostCardsList({ postDetails }: CarouselPostCardsListProps) {
+function CarouselPostCardsList({
+  postDetails,
+  postId,
+}: CarouselPostCardsListProps) {
   const [curIndex, setCurIndex] = useState<number>(0);
   const [cardWidth, setCardWidth] = useState<number>(0);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
@@ -58,7 +62,7 @@ function CarouselPostCardsList({ postDetails }: CarouselPostCardsListProps) {
 
   return (
     <div>
-      <CardListHeader memberInfo={postDetails.memberInfo} />
+      <CardListHeader memberInfo={postDetails.memberInfo} postId={postId} />
       <section ref={wrapperRef} className={containerStyles.wrapper}>
         {curIndex === 0 ? (
           ""
