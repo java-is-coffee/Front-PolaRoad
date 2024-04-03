@@ -1,0 +1,78 @@
+/* WarningModal.module.css */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent backdrop */
+  z-index: 1000; /* High z-index to ensure it covers other content */
+}
+
+.modalContents {
+  position: fixed;
+  width: 30%;
+  min-width: 200px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the modal */
+  z-index: 1001; /* Higher than the backdrop to appear on top */
+  /* Additional styling for the modal content */
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h2 {
+  margin: 20px 0;
+  font-size: 1.6rem;
+}
+
+.divider {
+  border: 0;
+  width: 100%;
+  height: 1px;
+  background: #d9d9d9; /* 구분선의 색상 */
+  margin: 0;
+  border: 0;
+}
+
+.inputLabel {
+  width: 100%;
+  text-align: center;
+}
+
+.uploadBtn {
+  width: 100%;
+  font-size: 1.4rem;
+  padding: 10px 0;
+  color: skyblue;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.delete {
+  width: 100%;
+  font-size: 1.4rem;
+  background-color: white;
+  border: none;
+  color: red;
+  font-weight: bold;
+  padding: 10px 0;
+  cursor: pointer;
+}
+
+.cancel {
+  border: none;
+  width: 100%;
+  background-color: white;
+  font-size: 1.4rem;
+  font-weight: bold;
+  padding: 10px 0;
+  cursor: pointer;
+  border-radius: 8px;
+}

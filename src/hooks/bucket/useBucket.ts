@@ -8,18 +8,20 @@ const ACCESS_KEY_ID = process.env.REACT_APP_BUCKET_ACCESS_ID; // IAM에서 생�
 const SECRET_ACCESS_KEY = process.env.REACT_APP_BUCKET_ACCESS_KEY; // IAM에서 생성한 사용자의 SECRET_ACCESS_KEY
 
 interface uploadImageProps {
-  type: "POST" | "COMMENT";
+  type: "POST" | "COMMENT" | "PROFILE";
   imageInfo: IUploadImage;
 }
 
 const pathResolver = ({ type, imageInfo }: uploadImageProps) => {
-  return type === "POST"
-    ? `${imageInfo.postUserId}/post/${imageInfo.postId}/${uuid()}${
-        imageInfo.image.name
-      }`
-    : `${imageInfo.postUserId}/post/${imageInfo.postId}/comment/${uuid()}${
-        imageInfo.image.name
-      }`;
+  if (type === "PROFILE") return `/profile/${imageInfo.postUserId}`;
+  else if (type === "POST")
+    return `${imageInfo.postUserId}/post/${imageInfo.postId}/${uuid()}${
+      imageInfo.image.name
+    }`;
+  else
+    return `${imageInfo.postUserId}/post/${imageInfo.postId}/comment/${uuid()}${
+      imageInfo.image.name
+    }`;
 };
 
 const S3 = new AWS.S3({
