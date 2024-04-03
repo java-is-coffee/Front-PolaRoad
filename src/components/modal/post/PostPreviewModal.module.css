@@ -21,15 +21,6 @@
   overflow-y: auto;
 }
 
-.closeButton {
-  background-color: #f44336;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  float: right;
-}
-
 .container {
   display: flex;
   gap: 20px;
