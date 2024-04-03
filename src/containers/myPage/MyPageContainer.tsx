@@ -30,7 +30,7 @@ function MyPageContainer() {
         <ProfileCard memberInfo={memberInfo} />
       </div>
       <div className={containerStyle.userHistoryWrapper}>
-        <UserHistoryContainer />
+        <UserHistoryContainer memberId={memberInfo.memberId} />
       </div>
     </div>
   );

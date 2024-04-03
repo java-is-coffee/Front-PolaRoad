@@ -72,7 +72,7 @@ function CarouselPostCardsList({ postDetails }: CarouselPostCardsListProps) {
         <section
           className={containerStyles.cardCarousel}
           style={{
-            transform: `translate3d(${curIndex * -cardWidth - 20}px, 0, 0)`,
+            transform: `translate3d(${curIndex * -cardWidth}px, 0, 0)`,
           }}
         >
           {cards.map((card, index) => (
