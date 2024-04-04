@@ -4,9 +4,12 @@ import getPostDetails from "api/post/getPostDetails";
 import { IPostDTO } from "interface/post/IPostDTO";
 import secureLocalStorage from "react-secure-storage";
 import PostMap from "components/map/PostMap";
-import PostCardList from "containers/post/postCardList/web/PostCardList";
 import PostComments from "containers/post/comments/PostComments";
 import { toast } from "react-toastify";
+import CarouselPostCardsList from "containers/post/postCardList/mobile/CarouselPostCardsList";
+import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { useModal } from "hooks/modal/ModalProvider";
+import ModalOption from "enum/modalOptionTypes";
 
 interface PostPreviewModalProps {
   postId?: string;
@@ -14,7 +17,8 @@ interface PostPreviewModalProps {
 
 function PostPreviewModal({ postId }: PostPreviewModalProps) {
   const [postDetails, setPostDetails] = useState<IPostDTO | null>(null);
-
+  const [sideContentType, setSideContentType] = useState<string>("comment");
+  const { closeModal } = useModal();
   useEffect(() => {
     const getPostData = async () => {
       if (!postId) {
@@ -32,22 +36,46 @@ function PostPreviewModal({ postId }: PostPreviewModalProps) {
     }
   }, [postId]);
 
+  const handleChange = (
+    event: React.MouseEvent<HTMLElement>,
+    newAlignment: string
+  ) => {
+    setSideContentType(newAlignment);
+  };
+
+  const handleCancel = () => {
+    closeModal(ModalOption.POST_PREVIEW);
+  };
+
   return postDetails ? (
-    <div className={modalStyle.overlay}>
-      <div className={modalStyle.modal}>
-        <button className={modalStyle.closeButton}>Close</button>
+    <div className={modalStyle.backdrop} onClick={handleCancel}>
+      <div className={modalStyle.modal} onClick={(e) => e.stopPropagation()}>
         <section className={modalStyle.container}>
-          <article className={modalStyle.sideComponent}>
-            <PostMap cards={postDetails.cards} />
-          </article>
           <article className={modalStyle.mainComponent}>
-            <PostCardList postDetails={postDetails} />
+            <CarouselPostCardsList
+              postDetails={postDetails}
+              postId={Number(postId)}
+            />
           </article>
           <article className={modalStyle.sideComponent}>
-            <PostComments
-              postId={postId}
-              memberId={postDetails.memberInfo.memberId}
-            />
+            <ToggleButtonGroup
+              color="success"
+              value={sideContentType}
+              exclusive
+              onChange={handleChange}
+              aria-label="Platform"
+            >
+              <ToggleButton value="comment">comment</ToggleButton>
+              <ToggleButton value="map">map</ToggleButton>
+            </ToggleButtonGroup>
+            {sideContentType === "comment" ? (
+              <PostComments
+                postId={postId}
+                memberId={postDetails.memberInfo.memberId}
+              />
+            ) : (
+              <PostMap cards={postDetails.cards} />
+            )}
           </article>
         </section>
       </div>

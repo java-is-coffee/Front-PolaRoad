@@ -8,6 +8,7 @@ enum ModalOption {
   POSTOPTION = "POSTOPTION",
   EDITPROFILEIMG = "EDITPROFILEIMG",
   POST_PREVIEW = "POST_PREVIEW",
+  SHARE = "SHARE",
 }
 
 export default ModalOption;
