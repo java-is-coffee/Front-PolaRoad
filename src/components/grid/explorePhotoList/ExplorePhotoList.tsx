@@ -9,6 +9,7 @@ import { CircularProgress, useMediaQuery } from "@mui/material";
 import {
   conceptSet,
   GetListDTO,
+  PostData,
   regionSet,
   sortSet,
 } from "interface/explore/ExplorePost";
@@ -156,7 +157,7 @@ const ExplorePhotoList = () => {
             적합한 게시글이 존재하지 않아요 ㅠ ㅅ ㅠ
           </div>
         ) : (
-          storePostList.map((item) => (
+          storePostList.map((item: PostData) => (
             <div key={item.postId} className={styles.card}>
               <MainPhotoCard item={item} />
             </div>

@@ -15,13 +15,11 @@ function MobileHeader() {
 
   return (
     <div className={headerStyle.header}>
-      <div className={headerStyle.input}>
+      <div className={headerStyle.searchBox}>
         <div>
           <SearchIcon sx={{ color: "#bbbbbb", fontSize: "2rem" }} />
         </div>
-        <div>
-          <input />
-        </div>
+        <input className={headerStyle.input} placeholder="Search" />
         <div onClick={handleComponent}>
           <TuneIcon sx={{ color: "#bbbbbb", fontSize: "2rem" }} />
         </div>
