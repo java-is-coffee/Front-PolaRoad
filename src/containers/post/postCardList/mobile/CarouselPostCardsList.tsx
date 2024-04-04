@@ -1,15 +1,20 @@
 import SingleCardDetails from "components/card/postDetail/SingleCardDetails";
 import { IPostDTO } from "interface/post/IPostDTO";
-import containerStyles from "./PostCardsList.module.css";
+import containerStyles from "./CarouselPostCardsList.module.css";
 import { useEffect, useRef, useState } from "react";
 import ThumbnailCard from "components/card/postDetail/thumbnailCard/ThumbnailCard";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import CardListHeader from "components/header/cardLIst/CardLIstHeader";
 
-interface PostCardListProps {
+interface CarouselPostCardsListProps {
   postDetails: IPostDTO;
+  postId: number;
 }
 
-function PostCardList({ postDetails }: PostCardListProps) {
+function CarouselPostCardsList({
+  postDetails,
+  postId,
+}: CarouselPostCardsListProps) {
   const [curIndex, setCurIndex] = useState<number>(0);
   const [cardWidth, setCardWidth] = useState<number>(0);
   const wrapperRef = useRef<HTMLDivElement | null>(null);
@@ -32,7 +37,7 @@ function PostCardList({ postDetails }: PostCardListProps) {
   useEffect(() => {
     const updateCardWidth = () => {
       const wrapperWidth = wrapperRef.current?.offsetWidth ?? 0;
-      setCardWidth(wrapperWidth - 20); // 예: 부모 컨테이너 너비에서 100px을 빼서 설정
+      setCardWidth(wrapperWidth); // 예: 부모 컨테이너 너비에서 100px을 빼서 설정
     };
 
     updateCardWidth();
@@ -56,43 +61,46 @@ function PostCardList({ postDetails }: PostCardListProps) {
   };
 
   return (
-    <section ref={wrapperRef} className={containerStyles.wrapper}>
-      {curIndex === 0 ? (
-        ""
-      ) : (
-        <IoIosArrowBack
-          size={"30px"}
-          className={containerStyles.navButtonPrev}
-          onClick={handleCardLeft}
-        />
-      )}
-      <section
-        className={containerStyles.cardCarousel}
-        style={{
-          transform: `translate3d(${curIndex * -cardWidth}px, 0, 0)`,
-        }}
-      >
-        {cards.map((card, index) => (
-          <div
-            className={containerStyles.singleCard}
-            key={index}
-            style={{ width: `${cardWidth}px` }}
-          >
-            {card}
-          </div>
-        ))}
+    <div>
+      <CardListHeader memberInfo={postDetails.memberInfo} postId={postId} />
+      <section ref={wrapperRef} className={containerStyles.wrapper}>
+        {curIndex === 0 ? (
+          ""
+        ) : (
+          <IoIosArrowBack
+            size={"24px"}
+            className={containerStyles.navButtonPrev}
+            onClick={handleCardLeft}
+          />
+        )}
+        <section
+          className={containerStyles.cardCarousel}
+          style={{
+            transform: `translate3d(${curIndex * -cardWidth}px, 0, 0)`,
+          }}
+        >
+          {cards.map((card, index) => (
+            <div
+              className={containerStyles.singleCard}
+              key={index}
+              style={{ width: `${cardWidth}px` }}
+            >
+              {card}
+            </div>
+          ))}
+        </section>
+        {curIndex === cards.length - 1 ? (
+          ""
+        ) : (
+          <IoIosArrowForward
+            size={"24px"}
+            className={containerStyles.navButtonNext}
+            onClick={handleCardRight}
+          />
+        )}
       </section>
-      {curIndex === cards.length - 1 ? (
-        ""
-      ) : (
-        <IoIosArrowForward
-          size={"30px"}
-          className={containerStyles.navButtonNext}
-          onClick={handleCardRight}
-        />
-      )}
-    </section>
+    </div>
   );
 }
 
-export default PostCardList;
+export default CarouselPostCardsList;

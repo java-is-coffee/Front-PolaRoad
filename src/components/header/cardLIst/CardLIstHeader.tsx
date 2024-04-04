@@ -9,9 +9,10 @@ import ModalOption from "enum/modalOptionTypes";
 
 interface CarsListHeaderProps {
   memberInfo: IMemberInfo;
+  postId: number;
 }
 
-function CardListHeader({ memberInfo }: CarsListHeaderProps) {
+function CardListHeader({ memberInfo, postId }: CarsListHeaderProps) {
   const { getImage } = useBucket();
   const [profileImg, setProfileImg] = useState<string>();
   const { openModal } = useModal();
@@ -27,7 +28,7 @@ function CardListHeader({ memberInfo }: CarsListHeaderProps) {
   }, []);
 
   const handleOptionClick = () => {
-    openModal(ModalOption.POSTOPTION);
+    openModal(ModalOption.POSTOPTION, { postId: postId });
   };
 
   return (

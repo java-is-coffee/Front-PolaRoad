@@ -9,7 +9,6 @@
 .cardCarousel {
   display: flex; /* 카드들을 수평 방향으로 나열 */
   transition: transform 0.3s ease-in-out; /* 부드러운 전환 효과를 위해 */
-  margin: 0 10px;
 }
 
 .singleCard {
@@ -35,7 +34,6 @@
   border-radius: 50%;
   cursor: pointer;
   padding: 2px;
-  margin: 0 20px;
   z-index: 10;
 }
 
