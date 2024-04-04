@@ -39,6 +39,7 @@ const ExplorePhotoList = () => {
     storeConcept,
     storeRegion,
     storeSort,
+    storeSearchText,
     setValue,
   } = useStoreValue();
 
@@ -55,21 +56,20 @@ const ExplorePhotoList = () => {
     if (query.get("concept") !== null) getContent("concept");
     if (query.get("sort") !== null) getContent("sort");
 
-    if (storePostList === null) {
-      setValue(setSearchText(query.get("search")));
-      const initPostList: GetListDTO = {
-        paging: 1,
-        pagingNumber: 8,
-        searchType: "KEYWORD",
-        keyword: query.get("search"),
-        sortBy: "RECENT",
-        concept: query.get("concept"),
-        region: query.get("region"),
-      };
-      setPostList(initPostList);
-    }
+    setValue(setSearchText(query.get("search")));
+    const initPostList: GetListDTO = {
+      paging: 1,
+      pagingNumber: 8,
+      searchType: "KEYWORD",
+      keyword: query.get("search"),
+      sortBy: "RECENT",
+      concept: query.get("concept"),
+      region: query.get("region"),
+    };
+    setPostList(initPostList);
+
     // eslint-disable-next-line
-  }, [storePostList]);
+  }, [query]);
 
   useEffect(() => {
     //렌더링 시작 시, 해당 view가 바로 포착되어서 .
@@ -98,6 +98,18 @@ const ExplorePhotoList = () => {
 
     // eslint-disable-next-line
   }, [storeRegion]);
+
+  useEffect(() => {
+    if (storeSearchText !== null) {
+      query.set("search", storeSearchText);
+      setQuery(query);
+    } else {
+      query.delete("search");
+      setQuery(query);
+    }
+
+    // eslint-disable-next-line
+  }, [storeSearchText]);
 
   useEffect(() => {
     if (storeConcept !== null) {

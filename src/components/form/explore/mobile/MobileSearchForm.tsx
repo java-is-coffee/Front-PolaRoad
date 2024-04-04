@@ -17,7 +17,7 @@ import {
   switchSort,
 } from "../../../../redux/reducers/explore/filterReducer";
 import { IconButton } from "@mui/material";
-import { setIsMobileSearch } from "../../../../redux/reducers/explore/explorePostReducer";
+import { setIsMobileSearchFilter } from "../../../../redux/reducers/explore/exploreMobileSetting";
 
 const MobileSearchForm = () => {
   const { storeSort, storeConcept, storeRegion, setValue } = useStoreValue();
@@ -65,7 +65,7 @@ const MobileSearchForm = () => {
           aria-label="delete"
           size="large"
           onClick={() => {
-            setValue(setIsMobileSearch(false));
+            setValue(setIsMobileSearchFilter(false));
           }}
         >
           <CloseIcon fontSize="inherit" />

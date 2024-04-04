@@ -3,12 +3,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import newPostReducers from "../reducers/newPost/newPostReducers";
 import filterReducer from "../reducers/explore/filterReducer";
 import explorePostReducer from "../reducers/explore/explorePostReducer";
+import exploreMobileSetting from "../reducers/explore/exploreMobileSetting";
 
 export const rootReducer = configureStore({
   reducer: {
     newPost: newPostReducers,
     filter: filterReducer,
     explorePost: explorePostReducer,
+    exploreMobileSetting: exploreMobileSetting,
   },
 });
 

@@ -34,8 +34,8 @@ const useStoreValue = () => {
     (state: RootState) => state.filter.searchText
   );
 
-  const isMobileSearch = useSelector(
-    (state: RootState) => state.explorePost.isMobileSearch
+  const isMobileSearchFilter = useSelector(
+    (state: RootState) => state.exploreMobileSetting.isMobileSearchFilter
   );
 
   const setValue = (action: PayloadAction<any>) => {
@@ -57,7 +57,7 @@ const useStoreValue = () => {
     storeSort,
     storeCurPage,
     storeSearchText,
-    isMobileSearch,
+    isMobileSearchFilter,
     setValue,
     resetValue,
   };

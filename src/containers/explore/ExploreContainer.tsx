@@ -9,7 +9,8 @@ import { useMediaQuery } from "@mui/material";
 import useStoreValue from "hooks/storeValue/useStoreValue";
 import { setSearchText } from "../../redux/reducers/explore/filterReducer";
 import MobileSearchForm from "components/form/explore/mobile/MobileSearchForm";
-import { setIsMobileSearch } from "../../redux/reducers/explore/explorePostReducer";
+import { setIsMobileSearchFilter } from "../../redux/reducers/explore/exploreMobileSetting";
+import MobileRecentForm from "components/form/explore/mobile/MobileSearchHistory";
 
 function ExploreContainer() {
   const [tokens] = useSearchParams();
@@ -19,7 +20,7 @@ function ExploreContainer() {
 
   // 커스텀 훅
 
-  const { isMobileSearch, setValue } = useStoreValue();
+  const { isMobileSearchFilter, setValue } = useStoreValue();
 
   //oauth를 통해 들어왔을 경우. param에 토큰들이 저장되어 들어옴
   useEffect(() => {
@@ -49,7 +50,7 @@ function ExploreContainer() {
   //크기가 다시 커졌을 경우, 검색 창이 안보이도록
   useEffect(() => {
     if (isSmallScreen === false) {
-      setValue(setIsMobileSearch(false));
+      setValue(setIsMobileSearchFilter(false));
     }
     // eslint-disable-next-line
   }, [isSmallScreen]);
@@ -59,7 +60,7 @@ function ExploreContainer() {
       {!isSmallScreen ? <MainPhoto /> : ""}
       {!isSmallScreen ? <MainCategory /> : ""}
       {/* 모바일 화면 + 설정 되어있을때.  */}
-      {isMobileSearch && isSmallScreen ? (
+      {isMobileSearchFilter && isSmallScreen ? (
         <MobileSearchForm />
       ) : (
         <ExplorePhotoList />
