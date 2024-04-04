@@ -10,6 +10,7 @@ import { IMemberInfoDetails } from "interface/member/IMemberInfoDetails";
 import useBucket from "hooks/bucket/useBucket";
 import { useEffect, useState } from "react";
 import { useModal } from "hooks/modal/ModalProvider";
+import UserActionModal from "components/modal/userSetting/UserSettingModal";
 
 interface ProfileCardProps {
   memberInfo: IMemberInfoDetails;
@@ -18,7 +19,7 @@ interface ProfileCardProps {
 function ProfileCard({ memberInfo }: ProfileCardProps) {
   const [profileImgURL, setProfileImgURL] = useState<string>("");
   const { getImage } = useBucket();
-  const { openModal } = useModal();
+  const { registerModal, openModal, closeModal } = useModal();
 
   useEffect(() => {
     const fetchProfileImg = async () => {
@@ -33,6 +34,16 @@ function ProfileCard({ memberInfo }: ProfileCardProps) {
 
   const handleEditProfileImg = () => {
     openModal(ModalOption.EDITPROFILEIMG);
+  };
+
+  useEffect(() => {
+    registerModal(ModalOption.USER_SETTING, <UserActionModal />);
+    return closeModal(ModalOption.USER_SETTING);
+    // eslint-disable-next-line
+  }, []);
+
+  const handleOpenUserSetting = () => {
+    openModal(ModalOption.USER_SETTING);
   };
 
   return (
@@ -51,7 +62,7 @@ function ProfileCard({ memberInfo }: ProfileCardProps) {
             name="프로필 변경"
             clickAction={handleEditProfileImg}
           />
-          <IoIosSettings size={"24px"} />
+          <IoIosSettings size={"24px"} onClick={handleOpenUserSetting} />
         </div>
       </div>
       <div className={profileStyles.stat}>
