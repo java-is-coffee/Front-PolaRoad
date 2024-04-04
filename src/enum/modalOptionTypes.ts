@@ -10,6 +10,7 @@ enum ModalOption {
   POST_PREVIEW = "POST_PREVIEW",
   SHARE = "SHARE",
   USER_SETTING = "USER_SETTING",
+  USER_INFO = "USER_INFO",
 }
 
 export default ModalOption;
