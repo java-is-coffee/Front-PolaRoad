@@ -7,9 +7,6 @@ import secureLocalStorage from "react-secure-storage";
 import useError from "hooks/error/useErrorHandler";
 import PostComments from "./comments/PostComments";
 import PostMap from "components/map/PostMap";
-import { useModal } from "hooks/modal/ModalProvider";
-import ModalOption from "enum/modalOptionTypes";
-import PostOptionModal from "components/modal/option/PostOptionModal";
 import PostCardList from "./postCardList/web/PostCardList";
 
 function PostDetail() {
@@ -32,20 +29,6 @@ function PostDetail() {
     }
     // eslint-disable-next-line
   }, []);
-
-  // 포스트 옵션 모달 설정
-  const { registerModal, closeModal } = useModal();
-  useEffect(() => {
-    if (!postDetails) return;
-    registerModal(
-      ModalOption.POST_OPTION,
-      <PostOptionModal memberId={postDetails?.memberInfo.memberId} />
-    );
-    return () => {
-      closeModal(ModalOption.POST_OPTION);
-    };
-    // eslint-disable-next-line
-  }, [postDetails]);
 
   if (!postId) return <div></div>;
 

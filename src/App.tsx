@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./routes/Home";
 import Explore from "./routes/Explore";
@@ -10,7 +10,42 @@ import "react-toastify/dist/ReactToastify.css";
 import "./styles/globals.css";
 import Post from "routes/Post";
 
+// 사용되는 모달 등록
+import { useModal } from "hooks/modal/ModalProvider";
+import ModalOption from "enum/modalOptionTypes";
+import NewPostModal from "components/modal/newPost/NewPostModal";
+import WarningModal from "components/modal/warn/WarningModal";
+import EditProfileImgModal from "components/modal/profileImg/EditProfileImgModal";
+import PostPreviewModal from "components/modal/post/PostPreviewModal";
+import ShareModal from "components/modal/shareModal/ShareModal";
+import UserInfoModal from "components/modal/userSetting/userInfo/UserInfoModal";
+import PostOptionModal from "components/modal/option/PostOptionModal";
+import UserSettingModal from "components/modal/userSetting/UserSettingModal";
+
 function App() {
+  const { registerModal, closeModal } = useModal();
+  useEffect(() => {
+    registerModal(ModalOption.POST, <NewPostModal />);
+    registerModal(ModalOption.WARNING, <WarningModal />);
+    registerModal(ModalOption.EDIT_PROFILE_IMG, <EditProfileImgModal />);
+    registerModal(ModalOption.POST_PREVIEW, <PostPreviewModal />);
+    registerModal(ModalOption.SHARE, <ShareModal />);
+    registerModal(ModalOption.USER_SETTING, <UserSettingModal />);
+    registerModal(ModalOption.USER_INFO, <UserInfoModal />);
+    registerModal(ModalOption.POST_OPTION, <PostOptionModal />);
+
+    return () => {
+      closeModal(ModalOption.POST);
+      closeModal(ModalOption.WARNING);
+      closeModal(ModalOption.EDIT_PROFILE_IMG);
+      closeModal(ModalOption.POST_PREVIEW);
+      closeModal(ModalOption.SHARE);
+      closeModal(ModalOption.USER_SETTING);
+      closeModal(ModalOption.USER_INFO);
+      closeModal(ModalOption.POST_OPTION);
+    };
+    // eslint-disable-next-line
+  }, []);
   return (
     <div className="App">
       <Router>

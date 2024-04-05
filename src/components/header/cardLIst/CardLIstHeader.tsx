@@ -28,7 +28,10 @@ function CardListHeader({ memberInfo, postId }: CarsListHeaderProps) {
   }, []);
 
   const handleOptionClick = () => {
-    openModal(ModalOption.POST_OPTION, { postId: postId });
+    openModal(ModalOption.POST_OPTION, {
+      memberId: memberInfo.memberId,
+      postId: postId,
+    });
   };
 
   return (

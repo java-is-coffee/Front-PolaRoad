@@ -2,11 +2,9 @@ import { useModal } from "hooks/modal/ModalProvider";
 import modalStyles from "./UserSettingModal.module.css";
 import ModalOption from "enum/modalOptionTypes";
 import secureLocalStorage from "react-secure-storage";
-import { useEffect } from "react";
-import UserInfoModal from "./userInfo/UserInfoModal";
 
 const UserSettingModal = () => {
-  const { registerModal, openModal, closeModal } = useModal();
+  const { openModal, closeModal } = useModal();
 
   const handleCancel = () => {
     closeModal(ModalOption.USER_SETTING);
@@ -19,16 +17,9 @@ const UserSettingModal = () => {
   };
 
   const handleUserInfo = () => {
+    handleCancel();
     openModal(ModalOption.USER_INFO);
   };
-
-  useEffect(
-    () => {
-      registerModal(ModalOption.USER_INFO, <UserInfoModal />);
-      return closeModal(ModalOption.USER_INFO);
-    }, //eslint-disable-next-line
-    []
-  );
 
   return (
     <div className={modalStyles.backdrop} onClick={handleCancel}>

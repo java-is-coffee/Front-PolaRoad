@@ -1,21 +1,20 @@
-import React, { useEffect } from "react";
 import modalStyles from "./PostOptionModal.module.css";
 import { useModal } from "../../../hooks/modal/ModalProvider";
 import ModalOption from "../../../enum/modalOptionTypes";
 import postFollowMember from "api/follow/postFollowMember";
 import { toast } from "react-toastify";
-import ShareModal from "../shareModal/ShareModal";
 
 interface PostOptionModalProps {
-  memberId: number;
+  memberId?: number;
   postId?: number;
 }
 
 const BASE_URL = "http://polaroad.s3-website.ap-northeast-2.amazonaws.com";
 
 const PostOptionModal = ({ memberId, postId }: PostOptionModalProps) => {
-  const { registerModal, openModal, closeModal } = useModal();
+  const { openModal, closeModal } = useModal();
 
+  if (!memberId) return <div></div>;
   // "취소" 버튼 클릭 시 실행될 함수
   const handleCancel = () => {
     closeModal(ModalOption.POST_OPTION); // 경고 모달을 닫음
@@ -38,15 +37,8 @@ const PostOptionModal = ({ memberId, postId }: PostOptionModalProps) => {
 
   const handleShare = () => {
     console.log("openshareModal");
-    openModal(ModalOption.SHARE);
+    openModal(ModalOption.SHARE, { postId: postId });
   };
-
-  useEffect(() => {
-    if (postId)
-      registerModal(ModalOption.SHARE, <ShareModal postId={postId} />);
-    return closeModal(ModalOption.SHARE);
-    //eslint-disable-next-line
-  }, []);
 
   return (
     <div className={modalStyles.backdrop} onClick={handleCancel}>
