@@ -13,12 +13,12 @@ function MyPage() {
   useEffect(() => {
     registerModal(ModalOption.POST, <NewPostModal />);
     registerModal(ModalOption.WARNING, <WarningModal />);
-    registerModal(ModalOption.EDITPROFILEIMG, <EditProfileImgModal />);
+    registerModal(ModalOption.EDIT_PROFILE_IMG, <EditProfileImgModal />);
     registerModal(ModalOption.POST_PREVIEW, <PostPreviewModal />);
     return () => {
       closeModal(ModalOption.POST);
       closeModal(ModalOption.WARNING);
-      closeModal(ModalOption.EDITPROFILEIMG);
+      closeModal(ModalOption.EDIT_PROFILE_IMG);
       closeModal(ModalOption.POST_PREVIEW);
     };
     // eslint-disable-next-line

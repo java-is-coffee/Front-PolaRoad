@@ -18,12 +18,12 @@ const PostOptionModal = ({ memberId, postId }: PostOptionModalProps) => {
 
   // "취소" 버튼 클릭 시 실행될 함수
   const handleCancel = () => {
-    closeModal(ModalOption.POSTOPTION); // 경고 모달을 닫음
+    closeModal(ModalOption.POST_OPTION); // 경고 모달을 닫음
   };
 
   const handleFollow = async () => {
     const result = await postFollowMember(memberId);
-    if (result) closeModal(ModalOption.POSTOPTION);
+    if (result) closeModal(ModalOption.POST_OPTION);
   };
 
   // 현재 페이지의 URL을 클립보드에 복사하는 함수

@@ -33,7 +33,7 @@ function ProfileCard({ memberInfo }: ProfileCardProps) {
   }, []);
 
   const handleEditProfileImg = () => {
-    openModal(ModalOption.EDITPROFILEIMG);
+    openModal(ModalOption.EDIT_PROFILE_IMG);
   };
 
   useEffect(() => {

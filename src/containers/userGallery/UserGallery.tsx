@@ -26,10 +26,10 @@ function UserHistoryContainer({ memberId }: UserHistoryContainerProps) {
   useEffect(
     () => {
       registerModal(
-        ModalOption.POSTOPTION,
+        ModalOption.POST_OPTION,
         <PostOptionModal memberId={memberId} />
       );
-      return closeModal(ModalOption.POSTOPTION);
+      return closeModal(ModalOption.POST_OPTION);
     },
     //eslint-disable-next-line
     []

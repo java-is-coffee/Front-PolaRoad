@@ -38,11 +38,11 @@ function PostDetail() {
   useEffect(() => {
     if (!postDetails) return;
     registerModal(
-      ModalOption.POSTOPTION,
+      ModalOption.POST_OPTION,
       <PostOptionModal memberId={postDetails?.memberInfo.memberId} />
     );
     return () => {
-      closeModal(ModalOption.POSTOPTION);
+      closeModal(ModalOption.POST_OPTION);
     };
     // eslint-disable-next-line
   }, [postDetails]);
