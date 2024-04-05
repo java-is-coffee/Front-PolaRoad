@@ -1,4 +1,4 @@
-import Header from "../components/header/Header";
+import Header from "../components/header/web/WebHeader";
 import MyPageContainer from "../containers/myPage/MyPageContainer";
 
 function MyPage() {
