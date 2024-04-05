@@ -1,0 +1,73 @@
+.formContainer {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 5px 15px;
+  margin-top: 30px;
+  min-height: 300px;
+}
+
+.inputContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  padding: 5px 0;
+  border: 1px solid #d9d9d9;
+}
+
+/* 추가적인 스타일링 */
+label {
+  font-weight: bold; /* 라벨의 글꼴을 굵게 합니다 */
+  padding: 2px 8px;
+}
+
+.inputContainer input {
+  width: 100%;
+  box-sizing: border-box;
+  flex: 1;
+  border: none;
+  background-color: transparent;
+  padding: 2px 8px;
+  font-size: 1.4rem;
+}
+
+.inputContainer input:focus {
+  outline: none; /* Removes the default focus outline */
+}
+.nameSpace {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.clearButton {
+  background: none;
+  border: none;
+  font-size: 1.2em; /* Size of the clear button */
+  cursor: pointer; /* Pointer cursor on hover */
+  padding: 5px 10px; /* Padding inside the button */
+}
+
+/* Additional styles for the button, for example on hover */
+.clearButton:hover {
+  color: #999; /* Change color on hover */
+}
+
+.formContainer p {
+  margin-top: 5px;
+  font-size: 1.2rem;
+}
+
+.formContainer button {
+  width: 100%;
+  font-size: 1.4rem;
+  border-radius: 8px;
+  background-color: var(--main-theme-color);
+  color: white;
+  cursor: pointer;
+}
