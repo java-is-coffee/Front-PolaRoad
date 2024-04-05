@@ -5,7 +5,7 @@ import MainPhotoCard from "../../card/mainPhoto/MainPhotoCard";
 import styles from "./ExplorePhotoList.module.css";
 import useExploreHooks from "../../../hooks/explore/useExploreHooks";
 import { useDispatch } from "react-redux";
-import { CircularProgress, useMediaQuery } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
 import { GetListDTO, PostData } from "interface/explore/ExplorePost";
 import { useInView } from "react-intersection-observer";
 import {
@@ -99,8 +99,7 @@ const ExplorePhotoList = () => {
           ))
         )
       ) : (
-        //로딩창
-        <CircularProgress color="success" />
+        ""
       )}
 
       <div ref={ref} className={styles.wait}>
