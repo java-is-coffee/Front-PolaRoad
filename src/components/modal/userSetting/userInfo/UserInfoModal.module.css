@@ -28,6 +28,10 @@
   align-items: center;
 }
 
+.defaultContents {
+  width: 100%;
+}
+
 .closeButton {
   position: absolute;
   top: 10px;
@@ -64,9 +68,11 @@
   width: 100%;
   font-size: 1.4rem;
   font-weight: 500;
+  margin-bottom: 20px;
 }
 
 .option {
+  cursor: pointer;
   padding: 10px 10px;
   display: flex;
   flex-direction: row;
