@@ -2,12 +2,6 @@
   z-index: 900;
 }
 
-
-.homeComponent ::-webkit-scrollbar {
-  display: none; 
-  
-}
-
 .videoContainer {
   position: relative; 
   width: 100vw; 
@@ -22,3 +16,6 @@
   object-fit: cover; 
 }
 
+html::-webkit-scrollbar {
+  display: none; 
+}

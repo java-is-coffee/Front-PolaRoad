@@ -1,12 +1,67 @@
 .mainPhoto {
   width: 100%;
   height: 40vh;
-  margin: 0px 10px;
   border-radius: 9px;
   min-height: 40vh;
   min-width: 100%;
+  overflow: hidden;
+}
+
+.carousel {
+  width: 100%;
+  height: 40vh;
+  border-radius: 9px;
+  min-height: 40vh;
+  min-width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+}
+
+.cardImg {
+  position: relative;
+}
+
+.photoButtonRight {
+  position: absolute;
+  display: none;
+  top: 40%;
+  right: 1rem;
+}
+
+.photoButtonLeft {
+  position: absolute;
+  display: none;
+  top: 40%;
+  left: 1rem;
+}
+
+.cardImg:hover .photoButtonRight {
+  display: flex !important;
+}
+
+.cardImg:hover .photoButtonLeft {
+  display: flex !important;
+}
+
+.cardImg:hover .index {
+  display: flex !important;
 }
 
 .photoInfo {
-  margin: 5px 1.5rem;
+  margin: 5px 1rem;
+}
+
+.goodNumber {
+  display: flex;
+  align-items: center;
+}
+
+.index {
+  position: absolute;
+  display: none;
+  justify-content: center;
+  width: 100%;
+  bottom: 5%;
+  /* left: 1rem; */
 }

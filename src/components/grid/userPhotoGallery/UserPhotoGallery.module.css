@@ -1,6 +1,6 @@
 .gridGallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  grid-gap: 16px;
-  padding: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-gap: 2px;
+  padding: 2px;
 }

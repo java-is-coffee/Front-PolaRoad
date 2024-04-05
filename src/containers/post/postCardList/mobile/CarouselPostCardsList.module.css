@@ -1,0 +1,46 @@
+.wrapper {
+  position: relative;
+  width: 50vw;
+  max-width: 1000px;
+  height: 100%;
+  overflow: hidden;
+}
+
+.cardCarousel {
+  display: flex; /* 카드들을 수평 방향으로 나열 */
+  transition: transform 0.3s ease-in-out; /* 부드러운 전환 효과를 위해 */
+}
+
+.singleCard {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto; /* 카드가 flex 컨테이너 안에서 확장/축소되지 않도록 설정 */
+  width: 50vw;
+}
+
+.singleCard:last-child {
+  margin-right: 0;
+  max-height: 1000px;
+}
+
+.navButtonPrev,
+.navButtonNext {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(0, 0, 0, 0.3);
+  background-color: #c9c7c1;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 2px;
+  z-index: 10;
+}
+
+.navButtonPrev {
+  left: 10px;
+}
+
+.navButtonNext {
+  right: 10px;
+}

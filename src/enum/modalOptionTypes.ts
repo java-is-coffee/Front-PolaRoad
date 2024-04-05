@@ -5,6 +5,10 @@ enum ModalOption {
   SETTING = "SETTING",
   SEARCH = "SEARCH",
   WARNING = "WARNING",
+  POSTOPTION = "POSTOPTION",
+  EDITPROFILEIMG = "EDITPROFILEIMG",
+  POST_PREVIEW = "POST_PREVIEW",
+  SHARE = "SHARE",
 }
 
 export default ModalOption;

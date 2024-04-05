@@ -4,7 +4,6 @@ import { GetListDTO } from "interface/explore/ExplorePost";
 const GetPostList = async (inputData: GetListDTO) => {
   try {
     console.log("게시판 로드 테스트");
-    console.log(inputData);
 
     let postAPI = `/api/post/list?page=${inputData.paging}&pageSize=${inputData.pagingNumber}&searchType=${inputData.searchType}&sortBy=${inputData.sortBy}`;
 
@@ -21,14 +20,13 @@ const GetPostList = async (inputData: GetListDTO) => {
     }
 
     const response = await axiosInstance.get(postAPI);
-
     console.log(postAPI);
 
     console.log(response.data.posts);
 
     return response.data.posts;
   } catch (error) {
-    return false;
+    return null;
   }
 };
 

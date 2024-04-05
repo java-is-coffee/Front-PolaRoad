@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import "./styles/globals.css";
+import Post from "routes/Post";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/explore" element={<Explore />}></Route>
           <Route path="/my" element={<MyPage />}></Route>
+          <Route path="/post/:postId" element={<Post />}></Route>
         </Routes>
       </Router>
       <ToastContainer

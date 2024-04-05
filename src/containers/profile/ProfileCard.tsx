@@ -6,34 +6,60 @@ import UserActionBtn from "../../components/button/user/UserActionBtn";
 import { CgFileAdd } from "react-icons/cg";
 import { MdOutlinePhotoAlbum } from "react-icons/md";
 import ModalOption from "../../enum/modalOptionTypes";
+import { IMemberInfoDetails } from "interface/member/IMemberInfoDetails";
+import useBucket from "hooks/bucket/useBucket";
+import { useEffect, useState } from "react";
+import { useModal } from "hooks/modal/ModalProvider";
 
-function ProfileCard() {
-  const postNum = 10;
-  const followerNum = 10;
-  const followeesNum = 10;
-  const username = "이지은";
+interface ProfileCardProps {
+  memberInfo: IMemberInfoDetails;
+}
 
-  const userNickname = "밤양갱";
+function ProfileCard({ memberInfo }: ProfileCardProps) {
+  const [profileImgURL, setProfileImgURL] = useState<string>("");
+  const { getImage } = useBucket();
+  const { openModal } = useModal();
+
+  useEffect(() => {
+    const fetchProfileImg = async () => {
+      if (memberInfo.profileImage) {
+        const imgUrl = await getImage(memberInfo.profileImage);
+        if (imgUrl) setProfileImgURL(imgUrl);
+      }
+    };
+    fetchProfileImg();
+    // eslint-disable-next-line
+  }, []);
+
+  const handleEditProfileImg = () => {
+    openModal(ModalOption.EDITPROFILEIMG);
+  };
 
   return (
     <div className={profileStyles.card}>
-      <div className={profileStyles.imgContainer}>
-        <ProfileImg size={"200px"} />
+      <div
+        className={profileStyles.imgContainer}
+        onClick={handleEditProfileImg}
+      >
+        <ProfileImg size={"200px"} imgUrl={profileImgURL} />
       </div>
       <div className={profileStyles.header}>
-        <span>{userNickname}</span>
+        <span>{memberInfo.nickname}</span>
         <div className={profileStyles.action}>
           <UserOptionBtn name="앨범보기" />
-          <UserOptionBtn name="프로필 변경" />
+          <UserOptionBtn
+            name="프로필 변경"
+            clickAction={handleEditProfileImg}
+          />
           <IoIosSettings size={"24px"} />
         </div>
       </div>
       <div className={profileStyles.stat}>
-        <span>{`게시물 ${postNum}`}</span>
-        <span>{`팔로워 ${followerNum}`}</span>
-        <span>{`팔로우 ${followeesNum}`}</span>
+        <span>{`게시물 ${memberInfo.postNumber}`}</span>
+        <span>{`팔로워 ${memberInfo.followedNumber}`}</span>
+        <span>{`팔로우 ${memberInfo.followingNumber}`}</span>
       </div>
-      <div className={profileStyles.username}>{username}</div>
+      <div className={profileStyles.username}>{memberInfo.name}</div>
       <UserActionBtn
         name="New post"
         icon={<CgFileAdd size={"24px"} />}

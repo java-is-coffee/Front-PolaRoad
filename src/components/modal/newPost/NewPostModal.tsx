@@ -15,7 +15,6 @@ import {
   filterCardNoneImage,
   resetPostDetails,
   setPostId,
-  setRoutePoint,
 } from "../../../redux/reducers/newPost/newPostReducers";
 import { QontoConnector, QontoStepIcon } from "./QontoStepStyle";
 import postNewPost from "api/post/postNewPost";
@@ -98,7 +97,6 @@ function NewPostModal() {
 
   const handleUploadButtonClick = () => {
     if (postDetails.title) {
-      dispatch(setRoutePoint());
       submitPostToServer();
     } else {
       toast.error("제목은 필수항목입니다.");

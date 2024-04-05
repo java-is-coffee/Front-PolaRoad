@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { IRoutesPointType } from "interface/map/IRoutesPointType";
 
 declare global {
   interface Window {
@@ -15,22 +16,21 @@ interface Place {
   // 필요에 따라 추가 프로퍼티 선언
 }
 
-interface KakaoMapProps {
-  latitude: number;
-  longitude: number;
-  level: number;
-}
-
-const useKakaoMap = ({ latitude, longitude, level }: KakaoMapProps) => {
+const useKakaoMap = () => {
   const mapRef = useRef<any>(null); // map 인스턴스를 저장하기 위한 ref
   const infoWindowRef = useRef<any>(null); // infoWindow 인스턴스를 저장하기 위한 ref
   const [selectedPlace, setSelectedPlace] = useState<Place>();
 
-  const initKakaoMap = (mapContainer: HTMLElement) => {
+  const initKakaoMap = (
+    mapContainer: HTMLElement,
+    initLatitude: number,
+    initLongitude: number,
+    initLevel: number
+  ) => {
     if (mapRef.current && infoWindowRef.current) return;
     const mapOption = {
-      center: new kakao.maps.LatLng(latitude, longitude),
-      level: level,
+      center: new kakao.maps.LatLng(initLatitude, initLongitude),
+      level: initLevel,
     };
     const newMap = new kakao.maps.Map(mapContainer, mapOption);
     const newInfoWindow = new kakao.maps.InfoWindow({ zIndex: 1 });
@@ -75,7 +75,80 @@ const useKakaoMap = ({ latitude, longitude, level }: KakaoMapProps) => {
     });
   };
 
-  return { selectedPlace, initKakaoMap, searchPlaceByKeyword };
+  // 위도 경도 계산하는 메서드
+  const getLatLng = (y: number, x: number) => {
+    return new kakao.maps.LatLng(y, x);
+  };
+
+  const calculateCenterPoint = (routePointData: IRoutesPointType[]) => {
+    if (routePointData.length === 0) return { lat: 0, lng: 0 };
+
+    const sum = routePointData.reduce(
+      (acc, curr) => {
+        acc.lat += curr.latitude ? curr.latitude : 0;
+        acc.lng += curr.longitude ? curr.longitude : 0;
+        return acc;
+      },
+      { lat: 0, lng: 0 }
+    );
+
+    return {
+      lat: sum.lat / routePointData.length,
+      lng: sum.lng / routePointData.length,
+    };
+  };
+
+  const renderOverlay = (routes: IRoutesPointType[]) => {
+    renderPolyline(routes);
+    renderMarker(routes);
+  };
+
+  const mapReload = () => {
+    if (mapRef.current) {
+      mapRef.current.relayout();
+    }
+  };
+
+  const renderPolyline = (routes: IRoutesPointType[]) => {
+    if (routes.length <= 1) return;
+    const polyLine = new kakao.maps.Polyline({
+      path: routes,
+      strokeWeight: 2,
+      strokeColor: "#13C4A3",
+      strokeStyle: "dashed",
+    });
+    polyLine.setMap(mapRef.current);
+  };
+
+  const renderMarker = (routes: IRoutesPointType[]) => {
+    const bounds = new kakao.maps.LatLngBounds();
+    routes.forEach((route, index) => {
+      bounds.extend(new kakao.maps.LatLng(route.latitude, route.longitude));
+      const content = `<div style="width: 35px; height: 35px; background-color: #13C4A3; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size:1.4rem; font-weight:bold">${
+        index + 1
+      }</div>`;
+
+      // 커스텀 오버레이 생성
+      const customOverlay = new window.kakao.maps.CustomOverlay({
+        position: new window.kakao.maps.LatLng(route.latitude, route.longitude),
+        content: content,
+        yAnchor: 1,
+      });
+      mapRef.current.setBounds(bounds);
+      // 지도에 오버레이 추가
+      customOverlay.setMap(mapRef.current);
+    });
+  };
+
+  return {
+    selectedPlace,
+    initKakaoMap,
+    searchPlaceByKeyword,
+    getLatLng,
+    calculateCenterPoint,
+    renderOverlay,
+    mapReload,
+  };
 };
 
 export default useKakaoMap;

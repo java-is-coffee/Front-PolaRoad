@@ -8,18 +8,20 @@ const ACCESS_KEY_ID = process.env.REACT_APP_BUCKET_ACCESS_ID; // IAM에서 생�
 const SECRET_ACCESS_KEY = process.env.REACT_APP_BUCKET_ACCESS_KEY; // IAM에서 생성한 사용자의 SECRET_ACCESS_KEY
 
 interface uploadImageProps {
-  type: "POST" | "COMMENT";
+  type: "POST" | "COMMENT" | "PROFILE";
   imageInfo: IUploadImage;
 }
 
 const pathResolver = ({ type, imageInfo }: uploadImageProps) => {
-  return type === "POST"
-    ? `${imageInfo.postUserId}/post/${imageInfo.postId}/${uuid()}${
-        imageInfo.image.name
-      }`
-    : `${imageInfo.postUserId}/post/${imageInfo.postId}/comment/${uuid()}${
-        imageInfo.image.name
-      }`;
+  if (type === "PROFILE") return `/profile/${imageInfo.postUserId}`;
+  else if (type === "POST")
+    return `${imageInfo.postUserId}/post/${imageInfo.postId}/${uuid()}${
+      imageInfo.image.name
+    }`;
+  else
+    return `${imageInfo.postUserId}/post/${imageInfo.postId}/comment/${uuid()}${
+      imageInfo.image.name
+    }`;
 };
 
 const S3 = new AWS.S3({
@@ -53,6 +55,41 @@ const useBucket = () => {
       return null;
     }
   };
+  const getImage = async (filePath: string): Promise<string | null> => {
+    if (!ALBUM_BUCKET_NAME || !REGION || !ACCESS_KEY_ID || !SECRET_ACCESS_KEY) {
+      console.log("버킷 설정을 확인해주세요");
+      return null;
+    }
+    try {
+      const data = await S3.getObject({
+        Bucket: ALBUM_BUCKET_NAME,
+        Key: filePath,
+      }).promise();
+      console.log("이미지 불러오기 성공");
+
+      // data.Body가 Uint8Array라고 가정하고 ArrayBuffer로 변환
+      if (data.Body instanceof Uint8Array) {
+        const arrayBuffer = data.Body.buffer;
+        const blob = new Blob([arrayBuffer], {
+          type: data.ContentType || "application/octet-stream",
+        });
+        const urlCreator = window.URL || window.webkitURL;
+        const imageUrl = urlCreator.createObjectURL(blob);
+        return imageUrl;
+      } else {
+        throw new Error(
+          "The body of the S3 object is not in the expected format."
+        );
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        console.log("There was an error getting your photo: ", err.message);
+      } else {
+        console.log("There was an error getting your photo");
+      }
+    }
+    return null;
+  };
 
   const deleteImage = async (filePath: string) => {
     if (!ALBUM_BUCKET_NAME || !REGION || !ACCESS_KEY_ID || !SECRET_ACCESS_KEY) {
@@ -76,7 +113,7 @@ const useBucket = () => {
     }
   };
 
-  return { uploadImage, deleteImage };
+  return { uploadImage, getImage, deleteImage };
 };
 
 export default useBucket;
