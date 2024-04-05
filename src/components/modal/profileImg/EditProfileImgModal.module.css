@@ -6,7 +6,7 @@
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent backdrop */
-  z-index: 1000; /* High z-index to ensure it covers other content */
+  z-index: 1001; /* High z-index to ensure it covers other content */
 }
 
 .modalContents {
@@ -16,7 +16,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); /* Center the modal */
-  z-index: 1001; /* Higher than the backdrop to appear on top */
+  z-index: 1005; /* Higher than the backdrop to appear on top */
   /* Additional styling for the modal content */
   background: white;
   border-radius: 8px;
