@@ -10,11 +10,8 @@ import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import TuneIcon from "@mui/icons-material/Tune";
 import { useModal } from "../../hooks/modal/ModalProvider";
 import ModalOption from "../../enum/modalOptionTypes";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store/store";
 import CategoryType from "../../enum/ConceptOptionType";
 import useExploreHooks from "../../hooks/explore/useExploreHooks";
-import { switchConcept } from "../../redux/reducers/explore/filterReducer";
 import { conceptSet, GetListDTO } from "interface/explore/ExplorePost";
 import { useEffect, useState } from "react";
 import ScrollButtonLeft from "components/button/explore/ScrollButtonLeft";
@@ -23,12 +20,7 @@ import { useMediaQuery } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
 
 const MainCategory = () => {
-  const storeCategory = useSelector(
-    (state: RootState) => state.filter.activeConcept
-  );
-  const categoryList = Object.values(CategoryType);
   const isSmallScreen = useMediaQuery("(max-width: 767px)");
-  const { SetItem } = useExploreHooks();
   const [param, setParam] = useSearchParams();
   const { openModal } = useModal();
   const { setPostList } = useExploreHooks();
@@ -89,11 +81,12 @@ const MainCategory = () => {
   };
 
   const handleClick = (inputData: CategoryType) => {
-    const number = categoryList.indexOf(inputData);
+    const number = conceptSet.values.indexOf(inputData);
+    const savedData = conceptSet.key[number];
     //중복 체크 (중복으로 눌려졌는지)
-    const checkDup = inputData === storeCategory;
+    const checkDup = savedData === param.get("concept");
     if (!checkDup) {
-      param.set("concept", inputData);
+      param.set("concept", conceptSet.key[number]);
       setParam(param);
     } else {
       param.delete("concept");
@@ -108,7 +101,6 @@ const MainCategory = () => {
       concept: checkDup ? null : conceptSet.key[number],
       region: null,
     };
-    SetItem(switchConcept(checkDup ? null : inputData));
     setPostList(setCategoyList);
   };
 
@@ -140,7 +132,7 @@ const MainCategory = () => {
           ""
         )}
         <div className={styles.categoryContainer} style={scrollStyle}>
-          {categoryList.map((item, index) => (
+          {conceptSet.values.map((item, index) => (
             <label
               key={item}
               className={`${styles.categoryLabel}`}
@@ -148,7 +140,9 @@ const MainCategory = () => {
             >
               <div
                 className={`${styles.categoryItem} ${
-                  storeCategory === item ? styles.selected : ""
+                  param.get("concept") === conceptSet.key[index]
+                    ? styles.selected
+                    : ""
                 } `}
               >
                 {iconList[index]}

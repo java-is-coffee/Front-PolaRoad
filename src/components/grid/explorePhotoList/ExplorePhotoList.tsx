@@ -6,13 +6,7 @@ import styles from "./ExplorePhotoList.module.css";
 import useExploreHooks from "../../../hooks/explore/useExploreHooks";
 import { useDispatch } from "react-redux";
 import { CircularProgress, useMediaQuery } from "@mui/material";
-import {
-  conceptSet,
-  GetListDTO,
-  PostData,
-  regionSet,
-  sortSet,
-} from "interface/explore/ExplorePost";
+import { GetListDTO, PostData } from "interface/explore/ExplorePost";
 import { useInView } from "react-intersection-observer";
 import {
   setCurPage,
@@ -30,18 +24,10 @@ const ExplorePhotoList = () => {
 
   const dispatch = useDispatch();
 
-  const [query, setQuery] = useSearchParams();
+  const [query] = useSearchParams();
 
-  const {
-    storePostList,
-    storeEndPoint,
-    storeCurPage,
-    storeConcept,
-    storeRegion,
-    storeSort,
-    storeSearchText,
-    setValue,
-  } = useStoreValue();
+  const { storePostList, storeEndPoint, storeCurPage, setValue } =
+    useStoreValue();
 
   //화면이 전부 나와야하며, 1초 딜레이
   const [ref, inView] = useInView({
@@ -62,7 +48,7 @@ const ExplorePhotoList = () => {
       pagingNumber: 8,
       searchType: "KEYWORD",
       keyword: query.get("search"),
-      sortBy: "RECENT",
+      sortBy: query.get("sort") !== null ? query.get("sort") : "RECENT",
       concept: query.get("concept"),
       region: query.get("region"),
     };
@@ -80,69 +66,6 @@ const ExplorePhotoList = () => {
     }
     // eslint-disable-next-line
   }, [inView]);
-
-  useEffect(() => {
-    if (storeRegion !== null) {
-      const regionNumber = storeRegion
-        ? regionSet.values.indexOf(storeRegion)
-        : null;
-      query.set(
-        "region",
-        regionNumber !== null ? regionSet.key[regionNumber] : ""
-      );
-      setQuery(query);
-    } else {
-      query.delete("region");
-      setQuery(query);
-    }
-
-    // eslint-disable-next-line
-  }, [storeRegion]);
-
-  useEffect(() => {
-    if (storeSearchText !== null) {
-      query.set("search", storeSearchText);
-      setQuery(query);
-    } else {
-      query.delete("search");
-      setQuery(query);
-    }
-
-    // eslint-disable-next-line
-  }, [storeSearchText]);
-
-  useEffect(() => {
-    if (storeConcept !== null) {
-      const categoryNumber = storeConcept
-        ? conceptSet.values.indexOf(storeConcept)
-        : null;
-      query.set(
-        "concept",
-        categoryNumber !== null ? conceptSet.key[categoryNumber] : ""
-      );
-      setQuery(query);
-    } else {
-      query.delete("concept");
-      setQuery(query);
-    }
-
-    // eslint-disable-next-line
-  }, [storeConcept]);
-
-  useEffect(() => {
-    if (storeSort !== null) {
-      const sortNumber = storeSort ? sortSet.values.indexOf(storeSort) : null;
-      query.set(
-        "sort",
-        sortNumber !== null ? sortSet.key[sortNumber] : "RECENT"
-      );
-      setQuery(query);
-    } else {
-      query.delete("sort");
-      setQuery(query);
-    }
-    // eslint-disable-next-line
-  }, [storeSort]);
 
   const addPostFunc = async (value: number) => {
     const addData: GetListDTO = {

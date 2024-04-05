@@ -2,9 +2,6 @@ import { useEffect, useMemo } from "react";
 import ModalOption from "../../../enum/modalOptionTypes";
 import { useModal } from "../../../hooks/modal/ModalProvider";
 import dropdownStyles from "./SearchDropdown.module.css";
-import CategoryType from "../../../enum/ConceptOptionType";
-import RegionOptionType from "../../../enum/filter/RegionType";
-import SortOptionType from "../../../enum/filter/SortOptionType";
 import useExploreHooks from "../../../hooks/explore/useExploreHooks";
 
 import {
@@ -13,8 +10,14 @@ import {
   switchSort,
 } from "../../../redux/reducers/explore/filterReducer";
 import { Button } from "@mui/material";
-import { GetListDTO } from "interface/explore/ExplorePost";
+import {
+  conceptSet,
+  GetListDTO,
+  regionSet,
+  sortSet,
+} from "interface/explore/ExplorePost";
 import useStoreValue from "hooks/storeValue/useStoreValue";
+import { useSearchParams } from "react-router-dom";
 
 function SearchDropdown() {
   const { closeModal } = useModal();
@@ -22,23 +25,7 @@ function SearchDropdown() {
   const { SetItem } = useExploreHooks();
   const { storeSort, storeConcept, storeRegion } = useStoreValue();
 
-  const { sortSet, categorySet, regionSet } = useMemo(
-    () => ({
-      sortSet: {
-        key: Object.keys(SortOptionType),
-        values: Object.values(SortOptionType),
-      },
-      categorySet: {
-        key: Object.keys(CategoryType),
-        values: Object.values(CategoryType),
-      },
-      regionSet: {
-        key: Object.keys(RegionOptionType),
-        values: Object.values(RegionOptionType),
-      },
-    }),
-    []
-  );
+  const [query, setQuery] = useSearchParams();
 
   // Esc 눌렀을때 모달 탈출
   const handleKeyUp = (event: KeyboardEvent) => {
@@ -62,25 +49,37 @@ function SearchDropdown() {
   }, []);
 
   const handleClick = (inputData: any, aboutFilter: string) => {
-    if (aboutFilter === "정렬") {
-      if (inputData === storeSort) {
-        SetItem(switchSort(null));
+    if (aboutFilter === "sort") {
+      const savedData = query.get("sort");
+      const number = sortSet.values.indexOf(inputData);
+      if (sortSet.key[number] === savedData) {
+        query.delete("sort");
+        setQuery(query);
       } else {
-        SetItem(switchSort(inputData));
+        query.set("sort", sortSet.key[number]);
+        setQuery(query);
       }
     }
-    if (aboutFilter === "카테고리") {
-      if (inputData === storeConcept) {
-        SetItem(switchConcept(null));
+    if (aboutFilter === "concept") {
+      const savedData = query.get("concept");
+      const number = conceptSet.values.indexOf(inputData);
+      if (conceptSet.key[number] === savedData) {
+        query.delete("concept");
+        setQuery(query);
       } else {
-        SetItem(switchConcept(inputData));
+        query.set("concept", conceptSet.key[number]);
+        setQuery(query);
       }
     }
-    if (aboutFilter === "지역") {
-      if (inputData === storeRegion) {
-        SetItem(switchRegion(null));
+    if (aboutFilter === "region") {
+      const savedData = query.get("region");
+      const number = regionSet.values.indexOf(inputData);
+      if (regionSet.key[number] === savedData) {
+        query.delete("region");
+        setQuery(query);
       } else {
-        SetItem(switchRegion(inputData));
+        query.set("region", regionSet.key[number]);
+        setQuery(query);
       }
     }
   };
@@ -88,7 +87,7 @@ function SearchDropdown() {
   const handleSubmit = () => {
     const sortNumber = storeSort ? sortSet.values.indexOf(storeSort) : null;
     const categoryNumber = storeConcept
-      ? categorySet.values.indexOf(storeConcept)
+      ? conceptSet.values.indexOf(storeConcept)
       : null;
     const regionNumber = storeRegion
       ? regionSet.values.indexOf(storeRegion)
@@ -100,7 +99,7 @@ function SearchDropdown() {
       searchType: "KEYWORD",
       keyword: null,
       sortBy: sortNumber !== null ? sortSet.key[sortNumber] : "RECENT",
-      concept: categoryNumber !== null ? categorySet.key[categoryNumber] : null,
+      concept: categoryNumber !== null ? conceptSet.key[categoryNumber] : null,
       region: regionNumber !== null ? regionSet.key[regionNumber] : null,
     };
 
@@ -119,13 +118,15 @@ function SearchDropdown() {
         <div className={dropdownStyles.option}>
           <div className={dropdownStyles.title}>정렬</div>
           <div className={dropdownStyles.list}>
-            {sortSet.values.map((item) => (
+            {sortSet.values.map((item, index) => (
               <div
                 className={`${dropdownStyles.item} ${
-                  storeSort === item ? dropdownStyles.selected : ""
+                  query.get("sort") === sortSet.key[index]
+                    ? dropdownStyles.selected
+                    : ""
                 }`}
                 key={item}
-                onClick={() => handleClick(item, "정렬")}
+                onClick={() => handleClick(item, "sort")}
               >
                 <span>{item}</span>
               </div>
@@ -139,13 +140,15 @@ function SearchDropdown() {
         <div className={dropdownStyles.option}>
           <div className={dropdownStyles.title}>카테고리</div>
           <div className={dropdownStyles.list}>
-            {categorySet.values.map((item) => (
+            {conceptSet.values.map((item, index) => (
               <div
                 className={`${dropdownStyles.item} ${
-                  storeConcept === item ? dropdownStyles.selected : ""
+                  query.get("concept") === conceptSet.key[index]
+                    ? dropdownStyles.selected
+                    : ""
                 }`}
                 key={item}
-                onClick={() => handleClick(item, "카테고리")}
+                onClick={() => handleClick(item, "concept")}
               >
                 <span>{item}</span>
               </div>
@@ -158,13 +161,15 @@ function SearchDropdown() {
         <div className={dropdownStyles.option}>
           <div className={dropdownStyles.title}>지역</div>
           <div className={dropdownStyles.list}>
-            {regionSet.values.map((item) => (
+            {regionSet.values.map((item, index) => (
               <div
                 className={`${dropdownStyles.item} ${
-                  storeRegion === item ? dropdownStyles.selected : ""
+                  query.get("region") === regionSet.key[index]
+                    ? dropdownStyles.selected
+                    : ""
                 }`}
                 key={item}
-                onClick={() => handleClick(item, "지역")}
+                onClick={() => handleClick(item, "region")}
               >
                 <span>{item}</span>
               </div>

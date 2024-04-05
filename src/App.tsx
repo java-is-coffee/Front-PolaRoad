@@ -9,18 +9,21 @@ import "react-toastify/dist/ReactToastify.css";
 
 import "./styles/globals.css";
 import Post from "routes/Post";
+import { ModalProvider } from "hooks/modal/ModalProvider";
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <Routes>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/explore" element={<Explore />}></Route>
-          <Route path="/my" element={<MyPage />}></Route>
-          <Route path="/post/:postId" element={<Post />}></Route>
-        </Routes>
+        <ModalProvider>
+          <Routes>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/explore" element={<Explore />}></Route>
+            <Route path="/my" element={<MyPage />}></Route>
+            <Route path="/post/:postId" element={<Post />}></Route>
+          </Routes>
+        </ModalProvider>
       </Router>
       <ToastContainer
         position="top-right"
