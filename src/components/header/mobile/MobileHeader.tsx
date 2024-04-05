@@ -8,7 +8,7 @@ import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import MobileSearchHistory from "components/form/explore/mobile/MobileSearchHistory";
-import { setSearchText } from "../../../redux/reducers/explore/filterReducer";
+import { useSearchParams } from "react-router-dom";
 
 export interface RecentDTO {
   id: number;
@@ -20,6 +20,8 @@ function MobileHeader() {
   const [isInput, setIsInput] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [recentData, setRecentData] = useState<RecentDTO[]>([]);
+
+  const [query, setQuery] = useSearchParams();
 
   useEffect(() => {
     const result = localStorage.getItem("recentData") || "[]";
@@ -46,8 +48,6 @@ function MobileHeader() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    event.currentTarget.blur();
-    console.log(recentData.length);
     const newData: RecentDTO = {
       id: Date.now(),
       data: inputValue,
@@ -59,8 +59,10 @@ function MobileHeader() {
     if (newList.length > 5) {
       deleteData(recentData[4].id);
     }
-    setValue(setSearchText(inputValue));
+
     setIsInput(false);
+    query.set("search", inputValue);
+    setQuery(query);
   };
 
   return (

@@ -14,7 +14,7 @@ import {
 } from "../../../redux/reducers/explore/explorePostReducer";
 import { useSearchParams } from "react-router-dom";
 import useStoreValue from "hooks/storeValue/useStoreValue";
-import { setSearchText } from "../../../redux/reducers/explore/filterReducer";
+
 import useCustomParam from "hooks/explore/useCustomParam";
 
 const ExplorePhotoList = () => {
@@ -26,8 +26,7 @@ const ExplorePhotoList = () => {
 
   const [query] = useSearchParams();
 
-  const { storePostList, storeEndPoint, storeCurPage, setValue } =
-    useStoreValue();
+  const { storePostList, storeEndPoint, storeCurPage } = useStoreValue();
 
   //화면이 전부 나와야하며, 1초 딜레이
   const [ref, inView] = useInView({
@@ -42,7 +41,6 @@ const ExplorePhotoList = () => {
     if (query.get("concept") !== null) getContent("concept");
     if (query.get("sort") !== null) getContent("sort");
 
-    setValue(setSearchText(query.get("search")));
     const initPostList: GetListDTO = {
       paging: 1,
       pagingNumber: 8,

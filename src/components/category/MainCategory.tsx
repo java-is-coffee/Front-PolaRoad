@@ -92,16 +92,6 @@ const MainCategory = () => {
       param.delete("concept");
       setParam(param);
     }
-    const setCategoyList: GetListDTO = {
-      paging: 1,
-      pagingNumber: 8,
-      searchType: "KEYWORD",
-      keyword: null,
-      sortBy: "RECENT",
-      concept: checkDup ? null : conceptSet.key[number],
-      region: null,
-    };
-    setPostList(setCategoyList);
   };
 
   const iconList = [
