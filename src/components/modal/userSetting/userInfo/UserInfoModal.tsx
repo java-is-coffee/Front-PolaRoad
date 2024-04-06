@@ -48,6 +48,10 @@ const UserInfoModal = () => {
     setEditFomType(null);
   };
 
+  const handleEditProfileImg = () => {
+    openModal(ModalOption.EDIT_PROFILE_IMG);
+  };
+
   if (!memberInfo) return <div></div>;
 
   return (
@@ -64,7 +68,10 @@ const UserInfoModal = () => {
         {!editFormType ? (
           <div className={modalStyles.defaultContents}>
             <div className={modalStyles.profileCard}>
-              <div className={modalStyles.imgContainer}>
+              <div
+                className={modalStyles.imgContainer}
+                onClick={handleEditProfileImg}
+              >
                 <img src={profileImg} alt="프로필 이미지" />
               </div>
               <span>{memberInfo?.name}</span>
@@ -93,7 +100,7 @@ const UserInfoModal = () => {
               </div>
               <div
                 className={modalStyles.option}
-                onClick={() => openModal(ModalOption.EDIT_PROFILE_IMG)}
+                onClick={handleEditProfileImg}
               >
                 <span>프로필 사진</span>
                 <IoIosArrowForward />
