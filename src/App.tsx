@@ -21,6 +21,7 @@ import ShareModal from "components/modal/shareModal/ShareModal";
 import UserInfoModal from "components/modal/userSetting/userInfo/UserInfoModal";
 import PostOptionModal from "components/modal/option/PostOptionModal";
 import UserSettingModal from "components/modal/userSetting/UserSettingModal";
+import NewAlbumModal from "components/modal/album/newAlbum/NewAlbumModal";
 
 function App() {
   const { registerModal, closeModal } = useModal();
@@ -33,7 +34,7 @@ function App() {
     registerModal(ModalOption.USER_SETTING, <UserSettingModal />);
     registerModal(ModalOption.USER_INFO, <UserInfoModal />);
     registerModal(ModalOption.POST_OPTION, <PostOptionModal />);
-
+    registerModal(ModalOption.ALBUM, <NewAlbumModal />);
     return () => {
       closeModal(ModalOption.POST);
       closeModal(ModalOption.WARNING);
@@ -43,6 +44,7 @@ function App() {
       closeModal(ModalOption.USER_SETTING);
       closeModal(ModalOption.USER_INFO);
       closeModal(ModalOption.POST_OPTION);
+      closeModal(ModalOption.ALBUM);
     };
     // eslint-disable-next-line
   }, []);
