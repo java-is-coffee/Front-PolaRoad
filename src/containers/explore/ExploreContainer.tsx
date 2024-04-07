@@ -10,7 +10,6 @@ import useStoreValue from "hooks/storeValue/useStoreValue";
 import { setSearchText } from "../../redux/reducers/explore/filterReducer";
 import MobileSearchForm from "components/form/explore/mobile/MobileSearchForm";
 import { setIsMobileSearchFilter } from "../../redux/reducers/explore/exploreMobileSetting";
-import MobileRecentForm from "components/form/explore/mobile/MobileSearchHistory";
 
 function ExploreContainer() {
   const [tokens] = useSearchParams();
