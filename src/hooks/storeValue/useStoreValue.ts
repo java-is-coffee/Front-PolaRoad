@@ -1,12 +1,6 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  switchConcept,
-  switchRegion,
-  switchSort,
-} from "../../redux/reducers/explore/filterReducer";
 import { RootState } from "redux/store/store";
-import { setExplorePostList } from "../../redux/reducers/explore/explorePostReducer";
 
 const useStoreValue = () => {
   const dispatch = useDispatch();
@@ -42,13 +36,6 @@ const useStoreValue = () => {
     dispatch(action);
   };
 
-  const resetValue = () => {
-    dispatch(switchRegion(null));
-    dispatch(switchSort(null));
-    dispatch(switchConcept(null));
-    dispatch(setExplorePostList(null));
-  };
-
   return {
     storePostList,
     storeEndPoint,
@@ -59,7 +46,6 @@ const useStoreValue = () => {
     storeSearchText,
     isMobileSearchFilter,
     setValue,
-    resetValue,
   };
 };
 

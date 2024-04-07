@@ -11,8 +11,7 @@ import TuneIcon from "@mui/icons-material/Tune";
 import { useModal } from "../../hooks/modal/ModalProvider";
 import ModalOption from "../../enum/modalOptionTypes";
 import CategoryType from "../../enum/ConceptOptionType";
-import useExploreHooks from "../../hooks/explore/useExploreHooks";
-import { conceptSet, GetListDTO } from "interface/explore/ExplorePost";
+import { conceptSet } from "interface/explore/ExplorePost";
 import { useEffect, useState } from "react";
 import ScrollButtonLeft from "components/button/explore/ScrollButtonLeft";
 import ScrollButtonRight from "components/button/explore/ScrollButtonRight";
@@ -23,7 +22,6 @@ const MainCategory = () => {
   const isSmallScreen = useMediaQuery("(max-width: 767px)");
   const [param, setParam] = useSearchParams();
   const { openModal } = useModal();
-  const { setPostList } = useExploreHooks();
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const handleNext = () => {
     if (activeIndex !== 1)

@@ -1,4 +1,4 @@
-import { conceptSet, regionSet } from "interface/explore/ExplorePost";
+import { conceptSet, regionSet, sortSet } from "interface/explore/ExplorePost";
 import styles from "./MobileSearchForm.module.css";
 import StarIcon from "@mui/icons-material/Star";
 import KebabDiningIcon from "@mui/icons-material/KebabDining";
@@ -10,18 +10,18 @@ import DirectionsCarFilledIcon from "@mui/icons-material/DirectionsCarFilled";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import useStoreValue from "hooks/storeValue/useStoreValue";
 import CloseIcon from "@mui/icons-material/Close";
-import useExploreHooks from "hooks/explore/useExploreHooks";
-import {
-  switchConcept,
-  switchRegion,
-  switchSort,
-} from "../../../../redux/reducers/explore/filterReducer";
-import { IconButton } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
 import { setIsMobileSearchFilter } from "../../../../redux/reducers/explore/exploreMobileSetting";
+import { useSearchParams } from "react-router-dom";
+import { useState } from "react";
 
 const MobileSearchForm = () => {
-  const { storeSort, storeConcept, storeRegion, setValue } = useStoreValue();
-  const { SetItem } = useExploreHooks();
+  const { setValue } = useStoreValue();
+
+  const [query, setQuery] = useSearchParams();
+  const [savedSort, setSavedSort] = useState<string | null>("");
+  const [savedConcept, setSavedConcept] = useState<string | null>("");
+  const [savedRegion, setSavedRegion] = useState<string | null>("");
 
   const iconList = [
     <StarIcon className={styles.categoryIcon} />,
@@ -35,32 +35,44 @@ const MobileSearchForm = () => {
   ];
 
   const handleClick = (inputData: any, aboutFilter: string) => {
-    if (aboutFilter === "정렬") {
-      if (inputData === storeSort) {
-        SetItem(switchSort(null));
-      } else {
-        SetItem(switchSort(inputData));
-      }
+    //savedData = 쿼리에 등록된 데이터 / number = 해당 데이터와 맞는 번호(key값에 대응하기 위해) / checkData = number와 매칭되는 키값 (FOOD & BUSAN)
+    const savedData = query.get(aboutFilter);
+    const number =
+      aboutFilter === "sort"
+        ? sortSet.values.indexOf(inputData)
+        : aboutFilter === "region"
+        ? regionSet.values.indexOf(inputData)
+        : conceptSet.values.indexOf(inputData);
+    const checkData =
+      aboutFilter === "sort"
+        ? sortSet.key[number]
+        : aboutFilter === "region"
+        ? regionSet.key[number]
+        : conceptSet.key[number];
+
+    const state =
+      aboutFilter === "sort"
+        ? setSavedSort
+        : aboutFilter === "region"
+        ? setSavedConcept
+        : setSavedRegion;
+    if (checkData === savedData) {
+      query.delete(aboutFilter);
+      state(null);
+    } else {
+      query.set(aboutFilter, checkData);
+      state(checkData);
     }
-    if (aboutFilter === "concept") {
-      if (inputData === storeConcept) {
-        SetItem(switchConcept(null));
-      } else {
-        SetItem(switchConcept(inputData));
-      }
-    }
-    if (aboutFilter === "region") {
-      if (inputData === storeRegion) {
-        SetItem(switchRegion(null));
-      } else {
-        SetItem(switchRegion(inputData));
-      }
-    }
+  };
+
+  const handleSubmit = () => {
+    setQuery(query);
+    setValue(setIsMobileSearchFilter(false));
   };
 
   return (
     <div>
-      <div>
+      <div className={styles.container}>
         <IconButton
           aria-label="delete"
           size="large"
@@ -70,13 +82,34 @@ const MobileSearchForm = () => {
         >
           <CloseIcon fontSize="inherit" />
         </IconButton>
+        <h1>정렬</h1>
+        <div className={styles.conceptBox}>
+          {sortSet.values.map((item, index) => (
+            <div
+              key={index}
+              className={`${styles.conceptList} ${
+                savedSort === sortSet.key[index] ||
+                sortSet.key[index] === query.get("sort")
+                  ? styles.selected
+                  : ""
+              }`}
+              onClick={() => handleClick(item, "sort")}
+            >
+              <div>{iconList[index]}</div>
+              {item}
+            </div>
+          ))}
+        </div>
         <h1>여행 테마</h1>
         <div className={styles.conceptBox}>
           {conceptSet.values.map((item, index) => (
             <div
               key={index}
               className={`${styles.conceptList} ${
-                storeConcept === item ? styles.selected : ""
+                savedConcept === conceptSet.key[index] ||
+                conceptSet.key[index] === query.get("concept")
+                  ? styles.selected
+                  : ""
               }`}
               onClick={() => handleClick(item, "concept")}
             >
@@ -91,7 +124,10 @@ const MobileSearchForm = () => {
             <div
               key={index}
               className={`${styles.conceptList} ${
-                storeRegion === item ? styles.selected : ""
+                savedRegion === regionSet.key[index] ||
+                regionSet.key[index] === query.get("region")
+                  ? styles.selected
+                  : ""
               }`}
               onClick={() => handleClick(item, "region")}
             >
@@ -99,6 +135,17 @@ const MobileSearchForm = () => {
             </div>
           ))}
         </div>
+        <Button
+          variant="contained"
+          sx={{
+            fontSize: "1.5rem",
+            backgroundColor: "#13c4a3",
+            ":hover": { backgroundColor: "#13c4a3", fontSize: "1.5rem" },
+          }}
+          onClick={handleSubmit}
+        >
+          적용하기
+        </Button>
       </div>
     </div>
   );

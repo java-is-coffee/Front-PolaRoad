@@ -97,8 +97,9 @@ function MobileHeader() {
           value={inputValue}
           onFocus={() => setIsInput(true)}
           onChange={(e) => setInputValue(e.target.value)}
+          onBlur={() => setIsInput(false)}
           InputProps={{
-            endAdornment: isInput && inputValue && (
+            endAdornment: inputValue && (
               <InputAdornment position="end">
                 <IconButton onClick={clearInput}>
                   <CloseIcon />
