@@ -1,6 +1,7 @@
 enum ModalOption {
   POST = "POST",
   ALBUM = "ALBUM",
+  WISH = "WISH",
   PROFILE = "PROFILE",
   SETTING = "SETTING",
   SEARCH = "SEARCH",
