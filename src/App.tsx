@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import "./styles/globals.css";
 import Post from "routes/Post";
+import { ModalProvider } from "hooks/modal/ModalProvider";
 
 // 사용되는 모달 등록
 import { ModalProvider, useModal } from "hooks/modal/ModalProvider";

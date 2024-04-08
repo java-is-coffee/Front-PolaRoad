@@ -10,9 +10,10 @@
   background: white;
 }
 
-.input {
+.searchBox {
   width: 90%;
   padding: 15px 20px;
+  align-items: center;
   margin: auto;
   border-radius: 30px;
   background-color: #f6f3f3;
@@ -21,4 +22,15 @@
   flex-direction: row;
   justify-content: space-between;
   font-size: 2rem;
+}
+
+.input {
+  border: none;
+  background-color: inherit;
+  font-size: 1.5rem;
+  width: 80%;
+}
+
+.input:focus {
+  border: none;
 }

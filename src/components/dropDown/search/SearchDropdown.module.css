@@ -11,12 +11,14 @@
 .wrapper {
   position: fixed;
   top: 10%;
-  left: 30%;
+  left: 50%;
+  flex-wrap: wrap;
+  transform: translate(-50%, 0);
   padding: 2rem;
   background-color: #ffffff;
   border: 1px solid #d9d9d9;
   border-radius: 10px;
-  width: 40%;
+  /* width: 40%; */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
