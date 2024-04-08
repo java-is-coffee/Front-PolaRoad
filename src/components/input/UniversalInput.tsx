@@ -8,7 +8,6 @@ interface UniversalInputProps {
   placeholder?: string;
   type: string;
   id: string;
-  isRequired?: boolean;
   errorMsg?: string;
   isValidate: boolean;
 }
