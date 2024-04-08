@@ -1,5 +1,4 @@
 import UniversalInput from "components/input/UniversalInput";
-import { useState } from "react";
 
 interface NewAlbumTextFormProps {
   name: string;
