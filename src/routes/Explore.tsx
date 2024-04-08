@@ -4,9 +4,10 @@ import MobileHeader from "../components/header/mobile/MobileHeader";
 import ExploreContainer from "../containers/explore/ExploreContainer";
 import { useModal } from "../hooks/modal/ModalProvider";
 import ModalOption from "../enum/modalOptionTypes";
-import SearchDropdown from "../components/dropDown/search/SearchDropdown";
+import FilterModal from "../components/dropDown/search/FilterModal";
 import { useMediaQuery } from "@mui/material";
 import BottomNavigator from "components/bottom/BottomNavigator";
+import SearchDropdown from "components/dropDown/search/SearchDropdown";
 
 function Explore() {
   const { registerModal, closeModal } = useModal();
@@ -16,8 +17,12 @@ function Explore() {
   // 3. 모바일 가로, 태블릿 : 480px ~ 767px
   // 4. 모바일 : ~ 480px
   useEffect(() => {
+    registerModal(ModalOption.FILTER, <FilterModal />);
     registerModal(ModalOption.SEARCH, <SearchDropdown />);
-    return () => closeModal(ModalOption.SEARCH);
+    return () => {
+      closeModal(ModalOption.FILTER);
+      closeModal(ModalOption.SEARCH);
+    };
     // eslint-disable-next-line
   }, []);
   return (

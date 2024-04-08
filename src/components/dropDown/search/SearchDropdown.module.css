@@ -1,4 +1,4 @@
-.outSide {
+.container {
   background-color: var(0 0 0 5);
   position: fixed;
   top: 0;
@@ -7,8 +7,7 @@
   background-color: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(5px);
 }
-
-.wrapper {
+.modal {
   position: fixed;
   top: 10%;
   left: 50%;
@@ -25,66 +24,4 @@
   gap: 10px;
   margin: 8px;
   align-items: center;
-}
-
-.head {
-  width: 100%;
-  display: flex;
-  font-size: 2rem;
-  font-weight: 700;
-  justify-content: center;
-}
-
-.line {
-  margin: auto;
-  border: 0.2rem solid #13c4a3;
-  border-radius: 10px;
-  width: 100%;
-}
-
-.option {
-  margin: 1rem 0px;
-}
-
-.title {
-  font-size: 1.8rem;
-  font-weight: bold;
-  text-align: start;
-  margin-bottom: 10px;
-}
-
-.list {
-  width: 100%;
-  padding: auto;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr); /* 3개의 열을 같은 너비로 설정 */
-  grid-gap: 10px; /* 그리드 아이템 간의 간격 설정 */
-}
-
-.list :hover {
-  background-color: #13c4a3;
-}
-
-.selected {
-  background-color: #13c4a3 !important;
-}
-
-.item {
-  font-size: 1.2rem;
-  background-color: #eff1f5;
-  color: black;
-  border-radius: 5px;
-  padding: 4px 6px;
-  width: 7rem;
-  padding: 1rem;
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
-}
-.item span {
-  font-weight: 500;
-}
-
-.bottomBtn {
-  float: right;
 }

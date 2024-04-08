@@ -2,17 +2,34 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import styles from "./MainPhotoCard.module.css";
 import PlaceIcon from "@mui/icons-material/Place";
 import { PostData } from "interface/explore/ExplorePost";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CircleIcon from "@mui/icons-material/Circle";
 import ScrollButtonLeft from "components/button/explore/ScrollButtonLeft";
 import ScrollButtonRight from "components/button/explore/ScrollButtonRight";
-
-const testImgs = ["/한옥.jpg", "/다리.jpg"];
+import useBucket from "hooks/bucket/useBucket";
 
 const MainPhotoCard = ({ item }: { item: PostData }) => {
+  const [cardImgs, setCardImgs] = useState<string[]>([]);
+  const { getImage } = useBucket();
+
+  useEffect(() => {
+    const fetchMemberInfo = async (src: string, index: number) => {
+      const newImg = await getImage(item.images[index]);
+      if (newImg) {
+        setCardImgs([...cardImgs, newImg]);
+      }
+    };
+
+    item.images.map((imgSrc: string, index: number) =>
+      fetchMemberInfo(imgSrc, index)
+    );
+
+    // eslint-disable-next-line
+  }, []);
+
   const [activeImgIndex, setActiveImgIndex] = useState<number>(0);
   const handleNext = () => {
-    if (activeImgIndex < testImgs.length - 1) {
+    if (activeImgIndex < cardImgs.length - 1) {
       setActiveImgIndex((prevActiveStep) => prevActiveStep + 1);
     }
   };
@@ -32,13 +49,13 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
     <div key={item.postId}>
       <div className={styles.cardImg}>
         <div className={`${styles.carousel}`}>
-          {testImgs.map((item) => (
+          {cardImgs.map((img, index) => (
             <img
-              key={item}
+              key={img}
               style={exampleStyle}
               loading="lazy"
               alt="카드 이미지"
-              src={item}
+              src={cardImgs[index]}
               className={styles.mainPhoto}
             />
           ))}
@@ -52,7 +69,7 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
           </div>
         )}
 
-        {activeImgIndex === testImgs.length - 1 ? (
+        {activeImgIndex === cardImgs.length - 1 ? (
           ""
         ) : (
           <div className={styles.photoButtonRight}>
@@ -61,11 +78,11 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
         )}
 
         <div className={styles.index}>
-          {testImgs.map((card, index) =>
+          {cardImgs.map((img, index) =>
             index === activeImgIndex ? (
-              <CircleIcon key={card + item.postId} sx={{ color: "#13c4a3" }} />
+              <CircleIcon key={img + item.postId} sx={{ color: "#13c4a3" }} />
             ) : (
-              <CircleIcon key={card + item.postId} sx={{ color: "white" }} />
+              <CircleIcon key={img + item.postId} sx={{ color: "white" }} />
             )
           )}
         </div>
