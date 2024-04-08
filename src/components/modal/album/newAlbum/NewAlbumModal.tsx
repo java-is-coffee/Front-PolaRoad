@@ -3,8 +3,6 @@ import modalStyles from "./NewAlbumModal.module.css";
 import ModalOption from "enum/modalOptionTypes";
 import { IoMdClose } from "react-icons/io";
 import { useState } from "react";
-import { IWishListDTO } from "interface/wish/IWishList";
-import { toast } from "react-toastify";
 import NewAlbumTextForm from "components/form/album/NewAlbumTextForm";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import SelectAlbumCardForm from "components/form/album/SelectAlbumCardForm";
