@@ -12,7 +12,7 @@ const EditProfileImgModal = () => {
   const { closeModal } = useModal();
   const { uploadImage } = useBucket();
   const handleCancel = () => {
-    closeModal(ModalOption.EDITPROFILEIMG);
+    closeModal(ModalOption.EDIT_PROFILE_IMG);
   };
   const handleImgUpload = async (
     event: React.ChangeEvent<HTMLInputElement>

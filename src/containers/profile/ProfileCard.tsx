@@ -32,7 +32,11 @@ function ProfileCard({ memberInfo }: ProfileCardProps) {
   }, []);
 
   const handleEditProfileImg = () => {
-    openModal(ModalOption.EDITPROFILEIMG);
+    openModal(ModalOption.EDIT_PROFILE_IMG);
+  };
+
+  const handleOpenUserSetting = () => {
+    openModal(ModalOption.USER_SETTING);
   };
 
   return (
@@ -51,7 +55,7 @@ function ProfileCard({ memberInfo }: ProfileCardProps) {
             name="프로필 변경"
             clickAction={handleEditProfileImg}
           />
-          <IoIosSettings size={"24px"} />
+          <IoIosSettings size={"24px"} onClick={handleOpenUserSetting} />
         </div>
       </div>
       <div className={profileStyles.stat}>
