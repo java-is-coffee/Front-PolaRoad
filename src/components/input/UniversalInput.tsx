@@ -1,4 +1,4 @@
-import React from "react"; // React를 임포트합니다.
+import React from "react";
 import inputStyles from "./UniversalInput.module.css";
 
 interface UniversalInputProps {
@@ -10,10 +10,16 @@ interface UniversalInputProps {
   id: string;
   isRequired?: boolean;
   errorMsg?: string;
+  isValidate: boolean;
 }
 
-const inputStyle = (isValid: boolean | null) => ({
+// 입력 필드 스타일을 결정하는 함수
+const inputFieldStyle = (isValid: boolean) => ({
   borderColor: isValid ? "#15C4A3" : "red",
+});
+
+// 오류 메시지 스타일을 결정하는 상수 (필요한 경우 조절 가능)
+const errorMessageStyle = (isValid: boolean) => ({
   color: isValid ? "#15C4A3" : "red",
 });
 
@@ -24,14 +30,14 @@ const UniversalInput = ({
   placeholder,
   type = "text",
   id,
-  isRequired,
   errorMsg,
+  isValidate,
 }: UniversalInputProps) => {
   return (
     <div>
       <div
         className={inputStyles.inputContainer}
-        style={inputStyle(value !== "")}
+        style={inputFieldStyle(isValidate)}
       >
         <label htmlFor={id}>{label}</label>
         <input
@@ -42,11 +48,9 @@ const UniversalInput = ({
           onChange={onChange}
         />
       </div>
-      {isRequired && (
-        <p className={inputStyles.errorMsg} style={inputStyle(value !== "")}>
-          {errorMsg}
-        </p>
-      )}
+      <p className={inputStyles.errorMsg} style={errorMessageStyle(isValidate)}>
+        {isValidate ? "가능한 이름입니다." : errorMsg}
+      </p>
     </div>
   );
 };
