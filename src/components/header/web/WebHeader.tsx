@@ -3,21 +3,42 @@ import headerStyle from "./WebHeader.module.css";
 import { Avatar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import HeaderSearch from "components/form/header/HeaderSearch";
-import useStoreValue from "hooks/storeValue/useStoreValue";
+import { useEffect, useState } from "react";
+import useBucket from "hooks/bucket/useBucket";
+import { IMemberInfoDetails } from "interface/member/IMemberInfoDetails";
+import getMemberInfo from "api/member/getMemberInfo";
+import secureLocalStorage from "react-secure-storage";
 
 function WebHeader() {
   const navigate = useNavigate();
-  const { resetValue } = useStoreValue();
 
   const navigation = (input: string) => {
     navigate(`/${input}`);
   };
 
   const resetPage = () => {
-    resetValue();
     navigate("/explore");
   };
   //true = pc화면 / false = 모바일 화면 767이하
+
+  const [profileImgURL, setProfileImgURL] = useState<string>("");
+  const { getImage } = useBucket();
+
+  useEffect(() => {
+    if (secureLocalStorage.getItem("accessToken")) {
+      const fetchMemberInfo = async () => {
+        const result: IMemberInfoDetails | null = await getMemberInfo();
+        if (result) {
+          const imgUrl = await getImage(result.profileImage);
+          if (imgUrl) {
+            setProfileImgURL(imgUrl);
+          }
+        }
+      };
+      fetchMemberInfo();
+    }
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className={headerStyle.header}>
@@ -55,7 +76,12 @@ function WebHeader() {
               navigation("my");
             }}
           >
-            <Avatar alt="Travis Howard" src="icons/favicon-32x32.png" />
+            <Avatar
+              alt="Travis Howard"
+              src={
+                profileImgURL !== "" ? profileImgURL : `icons/favicon-32x32.png`
+              }
+            />
           </span>
         </div>
       </div>
