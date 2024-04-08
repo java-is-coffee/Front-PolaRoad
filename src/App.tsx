@@ -11,7 +11,7 @@ import "./styles/globals.css";
 import Post from "routes/Post";
 
 // 사용되는 모달 등록
-import { useModal } from "hooks/modal/ModalProvider";
+import { ModalProvider, useModal } from "hooks/modal/ModalProvider";
 import ModalOption from "enum/modalOptionTypes";
 import NewPostModal from "components/modal/newPost/NewPostModal";
 import WarningModal from "components/modal/warn/WarningModal";
@@ -51,13 +51,15 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Routes>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/explore" element={<Explore />}></Route>
-          <Route path="/my" element={<MyPage />}></Route>
-          <Route path="/post/:postId" element={<Post />}></Route>
-        </Routes>
+        <ModalProvider>
+          <Routes>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/explore" element={<Explore />}></Route>
+            <Route path="/my" element={<MyPage />}></Route>
+            <Route path="/post/:postId" element={<Post />}></Route>
+          </Routes>
+        </ModalProvider>
       </Router>
       <ToastContainer
         position="top-right"

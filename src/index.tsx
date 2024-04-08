@@ -5,7 +5,6 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { rootReducer } from "./redux/store/store";
 import App from "./App";
-import { ModalProvider } from "./hooks/modal/ModalProvider";
 import "react-toastify/dist/ReactToastify.css";
 
 const root = ReactDOM.createRoot(
@@ -14,9 +13,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={rootReducer}>
-      <ModalProvider>
-        <App />
-      </ModalProvider>
+      <App />
     </Provider>
   </React.StrictMode>
 );
