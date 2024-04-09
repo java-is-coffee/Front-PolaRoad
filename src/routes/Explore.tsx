@@ -30,7 +30,6 @@ function Explore() {
       closeModal(ModalOption.POST);
       closeModal(ModalOption.WARNING);
       closeModal(ModalOption.SHARE);
-      closeModal(ModalOption.ALBUM);
     };
   }, []);
   return (
