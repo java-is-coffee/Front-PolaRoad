@@ -8,9 +8,9 @@ import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import SelectAlbumCardForm from "components/form/album/SelectAlbumCardForm";
 
 const NewAlbumModal = () => {
-  const { closeModal } = useModal();
+  const { openModal } = useModal();
   const handleClose = () => {
-    closeModal(ModalOption.ALBUM);
+    openModal(ModalOption.WARNING, { modalType: ModalOption.ALBUM });
   };
   const [name, setName] = useState<string>("");
   const [isNameValidated, setIsNameValidated] = useState<boolean>(false);
