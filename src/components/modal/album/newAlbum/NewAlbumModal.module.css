@@ -55,14 +55,19 @@ h1 {
 }
 
 .submitButton {
-  margin-top: 10px;
-  width: 100%;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 5px 20px;
   cursor: pointer;
   transition: 0.1s all ease-in-out;
   border-radius: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
 }
 
 .submitButton:hover {
   background-color: var(--main-theme-color);
   color: white;
+  border: none;
 }
