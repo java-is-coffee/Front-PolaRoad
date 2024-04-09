@@ -84,6 +84,8 @@ const useBucket = () => {
     } catch (err) {
       if (err instanceof Error) {
         console.log("There was an error getting your photo: ", err.message);
+        //기본 이미지 출력 (이미지 로딩 실패 시)
+        return "/logo512.png";
       } else {
         console.log("There was an error getting your photo");
       }

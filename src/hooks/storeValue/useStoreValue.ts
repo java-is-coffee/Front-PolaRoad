@@ -12,20 +12,8 @@ const useStoreValue = () => {
   const storeEndPoint = useSelector(
     (state: RootState) => state.explorePost.endPoint
   );
-
-  const storeConcept = useSelector(
-    (state: RootState) => state.filter.activeConcept
-  );
-  const storeRegion = useSelector(
-    (state: RootState) => state.filter.activeRegion
-  );
-  const storeSort = useSelector((state: RootState) => state.filter.activeSort);
   const storeCurPage = useSelector(
     (state: RootState) => state.explorePost.curPage
-  );
-
-  const storeSearchText = useSelector(
-    (state: RootState) => state.filter.searchText
   );
 
   const isMobileSearchFilter = useSelector(
@@ -39,11 +27,7 @@ const useStoreValue = () => {
   return {
     storePostList,
     storeEndPoint,
-    storeConcept,
-    storeRegion,
-    storeSort,
     storeCurPage,
-    storeSearchText,
     isMobileSearchFilter,
     setValue,
   };
