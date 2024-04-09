@@ -31,6 +31,7 @@ function Explore() {
       closeModal(ModalOption.WARNING);
       closeModal(ModalOption.SHARE);
     };
+    // eslint-disable-next-line
   }, []);
   return (
     <div>
