@@ -1,0 +1,92 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  position: relative;
+  width: auto;
+  height: auto;
+  max-width: 800px;
+  min-width: 300px;
+  max-height: 80vh;
+  min-height: 100px;
+  background-color: white;
+  border-radius: 8px;
+  overflow: auto;
+  transition: all 0.2s ease;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+h1 {
+  margin: 0;
+  margin-bottom: 15px;
+}
+
+.wishListContainer {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px; /* 모서리를 둥글게 */
+  height: 100px;
+  border: 1px solid #ccc;
+  overflow: scroll;
+}
+
+.wishListItem {
+  padding: 10px;
+  background-color: white; /* 배경색 */
+  border-radius: 8px; /* 모서리 둥글게 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wishListItemText {
+  font-size: 1.4rem; /* 텍스트 크기 */
+}
+
+/* 편집 버튼 기본 스타일 */
+.wishItemEditButton {
+  cursor: pointer;
+  opacity: 0; /* 기본 상태에서는 완전히 투명 */
+  transition: opacity 0.3s ease; /* 부드러운 효과를 위한 전환 */
+  /* 기타 스타일 */
+}
+
+.wishItemEditButton:hover {
+  color: var(--main-theme-color);
+}
+
+/* 위시리스트 항목 위에 마우스를 올렸을 때 편집 버튼을 보여줌 */
+.wishListItem:hover .wishItemEditButton {
+  opacity: 1; /* hover 상태에서 완전히 불투명 (보임) */
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.submitButton {
+  margin-top: 10px;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.1s all ease-in-out;
+  border-radius: 8px;
+}
+
+.submitButton:hover {
+  background-color: var(--main-theme-color);
+  color: white;
+}

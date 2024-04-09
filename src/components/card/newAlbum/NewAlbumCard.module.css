@@ -1,0 +1,11 @@
+.imgContainer {
+  width: calc(25% - 20px);
+  height: calc(25% - 20px);
+}
+
+.imgContainer img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
