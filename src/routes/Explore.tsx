@@ -18,7 +18,7 @@ function Explore() {
   //   1. 낮은 해상도의 PC, 태블릿 가로 : ~1024px
   // 2. 테블릿 가로 : 768px ~ 1023px
   // 3. 모바일 가로, 태블릿 : 480px ~ 767px
-  // 4. 모바일 : ~ 480px
+  // 4. 모바일 : ~ 480px.
   useEffect(() => {
     registerModal(ModalOption.FILTER, <FilterModal />);
     registerModal(ModalOption.SEARCH, <SearchDropdown />);
@@ -44,5 +44,4 @@ function Explore() {
     </div>
   );
 }
-
 export default Explore;
