@@ -7,7 +7,11 @@ import { resetPostDetails } from "../../../redux/reducers/newPost/newPostReducer
 import useBucket from "hooks/bucket/useBucket";
 import { RootState } from "redux/store/store";
 
-const WarningModal = () => {
+interface WarningModalProps {
+  modalType?: ModalOption;
+}
+
+const WarningModal = ({ modalType }: WarningModalProps) => {
   const { closeModal } = useModal();
   const { deleteImage } = useBucket();
   const cardList = useSelector(
@@ -15,28 +19,41 @@ const WarningModal = () => {
   );
   const dispatch = useDispatch();
 
-  // "나가기" 버튼 클릭 시 실행될 함수
-  const handleExit = () => {
-    dispatch(resetPostDetails()); // 포스트 상세 정보를 리셋
-    cardList.forEach((card) => {
-      if (card.image) {
-        deleteImage(card.image);
-      }
-    });
-    closeModal(ModalOption.WARNING);
-    closeModal(ModalOption.POST); // 실제 포스트 모달을 닫음
+  if (!modalType) return <div></div>;
+
+  // 모달 타입에 따른 메시지 결정
+  const messageInfo = {
+    title:
+      modalType === ModalOption.ALBUM
+        ? "앨범을 삭제하시겠어요?"
+        : "포스트를 삭제하시겠어요?",
+    description:
+      "작성 중인 내용이 저장되지 않을 수 있습니다. 정말 닫으시겠습니까?",
   };
 
-  // "취소" 버튼 클릭 시 실행될 함수
+  const handleExit = () => {
+    // 포스트 또는 앨범에 따라 필요한 상태 리셋 또는 삭제 로직 추가
+    if (modalType === ModalOption.POST) {
+      dispatch(resetPostDetails());
+      cardList.forEach((card) => {
+        if (card.image) {
+          deleteImage(card.image);
+        }
+      });
+    }
+    closeModal(ModalOption.WARNING);
+    closeModal(modalType); // modalType에 따라 해당 모달을 닫음
+  };
+
   const handleCancel = () => {
-    closeModal(ModalOption.WARNING); // 경고 모달을 닫음
+    closeModal(ModalOption.WARNING); // 경고 모달만 닫음
   };
 
   return (
     <div className={modalStyles.backdrop}>
       <div className={modalStyles.warningModalContainer}>
-        <h2>포스트를 삭제하시겠어요?</h2>
-        <p>작성 중인 내용이 저장되지 않을 수 있습니다. 정말 닫으시겠습니까?</p>
+        <h2>{messageInfo.title}</h2>
+        <p>{messageInfo.description}</p>
         <button className={modalStyles.delete} onClick={handleExit}>
           삭제
         </button>

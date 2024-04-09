@@ -2,11 +2,16 @@ import { useEffect } from "react";
 import WebHeader from "../components/header/web/WebHeader";
 import MobileHeader from "../components/header/mobile/MobileHeader";
 import ExploreContainer from "../containers/explore/ExploreContainer";
-import { useModal } from "../hooks/modal/ModalProvider";
-import ModalOption from "../enum/modalOptionTypes";
 import SearchDropdown from "../components/dropDown/search/SearchDropdown";
 import { useMediaQuery } from "@mui/material";
 import BottomNavigator from "components/bottom/BottomNavigator";
+
+// 사용되는 모달 등록
+import { useModal } from "hooks/modal/ModalProvider";
+import ModalOption from "enum/modalOptionTypes";
+import NewPostModal from "components/modal/newPost/NewPostModal";
+import WarningModal from "components/modal/warn/WarningModal";
+import ShareModal from "components/modal/shareModal/ShareModal";
 
 function Explore() {
   const { registerModal, closeModal } = useModal();
@@ -17,7 +22,15 @@ function Explore() {
   // 4. 모바일 : ~ 480px
   useEffect(() => {
     registerModal(ModalOption.SEARCH, <SearchDropdown />);
-    return () => closeModal(ModalOption.SEARCH);
+    registerModal(ModalOption.POST, <NewPostModal />);
+    registerModal(ModalOption.WARNING, <WarningModal />);
+    registerModal(ModalOption.SHARE, <ShareModal />);
+    return () => {
+      closeModal(ModalOption.SEARCH);
+      closeModal(ModalOption.POST);
+      closeModal(ModalOption.WARNING);
+      closeModal(ModalOption.SHARE);
+    };
     // eslint-disable-next-line
   }, []);
   return (
