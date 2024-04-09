@@ -17,11 +17,14 @@ import ScrollButtonLeft from "components/button/explore/ScrollButtonLeft";
 import ScrollButtonRight from "components/button/explore/ScrollButtonRight";
 import { useMediaQuery } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
+import { setExplorePostList } from "../../redux/reducers/explore/explorePostReducer";
+import useExploreHooks from "hooks/explore/useExploreHooks";
 
 const MainCategory = () => {
   const isSmallScreen = useMediaQuery("(max-width: 767px)");
   const [query, setQuery] = useSearchParams();
   const { openModal } = useModal();
+  const { setItem } = useExploreHooks();
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const handleNext = () => {
     if (activeIndex !== 1)
@@ -86,9 +89,11 @@ const MainCategory = () => {
     if (!checkDup) {
       query.set("concept", conceptSet.key[number]);
       setQuery(query);
+      setItem(setExplorePostList(null));
     } else {
       query.delete("concept");
       setQuery(query);
+      setItem(setExplorePostList(null));
     }
   };
 

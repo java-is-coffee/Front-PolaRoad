@@ -14,7 +14,7 @@ const useExploreHooks = () => {
   const dispatch = useDispatch();
 
   //모든 페이로드 액션 테스트
-  const SetItem = (action: PayloadAction<any>) => {
+  const setItem = (action: PayloadAction<any>) => {
     dispatch(action);
   };
 
@@ -37,7 +37,7 @@ const useExploreHooks = () => {
     }
   };
 
-  return { SetItem, setPostList, addPostList };
+  return { setItem, setPostList, addPostList };
 };
 
 export default useExploreHooks;

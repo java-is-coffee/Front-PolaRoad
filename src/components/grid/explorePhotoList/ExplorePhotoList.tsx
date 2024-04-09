@@ -34,16 +34,18 @@ const ExplorePhotoList = () => {
   useEffect(() => {
     console.log("시작");
 
-    const initPostList: GetListDTO = {
-      paging: 1,
-      pagingNumber: 8,
-      searchType: "KEYWORD",
-      keyword: query.get("search"),
-      sortBy: query.get("sort") !== null ? query.get("sort") : "RECENT",
-      concept: query.get("concept"),
-      region: query.get("region"),
-    };
-    setPostList(initPostList);
+    if (storePostList === null) {
+      const initPostList: GetListDTO = {
+        paging: 1,
+        pagingNumber: 8,
+        searchType: "KEYWORD",
+        keyword: query.get("search"),
+        sortBy: query.get("sort") !== null ? query.get("sort") : "RECENT",
+        concept: query.get("concept"),
+        region: query.get("region"),
+      };
+      setPostList(initPostList);
+    }
 
     // eslint-disable-next-line
   }, [query]);
