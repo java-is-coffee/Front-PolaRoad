@@ -5,7 +5,12 @@
 }
 
 .cardGallery {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(200px, 1fr)
+  ); /* 카드의 최소 너비를 200px로 설정하고, 가능한 많은 칼럼을 생성 */
+  grid-gap: 5px; /* 그리드 아이템 사이의 간격 설정 */
+  justify-content: center; /* 전체 그리드를 가운데 정렬, 필요에 따라 변경 가능 */
+  align-items: stretch; /* 그리드 아이템을 그들의 셀 높이만큼 늘림 */
 }
