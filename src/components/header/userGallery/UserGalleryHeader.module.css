@@ -1,7 +1,11 @@
 .headerWrapper {
+  position: sticky;
+  top: 0;
   display: flex;
   justify-content: center;
   border-bottom: 1px solid #ccc;
+  z-index: 100;
+  background-color: white;
 }
 
 .option {

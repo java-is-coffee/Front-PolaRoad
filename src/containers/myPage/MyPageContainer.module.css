@@ -1,17 +1,25 @@
 .wrapper {
-  margin-top: 100px;
+  width: 100vw;
+  margin-top: 75px;
   display: flex;
   flex-direction: row;
 }
 
 .profileWrapper {
-  position: sticky;
-  top: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-basis: 40%;
   min-width: 400px;
   max-width: 600px;
-  padding: 40px 20px;
 }
+
 .userHistoryWrapper {
   flex-grow: 1;
-  padding: 20px;
+  height: calc(100vh - 75px);
+  overflow: scroll;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
