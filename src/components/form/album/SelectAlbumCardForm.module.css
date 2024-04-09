@@ -1,0 +1,11 @@
+.formContainer {
+  width: 50vw;
+  height: 50vh;
+  overflow: scroll;
+}
+
+.cardGallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}

@@ -1,0 +1,35 @@
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  padding: 5px 0;
+  border: 1px solid #d9d9d9;
+}
+
+label {
+  font-weight: bold; /* 라벨의 글꼴을 굵게 합니다 */
+  padding: 2px 8px;
+  color: black;
+}
+
+.inputContainer input {
+  width: 100%;
+  box-sizing: border-box;
+  flex: 1;
+  border: none;
+  background-color: transparent;
+  padding: 2px 8px;
+  font-size: 1.4rem;
+}
+
+.inputContainer input:focus {
+  outline: none; /* Removes the default focus outline */
+}
+
+p {
+  padding: 2px 8px;
+  margin: 0;
+  font-size: 1.2rem;
+}

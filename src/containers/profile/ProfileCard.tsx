@@ -10,6 +10,7 @@ import { IMemberInfoDetails } from "interface/member/IMemberInfoDetails";
 import useBucket from "hooks/bucket/useBucket";
 import { useEffect, useState } from "react";
 import { useModal } from "hooks/modal/ModalProvider";
+import { FaRegHeart } from "react-icons/fa";
 
 interface ProfileCardProps {
   memberInfo: IMemberInfoDetails;
@@ -73,6 +74,11 @@ function ProfileCard({ memberInfo }: ProfileCardProps) {
         name="New album"
         icon={<MdOutlinePhotoAlbum size={"24px"} />}
         type={ModalOption.ALBUM}
+      />
+      <UserActionBtn
+        name="New wishlist"
+        icon={<FaRegHeart size={"24px"} />}
+        type={ModalOption.WISH}
       />
     </div>
   );
