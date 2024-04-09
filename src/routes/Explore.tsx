@@ -12,13 +12,6 @@ import NewPostModal from "components/modal/newPost/NewPostModal";
 import WarningModal from "components/modal/warn/WarningModal";
 import ShareModal from "components/modal/shareModal/ShareModal";
 
-// 사용되는 모달 등록
-import { useModal } from "hooks/modal/ModalProvider";
-import ModalOption from "enum/modalOptionTypes";
-import NewPostModal from "components/modal/newPost/NewPostModal";
-import WarningModal from "components/modal/warn/WarningModal";
-import ShareModal from "components/modal/shareModal/ShareModal";
-
 function Explore() {
   const { registerModal, closeModal } = useModal();
   const isSmallScreen = useMediaQuery("(max-width: 767px)");
