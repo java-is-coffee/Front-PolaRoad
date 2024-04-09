@@ -14,9 +14,7 @@ const root = ReactDOM.createRoot(
 root.render(
   // <React.StrictMode>
   <Provider store={rootReducer}>
-    {/* <ModalProvider> */}
     <App />
-    {/* </ModalProvider> */}
   </Provider>
   // </React.StrictMode>
 );

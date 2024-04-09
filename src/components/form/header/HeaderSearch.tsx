@@ -6,6 +6,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { RecentDTO } from "components/header/mobile/MobileHeader";
 import ModalOption from "enum/modalOptionTypes";
 import { useModal } from "hooks/modal/ModalProvider";
+import styles from "./HeaderSearch.module.css";
 
 const HeaderSearch = () => {
   const [searchInput, setSearchInput] = useState("");
@@ -20,7 +21,6 @@ const HeaderSearch = () => {
       id: Date.now(),
       data: searchInput,
     };
-
     const newList = [newData, ...recentData];
 
     setRecentData(newList);
@@ -28,9 +28,11 @@ const HeaderSearch = () => {
       deleteData(recentData[4].id);
     }
 
+    localStorage.setItem("recentData", JSON.stringify(newList));
+
     query.set("search", searchInput);
-    closeModal(ModalOption.SEARCH);
     setQuery(query);
+    closeModal(ModalOption.SEARCH);
   };
 
   useEffect(() => {
@@ -38,13 +40,17 @@ const HeaderSearch = () => {
     setRecentData(JSON.parse(result));
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("recentData", JSON.stringify(recentData));
-    console.log(localStorage.getItem("recentData"));
-  }, [recentData]);
+  //원래 recentData 변경 시, 바로 적용되도록 하려했으나. 해당 부분이 적용되려면 해당 함수가 종료되는 시점이어야하는데. submit의 경우 제출하면 바로 종료되기때문에..
+  //state 쓸지말지는 고민좀 해야할 것 같습니다.
+  // useEffect(() => {
+  //   console.log("테슽1");
+  //   console.log(recentData);
+  //   localStorage.setItem("recentData", JSON.stringify(recentData));
+  // }, [recentData]);
 
   const deleteData = (selectedId: number) => {
     const deletedData = recentData.filter((item) => item.id !== selectedId);
+    localStorage.setItem("recentData", JSON.stringify(deletedData));
     setRecentData(deletedData);
   };
 
@@ -62,6 +68,7 @@ const HeaderSearch = () => {
             setSearchInput(value.target.value);
           }}
           required
+          autoComplete="off"
           sx={{
             ".MuiOutlinedInput-root": { fontSize: "1.3rem" },
             width: "20vw",
@@ -89,7 +96,7 @@ const HeaderSearch = () => {
       <div>
         <h2>최근 검색어</h2>
         {recentData.map((item) => (
-          <div key={item.id}>
+          <div key={item.id} className={styles.recentList}>
             {item.data}
             <IconButton
               aria-label="delete"

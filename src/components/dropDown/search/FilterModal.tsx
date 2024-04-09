@@ -6,6 +6,8 @@ import { Button } from "@mui/material";
 import { conceptSet, regionSet, sortSet } from "interface/explore/ExplorePost";
 import { useSearchParams } from "react-router-dom";
 
+type filterType = "sort" | "region" | "concept";
+
 function FilterModal() {
   const { closeModal } = useModal();
 
@@ -16,20 +18,24 @@ function FilterModal() {
 
   const [query, setQuery] = useSearchParams();
 
+  const handleCloseModla = () => {
+    closeModal(ModalOption.FILTER);
+    closeModal(ModalOption.SEARCH);
+  };
+
   // Esc 눌렀을때 모달 탈출
   const handleKeyUp = (event: KeyboardEvent) => {
     if (event.key === "Escape") {
-      closeModal(ModalOption.FILTER);
-      closeModal(ModalOption.SEARCH);
+      handleCloseModla();
     }
   };
   // 모달 바깥쪽 눌렀을떄 모달 탈출
   const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
-      closeModal(ModalOption.FILTER);
-      closeModal(ModalOption.SEARCH);
+      handleCloseModla();
     }
   };
+
   // 컴포넌트 랜더링시에 한번만 리스너 추가
   useEffect(() => {
     document.addEventListener("keyup", handleKeyUp);
@@ -39,40 +45,40 @@ function FilterModal() {
     // eslint-disable-next-line
   }, []);
 
-  const handleClick = (inputData: any, aboutFilter: string) => {
+  const handleClick = (inputData: any, filter: filterType) => {
     //savedData = 쿼리에 등록된 데이터 / number = 해당 데이터와 맞는 번호(key값에 대응하기 위해) / checkData = number와 매칭되는 키값 (FOOD & BUSAN)
-    const savedData = query.get(aboutFilter);
+    const savedData = query.get(filter);
     const number =
-      aboutFilter === "sort"
+      filter === "sort"
         ? sortSet.values.indexOf(inputData)
-        : aboutFilter === "region"
+        : filter === "region"
         ? regionSet.values.indexOf(inputData)
         : conceptSet.values.indexOf(inputData);
     const checkData =
-      aboutFilter === "sort"
+      filter === "sort"
         ? sortSet.key[number]
-        : aboutFilter === "region"
+        : filter === "region"
         ? regionSet.key[number]
         : conceptSet.key[number];
 
     const state =
-      aboutFilter === "sort"
+      filter === "sort"
         ? setSavedSort
-        : aboutFilter === "region"
+        : filter === "region"
         ? setSavedConcept
         : setSavedRegion;
     if (checkData === savedData) {
-      query.delete(aboutFilter);
+      query.delete(filter);
       state(null);
     } else {
-      query.set(aboutFilter, checkData);
+      query.set(filter, checkData);
       state(checkData);
     }
   };
 
   const handleSubmit = () => {
     setQuery(query);
-    closeModal(ModalOption.FILTER);
+    handleCloseModla();
   };
 
   return (

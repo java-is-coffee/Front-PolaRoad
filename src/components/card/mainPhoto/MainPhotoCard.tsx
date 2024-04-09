@@ -1,16 +1,18 @@
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import styles from "./MainPhotoCard.module.css";
 import PlaceIcon from "@mui/icons-material/Place";
-import { PostData } from "interface/explore/ExplorePost";
+import { PostData, regionSet } from "interface/explore/ExplorePost";
 import { useEffect, useState } from "react";
 import CircleIcon from "@mui/icons-material/Circle";
 import ScrollButtonLeft from "components/button/explore/ScrollButtonLeft";
 import ScrollButtonRight from "components/button/explore/ScrollButtonRight";
 import useBucket from "hooks/bucket/useBucket";
+import { useNavigate } from "react-router-dom";
 
 const MainPhotoCard = ({ item }: { item: PostData }) => {
   const [cardImgs, setCardImgs] = useState<string[]>([]);
   const { getImage } = useBucket();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMemberInfo = async (src: string, index: number) => {
@@ -45,6 +47,10 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
     opacity: 1,
   };
 
+  const goPost = (id: number) => {
+    navigate(`/post/${id}`);
+  };
+
   return (
     <div key={item.postId}>
       <div className={styles.cardImg}>
@@ -52,6 +58,9 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
           {cardImgs.map((img, index) => (
             <img
               key={img}
+              onClick={() => {
+                goPost(item.postId);
+              }}
               style={exampleStyle}
               loading="lazy"
               alt="카드 이미지"
@@ -88,12 +97,16 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
         </div>
       </div>
 
-      <div className={styles.photoInfo}>
+      <div
+        className={styles.photoInfo}
+        onClick={() => {
+          goPost(item.postId);
+        }}
+      >
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
-
             fontSize: "1rem",
           }}
         >
@@ -105,9 +118,9 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
         </div>
 
         <div style={{ fontSize: "1.7rem" }}>{item.title}</div>
-        <div>
+        <div className={styles.regionBox}>
           <PlaceIcon style={{ color: "#13C4A3" }} />
-          {item.region}
+          {regionSet.values[regionSet.key.indexOf(item.region)]}
         </div>
       </div>
     </div>

@@ -8,6 +8,9 @@ import FilterModal from "../components/dropDown/search/FilterModal";
 import { useMediaQuery } from "@mui/material";
 import BottomNavigator from "components/bottom/BottomNavigator";
 import SearchDropdown from "components/dropDown/search/SearchDropdown";
+import NewPostModal from "components/modal/newPost/NewPostModal";
+import WarningModal from "components/modal/warn/WarningModal";
+import ShareModal from "components/modal/shareModal/ShareModal";
 
 function Explore() {
   const { registerModal, closeModal } = useModal();
@@ -19,9 +22,15 @@ function Explore() {
   useEffect(() => {
     registerModal(ModalOption.FILTER, <FilterModal />);
     registerModal(ModalOption.SEARCH, <SearchDropdown />);
+    registerModal(ModalOption.POST, <NewPostModal />);
+    registerModal(ModalOption.WARNING, <WarningModal />);
+    registerModal(ModalOption.SHARE, <ShareModal />);
     return () => {
       closeModal(ModalOption.FILTER);
       closeModal(ModalOption.SEARCH);
+      closeModal(ModalOption.POST);
+      closeModal(ModalOption.WARNING);
+      closeModal(ModalOption.SHARE);
     };
     // eslint-disable-next-line
   }, []);
