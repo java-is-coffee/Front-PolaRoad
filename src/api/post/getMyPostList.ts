@@ -3,7 +3,7 @@ import { ISinglePost } from "interface/post/ISinglePost";
 
 interface PostListDTO {
   posts: ISinglePost[];
-  maxPage: number;
+  hasNext: boolean;
 }
 
 const getMyPostList = async (
