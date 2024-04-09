@@ -1,16 +1,20 @@
 import { GoBell } from "react-icons/go";
 import headerStyle from "./WebHeader.module.css";
-import { Avatar } from "@mui/material";
+import { Avatar, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import HeaderSearch from "components/form/header/HeaderSearch";
+// import HeaderSearch from "components/form/header/HeaderSearch";
 import { useEffect, useState } from "react";
 import useBucket from "hooks/bucket/useBucket";
 import { IMemberInfoDetails } from "interface/member/IMemberInfoDetails";
 import getMemberInfo from "api/member/getMemberInfo";
+import SearchIcon from "@mui/icons-material/Search";
 import secureLocalStorage from "react-secure-storage";
+import { useModal } from "hooks/modal/ModalProvider";
+import ModalOption from "enum/modalOptionTypes";
 
 function WebHeader() {
   const navigate = useNavigate();
+  const { openModal } = useModal();
 
   const navigation = (input: string) => {
     navigate(`/${input}`);
@@ -67,7 +71,19 @@ function WebHeader() {
           <div
             className={`${headerStyle.searchToggleWrapper} ${headerStyle.searchVisible}`}
           >
-            <HeaderSearch />
+            <IconButton
+              aria-label="toggle password visibility"
+              edge="end"
+              sx={{
+                backgroundColor: "#13c4a3",
+                marginRight: "-1px",
+              }}
+              onClick={() => {
+                openModal(ModalOption.SEARCH);
+              }}
+            >
+              <SearchIcon />
+            </IconButton>
           </div>
 
           <GoBell size={"32px"} />
