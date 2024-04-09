@@ -11,14 +11,7 @@ import { useModal } from "hooks/modal/ModalProvider";
 import ModalOption from "enum/modalOptionTypes";
 import NewPostModal from "components/modal/newPost/NewPostModal";
 import WarningModal from "components/modal/warn/WarningModal";
-import EditProfileImgModal from "components/modal/profileImg/EditProfileImgModal";
-import PostPreviewModal from "components/modal/post/PostPreviewModal";
 import ShareModal from "components/modal/shareModal/ShareModal";
-import UserInfoModal from "components/modal/userSetting/userInfo/UserInfoModal";
-import PostOptionModal from "components/modal/option/PostOptionModal";
-import UserSettingModal from "components/modal/userSetting/UserSettingModal";
-import NewAlbumModal from "components/modal/album/newAlbum/NewAlbumModal";
-import NewWishListModal from "components/modal/wish/newWishList/NewWishListModal";
 
 function Explore() {
   const { registerModal, closeModal } = useModal();
@@ -31,16 +24,13 @@ function Explore() {
     registerModal(ModalOption.SEARCH, <SearchDropdown />);
     registerModal(ModalOption.POST, <NewPostModal />);
     registerModal(ModalOption.WARNING, <WarningModal />);
-    registerModal(ModalOption.WISH, <NewWishListModal />);
-    registerModal(ModalOption.EDIT_PROFILE_IMG, <EditProfileImgModal />);
-    registerModal(ModalOption.POST_PREVIEW, <PostPreviewModal />);
     registerModal(ModalOption.SHARE, <ShareModal />);
-    registerModal(ModalOption.USER_SETTING, <UserSettingModal />);
-    registerModal(ModalOption.USER_INFO, <UserInfoModal />);
-    registerModal(ModalOption.POST_OPTION, <PostOptionModal />);
-    registerModal(ModalOption.ALBUM, <NewAlbumModal />);
-    return () => closeModal(ModalOption.SEARCH);
-    // eslint-disable-next-line
+    return () => {
+      closeModal(ModalOption.SEARCH);
+      closeModal(ModalOption.POST);
+      closeModal(ModalOption.WARNING);
+      closeModal(ModalOption.SHARE);
+    };
   }, []);
   return (
     <div>
