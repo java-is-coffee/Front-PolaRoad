@@ -1,5 +1,4 @@
 import useBucket from "hooks/bucket/useBucket";
-import { Card } from "interface/card/ICardListDTO";
 import { useEffect, useState } from "react";
 import cardStyles from "./NewAlbumCard.module.css";
 

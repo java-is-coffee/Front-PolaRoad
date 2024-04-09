@@ -4,7 +4,7 @@ import { Card } from "interface/card/ICardListDTO";
 import { useEffect, useRef, useState } from "react";
 import formStyles from "./SelectAlbumCardForm.module.css";
 
-interface SelectAlbumCardForm {
+interface SelectAlbumCardFormProps {
   handleAddCard: (cardId: number) => void;
   handleRemoveCard: (cardId: number) => void;
   selectedIds: number[];
@@ -14,7 +14,7 @@ const SelectAlbumCardForm = ({
   handleAddCard,
   handleRemoveCard,
   selectedIds,
-}: SelectAlbumCardForm) => {
+}: SelectAlbumCardFormProps) => {
   const [myCardList, setMyCardList] = useState<Card[]>([]);
   const [page, setPage] = useState<number>(0);
   const [maxPage, setMaxPage] = useState<number>(0);
@@ -48,13 +48,14 @@ const SelectAlbumCardForm = ({
 
   useEffect(() => {
     fetchCardList(); // 컴포넌트 마운트 시 데이터 로드
+    //eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     if (page < 1) {
       fetchCardList(); // 컴포넌트 마운트 시 데이터 로드
-      console.log("second");
     }
+    //eslint-disable-next-line
   }, [page]);
 
   useEffect(() => {
