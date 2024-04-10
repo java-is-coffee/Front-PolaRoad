@@ -15,8 +15,6 @@ import {
 import { useSearchParams } from "react-router-dom";
 import useStoreValue from "hooks/storeValue/useStoreValue";
 
-import useCustomParam from "hooks/explore/useCustomParam";
-
 const ExplorePhotoList = () => {
   const { setPostList, addPostList } = useExploreHooks();
 
@@ -33,13 +31,8 @@ const ExplorePhotoList = () => {
     threshold: 0.8,
   });
 
-  const { getContent } = useCustomParam();
-
   useEffect(() => {
     console.log("시작");
-    if (query.get("region") !== null) getContent("region");
-    if (query.get("concept") !== null) getContent("concept");
-    if (query.get("sort") !== null) getContent("sort");
 
     const initPostList: GetListDTO = {
       paging: 1,

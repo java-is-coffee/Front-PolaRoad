@@ -20,7 +20,7 @@ import { useSearchParams } from "react-router-dom";
 
 const MainCategory = () => {
   const isSmallScreen = useMediaQuery("(max-width: 767px)");
-  const [param, setParam] = useSearchParams();
+  const [query, setQuery] = useSearchParams();
   const { openModal } = useModal();
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const handleNext = () => {
@@ -82,13 +82,13 @@ const MainCategory = () => {
     const number = conceptSet.values.indexOf(inputData);
     const savedData = conceptSet.key[number];
     //중복 체크 (중복으로 눌려졌는지)
-    const checkDup = savedData === param.get("concept");
+    const checkDup = savedData === query.get("concept");
     if (!checkDup) {
-      param.set("concept", conceptSet.key[number]);
-      setParam(param);
+      query.set("concept", conceptSet.key[number]);
+      setQuery(query);
     } else {
-      param.delete("concept");
-      setParam(param);
+      query.delete("concept");
+      setQuery(query);
     }
   };
 
@@ -128,7 +128,7 @@ const MainCategory = () => {
             >
               <div
                 className={`${styles.categoryItem} ${
-                  param.get("concept") === conceptSet.key[index]
+                  query.get("concept") === conceptSet.key[index]
                     ? styles.selected
                     : ""
                 } `}
@@ -151,7 +151,7 @@ const MainCategory = () => {
       <div
         className={styles.filterButton}
         onClick={() => {
-          openModal(ModalOption.SEARCH);
+          openModal(ModalOption.FILTER);
         }}
       >
         <TuneIcon sx={{ fontSize: "2rem", marginRight: "0.5rem" }} />

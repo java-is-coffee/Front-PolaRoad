@@ -2,7 +2,7 @@ import { IoSearch } from "react-icons/io5";
 
 import searchBtnStyles from "./SearchToggleBtn.module.css";
 import { useEffect, useRef, useState } from "react";
-import SearchDropdown from "./SearchDropdown";
+import FilterModal from "./FilterModal";
 
 interface SearchToggleBtnProps {
   isScrolled: boolean;
@@ -51,7 +51,7 @@ function SearchToggleBtn({
           <IoSearch size={"20px"} />
         </div>
       </div>
-      {isActive && <SearchDropdown />}
+      {isActive && <FilterModal />}
     </div>
   );
 }
