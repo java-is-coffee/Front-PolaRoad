@@ -16,7 +16,7 @@ const SelectAlbumCardForm = ({
   selectedIds,
 }: SelectAlbumCardFormProps) => {
   const [myCardList, setMyCardList] = useState<Card[]>([]);
-  const [page, setPage] = useState<number>(0);
+  const [page, setPage] = useState<number>(1);
   const [maxPage, setMaxPage] = useState<number>(0);
   const pageSize = 10;
   const scrollRef = useRef<HTMLDivElement>(null);
