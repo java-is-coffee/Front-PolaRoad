@@ -24,7 +24,7 @@ const GetPostList = async (inputData: GetListDTO) => {
 
     console.log(response.data.posts);
 
-    return response.data.posts;
+    return response.data;
   } catch (error) {
     return null;
   }

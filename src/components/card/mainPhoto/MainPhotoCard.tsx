@@ -1,7 +1,7 @@
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import styles from "./MainPhotoCard.module.css";
 import PlaceIcon from "@mui/icons-material/Place";
-import { PostData, regionSet } from "interface/explore/ExplorePost";
+import { conceptSet, PostData, regionSet } from "interface/explore/ExplorePost";
 import { useEffect, useState } from "react";
 import CircleIcon from "@mui/icons-material/Circle";
 import ScrollButtonLeft from "components/button/explore/ScrollButtonLeft";
@@ -118,9 +118,14 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
         </div>
 
         <div style={{ fontSize: "1.7rem" }}>{item.title}</div>
-        <div className={styles.regionBox}>
-          <PlaceIcon style={{ color: "#13C4A3" }} />
-          {regionSet.values[regionSet.key.indexOf(item.region)]}
+        <div className={styles.bottomBox}>
+          <div className={styles.regionText}>
+            <PlaceIcon style={{ color: "#13C4A3" }} />
+            {regionSet.values[regionSet.key.indexOf(item.region)]}
+          </div>
+          <div className={styles.conceptText}>
+            {conceptSet.values[conceptSet.key.indexOf(item.concept)]}
+          </div>
         </div>
       </div>
     </div>

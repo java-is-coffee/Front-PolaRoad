@@ -70,7 +70,13 @@ function WebHeader() {
               Subscribe
             </span>
             <span>Map</span>
-            <span>New Post</span>
+            <span
+              onClick={() => {
+                openModal(ModalOption.POST);
+              }}
+            >
+              New Post
+            </span>
           </div>
         </div>
         <div className={headerStyle.userAction}>

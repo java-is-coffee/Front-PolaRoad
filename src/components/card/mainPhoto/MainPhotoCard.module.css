@@ -66,7 +66,23 @@
   /* left: 1rem; */
 }
 
-.regionBox {
+.bottomBox {
   display: flex;
   align-items: center;
+  flex-direction: row;
+  font-size: 1.1rem;
+  justify-content: space-between;
+}
+
+.regionText {
+  display: flex;
+  align-items: center;
+}
+
+.conceptText {
+  border-radius: 10px;
+  border: none;
+  background-color: #13c4a3;
+  color: white;
+  padding: 5px;
 }

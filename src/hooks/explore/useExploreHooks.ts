@@ -20,19 +20,21 @@ const useExploreHooks = () => {
 
   const setPostList = async (inputDTO: GetListDTO) => {
     const result = await getPostList(inputDTO);
-    dispatch(setExplorePostList(result));
+    dispatch(setExplorePostList(result.posts));
     dispatch(setCurPage(1));
     dispatch(setEndPoint(false));
   };
 
   const addPostList = async (inputDTO: GetListDTO) => {
     const result = await getPostList(inputDTO);
+    console.log(result);
 
-    if (result.length === 0) {
+    if (result.hasNext === false) {
+      dispatch(addExplorePostList(result.posts));
       console.log("끝");
       return 0;
     } else {
-      dispatch(addExplorePostList(result));
+      dispatch(addExplorePostList(result.posts));
       return 1;
     }
   };
