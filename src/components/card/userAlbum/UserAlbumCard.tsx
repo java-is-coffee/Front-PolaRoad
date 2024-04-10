@@ -2,6 +2,8 @@ import cardStyles from "./UserAlbumCard.module.css";
 import useBucket from "hooks/bucket/useBucket";
 import { useEffect, useState } from "react";
 import { ISingleAlbum } from "interface/album/ISingleAlbum";
+import { useModal } from "hooks/modal/ModalProvider";
+import ModalOption from "enum/modalOptionTypes";
 
 interface UserAlbumCardProps {
   singleAlbumData?: ISingleAlbum;
@@ -9,6 +11,7 @@ interface UserAlbumCardProps {
 
 function UserAlbumCard({ singleAlbumData }: UserAlbumCardProps) {
   const { getImage } = useBucket();
+  const { openModal } = useModal();
   const [thumbnailUrl, setThumbnailUrl] = useState<string>("");
   useEffect(() => {
     if (singleAlbumData) {
@@ -21,8 +24,12 @@ function UserAlbumCard({ singleAlbumData }: UserAlbumCardProps) {
     }
     // eslint-disable-next-line
   }, []);
+
+  const handleOpenPreview = () => {
+    openModal(ModalOption.AlBUM_PREVIEW, { albumId: singleAlbumData?.albumId });
+  };
   return (
-    <div className={cardStyles.imgContainer}>
+    <div className={cardStyles.imgContainer} onClick={handleOpenPreview}>
       <img
         className={cardStyles.img}
         src={thumbnailUrl}
