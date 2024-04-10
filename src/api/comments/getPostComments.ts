@@ -11,7 +11,6 @@ const getPostComments = async (
     const response = await axiosInstance.get(API_URL);
 
     const { status, data } = response;
-    console.log(data);
     if (status === 200) {
       console.log("postDetails fetch success");
       return data as ICommentDTO;
