@@ -7,7 +7,6 @@ import NewAlbumTextForm from "components/form/album/NewAlbumTextForm";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import SelectAlbumCardForm from "components/form/album/SelectAlbumCardForm";
 import { INewAlbumDTO } from "interface/album/INewAlbumDTO";
-import postNewAlbum from "api/album/postNewAlbum";
 import { toast } from "react-toastify";
 import patchEditAlbum from "api/album/patchEditAlbum";
 
