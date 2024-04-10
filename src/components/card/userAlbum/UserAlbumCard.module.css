@@ -30,7 +30,7 @@
   overflow: hidden;
   width: 100%;
   height: 100%; /* 높이 */
-  transition: width 0.5s ease, opacity 0.5s ease; /* 너비와 투명도 변경에 대한 전환 효과 */
+  transition: width 0.5s ease, opacity 0.5s ease;
 }
 
 /* 마우스 호버 시 배경 확장 애니메이션 */
@@ -42,7 +42,8 @@
 .cardDetails {
   content: attr(data-name);
   color: white;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
+  font-weight: bold;
   position: relative;
   padding: 10px;
 }
