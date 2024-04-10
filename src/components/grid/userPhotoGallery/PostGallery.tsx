@@ -43,6 +43,7 @@ function PostGallery() {
     }
 
     return () => observer.current?.disconnect();
+    // eslint-disable-next-line
   }, [postPage]);
 
   return (

@@ -43,6 +43,7 @@ function AlbumGallery() {
     }
 
     return () => observer.current?.disconnect();
+    // eslint-disable-next-line
   }, [albumHasNext]);
 
   return (
