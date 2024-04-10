@@ -42,11 +42,12 @@ function ProfileCard({ memberInfo }: ProfileCardProps) {
 
   return (
     <div className={profileStyles.card}>
-      <div
-        className={profileStyles.imgContainer}
-        onClick={handleEditProfileImg}
-      >
-        <ProfileImg size={"200px"} imgUrl={profileImgURL} />
+      <div className={profileStyles.imgContainer}>
+        <ProfileImg
+          size={"200px"}
+          imgUrl={profileImgURL}
+          onClick={handleEditProfileImg}
+        />
       </div>
       <div className={profileStyles.header}>
         <span>{memberInfo.nickname}</span>
