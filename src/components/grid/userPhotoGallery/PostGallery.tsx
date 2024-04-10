@@ -15,8 +15,10 @@ function PostGallery() {
 
   const fetchPostList = async () => {
     if (!postHasNext) return;
+    console.log(postHasNext);
     const data = await getMyPostList(postPage, postAmount);
     if (data) {
+      console.log(data.hasNext);
       data.hasNext ? setPostPage((prev) => prev + 1) : setPostHasNext(false);
       const newPosts = data.posts.filter(
         (newPost) =>
@@ -44,7 +46,7 @@ function PostGallery() {
 
     return () => observer.current?.disconnect();
     // eslint-disable-next-line
-  }, [postPage]);
+  }, [postPage, postHasNext]);
 
   return (
     <div className={gridStyle.gridGallery}>

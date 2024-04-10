@@ -44,7 +44,7 @@ function AlbumGallery() {
 
     return () => observer.current?.disconnect();
     // eslint-disable-next-line
-  }, [albumHasNext]);
+  }, [albumPage, albumHasNext]);
 
   return (
     <div className={gridStyle.gridGallery}>
