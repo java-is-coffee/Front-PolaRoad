@@ -1,10 +1,11 @@
 .formContainer {
-  width: 50vw;
+  width: 100%;
   height: 50vh;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .cardGallery {
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(
     auto-fill,
