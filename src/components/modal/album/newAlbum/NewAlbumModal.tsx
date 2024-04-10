@@ -25,15 +25,16 @@ const NewAlbumModal = () => {
   const [formIndex, setFormIndex] = useState<number>(0);
 
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (checkValidate(e.target.value)) setIsNameValidated(true);
-    setName(e.target.value);
+    const newValue = e.target.value;
+    setName(newValue);
+    setIsNameValidated(checkValidate(newValue));
   };
 
   const handleChangeDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (checkValidate(e.target.value)) setIsDescriptionValidated(true);
-    setDescription(e.target.value);
+    const newValue = e.target.value;
+    setDescription(newValue);
+    setIsDescriptionValidated(checkValidate(newValue));
   };
-
   const handleAddCard = (cardId: number) => {
     setCardIdList((prev) => [...prev, cardId]);
   };
