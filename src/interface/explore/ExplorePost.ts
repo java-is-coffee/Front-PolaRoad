@@ -20,10 +20,10 @@ export interface GetListDTO {
   paging: number;
   pagingNumber: number;
   searchType: string;
-  keyword: string | null;
-  sortBy: string | null;
-  concept: string | null;
-  region: string | null;
+  keyword?: string | null;
+  sortBy?: string | null;
+  concept?: string | null;
+  region?: string | null;
 }
 
 export const { sortSet, conceptSet, regionSet } = {

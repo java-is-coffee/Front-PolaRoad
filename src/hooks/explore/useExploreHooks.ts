@@ -8,7 +8,7 @@ import {
   setEndPoint,
   setExplorePostList,
 } from "../../redux/reducers/explore/explorePostReducer";
-import { GetListDTO } from "interface/explore/ExplorePost";
+import { GetListDTO, PostData } from "interface/explore/ExplorePost";
 
 const useExploreHooks = () => {
   const dispatch = useDispatch();
@@ -20,7 +20,7 @@ const useExploreHooks = () => {
 
   const setPostList = async (inputDTO: GetListDTO) => {
     const result = await getPostList(inputDTO);
-    dispatch(setExplorePostList(result));
+    dispatch(setExplorePostList(result?.posts as PostData[]));
     dispatch(setCurPage(1));
     dispatch(setEndPoint(false));
   };
@@ -28,11 +28,11 @@ const useExploreHooks = () => {
   const addPostList = async (inputDTO: GetListDTO) => {
     const result = await getPostList(inputDTO);
 
-    if (result.length === 0) {
+    if (result?.posts.length === 0) {
       console.log("끝");
       return 0;
     } else {
-      dispatch(addExplorePostList(result));
+      dispatch(addExplorePostList(result?.posts as PostData[]));
       return 1;
     }
   };
