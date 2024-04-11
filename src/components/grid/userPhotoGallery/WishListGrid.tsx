@@ -1,3 +1,4 @@
+import gridStyle from "./UserPhotoGallery.module.css";
 import getWishList from "api/wishlist/getWishList";
 import WishListThumbnailCard from "components/card/wishList/WishListThumbnailCard";
 import { IWishListDTO } from "interface/wish/IWishList";
@@ -18,7 +19,7 @@ const WishListGrid = () => {
     []
   );
   return (
-    <div>
+    <div className={gridStyle.gridGallery}>
       {wishList.map((wishList) => (
         <WishListThumbnailCard
           key={wishList.wishListId}
