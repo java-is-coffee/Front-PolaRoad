@@ -52,7 +52,7 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
   };
 
   return (
-    <div key={item.postId}>
+    <div key={item.postId} className={styles.container}>
       <div className={styles.cardImg}>
         <div className={`${styles.carousel}`}>
           {cardImgs.map((img, index) => (

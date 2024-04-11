@@ -95,9 +95,7 @@ const ExplorePhotoList = () => {
         ""
       )}
 
-      <div ref={ref} className={styles.wait}>
-        Footer
-      </div>
+      <div ref={ref} className={styles.wait}></div>
     </div>
   );
 };
