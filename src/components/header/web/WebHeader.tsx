@@ -2,7 +2,6 @@ import { GoBell } from "react-icons/go";
 import headerStyle from "./WebHeader.module.css";
 import { Avatar, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-// import HeaderSearch from "components/form/header/HeaderSearch";
 import { useEffect, useState } from "react";
 import useBucket from "hooks/bucket/useBucket";
 import { IMemberInfoDetails } from "interface/member/IMemberInfoDetails";
@@ -11,16 +10,20 @@ import SearchIcon from "@mui/icons-material/Search";
 import secureLocalStorage from "react-secure-storage";
 import { useModal } from "hooks/modal/ModalProvider";
 import ModalOption from "enum/modalOptionTypes";
+import useStoreValue from "hooks/storeValue/useStoreValue";
+import { setExplorePostList } from "../../../redux/reducers/explore/explorePostReducer";
 
 function WebHeader() {
   const navigate = useNavigate();
   const { openModal } = useModal();
+  const { setValue } = useStoreValue();
 
   const navigation = (input: string) => {
     navigate(`/${input}`);
   };
 
   const resetPage = () => {
+    setValue(setExplorePostList(null));
     navigate("/explore");
   };
   //true = pc화면 / false = 모바일 화면 767이하
@@ -55,13 +58,7 @@ function WebHeader() {
             </span>
           </div>
           <div className={headerStyle.action}>
-            <span
-              onClick={() => {
-                navigation("explore");
-              }}
-            >
-              Home
-            </span>
+            <span onClick={resetPage}>Home</span>
             <span
               onClick={() => {
                 navigate(-1);

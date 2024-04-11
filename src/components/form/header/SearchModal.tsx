@@ -6,11 +6,11 @@ import CloseIcon from "@mui/icons-material/Close";
 import { RecentDTO } from "components/header/mobile/MobileHeader";
 import ModalOption from "enum/modalOptionTypes";
 import { useModal } from "hooks/modal/ModalProvider";
-import styles from "./HeaderSearch.module.css";
+import styles from "./SearchModal.module.css";
 import { setExplorePostList } from "../../../redux/reducers/explore/explorePostReducer";
 import useExploreHooks from "hooks/explore/useExploreHooks";
 
-const HeaderSearch = () => {
+const SearchModal = () => {
   const [searchInput, setSearchInput] = useState("");
   const [query, setQuery] = useSearchParams();
   const [recentData, setRecentData] = useState<RecentDTO[]>([]);
@@ -20,23 +20,50 @@ const HeaderSearch = () => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const newData: RecentDTO = {
-      id: Date.now(),
-      data: searchInput,
-    };
-    const newList = [newData, ...recentData];
+    test(null);
 
-    setRecentData(newList);
-    if (newList.length > 5) {
-      deleteData(recentData[4].id);
+    // const newData: RecentDTO = {
+    //   id: Date.now(),
+    //   data: searchInput,
+    // };
+    // const newList = [newData, ...recentData];
+
+    // setRecentData(newList);
+    // if (newList.length > 5) {
+    //   deleteData(recentData[4].id);
+    // }
+
+    // localStorage.setItem("recentData", JSON.stringify(newList));
+
+    // query.set("search", searchInput);
+    // setQuery(query);
+    // setItem(setExplorePostList(null));
+    // closeModal(ModalOption.SEARCH);
+  };
+
+  const test = (item: string | null) => {
+    if (item === null) {
+      const newData: RecentDTO = {
+        id: Date.now(),
+        data: searchInput,
+      };
+      const newList = [newData, ...recentData];
+      setRecentData(newList);
+      if (newList.length > 5) {
+        deleteData(recentData[4].id);
+      }
+
+      localStorage.setItem("recentData", JSON.stringify(newList));
     }
 
-    localStorage.setItem("recentData", JSON.stringify(newList));
-
-    query.set("search", searchInput);
+    query.set("search", item !== null ? item : searchInput);
     setQuery(query);
     setItem(setExplorePostList(null));
     closeModal(ModalOption.SEARCH);
+  };
+
+  const repeatRecentData = (item: string) => {
+    test(item);
   };
 
   useEffect(() => {
@@ -92,7 +119,11 @@ const HeaderSearch = () => {
       <div>
         <h2>최근 검색어</h2>
         {recentData.map((item) => (
-          <div key={item.id} className={styles.recentList}>
+          <div
+            key={item.id}
+            className={styles.recentList}
+            onClick={() => repeatRecentData(item.data)}
+          >
             {item.data}
             <IconButton
               aria-label="delete"
@@ -108,4 +139,4 @@ const HeaderSearch = () => {
   );
 };
 
-export default HeaderSearch;
+export default SearchModal;

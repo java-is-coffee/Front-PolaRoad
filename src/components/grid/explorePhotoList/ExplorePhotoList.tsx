@@ -48,7 +48,7 @@ const ExplorePhotoList = () => {
     }
 
     // eslint-disable-next-line
-  }, [query]);
+  }, [query, storePostList]);
 
   useEffect(() => {
     //렌더링 시작 시, 해당 view가 바로 포착되어서 .
