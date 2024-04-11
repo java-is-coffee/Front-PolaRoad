@@ -63,7 +63,13 @@ function WebHeader() {
               Home
             </span>
             <span>Subscribe</span>
-            <span>Map</span>
+            <span
+              onClick={() => {
+                navigation("map");
+              }}
+            >
+              Map
+            </span>
             <span>New Post</span>
           </div>
         </div>
