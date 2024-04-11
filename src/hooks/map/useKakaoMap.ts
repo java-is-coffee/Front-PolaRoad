@@ -50,6 +50,15 @@ const useKakaoMap = () => {
     }
   };
 
+  // // 마크 클러스터 랜더링 함수
+  // const renderCluster = () => {
+  //   const clusterer = new kakao.maps.MarkerClusterer({
+  //     map: mapRef.current,
+  //     averageCenter: true,
+  //     minLevel: 10,
+  //   });
+  // };
+
   // 키워드로 장소를 검색하는 함수
   const searchPlaceByKeyword = (keyword: string) => {
     if (!mapRef.current) return;
