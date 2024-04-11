@@ -17,31 +17,8 @@ const SearchModal = () => {
   const { closeModal } = useModal();
   const { setItem } = useExploreHooks();
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    test(null);
-
-    // const newData: RecentDTO = {
-    //   id: Date.now(),
-    //   data: searchInput,
-    // };
-    // const newList = [newData, ...recentData];
-
-    // setRecentData(newList);
-    // if (newList.length > 5) {
-    //   deleteData(recentData[4].id);
-    // }
-
-    // localStorage.setItem("recentData", JSON.stringify(newList));
-
-    // query.set("search", searchInput);
-    // setQuery(query);
-    // setItem(setExplorePostList(null));
-    // closeModal(ModalOption.SEARCH);
-  };
-
-  const test = (item: string | null) => {
+  const setPostList = (item: string | null) => {
+    //item이 null이면 기본 검색
     if (item === null) {
       const newData: RecentDTO = {
         id: Date.now(),
@@ -56,14 +33,22 @@ const SearchModal = () => {
       localStorage.setItem("recentData", JSON.stringify(newList));
     }
 
+    //item이 null이 아니라면 해당 item을 검색하도록
     query.set("search", item !== null ? item : searchInput);
     setQuery(query);
     setItem(setExplorePostList(null));
     closeModal(ModalOption.SEARCH);
   };
 
+  //기본 제출 (item을 null로 해두어 해당 쿼리문을 그대로 사용하도록)
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setPostList(null);
+  };
+
+  //최근 검색어 클릭 시, 해당 검색어가 인자로 넘어가서 해당 검색어가 실행되도록
   const repeatRecentData = (item: string) => {
-    test(item);
+    setPostList(item);
   };
 
   useEffect(() => {
