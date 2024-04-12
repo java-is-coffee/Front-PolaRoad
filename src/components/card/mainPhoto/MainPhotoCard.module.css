@@ -1,6 +1,6 @@
 .container {
   width: 300px;
-  height: 400px;
+  height: 350px;
   cursor: pointer;
 }
 
@@ -10,8 +10,9 @@
 }
 
 .mainPhoto {
-  width: 300px;
-  height: 300px;
+  margin-top: 5px;
+  width: 270px;
+  height: 270px;
   border-radius: 9px;
   overflow: hidden;
 }
@@ -22,6 +23,7 @@
   overflow: hidden;
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 .cardImg {

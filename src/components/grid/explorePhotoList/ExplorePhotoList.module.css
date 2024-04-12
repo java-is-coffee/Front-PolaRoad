@@ -16,27 +16,23 @@
 }
 
 .card {
-  width: 23%;
   margin: 5px;
 }
 
 @media (max-width: 1250px) {
   .card {
-    width: 30%;
     margin: 5px;
   }
 }
 
 @media (max-width: 1025px) {
   .card {
-    width: 40%;
     margin: 5px;
   }
 }
 
 @media (max-width: 767px) {
   .card {
-    width: 90%;
     margin: 5px;
   }
 }
