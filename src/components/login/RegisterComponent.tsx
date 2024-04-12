@@ -49,7 +49,7 @@ function RegisterContainer({
   const [dupCheck, setDupCheck] = useState(true);
   const [regPassword, setRegPassword] = useState(true);
 
-  const { register, checkPassword, checkEmail, dupCheckEmail } = useRegister();
+  const { register, checkPassword, dupCheckEmail } = useRegister();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
