@@ -3,5 +3,6 @@ export interface ISingleAlbum {
   memberId: number;
   name: string;
   description: string;
+  thumbnail: string;
   updatedTime: string;
 }

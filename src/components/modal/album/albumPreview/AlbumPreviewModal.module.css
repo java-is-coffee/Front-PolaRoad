@@ -1,0 +1,97 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 10px 5px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 1200px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.albumName {
+  font-size: 2rem;
+  margin-top: 0;
+  color: #333;
+}
+
+.albumActionBtn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.albumActionBtn button {
+  border-radius: 4px;
+  margin-right: 10px;
+  padding: 4px 8px;
+  cursor: pointer;
+  text-align: center;
+  align-items: center;
+}
+
+.addCard {
+  color: var(--main-theme-color);
+}
+
+.addCard:hover {
+  background-color: var(--main-theme-color);
+  color: white;
+  transition: 0.2s all ease-in-out;
+}
+
+.editAlbum {
+  color: #3b3737;
+}
+
+.editAlbum:hover {
+  background-color: rgb(53, 163, 206);
+  color: white;
+  transition: 0.2s all ease-in-out;
+}
+
+.removeAlbum {
+  color: red;
+}
+
+.removeAlbum:hover {
+  background-color: red;
+  color: white;
+  transition: 0.2s all ease-in-out;
+}
+
+.description {
+  font-size: 1.6rem;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-left: 8px solid #826060;
+  border-bottom: 1px solid #826060;
+}
+
+.updatedTime {
+  font-size: 1.4rem;
+  display: block;
+  margin-top: 10px;
+}

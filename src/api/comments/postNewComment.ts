@@ -21,12 +21,10 @@ const postNewComment = async (
 
     const { status, data } = response;
     if (status === 200) {
-      console.log("postDetails fetch success");
       return data as CommentDetails;
     }
     return null;
   } catch (error) {
-    console.log("postDetails fetch fail");
     console.error(error);
     return null;
   }

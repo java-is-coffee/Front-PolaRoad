@@ -1,5 +1,5 @@
 interface INewCard {
-  cardId: string;
+  cardId: string | null;
   cardIndex: number | null;
   location: string | null;
   latitude: number | null;
