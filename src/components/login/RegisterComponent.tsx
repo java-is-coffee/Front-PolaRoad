@@ -49,7 +49,7 @@ function RegisterContainer({
   const [dupCheck, setDupCheck] = useState(true);
   const [regPassword, setRegPassword] = useState(true);
 
-  const { register, checkPassword, checkEmail } = useRegister();
+  const { register, checkPassword, checkEmail, dupCheckEmail } = useRegister();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -81,13 +81,12 @@ function RegisterContainer({
     } else setDupCheck(false);
   };
 
-  const checkingEmail = () => {
-    const testEmail = checkEmail(email);
-
+  const checkingEmail = async () => {
+    const testEmail = await checkEmail(email);
+    const dupCheck = await dupCheckEmail(email);
     if (testEmail) {
       setIsEmail(true);
     }
-
     if (!testEmail) {
       setIsEmail(false);
       toast.error("이메일이 올바르지 않습니다.");

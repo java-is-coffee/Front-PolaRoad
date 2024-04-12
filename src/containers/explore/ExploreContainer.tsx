@@ -22,23 +22,19 @@ function ExploreContainer() {
 
   //oauth를 통해 들어왔을 경우. param에 토큰들이 저장되어 들어옴
   useEffect(() => {
-    const accessToken = tokens.get("access_token");
-    const refreshToken = tokens.get("refresh_token");
-    // 리프레쉬 토큰조차 없을 경우, 다시 발급받아야함.
-    const storedRefreshToken = secureLocalStorage.getItem("refreshToken");
-    const storedAccessToken = secureLocalStorage.getItem("accessToken");
-    if (accessToken && refreshToken) {
-      return () => {
+    if (tokens.get("access_token")) {
+      console.log("oauth 테스트");
+      console.log("oauth 테스트??왜 실행이");
+      const accessToken = tokens.get("access_token");
+      const refreshToken = tokens.get("refresh_token");
+      // 리프레쉬 토큰조차 없을 경우, 다시 발급받아야함.
+
+      if (accessToken && refreshToken) {
         secureLocalStorage.setItem("accessToken", accessToken);
         secureLocalStorage.setItem("refreshToken", refreshToken);
         navigate("/explore");
-      };
+      }
     }
-
-    if (storedRefreshToken === null && storedAccessToken === null) {
-      navigate("/login");
-    }
-
     // eslint-disable-next-line
   }, [tokens]);
 
