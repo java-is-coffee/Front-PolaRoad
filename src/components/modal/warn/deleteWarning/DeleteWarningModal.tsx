@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import modalStyles from "./DeleteWarningModal.module.css";
 import { useModal } from "../../../../hooks/modal/ModalProvider";
 import ModalOption from "../../../../enum/modalOptionTypes";
