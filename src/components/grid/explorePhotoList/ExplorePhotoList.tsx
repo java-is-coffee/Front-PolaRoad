@@ -12,11 +12,14 @@ import {
   setCurPage,
   setEndPoint,
 } from "../../../redux/reducers/explore/explorePostReducer";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import useStoreValue from "hooks/storeValue/useStoreValue";
+import secureLocalStorage from "react-secure-storage";
 
 const ExplorePhotoList = () => {
   const { setPostList, addPostList } = useExploreHooks();
+
+  const navigate = useNavigate();
 
   const isSmallScreen = useMediaQuery("(max-width : 767px)");
 
@@ -32,9 +35,18 @@ const ExplorePhotoList = () => {
   });
 
   useEffect(() => {
+    console.log("얘부터 실행아님?");
+    if (localStorage.getItem("accessToken") === null) {
+      navigate("/login");
+      return;
+    }
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
     console.log("시작");
 
-    if (storePostList === null) {
+    if (storePostList === null && secureLocalStorage.getItem("accessToken")) {
       const initPostList: GetListDTO = {
         paging: 1,
         pagingNumber: 8,
