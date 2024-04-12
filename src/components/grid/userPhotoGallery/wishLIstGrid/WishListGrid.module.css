@@ -1,0 +1,27 @@
+.gridGallery {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+
+.sideBar {
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  max-width: 180px;
+}
+
+.defaultWish {
+  cursor: pointer;
+  padding: 4px;
+}
+
+h2 {
+  margin: 10px;
+}
+
+.selectedWish {
+  cursor: pointer;
+  padding: 4px;
+  color: var(--main-theme-color);
+}
