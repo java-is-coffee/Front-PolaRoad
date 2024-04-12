@@ -1,0 +1,36 @@
+.wrapper {
+  position: relative;
+  width: 100vw; /* 뷰포트의 전체 너비를 사용 */
+  max-width: 1000px; /* 최대 너비 제한 */
+  height: 100%; /* 필요한 경우 높이를 조정 */
+  overflow: hidden; /* 내부 요소가 넘칠 경우 숨김 처리 */
+  margin: auto; /* 가로 중앙 정렬 */
+}
+
+.cardCarousel {
+  width: 400px;
+  display: flex; /* 카드들을 수평 방향으로 나열 */
+  transition: transform 0.3s ease-in-out; /* 부드러운 전환 효과를 위해 */
+}
+
+.navButtonPrev,
+.navButtonNext {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(0, 0, 0, 0.3);
+  background-color: #c9c7c1;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 10px; /* 적절한 패딩 크기로 조정 */
+  z-index: 10;
+}
+
+.navButtonPrev {
+  left: 10px;
+}
+
+.navButtonNext {
+  right: 10px;
+}

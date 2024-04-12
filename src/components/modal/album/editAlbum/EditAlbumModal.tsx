@@ -1,5 +1,5 @@
 import { useModal } from "hooks/modal/ModalProvider";
-import modalStyles from "./NewAlbumModal.module.css";
+import modalStyles from "./EditAlbumModal.module.css";
 import ModalOption from "enum/modalOptionTypes";
 import { IoMdClose } from "react-icons/io";
 import { useState } from "react";
@@ -7,22 +7,32 @@ import NewAlbumTextForm from "components/form/album/NewAlbumTextForm";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import SelectAlbumCardForm from "components/form/album/SelectAlbumCardForm";
 import { INewAlbumDTO } from "interface/album/INewAlbumDTO";
-import postNewAlbum from "api/album/postNewAlbum";
 import { toast } from "react-toastify";
+import patchEditAlbum from "api/album/patchEditAlbum";
 
-const NewAlbumModal = () => {
+interface EditAlbumModalProps {
+  albumId?: number;
+  albumData?: INewAlbumDTO;
+}
+
+const EditAlbumModal = ({ albumId, albumData }: EditAlbumModalProps) => {
   const { openModal, closeModal } = useModal();
-  const handleClose = () => {
-    openModal(ModalOption.WARNING, { modalType: ModalOption.ALBUM });
-  };
-  const [name, setName] = useState<string>("");
-  const [isNameValidated, setIsNameValidated] = useState<boolean>(false);
-  const [description, setDescription] = useState<string>("");
+  const [name, setName] = useState<string>(albumData?.name ?? "");
+  const [isNameValidated, setIsNameValidated] = useState<boolean>(true);
+  const [description, setDescription] = useState<string>(
+    albumData?.description ?? ""
+  );
   const [isDescriptionValidated, setIsDescriptionValidated] =
-    useState<boolean>(false);
-  const [cardIdList, setCardIdList] = useState<number[]>([]);
-
+    useState<boolean>(true);
+  const [cardIdList, setCardIdList] = useState<number[]>(
+    albumData?.cardIdList ?? []
+  );
   const [formIndex, setFormIndex] = useState<number>(0);
+  if (!albumId || !albumData) return null;
+
+  const handleClose = () => {
+    openModal(ModalOption.WARNING, { modalType: ModalOption.ALBUM_EDIT });
+  };
 
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -35,6 +45,7 @@ const NewAlbumModal = () => {
     setDescription(newValue);
     setIsDescriptionValidated(checkValidate(newValue));
   };
+
   const handleAddCard = (cardId: number) => {
     setCardIdList((prev) => [...prev, cardId]);
   };
@@ -64,17 +75,18 @@ const NewAlbumModal = () => {
     return true;
   };
 
-  const handleSubmitNewAlbum = async () => {
+  const handleUploadEdit = async () => {
     if (!lastValidate()) return;
     const data: INewAlbumDTO = {
       name: name,
       description: description,
       cardIdList: cardIdList,
     };
-    const result = await postNewAlbum(data);
+    const result = await patchEditAlbum(albumId, data);
     if (result) {
-      toast.info("업로드 성공");
-      closeModal(ModalOption.ALBUM);
+      toast.info("수정 완료");
+      closeModal(ModalOption.ALBUM_EDIT);
+      closeModal(ModalOption.AlBUM_PREVIEW);
     } else {
       toast.info("업로드 도중 오류가 발생했습니다.");
     }
@@ -115,7 +127,7 @@ const NewAlbumModal = () => {
           className={modalStyles.closeButton}
           onClick={handleClose}
         />
-        <h1>새 앨범</h1>
+        <h1>앨범 수정</h1>
         {albumForms[formIndex]}
         {formIndex !== 0 && (
           <IoChevronBack
@@ -133,9 +145,9 @@ const NewAlbumModal = () => {
         ) : (
           <button
             className={modalStyles.submitButton}
-            onClick={handleSubmitNewAlbum}
+            onClick={handleUploadEdit}
           >
-            업로드
+            완료
           </button>
         )}
       </div>
@@ -143,4 +155,4 @@ const NewAlbumModal = () => {
   );
 };
 
-export default NewAlbumModal;
+export default EditAlbumModal;
