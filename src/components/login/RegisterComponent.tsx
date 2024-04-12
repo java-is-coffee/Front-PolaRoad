@@ -82,12 +82,10 @@ function RegisterContainer({
   };
 
   const checkingEmail = async () => {
-    const testEmail = await checkEmail(email);
     const dupCheck = await dupCheckEmail(email);
-    if (testEmail) {
+    if (dupCheck) {
       setIsEmail(true);
-    }
-    if (!testEmail) {
+    } else {
       setIsEmail(false);
       toast.error("이메일이 올바르지 않습니다.");
     }

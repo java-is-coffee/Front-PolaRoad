@@ -8,11 +8,14 @@ const useRegister = () => {
   const checkEmail = (input: string) => {
     const emailRegEx =
       /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
+
     return emailRegEx.test(input);
     // return true;
   };
 
   const dupCheckEmail = async (input: string) => {
+    const emailCheck = checkEmail(input);
+
     const EmailData: EmailData = {
       email: input,
     };
@@ -23,12 +26,10 @@ const useRegister = () => {
 
     const dupCheck = await EmailCheck(EmailDTO);
 
-    if (dupCheck === true) {
-      toast.warn("이미 존재하는 이메일 입니다.");
-      return false;
-    } else {
-      return true;
-    }
+    if (dupCheck === true) toast.warn("이미 존재하는 이메일 입니다.");
+
+    //dupCheck가 true 면 중복 // emailCheck가 true여야 이메일 규격
+    return emailCheck && !dupCheck;
   };
 
   const checkPassword = (input: string) => {

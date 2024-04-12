@@ -35,8 +35,7 @@ const ExplorePhotoList = () => {
   });
 
   useEffect(() => {
-    console.log("얘부터 실행아님?");
-    if (localStorage.getItem("accessToken") === null) {
+    if (secureLocalStorage.getItem("accessToken") === null) {
       navigate("/login");
       return;
     }
