@@ -19,7 +19,7 @@
   left: 50%;
   transform: translate(-50%, -50%); /* Center the modal */
   z-index: 1001; /* Higher than the backdrop to appear on top */
-  background: white;
+  background-color: white;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   display: flex;
@@ -46,7 +46,6 @@
 
 .imgContainer {
   width: 100px;
-  height: 100px;
   border-radius: 50%;
   overflow: hidden;
   margin: 0 auto 10px;
@@ -65,10 +64,13 @@
 }
 
 .optionSection {
-  width: 100%;
+  margin: 0 30px 30px;
   font-size: 1.4rem;
   font-weight: 500;
-  margin-bottom: 20px;
+  border: none;
+  border-radius: 15px;
+  background-color: white;
+  border: 1px solid #13c4a3;
 }
 
 .option {
@@ -78,4 +80,9 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid #13c4a3;
+}
+
+.option:last-child {
+  border-bottom: none;
 }

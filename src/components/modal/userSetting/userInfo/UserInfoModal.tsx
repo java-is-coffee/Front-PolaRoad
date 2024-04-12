@@ -75,6 +75,7 @@ const UserInfoModal = () => {
                 <img src={profileImg} alt="프로필 이미지" />
               </div>
               <span>{memberInfo?.name}</span>
+              <span style={{fontSize:"10px", color: "gray", marginTop: "3px"}}>PolaRoad</span>
             </div>
             <section className={modalStyles.optionSection}>
               <div
