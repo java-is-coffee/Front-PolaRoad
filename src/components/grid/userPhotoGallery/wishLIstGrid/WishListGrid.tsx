@@ -9,6 +9,9 @@ const WishListGrid = () => {
   const [selectedWishListId, setSelectedWishListId] = useState<number | null>(
     null
   );
+  const [selectedWishListName, setSelectedWishListName] = useState<
+    string | null
+  >(null);
   useEffect(
     () => {
       const fetchWishList = async () => {
@@ -20,8 +23,9 @@ const WishListGrid = () => {
     // eslint-disable-next-line
     []
   );
-  const handleSelectWishList = (wishListId: number) => {
+  const handleSelectWishList = (wishListId: number, wishListName: string) => {
     setSelectedWishListId(wishListId);
+    setSelectedWishListName(wishListName);
   };
   return (
     <div className={gridStyle.gridGallery}>
@@ -34,15 +38,25 @@ const WishListGrid = () => {
                 : gridStyle.defaultWish
             }
             key={wishList.wishListId}
-            onClick={() => handleSelectWishList(wishList.wishListId)}
+            onClick={() =>
+              handleSelectWishList(wishList.wishListId, wishList.name)
+            }
           >
             <h2>{wishList.name}</h2>
           </div>
         ))}
       </div>
-      <WishListPostGrid
-        wishListId={selectedWishListId ? selectedWishListId : 0}
-      />
+      {selectedWishListId && selectedWishListName ? (
+        <WishListPostGrid
+          wishListId={selectedWishListId}
+          wishListName={selectedWishListName}
+        />
+      ) : (
+        <div className={gridStyle.default}>
+          <img src="/logo512.png" alt="로고" width={"150px"} />
+          <span>위시리스트를 선택해주세요.</span>
+        </div>
+      )}
     </div>
   );
 };

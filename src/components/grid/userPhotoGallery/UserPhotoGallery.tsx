@@ -1,7 +1,7 @@
 import HistoryOption from "../../../enum/historyOptionType";
 import PostGallery from "./PostGallery";
 import AlbumGallery from "./AlbumGallery";
-import WishListGrid from "./WishListGrid";
+import WishListGrid from "./wishLIstGrid/WishListGrid";
 
 interface userPhotoGalleryProps {
   option: HistoryOption;
