@@ -1,0 +1,72 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  position: relative;
+  width: auto;
+  height: auto;
+  max-width: 800px;
+  min-width: 300px;
+  max-height: 80vh;
+  min-height: 100px;
+  background-color: white;
+  border-radius: 8px;
+  overflow: auto;
+  transition: all 0.2s ease;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+h1 {
+  margin: 0;
+  margin-bottom: 15px;
+}
+
+.menuItem {
+  color: #333;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.cancelButton {
+  margin-top: 10px;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.1s all ease-in-out;
+  border-radius: 8px;
+  color: red;
+}
+
+.cancelButton:hover {
+  background-color: red;
+  color: white;
+}
+
+.submitButton {
+  margin-top: 10px;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.1s all ease-in-out;
+  border-radius: 8px;
+  color: black;
+}
+
+.submitButton:hover {
+  background-color: var(--main-theme-color);
+  color: white;
+}
