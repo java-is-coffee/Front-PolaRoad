@@ -34,8 +34,8 @@ function PostMap({ cards }: PostMapProps) {
   }, [cards, containerRef.current]);
 
   useEffect(() => {
-    console.log("지도 재설정");
     mapReload();
+    // eslint-disable-next-line
   }, [containerRef.current]);
 
   useEffect(() => {
