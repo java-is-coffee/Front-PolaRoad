@@ -28,6 +28,11 @@
   font-weight: bold;
 }
 
+.thumbnailCard .actionControl {
+  display: flex;
+  flex-direction: row;
+}
+
 .thumbnailCard .good {
   display: inlineBlock;
   font-size: 1.2rem;
