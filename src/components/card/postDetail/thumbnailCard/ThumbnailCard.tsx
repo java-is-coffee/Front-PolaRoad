@@ -10,6 +10,7 @@ import { useModal } from "hooks/modal/ModalProvider";
 import ModalOption from "enum/modalOptionTypes";
 
 interface ThumbnailCardProps {
+  postId: number;
   title: string;
   goodNumber: number;
   thumbnailImageURL: string | undefined;
@@ -20,6 +21,7 @@ interface ThumbnailCardProps {
 }
 
 function ThumbnailCard({
+  postId,
   title,
   goodNumber,
   thumbnailImageURL,
@@ -28,7 +30,6 @@ function ThumbnailCard({
   hashTags,
   memberGood,
 }: ThumbnailCardProps) {
-  const { postId } = useParams();
   const { getImage } = useBucket();
   const { openModal } = useModal();
   const [isActiveHeart, setIsActiveHeart] = useState<boolean>(memberGood);

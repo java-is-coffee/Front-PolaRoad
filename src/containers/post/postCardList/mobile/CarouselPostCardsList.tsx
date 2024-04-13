@@ -20,6 +20,7 @@ function CarouselPostCardsList({
   const wrapperRef = useRef<HTMLDivElement | null>(null);
   const cards = [
     <ThumbnailCard
+      postId={postId}
       key="thumbnail"
       title={postDetails.title}
       goodNumber={postDetails.goodNumber}
