@@ -12,7 +12,7 @@ import {
   setCurPage,
   setEndPoint,
 } from "../../../redux/reducers/explore/explorePostReducer";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import useStoreValue from "hooks/storeValue/useStoreValue";
 import secureLocalStorage from "react-secure-storage";
 
@@ -25,6 +25,7 @@ const ExplorePhotoList = () => {
 
   const dispatch = useDispatch();
 
+  const location = useLocation();
   const [query] = useSearchParams();
 
   const { storePostList, storeEndPoint, storeCurPage } = useStoreValue();
@@ -36,7 +37,13 @@ const ExplorePhotoList = () => {
 
   useEffect(() => {
     if (secureLocalStorage.getItem("accessToken") === null) {
-      navigate("/login");
+      // console.log(location.search);
+      navigate("/login", {
+        state: {
+          from: location.pathname,
+          search: location.search,
+        },
+      });
       return;
     }
     // eslint-disable-next-line

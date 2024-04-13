@@ -38,6 +38,7 @@ function LoginContainer({
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const inputData: LoginData = {
       email: email,
       password: password,

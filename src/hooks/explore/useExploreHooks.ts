@@ -27,7 +27,6 @@ const useExploreHooks = () => {
 
   const addPostList = async (inputDTO: GetListDTO) => {
     const result = await getPostList(inputDTO);
-    console.log(result);
 
     if (result.hasNext === false) {
       dispatch(addExplorePostList(result.posts));
