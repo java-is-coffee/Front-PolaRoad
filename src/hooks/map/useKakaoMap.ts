@@ -99,8 +99,15 @@ const useKakaoMap = () => {
   };
 
   const renderOverlay = (routes: IRoutesPointType[]) => {
-    renderPolyline(routes);
+    const points = routes.map((route) => {
+      if (route.latitude !== null && route.longitude !== null) {
+        return getLatLng(route.latitude, route.longitude);
+      } else {
+        return null;
+      }
+    });
     renderMarker(routes);
+    renderPolyline(routes, points);
   };
 
   const mapReload = () => {
@@ -109,13 +116,14 @@ const useKakaoMap = () => {
     }
   };
 
-  const renderPolyline = (routes: IRoutesPointType[]) => {
+  const renderPolyline = (routes: IRoutesPointType[], points: any) => {
     if (routes.length <= 1) return;
+
     const polyLine = new kakao.maps.Polyline({
-      path: routes,
-      strokeWeight: 2,
+      path: points,
+      strokeWeight: 5,
       strokeColor: "#13C4A3",
-      strokeStyle: "dashed",
+      strokeStyle: "longdash",
     });
     polyLine.setMap(mapRef.current);
   };
@@ -134,10 +142,10 @@ const useKakaoMap = () => {
         content: content,
         yAnchor: 1,
       });
-      mapRef.current.setBounds(bounds);
       // 지도에 오버레이 추가
       customOverlay.setMap(mapRef.current);
     });
+    mapRef.current.setBounds(bounds);
   };
 
   return {
