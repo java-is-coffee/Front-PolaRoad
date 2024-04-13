@@ -4,7 +4,6 @@ import useBucket from "hooks/bucket/useBucket";
 import { useEffect, useState } from "react";
 import cardStyles from "./ThumbnailCard.module.css";
 import patchPostGoodToggle from "api/post/patchPostGoodToggle";
-import { useParams } from "react-router-dom";
 import { MdBookmarkAdd } from "react-icons/md";
 import { useModal } from "hooks/modal/ModalProvider";
 import ModalOption from "enum/modalOptionTypes";
