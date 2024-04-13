@@ -17,7 +17,7 @@ const SearchModal = () => {
   const { closeModal } = useModal();
   const { setItem } = useExploreHooks();
 
-  const setPostList = (item: string | null) => {
+  const setSearchData = (item: string | null) => {
     //item이 null이면 기본 검색
     if (item === null) {
       const newData: RecentDTO = {
@@ -43,12 +43,12 @@ const SearchModal = () => {
   //기본 제출 (item을 null로 해두어 해당 쿼리문을 그대로 사용하도록)
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setPostList(null);
+    setSearchData(null);
   };
 
   //최근 검색어 클릭 시, 해당 검색어가 인자로 넘어가서 해당 검색어가 실행되도록
   const repeatRecentData = (item: string) => {
-    setPostList(item);
+    setSearchData(item);
   };
 
   useEffect(() => {

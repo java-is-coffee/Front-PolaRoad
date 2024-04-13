@@ -23,8 +23,6 @@ function ExploreContainer() {
   //oauth를 통해 들어왔을 경우. param에 토큰들이 저장되어 들어옴
   useEffect(() => {
     if (tokens.get("access_token")) {
-      console.log("oauth 테스트");
-      console.log("oauth 테스트??왜 실행이");
       const accessToken = tokens.get("access_token");
       const refreshToken = tokens.get("refresh_token");
       // 리프레쉬 토큰조차 없을 경우, 다시 발급받아야함.

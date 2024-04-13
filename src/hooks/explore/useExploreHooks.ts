@@ -8,7 +8,8 @@ import {
   setEndPoint,
   setExplorePostList,
 } from "../../redux/reducers/explore/explorePostReducer";
-import { GetListDTO } from "interface/explore/ExplorePost";
+import { GetFollowListDTO, GetListDTO } from "interface/explore/ExplorePost";
+import getFollwerPostList from "api/explore/getFollwerPostList";
 
 const useExploreHooks = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,25 @@ const useExploreHooks = () => {
     dispatch(setEndPoint(false));
   };
 
+  const setFollowPostList = async (inputDTO: GetFollowListDTO) => {
+    if (inputDTO.paging === 1) {
+      const result = await getFollwerPostList(inputDTO);
+      dispatch(setExplorePostList(result.posts));
+      dispatch(setCurPage(inputDTO.paging));
+      dispatch(setEndPoint(false));
+    } else {
+      const result = await getFollwerPostList(inputDTO);
+      if (result.hasNext === false) {
+        dispatch(addExplorePostList(result.posts));
+        console.log("끝");
+        return 0;
+      } else {
+        dispatch(addExplorePostList(result.posts));
+        return 1;
+      }
+    }
+  };
+
   const addPostList = async (inputDTO: GetListDTO) => {
     const result = await getPostList(inputDTO);
 
@@ -38,7 +58,7 @@ const useExploreHooks = () => {
     }
   };
 
-  return { setItem, setPostList, addPostList };
+  return { setItem, setPostList, addPostList, setFollowPostList };
 };
 
 export default useExploreHooks;

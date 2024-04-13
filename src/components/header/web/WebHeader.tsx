@@ -1,7 +1,7 @@
 import { GoBell } from "react-icons/go";
 import headerStyle from "./WebHeader.module.css";
 import { Avatar, IconButton } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useBucket from "hooks/bucket/useBucket";
 import { IMemberInfoDetails } from "interface/member/IMemberInfoDetails";
@@ -12,11 +12,14 @@ import { useModal } from "hooks/modal/ModalProvider";
 import ModalOption from "enum/modalOptionTypes";
 import useStoreValue from "hooks/storeValue/useStoreValue";
 import { setExplorePostList } from "../../../redux/reducers/explore/explorePostReducer";
+import useExploreHooks from "hooks/explore/useExploreHooks";
 
 function WebHeader() {
   const navigate = useNavigate();
   const { openModal } = useModal();
+  const { setItem } = useExploreHooks();
   const { setValue } = useStoreValue();
+  const [query, setQuery] = useSearchParams();
 
   const navigation = (input: string) => {
     navigate(`/${input}`);
@@ -61,10 +64,12 @@ function WebHeader() {
             <span onClick={resetPage}>Home</span>
             <span
               onClick={() => {
-                navigate(-1);
+                query.set("follow", "true");
+                setQuery(query);
+                setItem(setExplorePostList(null));
               }}
             >
-              Subscribe
+              Follower
             </span>
             <span>Map</span>
             <span
