@@ -12,6 +12,7 @@ interface PostCardListProps {
 function PostCardList({ postDetails, postId }: PostCardListProps) {
   const cards = [
     <ThumbnailCard
+      postId={postId}
       title={postDetails.title}
       goodNumber={postDetails.goodNumber}
       thumbnailImageURL={postDetails.cards[postDetails.thumbnailIndex].image}

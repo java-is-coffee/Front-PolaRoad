@@ -36,8 +36,11 @@ const PostOptionModal = ({ memberId, postId }: PostOptionModalProps) => {
   };
 
   const handleShare = () => {
-    console.log("openshareModal");
     openModal(ModalOption.SHARE, { postId: postId });
+  };
+
+  const handleAddWish = () => {
+    openModal(ModalOption.ADD_TO_WISH, { postId: postId });
   };
 
   return (
@@ -50,7 +53,9 @@ const PostOptionModal = ({ memberId, postId }: PostOptionModalProps) => {
         <button className={modalStyles.option} onClick={handleFollow}>
           팔로우
         </button>
-        <button className={modalStyles.option}>저장</button>
+        <button className={modalStyles.option} onClick={handleAddWish}>
+          위시리스트에 추가
+        </button>
         <button className={modalStyles.option} onClick={handleShare}>
           공유
         </button>
