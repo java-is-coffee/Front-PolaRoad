@@ -1,7 +1,12 @@
 .container {
+  padding-top: 10px;
   width: 300px;
   height: 350px;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .container:hover {
@@ -10,20 +15,18 @@
 }
 
 .mainPhoto {
-  margin-top: 5px;
-  width: 270px;
+  width: 270px !important;
   height: 270px;
   border-radius: 9px;
-  overflow: hidden;
 }
 
 .carousel {
-  width: 300px;
+  width: 270px;
   border-radius: 9px;
   overflow: hidden;
   display: flex;
+  object-fit: cover;
   flex-direction: row;
-  justify-content: center;
 }
 
 .cardImg {
@@ -58,6 +61,7 @@
 
 .photoInfo {
   margin: 5px 1rem;
+  display: block;
 }
 
 .goodNumber {

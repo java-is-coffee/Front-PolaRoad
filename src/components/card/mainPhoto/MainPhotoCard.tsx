@@ -15,16 +15,16 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchMemberInfo = async (src: string, index: number) => {
-      const newImg = await getImage(item.images[index]);
+    const fetchMemberInfo = async (src: string) => {
+      const newImg = await getImage(src);
       if (newImg) {
-        setCardImgs([...cardImgs, newImg]);
+        setCardImgs((prev) => [...prev, newImg]);
       }
     };
 
-    item.images.map((imgSrc: string, index: number) =>
-      fetchMemberInfo(imgSrc, index)
-    );
+    item.images.map((imgSrc: string) => {
+      fetchMemberInfo(imgSrc);
+    });
 
     // eslint-disable-next-line
   }, []);
@@ -50,6 +50,8 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
   const goPost = (id: number) => {
     navigate(`/post/${id}`);
   };
+
+  console.log(cardImgs);
 
   return (
     <div key={item.postId} className={styles.container}>
