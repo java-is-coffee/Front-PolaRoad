@@ -16,26 +16,45 @@ const WishListPostGrid = ({
   wishListName,
 }: WishListPostGridProps) => {
   const { openModal } = useModal();
-  const [wishList, setWishList] = useState<IWishListPost[]>([]);
+  const [wishListPosts, setWishlistPosts] = useState<IWishListPost[]>([]);
   const [hasNext, setHasNext] = useState<boolean>(true);
+  const [page, setPage] = useState(1);
+  const observer = useRef<IntersectionObserver>();
   const lastPost = useRef(null); // 감시할 요소의 ref
+  const fetchWishList = async () => {
+    const data = await getWishListDetails(wishListId, page, 4);
+    if (data) {
+      data.hasNext ? setPage((prev) => prev + 1) : setHasNext(false);
+      setWishlistPosts((prev) => [...prev, ...data.posts]);
+    }
+  };
   useEffect(
     () => {
-      const fetchWishList = async () => {
-        const data = await getWishListDetails(wishListId, 1, 12);
-        if (data) {
-          setWishList(data.posts);
-          setHasNext(data.hasNext);
-        }
-      };
       fetchWishList();
     },
     // eslint-disable-next-line
     [wishListId, wishListName]
   );
 
+  useEffect(() => {
+    observer.current = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNext) {
+          fetchWishList();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (lastPost.current) {
+      observer.current.observe(lastPost.current);
+    }
+
+    return () => observer.current?.disconnect();
+    // eslint-disable-next-line
+  }, [wishListPosts, hasNext]);
+
   const handleDeleteWishList = () => {
-    console.log(wishListId);
     openModal(ModalOption.DELETE_WARNING, {
       type: "wishList",
       targetId: wishListId,
@@ -54,7 +73,7 @@ const WishListPostGrid = ({
         </span>
       </div>
       <div className={gridStyles.gridGallery}>
-        {wishList.map((post, index) => (
+        {wishListPosts.map((post, index) => (
           <WishListPostCard
             key={index}
             postId={post.postId}
