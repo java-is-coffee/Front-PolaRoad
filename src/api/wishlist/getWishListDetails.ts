@@ -10,7 +10,6 @@ const getWishListDetails = async (
     const API_URI = `/api/wishlist/content/${wishListId}?page=${page}&pageSize=${pageSize}`;
     const response = await axiosInstance.get(API_URI);
     const { status, data } = response;
-    console.log(data);
     if (status === 200) {
       return data as IWishListDetails;
     } else {
