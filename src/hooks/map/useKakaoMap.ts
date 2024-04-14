@@ -149,7 +149,23 @@ const useKakaoMap = () => {
     });
   };
 
+  // 지도의 영역을 변경 이벤트 리스너 등록하기
+  const registerMapChange = (
+    getMapArea: (swLatLng: any, neLatLng: any) => void
+  ) => {
+    const map = mapRef.current;
+    // bounds_changed 이벤트 리스너 설정
+    kakao.maps.event.addListener(map, "bounds_changed", () => {
+      // 지도의 현재 bounds를 가져옵니다.
+      const bounds = map.getBounds();
+      const swLatLng = bounds.getSouthWest();
+      const neLatLng = bounds.getNorthEast();
+      getMapArea(swLatLng, neLatLng);
+    });
+  };
+
   return {
+    mapRef,
     selectedPlace,
     initKakaoMap,
     searchPlaceByKeyword,
@@ -157,6 +173,7 @@ const useKakaoMap = () => {
     calculateCenterPoint,
     renderOverlay,
     mapReload,
+    registerMapChange,
   };
 };
 

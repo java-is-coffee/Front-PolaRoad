@@ -1,10 +1,17 @@
 import useKakaoMap from "hooks/map/useKakaoMap";
 import containerStyles from "./MapPageContainer.module.css";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+
+interface position {
+  latitude: number;
+  longitude: number;
+}
 
 const MapPageContainer = () => {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
-  const { initKakaoMap } = useKakaoMap();
+  const { mapRef, initKakaoMap, registerMapChange } = useKakaoMap();
+  const [bottomLeftLatLng, setBottomLeftLatLng] = useState<position | null>();
+  const [topRightLatLag, setTopRightLatLag] = useState<position | null>();
   // const [postPage, setPostPage] = useState<number>(1);
   // const [hasNext, setHasNext] = useState<boolean>(true);
   // const [postData, setPostData] = useState<MapPostData[]>([]);
@@ -26,14 +33,29 @@ const MapPageContainer = () => {
   //   }
   // };
 
-  // useEffect(() => {
-  //   fetchPostList(postPage);
-  // }, []);
+  useEffect(() => {
+    console.log(bottomLeftLatLng);
+    console.log(topRightLatLag);
+  }, [bottomLeftLatLng, topRightLatLag]);
+
+  const getMapArea = (swLatLng: any, neLatLng: any) => {
+    // 상태 업데이트
+    setBottomLeftLatLng({
+      latitude: swLatLng.getLat(),
+      longitude: swLatLng.getLng(),
+    });
+    setTopRightLatLag({
+      latitude: neLatLng.getLat(),
+      longitude: neLatLng.getLng(),
+    });
+  };
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
-    initKakaoMap(mapContainerRef.current, 36.2683, 127.6358, 12);
-    // eslint-disable-next-line
+
+    // 지도 초기화
+    initKakaoMap(mapContainerRef.current, 36.2683, 127.6358, 10);
+    registerMapChange(getMapArea);
   }, []);
 
   return (
