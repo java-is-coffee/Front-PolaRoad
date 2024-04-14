@@ -1,4 +1,6 @@
+import { IWishListPost } from "./IWishListPost";
+
 export interface IWishListDetails {
-  posts: { postId: number; title: string; thumbnailImage: string }[];
-  maxPage: number;
+  posts: IWishListPost[];
+  hasNext: boolean;
 }
