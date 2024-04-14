@@ -22,7 +22,7 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
       }
     };
 
-    item.images.map((imgSrc: string) => {
+    item.images.forEach((imgSrc: string) => {
       fetchMemberInfo(imgSrc);
     });
 
