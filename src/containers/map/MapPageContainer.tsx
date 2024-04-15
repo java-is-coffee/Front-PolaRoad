@@ -55,8 +55,8 @@ const MapPageContainer = () => {
 
   useEffect(() => {
     console.log(mapCards);
-    if (mapCards) renderMarkerForMapPage(mapCards);
     mapReload();
+    if (mapCards) renderMarkerForMapPage(mapCards);
     //eslint-disable-next-line
   }, [mapCards]);
 

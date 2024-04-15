@@ -21,6 +21,8 @@ const useKakaoMap = () => {
   const mapRef = useRef<any>(null); // map 인스턴스를 저장하기 위한 ref
   const infoWindowRef = useRef<any>(null); // infoWindow 인스턴스를 저장하기 위한 ref
   const [selectedPlace, setSelectedPlace] = useState<Place>();
+  // 마커들을 저장하는 배열
+  const markers = useRef<any[]>([]);
 
   const initKakaoMap = (
     mapContainer: HTMLElement,
@@ -170,8 +172,16 @@ const useKakaoMap = () => {
     });
   };
 
+  const removeAllMarkers = () => {
+    markers.current.forEach((marker) => {
+      marker.setMap(null); // 지도에서 마커 제거
+    });
+    markers.current = []; // 배열 비우기
+  };
+
   // 지도 페이지 마크 랜더링
   const renderMarkerForMapPage = (mapCards: IMapCard[]) => {
+    removeAllMarkers();
     const bounds = new kakao.maps.LatLngBounds();
     const map = mapRef.current;
     const existingPositions = new Set(); // 중복 위치를 추적하기 위한 Set
@@ -190,12 +200,12 @@ const useKakaoMap = () => {
       existingPositions.add(positionKey); // 위치를 Set에 추가
 
       // 마커 생성
-      new kakao.maps.Marker({
+      const maker = new kakao.maps.Marker({
         map: map,
         position: new kakao.maps.LatLng(card.latitude, card.longitude),
         image: markerImage, // 마커 이미지 사용
       });
-
+      markers.current.push(maker);
       bounds.extend(new kakao.maps.LatLng(card.latitude, card.longitude)); // 마커의 위치를 bounds에 추가
     });
   };
