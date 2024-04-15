@@ -1,0 +1,14 @@
+.data {
+  font-size: 2rem;
+  margin: 10px 0px;
+  padding: 5px 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 12px;
+}
+
+.data:hover {
+  background-color: #d9d9d9;
+}

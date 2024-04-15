@@ -1,6 +1,6 @@
 .gridGallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(5, 1fr); /* 5개의 컬럼으로 고정 */
   grid-gap: 2px;
   padding: 2px;
 }

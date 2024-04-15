@@ -1,23 +1,48 @@
 import { GoBell } from "react-icons/go";
 import headerStyle from "./WebHeader.module.css";
-import { Avatar } from "@mui/material";
+import { Avatar, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import HeaderSearch from "components/form/header/HeaderSearch";
-import useStoreValue from "hooks/storeValue/useStoreValue";
+// import HeaderSearch from "components/form/header/HeaderSearch";
+import { useEffect, useState } from "react";
+import useBucket from "hooks/bucket/useBucket";
+import { IMemberInfoDetails } from "interface/member/IMemberInfoDetails";
+import getMemberInfo from "api/member/getMemberInfo";
+import SearchIcon from "@mui/icons-material/Search";
+import secureLocalStorage from "react-secure-storage";
+import { useModal } from "hooks/modal/ModalProvider";
+import ModalOption from "enum/modalOptionTypes";
 
 function WebHeader() {
   const navigate = useNavigate();
-  const { resetValue } = useStoreValue();
+  const { openModal } = useModal();
 
   const navigation = (input: string) => {
     navigate(`/${input}`);
   };
 
   const resetPage = () => {
-    resetValue();
     navigate("/explore");
   };
   //true = pc화면 / false = 모바일 화면 767이하
+
+  const [profileImgURL, setProfileImgURL] = useState<string>("");
+  const { getImage } = useBucket();
+
+  useEffect(() => {
+    if (secureLocalStorage.getItem("accessToken")) {
+      const fetchMemberInfo = async () => {
+        const result: IMemberInfoDetails | null = await getMemberInfo();
+        if (result) {
+          const imgUrl = await getImage(result.profileImage);
+          if (imgUrl) {
+            setProfileImgURL(imgUrl);
+          }
+        }
+      };
+      fetchMemberInfo();
+    }
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className={headerStyle.header}>
@@ -46,7 +71,19 @@ function WebHeader() {
           <div
             className={`${headerStyle.searchToggleWrapper} ${headerStyle.searchVisible}`}
           >
-            <HeaderSearch />
+            <IconButton
+              aria-label="toggle password visibility"
+              edge="end"
+              sx={{
+                backgroundColor: "#13c4a3",
+                marginRight: "-1px",
+              }}
+              onClick={() => {
+                openModal(ModalOption.SEARCH);
+              }}
+            >
+              <SearchIcon />
+            </IconButton>
           </div>
 
           <GoBell size={"32px"} />
@@ -55,7 +92,12 @@ function WebHeader() {
               navigation("my");
             }}
           >
-            <Avatar alt="Travis Howard" src="icons/favicon-32x32.png" />
+            <Avatar
+              alt="Travis Howard"
+              src={
+                profileImgURL !== "" ? profileImgURL : `icons/favicon-32x32.png`
+              }
+            />
           </span>
         </div>
       </div>

@@ -5,13 +5,8 @@ import MainPhotoCard from "../../card/mainPhoto/MainPhotoCard";
 import styles from "./ExplorePhotoList.module.css";
 import useExploreHooks from "../../../hooks/explore/useExploreHooks";
 import { useDispatch } from "react-redux";
-import { CircularProgress, useMediaQuery } from "@mui/material";
-import {
-  conceptSet,
-  GetListDTO,
-  regionSet,
-  sortSet,
-} from "interface/explore/ExplorePost";
+import { useMediaQuery } from "@mui/material";
+import { GetListDTO, PostData } from "interface/explore/ExplorePost";
 import { useInView } from "react-intersection-observer";
 import {
   setCurPage,
@@ -19,8 +14,6 @@ import {
 } from "../../../redux/reducers/explore/explorePostReducer";
 import { useSearchParams } from "react-router-dom";
 import useStoreValue from "hooks/storeValue/useStoreValue";
-import { setSearchText } from "../../../redux/reducers/explore/filterReducer";
-import useCustomParam from "hooks/explore/useCustomParam";
 
 const ExplorePhotoList = () => {
   const { setPostList, addPostList } = useExploreHooks();
@@ -29,46 +22,31 @@ const ExplorePhotoList = () => {
 
   const dispatch = useDispatch();
 
-  const [query, setQuery] = useSearchParams();
+  const [query] = useSearchParams();
 
-  const {
-    storePostList,
-    storeEndPoint,
-    storeCurPage,
-    storeCategory,
-    storeRegion,
-    storeSort,
-    setValue,
-  } = useStoreValue();
+  const { storePostList, storeEndPoint, storeCurPage } = useStoreValue();
 
   //화면이 전부 나와야하며, 1초 딜레이
   const [ref, inView] = useInView({
     threshold: 0.8,
   });
 
-  const { getContent } = useCustomParam();
-
   useEffect(() => {
     console.log("시작");
-    if (query.get("region") !== null) getContent("region");
-    if (query.get("concept") !== null) getContent("concept");
-    if (query.get("sort") !== null) getContent("sort");
 
-    if (storePostList === null) {
-      setValue(setSearchText(query.get("search")));
-      const initPostList: GetListDTO = {
-        paging: 1,
-        pagingNumber: 8,
-        searchType: "KEYWORD",
-        keyword: query.get("search"),
-        sortBy: "RECENT",
-        concept: query.get("concept"),
-        region: query.get("region"),
-      };
-      setPostList(initPostList);
-    }
+    const initPostList: GetListDTO = {
+      paging: 1,
+      pagingNumber: 8,
+      searchType: "KEYWORD",
+      keyword: query.get("search"),
+      sortBy: query.get("sort") !== null ? query.get("sort") : "RECENT",
+      concept: query.get("concept"),
+      region: query.get("region"),
+    };
+    setPostList(initPostList);
+
     // eslint-disable-next-line
-  }, [storePostList]);
+  }, [query]);
 
   useEffect(() => {
     //렌더링 시작 시, 해당 view가 바로 포착되어서 .
@@ -79,57 +57,6 @@ const ExplorePhotoList = () => {
     }
     // eslint-disable-next-line
   }, [inView]);
-
-  useEffect(() => {
-    if (storeRegion !== null) {
-      const regionNumber = storeRegion
-        ? regionSet.values.indexOf(storeRegion)
-        : null;
-      query.set(
-        "region",
-        regionNumber !== null ? regionSet.key[regionNumber] : ""
-      );
-      setQuery(query);
-    } else {
-      query.delete("region");
-      setQuery(query);
-    }
-
-    // eslint-disable-next-line
-  }, [storeRegion]);
-
-  useEffect(() => {
-    if (storeCategory !== null) {
-      const categoryNumber = storeCategory
-        ? conceptSet.values.indexOf(storeCategory)
-        : null;
-      query.set(
-        "concept",
-        categoryNumber !== null ? conceptSet.key[categoryNumber] : ""
-      );
-      setQuery(query);
-    } else {
-      query.delete("concept");
-      setQuery(query);
-    }
-
-    // eslint-disable-next-line
-  }, [storeCategory]);
-
-  useEffect(() => {
-    if (storeSort !== null) {
-      const sortNumber = storeSort ? sortSet.values.indexOf(storeSort) : null;
-      query.set(
-        "sort",
-        sortNumber !== null ? sortSet.key[sortNumber] : "RECENT"
-      );
-      setQuery(query);
-    } else {
-      query.delete("sort");
-      setQuery(query);
-    }
-    // eslint-disable-next-line
-  }, [storeSort]);
 
   const addPostFunc = async (value: number) => {
     const addData: GetListDTO = {
@@ -156,15 +83,14 @@ const ExplorePhotoList = () => {
             적합한 게시글이 존재하지 않아요 ㅠ ㅅ ㅠ
           </div>
         ) : (
-          storePostList.map((item) => (
+          storePostList.map((item: PostData) => (
             <div key={item.postId} className={styles.card}>
               <MainPhotoCard item={item} />
             </div>
           ))
         )
       ) : (
-        //로딩창
-        <CircularProgress color="success" />
+        ""
       )}
 
       <div ref={ref} className={styles.wait}>

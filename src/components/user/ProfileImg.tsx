@@ -1,27 +1,32 @@
 interface profileImgProps {
   size: string;
   imgUrl: string;
+  onClick: () => void;
 }
-function ProfileImg({ size, imgUrl }: profileImgProps) {
+function ProfileImg({ size, imgUrl, onClick }: profileImgProps) {
   return (
     <div
       style={{
         width: size,
+        height: size,
         borderRadius: "50%",
         overflow: "hidden",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        cursor: "pointer",
       }}
+      onClick={onClick}
     >
-      {imgUrl ? (
-        <img src={imgUrl} alt="프로필 이미지" width={size} height={size} />
-      ) : (
-        <img
-          src="/basic/profile.png"
-          alt="프로필 기본이미지"
-          width={size}
-          height={size}
-          style={{ display: "block", width: "100%", height: "auto" }}
-        />
-      )}
+      <img
+        src={imgUrl ? imgUrl : "/basic/profile.png"}
+        alt={imgUrl ? "프로필 이미지" : "프로필 기본이미지"}
+        style={{
+          display: "block",
+          width: "100%",
+          objectFit: "cover",
+        }}
+      />
     </div>
   );
 }

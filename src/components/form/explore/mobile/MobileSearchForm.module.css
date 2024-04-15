@@ -1,15 +1,32 @@
+.container {
+  margin-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .conceptBox {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
+  margin-bottom: 100px;
 }
 
 .conceptList {
-  background-color: #d4d4d4;
+  background-color: #eff1f5;
   margin: 10px;
-  width: 40vw;
+  width: 25vw;
   padding: 15px;
   border-radius: 12px;
   font-size: 1.5rem;
+}
+
+/* .conceptBox :hover {
+  background-color: #13c4a3;
+} */
+
+.selected {
+  background-color: #13c4a3 !important;
 }

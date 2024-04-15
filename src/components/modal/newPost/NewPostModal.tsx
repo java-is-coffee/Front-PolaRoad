@@ -49,7 +49,7 @@ function NewPostModal() {
   // 모달 바깥쪽 눌렀을떄 모달 탈출
   const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
-      openModal(ModalOption.WARNING);
+      openModal(ModalOption.WARNING, { modalType: ModalOption.POST });
     }
   };
   // 컴포넌트 랜더링시에 한번만 리스너 추가

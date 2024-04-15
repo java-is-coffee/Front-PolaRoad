@@ -10,6 +10,7 @@ import { IMemberInfoDetails } from "interface/member/IMemberInfoDetails";
 import useBucket from "hooks/bucket/useBucket";
 import { useEffect, useState } from "react";
 import { useModal } from "hooks/modal/ModalProvider";
+import { FaRegHeart } from "react-icons/fa";
 
 interface ProfileCardProps {
   memberInfo: IMemberInfoDetails;
@@ -32,16 +33,21 @@ function ProfileCard({ memberInfo }: ProfileCardProps) {
   }, []);
 
   const handleEditProfileImg = () => {
-    openModal(ModalOption.EDITPROFILEIMG);
+    openModal(ModalOption.EDIT_PROFILE_IMG);
+  };
+
+  const handleOpenUserSetting = () => {
+    openModal(ModalOption.USER_SETTING);
   };
 
   return (
     <div className={profileStyles.card}>
-      <div
-        className={profileStyles.imgContainer}
-        onClick={handleEditProfileImg}
-      >
-        <ProfileImg size={"200px"} imgUrl={profileImgURL} />
+      <div className={profileStyles.imgContainer}>
+        <ProfileImg
+          size={"200px"}
+          imgUrl={profileImgURL}
+          onClick={handleEditProfileImg}
+        />
       </div>
       <div className={profileStyles.header}>
         <span>{memberInfo.nickname}</span>
@@ -51,7 +57,7 @@ function ProfileCard({ memberInfo }: ProfileCardProps) {
             name="프로필 변경"
             clickAction={handleEditProfileImg}
           />
-          <IoIosSettings size={"24px"} />
+          <IoIosSettings size={"24px"} onClick={handleOpenUserSetting} />
         </div>
       </div>
       <div className={profileStyles.stat}>
@@ -69,6 +75,11 @@ function ProfileCard({ memberInfo }: ProfileCardProps) {
         name="New album"
         icon={<MdOutlinePhotoAlbum size={"24px"} />}
         type={ModalOption.ALBUM}
+      />
+      <UserActionBtn
+        name="New wishlist"
+        icon={<FaRegHeart size={"24px"} />}
+        type={ModalOption.WISH}
       />
     </div>
   );

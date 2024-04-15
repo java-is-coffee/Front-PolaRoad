@@ -29,7 +29,6 @@ const NewCardDetails = () => {
   };
 
   const decreaseIndex = () => {
-    if (!validateCardDetails(cardList[activeIndex])) return;
     if (activeIndex - 1 < 0) {
       dispatch(addCardFront());
     } else {

@@ -1,12 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import HistoryOption from "../../enum/historyOptionType";
 import UserGalleryHeader from "../../components/header/userGallery/UserGalleryHeader";
 import UserPhotoGallery from "../../components/grid/userPhotoGallery/UserPhotoGallery";
 
 import containerStyles from "./UserGallery.module.css";
-import { useModal } from "hooks/modal/ModalProvider";
-import ModalOption from "enum/modalOptionTypes";
-import PostOptionModal from "components/modal/option/PostOptionModal";
 
 interface UserHistoryContainerProps {
   memberId: number;
@@ -14,7 +11,6 @@ interface UserHistoryContainerProps {
 }
 
 function UserHistoryContainer({ memberId }: UserHistoryContainerProps) {
-  const { registerModal, closeModal } = useModal();
   const [optionType, setOptionType] = useState<HistoryOption>(
     HistoryOption.POST
   );
@@ -22,18 +18,6 @@ function UserHistoryContainer({ memberId }: UserHistoryContainerProps) {
     if (optionType === option) return;
     setOptionType(option);
   };
-
-  useEffect(
-    () => {
-      registerModal(
-        ModalOption.POSTOPTION,
-        <PostOptionModal memberId={memberId} />
-      );
-      return closeModal(ModalOption.POSTOPTION);
-    },
-    //eslint-disable-next-line
-    []
-  );
 
   return (
     <div className={containerStyles.wrapper}>

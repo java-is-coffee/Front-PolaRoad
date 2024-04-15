@@ -10,7 +10,7 @@ import modalStyles from "./ShareModal.module.css";
 import { useModal } from "hooks/modal/ModalProvider";
 import ModalOption from "enum/modalOptionTypes";
 interface ShareModalProps {
-  postId: number;
+  postId?: number;
 }
 
 const BASE_URL = "http://polaroad.s3-website.ap-northeast-2.amazonaws.com";

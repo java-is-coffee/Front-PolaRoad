@@ -5,20 +5,15 @@ import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
 import { rootReducer } from "./redux/store/store";
 import App from "./App";
-import { ModalProvider } from "./hooks/modal/ModalProvider";
 import "react-toastify/dist/ReactToastify.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <Provider store={rootReducer}>
-      <ModalProvider>
-        <App />
-      </ModalProvider>
-    </Provider>
-  </React.StrictMode>
+  <Provider store={rootReducer}>
+    <App />
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function
