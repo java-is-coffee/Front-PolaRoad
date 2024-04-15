@@ -82,7 +82,11 @@ const MapPageContainer = () => {
   }, []);
 
   const handleConceptChange = (type: ConceptType) => {
-    setConcept(type);
+    if (type === concept) {
+      setConcept(undefined);
+    } else {
+      setConcept(type);
+    }
   };
 
   return (
