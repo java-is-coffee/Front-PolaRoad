@@ -1,65 +1,78 @@
 import useKakaoMap from "hooks/map/useKakaoMap";
 import containerStyles from "./MapPageContainer.module.css";
 import { useEffect, useRef, useState } from "react";
+import { IMapCard } from "interface/map/IMapCard";
+import getCardsByMapArea from "api/mapPost/getCardsByMapArea";
+import MapSideContainer from "components/map/sideContainer/MapSideConatainer";
+import ConceptType from "enum/ConceptOptionType";
+import MapHeader from "components/map/mapHeader/MapHeader";
 
 interface position {
-  latitude: number;
-  longitude: number;
+  lat: number;
+  lng: number;
 }
 
 const MapPageContainer = () => {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
-  const { mapRef, initKakaoMap, registerMapChange } = useKakaoMap();
-  const [bottomLeftLatLng, setBottomLeftLatLng] = useState<position | null>();
-  const [topRightLatLag, setTopRightLatLag] = useState<position | null>();
-  // const [postPage, setPostPage] = useState<number>(1);
-  // const [hasNext, setHasNext] = useState<boolean>(true);
-  // const [postData, setPostData] = useState<MapPostData[]>([]);
+  const { mapRef, initKakaoMap, registerMapChange, renderMarkerForMapPage } =
+    useKakaoMap();
+  const [mapLevel, setMapLevel] = useState<number>(10);
+  const [swLatLng, setSwLatLng] = useState<position>();
+  const [neLatLng, setNeLatLng] = useState<position>();
+  const [mapCards, setMapCards] = useState<IMapCard[]>([]);
+  const [concept, setConcept] = useState<ConceptType>();
 
-  // const fetchPostList = async (page: number) => {
-  //   const postConfig: GetListDTO = {
-  //     paging: page,
-  //     pagingNumber: 10,
-  //     searchType: "KEYWORD",
-  //     sortBy: "RECENT",
-  //   };
-  //   const data = await getPostList(postConfig);
-  //   if (data) {
-  //     setPostData((prev) => [...prev, ...data.posts]); // 이전 데이터에 새로운 데이터 추가
-  //     setHasNext(data.hasNext);
-  //     if (data.hasNext) {
-  //       fetchPostList(page + 1); // 다음 페이지가 있으면 재귀 호출
-  //     }
-  //   }
-  // };
+  const fetchMapCards = async () => {
+    if (!swLatLng || !neLatLng) return;
+    const data = await getCardsByMapArea(swLatLng, neLatLng, mapLevel);
+    if (data) {
+      setMapCards(data);
+    }
+  };
 
   useEffect(() => {
-    console.log(bottomLeftLatLng);
-    console.log(topRightLatLag);
-  }, [bottomLeftLatLng, topRightLatLag]);
+    fetchMapCards();
+  }, [swLatLng, neLatLng]);
 
-  const getMapArea = (swLatLng: any, neLatLng: any) => {
+  useEffect(() => {
+    console.log(mapCards);
+    if (mapCards) renderMarkerForMapPage(mapCards);
+  }, [mapCards]);
+
+  const getMapArea = (level: number, swLatLng: any, neLatLng: any) => {
     // 상태 업데이트
-    setBottomLeftLatLng({
-      latitude: swLatLng.getLat(),
-      longitude: swLatLng.getLng(),
+    setMapLevel(level);
+    setSwLatLng({
+      lat: swLatLng.getLat(),
+      lng: swLatLng.getLng(),
     });
-    setTopRightLatLag({
-      latitude: neLatLng.getLat(),
-      longitude: neLatLng.getLng(),
+    setNeLatLng({
+      lat: neLatLng.getLat(),
+      lng: neLatLng.getLng(),
     });
   };
 
   useEffect(() => {
     if (!mapContainerRef.current) return;
-
     // 지도 초기화
-    initKakaoMap(mapContainerRef.current, 36.2683, 127.6358, 10);
+    initKakaoMap(mapContainerRef.current, 36.2683, 127.6358, mapLevel);
     registerMapChange(getMapArea);
   }, []);
 
+  const handleConceptChange = (type: ConceptType) => {
+    setConcept(type);
+  };
+
   return (
-    <div ref={mapContainerRef} className={containerStyles.container}></div>
+    <div ref={mapContainerRef} className={containerStyles.container}>
+      {
+        <MapHeader
+          selectedConcept={concept}
+          handleSelectConcept={handleConceptChange}
+        />
+      }
+      {mapCards && <MapSideContainer cards={mapCards} />}
+    </div>
   );
 };
 
