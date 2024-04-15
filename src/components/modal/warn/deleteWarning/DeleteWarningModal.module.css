@@ -9,7 +9,7 @@
   z-index: 1004; /* High z-index to ensure it covers other content */
 }
 
-.deleteAlbumModalContainer {
+.deleteWarningModalContainer {
   position: fixed;
   width: 30%;
   min-width: 450px;
@@ -28,11 +28,11 @@
   align-items: center;
 }
 
-.deleteAlbumModalContainer p {
+.deleteWarningModalContainer p {
   font-size: 1.4rem;
 }
 
-.deleteAlbumModalContainer button {
+.deleteWarningModalContainer button {
   width: 100%;
   padding: 10px 10px;
   background-color: white;
@@ -41,7 +41,7 @@
   cursor: pointer;
 }
 
-.deleteAlbumModalContainer button:hover {
+.deleteWarningModalContainer button:hover {
   background-color: #ccc;
   transition: all 0.1s ease-in-out;
 }

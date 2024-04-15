@@ -18,7 +18,6 @@ function PostGallery() {
     console.log(postHasNext);
     const data = await getMyPostList(postPage, postAmount);
     if (data) {
-      console.log(data.hasNext);
       data.hasNext ? setPostPage((prev) => prev + 1) : setPostHasNext(false);
       const newPosts = data.posts.filter(
         (newPost) =>

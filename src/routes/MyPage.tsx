@@ -16,8 +16,9 @@ import UserSettingModal from "components/modal/userSetting/UserSettingModal";
 import NewAlbumModal from "components/modal/album/newAlbum/NewAlbumModal";
 import NewWishListModal from "components/modal/wish/newWishList/NewWishListModal";
 import AlbumPreviewModal from "components/modal/album/albumPreview/AlbumPreviewModal";
-import DeleteAlbumModal from "components/modal/album/deleteAlbum/DeleteAlbumModal";
 import EditAlbumModal from "components/modal/album/editAlbum/EditAlbumModal";
+import DeleteWarningModal from "components/modal/warn/deleteWarning/DeleteWarningModal";
+import AddPostWishList from "components/modal/wish/addPostWishList/AddPostWishList";
 
 function MyPage() {
   const { registerModal, closeModal } = useModal();
@@ -33,8 +34,9 @@ function MyPage() {
     registerModal(ModalOption.POST_OPTION, <PostOptionModal />);
     registerModal(ModalOption.ALBUM, <NewAlbumModal />);
     registerModal(ModalOption.AlBUM_PREVIEW, <AlbumPreviewModal />);
-    registerModal(ModalOption.AlBUM_DELETE, <DeleteAlbumModal />);
+    registerModal(ModalOption.DELETE_WARNING, <DeleteWarningModal />);
     registerModal(ModalOption.ALBUM_EDIT, <EditAlbumModal />);
+    registerModal(ModalOption.ADD_TO_WISH, <AddPostWishList />);
     return () => {
       closeModal(ModalOption.POST);
       closeModal(ModalOption.WARNING);
@@ -47,8 +49,9 @@ function MyPage() {
       closeModal(ModalOption.POST_OPTION);
       closeModal(ModalOption.ALBUM);
       closeModal(ModalOption.AlBUM_PREVIEW);
-      closeModal(ModalOption.AlBUM_DELETE);
+      closeModal(ModalOption.DELETE_WARNING);
       closeModal(ModalOption.ALBUM_EDIT);
+      closeModal(ModalOption.ADD_TO_WISH);
     };
     // eslint-disable-next-line
   }, []);
