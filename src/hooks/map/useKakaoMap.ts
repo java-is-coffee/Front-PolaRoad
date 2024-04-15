@@ -120,13 +120,18 @@ const useKakaoMap = () => {
 
   const renderPolyline = (routes: IRoutesPointType[]) => {
     if (routes.length <= 1) return;
+    const path = routes.map(
+      (route) => new kakao.maps.LatLng(route.latitude, route.longitude)
+    );
+    console.log(routes);
+    const map = mapRef.current;
     const polyLine = new kakao.maps.Polyline({
-      path: routes,
+      path: path,
       strokeWeight: 2,
       strokeColor: "#13C4A3",
       strokeStyle: "dashed",
     });
-    polyLine.setMap(mapRef.current);
+    polyLine.setMap(map);
   };
 
   const renderMarker = (routes: IRoutesPointType[]) => {
@@ -151,16 +156,17 @@ const useKakaoMap = () => {
 
   // 지도의 영역을 변경 이벤트 리스너 등록하기
   const registerMapChange = (
-    getMapArea: (swLatLng: any, neLatLng: any) => void
+    getMapArea: (level: number, swLatLng: any, neLatLng: any) => void
   ) => {
     const map = mapRef.current;
     // bounds_changed 이벤트 리스너 설정
     kakao.maps.event.addListener(map, "bounds_changed", () => {
       // 지도의 현재 bounds를 가져옵니다.
       const bounds = map.getBounds();
+      const level = map.getLevel();
       const swLatLng = bounds.getSouthWest();
       const neLatLng = bounds.getNorthEast();
-      getMapArea(swLatLng, neLatLng);
+      getMapArea(level, swLatLng, neLatLng);
     });
   };
 

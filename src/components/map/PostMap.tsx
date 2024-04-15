@@ -26,7 +26,7 @@ function PostMap({ cards }: PostMapProps) {
         latitude: card.latitude,
         longitude: card.longitude,
       }));
-
+    if (routePointData.length === 0) return;
     const centerPoint = calculateCenterPoint(routePointData);
     initKakaoMap(containerRef.current, centerPoint.lat, centerPoint.lng, 3);
     renderOverlay(routePointData);
