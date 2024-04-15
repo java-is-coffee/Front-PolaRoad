@@ -26,6 +26,11 @@ export interface GetListDTO {
   region: string | null;
 }
 
+export interface GetFollowListDTO {
+  paging: number;
+  pagingNumber: number;
+}
+
 export const { sortSet, conceptSet, regionSet } = {
   sortSet: {
     key: Object.keys(SortOptionType),

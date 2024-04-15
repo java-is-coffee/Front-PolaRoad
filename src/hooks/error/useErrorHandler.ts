@@ -20,7 +20,7 @@ const useErrorHandler = () => {
 
   const navigateOnError = ({ errorType, path }: ErrorProps) => {
     displayErrorToast(errorType);
-    // 토스트 메시지가 일정 시간 동안 표시된 후 페이지를 이동합니다.
+
     if (path) {
       navigate(path, { state: { from: location.pathname } });
     } else {

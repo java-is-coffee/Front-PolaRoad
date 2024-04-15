@@ -11,6 +11,7 @@ import SearchDropdown from "components/dropDown/search/SearchDropdown";
 import NewPostModal from "components/modal/newPost/NewPostModal";
 import WarningModal from "components/modal/warn/WarningModal";
 import ShareModal from "components/modal/shareModal/ShareModal";
+import ExploreFooter from "components/bottom/web/ExploreFooter";
 
 function Explore() {
   const { registerModal, closeModal } = useModal();
@@ -39,7 +40,7 @@ function Explore() {
       {isSmallScreen ? <MobileHeader /> : <WebHeader />}
       <ExploreContainer />
       <div style={{ position: "fixed", bottom: "0%", width: "100%" }}>
-        {isSmallScreen ? <BottomNavigator /> : ""}
+        {isSmallScreen ? <BottomNavigator /> : <ExploreFooter />}
       </div>
     </div>
   );

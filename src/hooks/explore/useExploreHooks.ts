@@ -8,36 +8,57 @@ import {
   setEndPoint,
   setExplorePostList,
 } from "../../redux/reducers/explore/explorePostReducer";
-import { GetListDTO } from "interface/explore/ExplorePost";
+import { GetFollowListDTO, GetListDTO } from "interface/explore/ExplorePost";
+import getFollwerPostList from "api/explore/getFollwerPostList";
 
 const useExploreHooks = () => {
   const dispatch = useDispatch();
 
   //모든 페이로드 액션 테스트
-  const SetItem = (action: PayloadAction<any>) => {
+  const setItem = (action: PayloadAction<any>) => {
     dispatch(action);
   };
 
   const setPostList = async (inputDTO: GetListDTO) => {
     const result = await getPostList(inputDTO);
-    dispatch(setExplorePostList(result));
+    dispatch(setExplorePostList(result.posts));
     dispatch(setCurPage(1));
     dispatch(setEndPoint(false));
+  };
+
+  const setFollowPostList = async (inputDTO: GetFollowListDTO) => {
+    if (inputDTO.paging === 1) {
+      const result = await getFollwerPostList(inputDTO);
+      dispatch(setExplorePostList(result.posts));
+      dispatch(setCurPage(inputDTO.paging));
+      dispatch(setEndPoint(false));
+    } else {
+      const result = await getFollwerPostList(inputDTO);
+      if (result.hasNext === false) {
+        dispatch(addExplorePostList(result.posts));
+        console.log("끝");
+        return 0;
+      } else {
+        dispatch(addExplorePostList(result.posts));
+        return 1;
+      }
+    }
   };
 
   const addPostList = async (inputDTO: GetListDTO) => {
     const result = await getPostList(inputDTO);
 
-    if (result.length === 0) {
+    if (result.hasNext === false) {
+      dispatch(addExplorePostList(result.posts));
       console.log("끝");
       return 0;
     } else {
-      dispatch(addExplorePostList(result));
+      dispatch(addExplorePostList(result.posts));
       return 1;
     }
   };
 
-  return { SetItem, setPostList, addPostList };
+  return { setItem, setPostList, addPostList, setFollowPostList };
 };
 
 export default useExploreHooks;

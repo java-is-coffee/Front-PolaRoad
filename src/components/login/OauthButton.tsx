@@ -3,10 +3,15 @@ import styles from "./Login.module.css";
 // import GoogleIcon from "@mui/icons-material/Google";
 
 const OauthButton = () => {
-  // const handleOauth = async () => {
-  //   window.location.href =
-  //     "https://k951a463f2f5fa.user-app.krampoline.com/api/oauth2/login/kakao";
-  // };
+  const handleOauthKakao = async () => {
+    window.location.href =
+      "https://k218cb89f724ba.user-app.krampoline.com/api/oauth2/login/kakao";
+  };
+
+  const handleOauthGoogle = async () => {
+    window.location.href =
+      "https://k218cb89f724ba.user-app.krampoline.com/api/oauth2/login/google";
+  };
   return (
     <div className={styles.oauthButton}>
       <div>
@@ -20,6 +25,7 @@ const OauthButton = () => {
             color: "#000000",
             ":hover": { background: "#FEE500" },
           }}
+          onClick={handleOauthKakao}
         >
           <img
             className={styles.kakaoLogo}
@@ -40,6 +46,7 @@ const OauthButton = () => {
             color: "black",
             ":hover": { background: "white" },
           }}
+          onClick={handleOauthGoogle}
         >
           <img
             className={styles.kakaoLogo}

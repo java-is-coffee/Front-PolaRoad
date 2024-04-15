@@ -6,22 +6,30 @@ import styles from "./ExplorePhotoList.module.css";
 import useExploreHooks from "../../../hooks/explore/useExploreHooks";
 import { useDispatch } from "react-redux";
 import { useMediaQuery } from "@mui/material";
-import { GetListDTO, PostData } from "interface/explore/ExplorePost";
+import {
+  GetFollowListDTO,
+  GetListDTO,
+  PostData,
+} from "interface/explore/ExplorePost";
 import { useInView } from "react-intersection-observer";
 import {
   setCurPage,
   setEndPoint,
 } from "../../../redux/reducers/explore/explorePostReducer";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import useStoreValue from "hooks/storeValue/useStoreValue";
+import secureLocalStorage from "react-secure-storage";
 
 const ExplorePhotoList = () => {
-  const { setPostList, addPostList } = useExploreHooks();
+  const { setPostList, addPostList, setFollowPostList } = useExploreHooks();
+
+  const navigate = useNavigate();
 
   const isSmallScreen = useMediaQuery("(max-width : 767px)");
 
   const dispatch = useDispatch();
 
+  const location = useLocation();
   const [query] = useSearchParams();
 
   const { storePostList, storeEndPoint, storeCurPage } = useStoreValue();
@@ -32,21 +40,44 @@ const ExplorePhotoList = () => {
   });
 
   useEffect(() => {
+    if (secureLocalStorage.getItem("accessToken") === null) {
+      navigate("/login", {
+        state: {
+          from: location.pathname,
+          search: location.search,
+        },
+      });
+      return;
+    }
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
     console.log("시작");
 
-    const initPostList: GetListDTO = {
-      paging: 1,
-      pagingNumber: 8,
-      searchType: "KEYWORD",
-      keyword: query.get("search"),
-      sortBy: query.get("sort") !== null ? query.get("sort") : "RECENT",
-      concept: query.get("concept"),
-      region: query.get("region"),
-    };
-    setPostList(initPostList);
+    if (storePostList === null && secureLocalStorage.getItem("accessToken")) {
+      if (query.get("follow") === "true") {
+        const initPostList: GetFollowListDTO = {
+          paging: 1,
+          pagingNumber: 8,
+        };
+        setFollowPostList(initPostList);
+      } else {
+        const initPostList: GetListDTO = {
+          paging: 1,
+          pagingNumber: 8,
+          searchType: "KEYWORD",
+          keyword: query.get("search"),
+          sortBy: query.get("sort") !== null ? query.get("sort") : "RECENT",
+          concept: query.get("concept"),
+          region: query.get("region"),
+        };
+        setPostList(initPostList);
+      }
+    }
 
     // eslint-disable-next-line
-  }, [query]);
+  }, [query, storePostList]);
 
   useEffect(() => {
     //렌더링 시작 시, 해당 view가 바로 포착되어서 .
@@ -59,19 +90,27 @@ const ExplorePhotoList = () => {
   }, [inView]);
 
   const addPostFunc = async (value: number) => {
-    const addData: GetListDTO = {
-      paging: value + 1,
-      pagingNumber: 8,
-      searchType: "KEYWORD",
-      keyword: query.get("search") ? query.get("search") : null,
-      sortBy: query.get("sort") ? query.get("sort") : "RECENT",
-      concept: query.get("concept") ? query.get("concept") : null,
-      region: query.get("region") ? query.get("region") : null,
-    };
+    if (query.get("follow") === "true") {
+      const initPostList: GetFollowListDTO = {
+        paging: value + 1,
+        pagingNumber: 8,
+      };
+      setFollowPostList(initPostList);
+    } else {
+      const addData: GetListDTO = {
+        paging: value + 1,
+        pagingNumber: 8,
+        searchType: "KEYWORD",
+        keyword: query.get("search"),
+        sortBy: query.get("sort") ? query.get("sort") : "RECENT",
+        concept: query.get("concept"),
+        region: query.get("region"),
+      };
 
-    const result = await addPostList(addData);
-    if (result === 0) {
-      dispatch(setEndPoint(true));
+      const result = await addPostList(addData);
+      if (result === 0) {
+        dispatch(setEndPoint(true));
+      }
     }
   };
 
@@ -93,9 +132,7 @@ const ExplorePhotoList = () => {
         ""
       )}
 
-      <div ref={ref} className={styles.wait}>
-        Footer
-      </div>
+      <div ref={ref} className={styles.wait}></div>
     </div>
   );
 };

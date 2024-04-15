@@ -2,7 +2,7 @@ import { useModal } from "hooks/modal/ModalProvider";
 import styles from "./SearchDropdown.module.css";
 import ModalOption from "enum/modalOptionTypes";
 import { useEffect } from "react";
-import HeaderSearch from "components/form/header/HeaderSearch";
+import SearchModal from "components/form/header/SearchModal";
 
 const SearchDropdown = () => {
   const { closeModal } = useModal();
@@ -31,9 +31,9 @@ const SearchDropdown = () => {
   return (
     <div className={styles.container} onClick={handleBackdropClick}>
       <div className={styles.modal}>
-        검색 모달
+        검색
         <div>
-          <HeaderSearch />
+          <SearchModal />
         </div>
       </div>
     </div>

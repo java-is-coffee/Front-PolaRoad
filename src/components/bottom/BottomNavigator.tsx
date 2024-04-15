@@ -1,12 +1,15 @@
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-
+import styles from "./BottomNavigator.module.css";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import PersonIcon from "@mui/icons-material/Person";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import HomeIcon from "@mui/icons-material/Home";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
+import { useModal } from "hooks/modal/ModalProvider";
+import ModalOption from "enum/modalOptionTypes";
 
 const commonStyles = {
   "&.Mui-selected": { color: "#12b193" },
@@ -19,9 +22,31 @@ const commonStyles = {
 const BottomNavigator = () => {
   const navigate = useNavigate();
 
+  const { openModal } = useModal();
+  const setModal = () => {
+    openModal(ModalOption.POST);
+  };
+
   const [value, setValue] = useState(null);
   return (
     <div>
+      <div className={styles.midContainer}>
+        <Button
+          variant="contained"
+          disableElevation
+          onClick={setModal}
+          sx={{
+            borderRadius: "20px",
+            fontSize: "1.5rem",
+            backgroundColor: "#13c4a3",
+            ":hover": {
+              backgroundColor: "#13c4a3",
+            },
+          }}
+        >
+          New Post
+        </Button>
+      </div>
       <BottomNavigation
         showLabels
         value={value}
