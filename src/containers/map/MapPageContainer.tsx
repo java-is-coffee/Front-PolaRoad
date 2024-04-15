@@ -48,7 +48,7 @@ const MapPageContainer = () => {
     if (data) {
       setMapCards(data);
     }
-  }, [swLatLng, neLatLng, concept, mapLevel]);
+  }, [swLatLng, neLatLng, concept, mapLevel, searchKeyword]);
 
   const debouncedFetchMapCards = React.useMemo(
     () => debounce(fetchMapCards, 300),
