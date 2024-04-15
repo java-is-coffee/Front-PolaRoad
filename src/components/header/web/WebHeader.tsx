@@ -71,7 +71,13 @@ function WebHeader() {
             >
               Follower
             </span>
-            <span>Map</span>
+            <span
+              onClick={() => {
+                navigation("map");
+              }}
+            >
+              Map
+            </span>
             <span
               onClick={() => {
                 openModal(ModalOption.POST);
