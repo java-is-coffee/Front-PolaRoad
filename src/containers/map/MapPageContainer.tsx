@@ -1,6 +1,12 @@
 import useKakaoMap from "hooks/map/useKakaoMap";
 import containerStyles from "./MapPageContainer.module.css";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  ChangeEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { IMapCard } from "interface/map/IMapCard";
 import getCardsByMapArea from "api/mapPost/getCardsByMapArea";
 import MapSideContainer from "containers/map/sideContainer/MapSideConatainer";
@@ -22,6 +28,7 @@ const MapPageContainer = () => {
   const [neLatLng, setNeLatLng] = useState<position>();
   const [mapCards, setMapCards] = useState<IMapCard[]>([]);
   const [concept, setConcept] = useState<ConceptType>();
+  const [searchKeyword, setSearchKeyword] = useState<string>("");
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchMapCards = useCallback(async () => {
@@ -33,8 +40,11 @@ const MapPageContainer = () => {
       swLatLng,
       neLatLng,
       conceptKey,
-      mapLevel
+      mapLevel,
+      "KEYWORD",
+      searchKeyword
     );
+    console.log(data);
     if (data) {
       setMapCards(data);
     }
@@ -89,6 +99,14 @@ const MapPageContainer = () => {
     }
   };
 
+  const handleSearchKeyword = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchKeyword(event.target.value);
+  };
+
+  const handleSearch = () => {
+    fetchMapCards();
+  };
+
   return (
     <div ref={mapContainerRef} className={containerStyles.container}>
       {
@@ -97,7 +115,13 @@ const MapPageContainer = () => {
           handleSelectConcept={handleConceptChange}
         />
       }
-      {mapCards && <MapSideContainer cards={mapCards} />}
+      {mapCards && (
+        <MapSideContainer
+          cards={mapCards}
+          handleInputChange={handleSearchKeyword}
+          handleSearch={handleSearch}
+        />
+      )}
     </div>
   );
 };

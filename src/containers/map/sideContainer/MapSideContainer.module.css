@@ -1,0 +1,37 @@
+.container {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  padding: 10px;
+  border-radius: 10px;
+  z-index: 100;
+  background-color: white;
+  min-width: 320px;
+  max-height: 80vh;
+  overflow: scroll;
+}
+
+.container h1 {
+  margin: 5px;
+}
+
+.default {
+  width: 100%;
+  min-height: 800px;
+  flex-shrink: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.default img {
+  opacity: 0.2;
+  margin: 20px;
+}
+
+.default span {
+  color: #ccc;
+  font-size: 1.6rem;
+  font-weight: bold;
+}
