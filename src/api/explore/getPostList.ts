@@ -1,28 +1,26 @@
 import { axiosInstance } from "api/token/axiosInstance";
 import { GetListDTO } from "interface/explore/ExplorePost";
-import { IPostListDTO } from "interface/explore/IPostListDTO";
 
-const getPostList = async (
-  inputData: GetListDTO
-): Promise<IPostListDTO | null> => {
+const GetPostList = async (inputData: GetListDTO) => {
   try {
     console.log("게시판 로드 테스트");
 
     let postAPI = `/api/post/list?page=${inputData.paging}&pageSize=${inputData.pagingNumber}&searchType=${inputData.searchType}&sortBy=${inputData.sortBy}`;
 
-    if (inputData.concept) {
+    if (inputData.concept !== null) {
       postAPI = postAPI.concat(`&concept=${inputData.concept}`);
     }
 
-    if (inputData.region) {
+    if (inputData.region !== null) {
       postAPI = postAPI.concat(`&region=${inputData.region}`);
     }
 
-    if (inputData.keyword) {
+    if (inputData.keyword !== null) {
       postAPI = postAPI.concat(`&keyword=${inputData.keyword}`);
     }
 
     const response = await axiosInstance.get(postAPI);
+    console.log(postAPI);
 
     console.log(response.data.posts);
 
@@ -32,4 +30,4 @@ const getPostList = async (
   }
 };
 
-export default getPostList;
+export default GetPostList;
