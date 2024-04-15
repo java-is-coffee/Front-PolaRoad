@@ -6,47 +6,55 @@ import CloseIcon from "@mui/icons-material/Close";
 import { RecentDTO } from "components/header/mobile/MobileHeader";
 import ModalOption from "enum/modalOptionTypes";
 import { useModal } from "hooks/modal/ModalProvider";
-import styles from "./HeaderSearch.module.css";
+import styles from "./SearchModal.module.css";
+import { setExplorePostList } from "../../../redux/reducers/explore/explorePostReducer";
+import useExploreHooks from "hooks/explore/useExploreHooks";
 
-const HeaderSearch = () => {
+const SearchModal = () => {
   const [searchInput, setSearchInput] = useState("");
   const [query, setQuery] = useSearchParams();
   const [recentData, setRecentData] = useState<RecentDTO[]>([]);
   const { closeModal } = useModal();
+  const { setItem } = useExploreHooks();
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const setSearchData = (item: string | null) => {
+    //item이 null이면 기본 검색
+    if (item === null) {
+      const newData: RecentDTO = {
+        id: Date.now(),
+        data: searchInput,
+      };
+      const newList = [newData, ...recentData];
+      setRecentData(newList);
+      if (newList.length > 5) {
+        deleteData(recentData[4].id);
+      }
 
-    const newData: RecentDTO = {
-      id: Date.now(),
-      data: searchInput,
-    };
-    const newList = [newData, ...recentData];
-
-    setRecentData(newList);
-    if (newList.length > 5) {
-      deleteData(recentData[4].id);
+      localStorage.setItem("recentData", JSON.stringify(newList));
     }
 
-    localStorage.setItem("recentData", JSON.stringify(newList));
-
-    query.set("search", searchInput);
+    //item이 null이 아니라면 해당 item을 검색하도록
+    query.set("search", item !== null ? item : searchInput);
     setQuery(query);
+    setItem(setExplorePostList(null));
     closeModal(ModalOption.SEARCH);
+  };
+
+  //기본 제출 (item을 null로 해두어 해당 쿼리문을 그대로 사용하도록)
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setSearchData(null);
+  };
+
+  //최근 검색어 클릭 시, 해당 검색어가 인자로 넘어가서 해당 검색어가 실행되도록
+  const repeatRecentData = (item: string) => {
+    setSearchData(item);
   };
 
   useEffect(() => {
     const result = localStorage.getItem("recentData") || "[]";
     setRecentData(JSON.parse(result));
   }, []);
-
-  //원래 recentData 변경 시, 바로 적용되도록 하려했으나. 해당 부분이 적용되려면 해당 함수가 종료되는 시점이어야하는데. submit의 경우 제출하면 바로 종료되기때문에..
-  //state 쓸지말지는 고민좀 해야할 것 같습니다.
-  // useEffect(() => {
-  //   console.log("테슽1");
-  //   console.log(recentData);
-  //   localStorage.setItem("recentData", JSON.stringify(recentData));
-  // }, [recentData]);
 
   const deleteData = (selectedId: number) => {
     const deletedData = recentData.filter((item) => item.id !== selectedId);
@@ -96,7 +104,11 @@ const HeaderSearch = () => {
       <div>
         <h2>최근 검색어</h2>
         {recentData.map((item) => (
-          <div key={item.id} className={styles.recentList}>
+          <div
+            key={item.id}
+            className={styles.recentList}
+            onClick={() => repeatRecentData(item.data)}
+          >
             {item.data}
             <IconButton
               aria-label="delete"
@@ -112,4 +124,4 @@ const HeaderSearch = () => {
   );
 };
 
-export default HeaderSearch;
+export default SearchModal;

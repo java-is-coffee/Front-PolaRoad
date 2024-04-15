@@ -1,7 +1,7 @@
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import styles from "./MainPhotoCard.module.css";
 import PlaceIcon from "@mui/icons-material/Place";
-import { PostData, regionSet } from "interface/explore/ExplorePost";
+import { conceptSet, PostData, regionSet } from "interface/explore/ExplorePost";
 import { useEffect, useState } from "react";
 import CircleIcon from "@mui/icons-material/Circle";
 import ScrollButtonLeft from "components/button/explore/ScrollButtonLeft";
@@ -15,16 +15,16 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchMemberInfo = async (src: string, index: number) => {
-      const newImg = await getImage(item.images[index]);
+    const fetchMemberInfo = async (src: string) => {
+      const newImg = await getImage(src);
       if (newImg) {
-        setCardImgs([...cardImgs, newImg]);
+        setCardImgs((prev) => [...prev, newImg]);
       }
     };
 
-    item.images.map((imgSrc: string, index: number) =>
-      fetchMemberInfo(imgSrc, index)
-    );
+    item.images.forEach((imgSrc: string) => {
+      fetchMemberInfo(imgSrc);
+    });
 
     // eslint-disable-next-line
   }, []);
@@ -51,8 +51,10 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
     navigate(`/post/${id}`);
   };
 
+  console.log(cardImgs);
+
   return (
-    <div key={item.postId}>
+    <div key={item.postId} className={styles.container}>
       <div className={styles.cardImg}>
         <div className={`${styles.carousel}`}>
           {cardImgs.map((img, index) => (
@@ -118,9 +120,14 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
         </div>
 
         <div style={{ fontSize: "1.7rem" }}>{item.title}</div>
-        <div className={styles.regionBox}>
-          <PlaceIcon style={{ color: "#13C4A3" }} />
-          {regionSet.values[regionSet.key.indexOf(item.region)]}
+        <div className={styles.bottomBox}>
+          <div className={styles.regionText}>
+            <PlaceIcon style={{ color: "#13C4A3" }} />
+            {regionSet.values[regionSet.key.indexOf(item.region)]}
+          </div>
+          <div className={styles.conceptText}>
+            {conceptSet.values[conceptSet.key.indexOf(item.concept)]}
+          </div>
         </div>
       </div>
     </div>

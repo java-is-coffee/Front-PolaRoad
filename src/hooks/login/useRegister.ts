@@ -3,6 +3,7 @@ import postRegister, {
   RegisterDTO,
   RegisterData,
 } from "../../api/login/postRegister";
+import EmailCheck, { EmailData, EmailDTO } from "api/login/emailCheck";
 const useRegister = () => {
   const checkEmail = (input: string) => {
     const emailRegEx =
@@ -10,6 +11,25 @@ const useRegister = () => {
 
     return emailRegEx.test(input);
     // return true;
+  };
+
+  const dupCheckEmail = async (input: string) => {
+    const emailCheck = checkEmail(input);
+
+    const EmailData: EmailData = {
+      email: input,
+    };
+
+    const EmailDTO: EmailDTO = {
+      data: EmailData,
+    };
+
+    const dupCheck = await EmailCheck(EmailDTO);
+
+    if (dupCheck === true) toast.warn("이미 존재하는 이메일 입니다.");
+
+    //dupCheck가 true 면 중복 // emailCheck가 true여야 이메일 규격
+    return emailCheck && !dupCheck;
   };
 
   const checkPassword = (input: string) => {
@@ -34,7 +54,7 @@ const useRegister = () => {
     }
   };
 
-  return { checkEmail, checkPassword, register };
+  return { checkEmail, checkPassword, register, dupCheckEmail };
 };
 
 export default useRegister;
