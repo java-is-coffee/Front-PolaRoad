@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { IRoutesPointType } from "interface/map/IRoutesPointType";
+import { IMapCard } from "interface/map/IMapCard";
 
 declare global {
   interface Window {
@@ -123,7 +124,6 @@ const useKakaoMap = () => {
     const path = routes.map(
       (route) => new kakao.maps.LatLng(route.latitude, route.longitude)
     );
-    console.log(routes);
     const map = mapRef.current;
     const polyLine = new kakao.maps.Polyline({
       path: path,
@@ -170,6 +170,36 @@ const useKakaoMap = () => {
     });
   };
 
+  // 지도 페이지 마크 랜더링
+  const renderMarkerForMapPage = (mapCards: IMapCard[]) => {
+    const bounds = new kakao.maps.LatLngBounds();
+    const map = mapRef.current;
+    const existingPositions = new Set(); // 중복 위치를 추적하기 위한 Set
+
+    // 마커 이미지 설정
+    const imageSrc = "/basic/marker.png";
+    const imageSize = new kakao.maps.Size(35, 35); // 마커 이미지의 크기 설정
+    const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); // 마커 이미지 객체 생성
+
+    mapCards.forEach((card) => {
+      const positionKey = `${card.latitude},${card.longitude}`;
+      // 이미 해당 위치에 마커가 있는지 확인
+      if (existingPositions.has(positionKey)) {
+        return; // 해당 위치에 마커가 이미 있으면 추가하지 않음
+      }
+      existingPositions.add(positionKey); // 위치를 Set에 추가
+
+      // 마커 생성
+      new kakao.maps.Marker({
+        map: map,
+        position: new kakao.maps.LatLng(card.latitude, card.longitude),
+        image: markerImage, // 마커 이미지 사용
+      });
+
+      bounds.extend(new kakao.maps.LatLng(card.latitude, card.longitude)); // 마커의 위치를 bounds에 추가
+    });
+  };
+
   return {
     mapRef,
     selectedPlace,
@@ -180,6 +210,7 @@ const useKakaoMap = () => {
     renderOverlay,
     mapReload,
     registerMapChange,
+    renderMarkerForMapPage,
   };
 };
 

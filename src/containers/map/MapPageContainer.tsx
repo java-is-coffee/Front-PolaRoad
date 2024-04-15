@@ -1,11 +1,12 @@
 import useKakaoMap from "hooks/map/useKakaoMap";
 import containerStyles from "./MapPageContainer.module.css";
-import { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { IMapCard } from "interface/map/IMapCard";
 import getCardsByMapArea from "api/mapPost/getCardsByMapArea";
-import MapSideContainer from "components/map/sideContainer/MapSideConatainer";
+import MapSideContainer from "containers/map/sideContainer/MapSideConatainer";
 import ConceptType from "enum/ConceptOptionType";
 import MapHeader from "components/map/mapHeader/MapHeader";
+import { debounce } from "lodash";
 
 interface position {
   lat: number;
@@ -14,7 +15,7 @@ interface position {
 
 const MapPageContainer = () => {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
-  const { mapRef, initKakaoMap, registerMapChange, renderMarkerForMapPage } =
+  const { initKakaoMap, registerMapChange, renderMarkerForMapPage, mapReload } =
     useKakaoMap();
   const [mapLevel, setMapLevel] = useState<number>(10);
   const [swLatLng, setSwLatLng] = useState<position>();
@@ -22,21 +23,41 @@ const MapPageContainer = () => {
   const [mapCards, setMapCards] = useState<IMapCard[]>([]);
   const [concept, setConcept] = useState<ConceptType>();
 
-  const fetchMapCards = async () => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const fetchMapCards = useCallback(async () => {
     if (!swLatLng || !neLatLng) return;
-    const data = await getCardsByMapArea(swLatLng, neLatLng, mapLevel);
+    const conceptKey = Object.keys(ConceptType).find(
+      (key) => ConceptType[key as keyof typeof ConceptType] === concept
+    );
+    const data = await getCardsByMapArea(
+      swLatLng,
+      neLatLng,
+      conceptKey,
+      mapLevel
+    );
     if (data) {
       setMapCards(data);
     }
-  };
+  }, [swLatLng, neLatLng, concept, mapLevel]);
+
+  const debouncedFetchMapCards = React.useMemo(
+    () => debounce(fetchMapCards, 300),
+    [fetchMapCards]
+  );
 
   useEffect(() => {
-    fetchMapCards();
-  }, [swLatLng, neLatLng]);
+    debouncedFetchMapCards();
+    return () => {
+      debouncedFetchMapCards.cancel();
+    };
+    //eslint-disable-next-line
+  }, [debouncedFetchMapCards]);
 
   useEffect(() => {
     console.log(mapCards);
     if (mapCards) renderMarkerForMapPage(mapCards);
+    mapReload();
+    //eslint-disable-next-line
   }, [mapCards]);
 
   const getMapArea = (level: number, swLatLng: any, neLatLng: any) => {
@@ -57,6 +78,7 @@ const MapPageContainer = () => {
     // 지도 초기화
     initKakaoMap(mapContainerRef.current, 36.2683, 127.6358, mapLevel);
     registerMapChange(getMapArea);
+    //eslint-disable-next-line
   }, []);
 
   const handleConceptChange = (type: ConceptType) => {
