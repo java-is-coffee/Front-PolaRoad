@@ -63,8 +63,13 @@ const SearchModal = () => {
   };
 
   return (
-    <div>
-      <form method="get" action="/explore" onSubmit={handleSubmit}>
+    <div className={styles.container}>
+      <form
+        method="get"
+        action="/explore"
+        onSubmit={handleSubmit}
+        className={styles.inputBox}
+      >
         <TextField
           id="outlined-basic"
           variant="outlined"
@@ -79,7 +84,6 @@ const SearchModal = () => {
           autoComplete="off"
           sx={{
             ".MuiOutlinedInput-root": { fontSize: "1.3rem" },
-            width: "20vw",
           }}
           InputProps={{
             endAdornment: (
