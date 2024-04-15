@@ -111,8 +111,15 @@ const useKakaoMap = () => {
   };
 
   const renderOverlay = (routes: IRoutesPointType[]) => {
-    renderPolyline(routes);
+    const points = routes.map((route) => {
+      if (route.latitude !== null && route.longitude !== null) {
+        return getLatLng(route.latitude, route.longitude);
+      } else {
+        return null;
+      }
+    });
     renderMarker(routes);
+    renderPolyline(routes, points);
   };
 
   const mapReload = () => {
@@ -121,7 +128,7 @@ const useKakaoMap = () => {
     }
   };
 
-  const renderPolyline = (routes: IRoutesPointType[]) => {
+  const renderPolyline = (routes: IRoutesPointType[], points: any) => {
     if (routes.length <= 1) return;
     const path = routes.map(
       (route) => new kakao.maps.LatLng(route.latitude, route.longitude)
@@ -130,8 +137,9 @@ const useKakaoMap = () => {
     const polyLine = new kakao.maps.Polyline({
       path: path,
       strokeWeight: 2,
+
       strokeColor: "#13C4A3",
-      strokeStyle: "dashed",
+      strokeStyle: "longdash",
     });
     polyLine.setMap(map);
   };
@@ -150,10 +158,10 @@ const useKakaoMap = () => {
         content: content,
         yAnchor: 1,
       });
-      mapRef.current.setBounds(bounds);
       // 지도에 오버레이 추가
       customOverlay.setMap(mapRef.current);
     });
+    mapRef.current.setBounds(bounds);
   };
 
   // 지도의 영역을 변경 이벤트 리스너 등록하기

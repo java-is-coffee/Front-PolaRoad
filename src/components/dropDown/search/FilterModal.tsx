@@ -5,11 +5,14 @@ import dropdownStyles from "./FilterModal.module.css";
 import { Button } from "@mui/material";
 import { conceptSet, regionSet, sortSet } from "interface/explore/ExplorePost";
 import { useSearchParams } from "react-router-dom";
+import useExploreHooks from "hooks/explore/useExploreHooks";
+import { setExplorePostList } from "../../../redux/reducers/explore/explorePostReducer";
 
 type filterType = "sort" | "region" | "concept";
 
 function FilterModal() {
   const { closeModal } = useModal();
+  const { setItem } = useExploreHooks();
 
   //얘들이 필요한 이유는 버튼이 눌렸을때 해당 버튼이 눌렸다는 상태를 저장하기 위해서.
   const [savedSort, setSavedSort] = useState<string | null>("");
@@ -78,6 +81,7 @@ function FilterModal() {
 
   const handleSubmit = () => {
     setQuery(query);
+    setItem(setExplorePostList(null));
     handleCloseModla();
   };
 

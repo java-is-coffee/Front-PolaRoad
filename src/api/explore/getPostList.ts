@@ -24,11 +24,9 @@ const getPostList = async (
 
     const response = await axiosInstance.get(postAPI);
 
-    const { status, data } = response;
-    if (status === 200) {
-      return data as IPostListDTO;
-    }
-    return null;
+    console.log(response.data.posts);
+
+    return response.data;
   } catch (error) {
     return null;
   }

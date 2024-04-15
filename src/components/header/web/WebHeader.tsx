@@ -1,8 +1,7 @@
 import { GoBell } from "react-icons/go";
 import headerStyle from "./WebHeader.module.css";
 import { Avatar, IconButton } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-// import HeaderSearch from "components/form/header/HeaderSearch";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useBucket from "hooks/bucket/useBucket";
 import { IMemberInfoDetails } from "interface/member/IMemberInfoDetails";
@@ -11,16 +10,23 @@ import SearchIcon from "@mui/icons-material/Search";
 import secureLocalStorage from "react-secure-storage";
 import { useModal } from "hooks/modal/ModalProvider";
 import ModalOption from "enum/modalOptionTypes";
+import useStoreValue from "hooks/storeValue/useStoreValue";
+import { setExplorePostList } from "../../../redux/reducers/explore/explorePostReducer";
+import useExploreHooks from "hooks/explore/useExploreHooks";
 
 function WebHeader() {
   const navigate = useNavigate();
   const { openModal } = useModal();
+  const { setItem } = useExploreHooks();
+  const { setValue } = useStoreValue();
+  const [query, setQuery] = useSearchParams();
 
   const navigation = (input: string) => {
     navigate(`/${input}`);
   };
 
   const resetPage = () => {
+    setValue(setExplorePostList(null));
     navigate("/explore");
   };
   //true = pc화면 / false = 모바일 화면 767이하
@@ -55,22 +61,24 @@ function WebHeader() {
             </span>
           </div>
           <div className={headerStyle.action}>
+            <span onClick={resetPage}>Home</span>
             <span
               onClick={() => {
-                navigation("explore");
+                query.set("follow", "true");
+                setQuery(query);
+                setItem(setExplorePostList(null));
               }}
             >
-              Home
+              Follower
             </span>
-            <span>Subscribe</span>
+            <span>Map</span>
             <span
               onClick={() => {
-                navigation("map");
+                openModal(ModalOption.POST);
               }}
             >
-              Map
+              New Post
             </span>
-            <span>New Post</span>
           </div>
         </div>
         <div className={headerStyle.userAction}>

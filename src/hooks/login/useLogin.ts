@@ -15,7 +15,11 @@ const useLogin = () => {
     const result = await postLogin(inputDTO);
 
     if (result === 200) {
-      const from = location.state?.from?.pathname || "/explore"; // 이전 페이지가 없다면 '/explore'로 설정
+      const param = location.state?.search ? location.state.search : "";
+      const from = location.state?.from
+        ? location.state.from + param
+        : "/explore"; // 이전 페이지가 없다면 '/explore'로 설정
+      console.log(param);
       navigate(from);
     } else {
       toast.error("로그인 실패");

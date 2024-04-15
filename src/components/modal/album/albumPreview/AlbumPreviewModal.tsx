@@ -58,7 +58,10 @@ function AlbumPreviewModal({ albumId }: AlbumPreviewModalProps) {
   };
 
   const handleDelete = () => {
-    openModal(ModalOption.AlBUM_DELETE, { albumId: albumId });
+    openModal(ModalOption.DELETE_WARNING, {
+      type: "album",
+      targetId: albumId,
+    });
   };
 
   const handleAddCard = () => {};

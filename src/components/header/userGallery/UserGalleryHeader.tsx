@@ -22,19 +22,19 @@ function UserGalleryHeader({
       </div>
       <div
         className={`${headerStyles.option} ${
-          option === HistoryOption.WISH ? headerStyles.selected : ""
-        }`}
-        onClick={() => handleOptionChange(HistoryOption.WISH)}
-      >
-        WISH
-      </div>
-      <div
-        className={`${headerStyles.option} ${
           option === HistoryOption.ALBUM ? headerStyles.selected : ""
         }`}
         onClick={() => handleOptionChange(HistoryOption.ALBUM)}
       >
         ALBUM
+      </div>
+      <div
+        className={`${headerStyles.option} ${
+          option === HistoryOption.WISH ? headerStyles.selected : ""
+        }`}
+        onClick={() => handleOptionChange(HistoryOption.WISH)}
+      >
+        WISH
       </div>
     </div>
   );
