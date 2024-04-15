@@ -4,9 +4,12 @@ import useBucket from "hooks/bucket/useBucket";
 import { useEffect, useState } from "react";
 import cardStyles from "./ThumbnailCard.module.css";
 import patchPostGoodToggle from "api/post/patchPostGoodToggle";
-import { useParams } from "react-router-dom";
+import { MdBookmarkAdd } from "react-icons/md";
+import { useModal } from "hooks/modal/ModalProvider";
+import ModalOption from "enum/modalOptionTypes";
 
 interface ThumbnailCardProps {
+  postId: number;
   title: string;
   goodNumber: number;
   thumbnailImageURL: string | undefined;
@@ -17,6 +20,7 @@ interface ThumbnailCardProps {
 }
 
 function ThumbnailCard({
+  postId,
   title,
   goodNumber,
   thumbnailImageURL,
@@ -25,8 +29,8 @@ function ThumbnailCard({
   hashTags,
   memberGood,
 }: ThumbnailCardProps) {
-  const { postId } = useParams();
   const { getImage } = useBucket();
+  const { openModal } = useModal();
   const [isActiveHeart, setIsActiveHeart] = useState<boolean>(memberGood);
   const [likeNum, setLikeNum] = useState<number>(goodNumber);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -42,6 +46,11 @@ function ThumbnailCard({
     //eslint-disable-next-line
   }, [thumbnailImageURL]);
 
+  const handleAddPostWishList = () => {
+    console.log("openModal");
+    openModal(ModalOption.ADD_TO_WISH, { postId: postId });
+  };
+
   const handleHeartClick = () => {
     isActiveHeart
       ? setLikeNum((prev) => prev - 1)
@@ -55,20 +64,23 @@ function ThumbnailCard({
       {imageUrl && <img src={imageUrl} alt="썸네일" />}
       <div className={cardStyles.header}>
         <div className={cardStyles.title}>{title}</div>
-        <div onClick={() => handleHeartClick()}>
-          {isActiveHeart ? (
-            <img
-              src={"/icons/like/selected-heart.png"}
-              style={{ width: "24px", height: "24px" }}
-              alt="active-heart"
-            />
-          ) : (
-            <img
-              src={"/icons/like/default-heart.png"}
-              style={{ width: "24px", height: "24px" }}
-              alt="default-heart"
-            />
-          )}
+        <div className={cardStyles.actionControl}>
+          <MdBookmarkAdd size={"24px"} onClick={handleAddPostWishList} />
+          <div onClick={() => handleHeartClick()}>
+            {isActiveHeart ? (
+              <img
+                src={"/icons/like/selected-heart.png"}
+                style={{ width: "24px", height: "24px" }}
+                alt="active-heart"
+              />
+            ) : (
+              <img
+                src={"/icons/like/default-heart.png"}
+                style={{ width: "24px", height: "24px" }}
+                alt="default-heart"
+              />
+            )}
+          </div>
         </div>
       </div>
       <span className={cardStyles.good}>{`좋아요 ${likeNum}개`}</span>
