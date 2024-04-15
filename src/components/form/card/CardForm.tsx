@@ -32,8 +32,9 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
     handleImageRemove,
   } = useSingleCard(cardDetails);
   // 이미지 업로딩 관련 const
-  const { uploadImage, deleteImage } = useBucket();
+  const { uploadImage, deleteImage, getImage } = useBucket();
   const postId = useSelector((state: RootState) => state.newPost.postId);
+  const [previewImg, setPreviewImg] = useState<string>("");
   // 리덕스 관련
   const dispatch = useDispatch();
 
@@ -75,6 +76,8 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
     const imageUrl = await uploadImage({ type: "POST", imageInfo });
     if (imageUrl) {
       handleImageChange(imageUrl);
+      const img = await getImage(imageUrl);
+      if (img) setPreviewImg(img);
     } else {
       toast.error("이미지 업로딩에 실패했습니다.");
     }
@@ -130,7 +133,7 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
           <img
             alt="Preview"
             className={formStyles.previewImg}
-            src={`${process.env.REACT_APP_BUCKET_BASEURL}/${newCard.image}`}
+            src={previewImg}
             width="100%"
             height="100%"
           />
