@@ -103,3 +103,12 @@
   color: white;
   padding: 5px;
 }
+
+.itemTitle {
+  width: 270px;
+  font-size: 1.7rem;
+  text-wrap: wrap;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

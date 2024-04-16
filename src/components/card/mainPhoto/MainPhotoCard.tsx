@@ -165,7 +165,7 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
           </span>
         </div>
 
-        <div style={{ fontSize: "1.7rem" }}>{item.title}</div>
+        <div className={styles.itemTitle}>{item.title}</div>
         <div className={styles.bottomBox}>
           <div className={styles.regionText}>
             <PlaceIcon style={{ color: "#13C4A3" }} />
