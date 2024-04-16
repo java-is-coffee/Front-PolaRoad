@@ -31,8 +31,10 @@ function SingleCardDetails({ cardDetails }: SingleCardDetailsProps) {
           height="100%"
         />
       )}
-      <div>{cardDetails.location}</div>
-      <div>{cardDetails.content}</div>
+      <div className={cardStyles.location}>{cardDetails.location}</div>
+      <blockquote className={cardStyles.content}>
+        <div>{cardDetails.content}</div>
+      </blockquote>
     </article>
   );
 }
