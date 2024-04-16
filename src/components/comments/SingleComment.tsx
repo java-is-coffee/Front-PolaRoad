@@ -36,38 +36,40 @@ function SingleComment({ commentDetails }: SingleCommentProps) {
 
   return (
     <div className={commentStyles.singleCommentWrapper}>
-      <div className={commentStyles.profileImg}>
-        {userProfileImg ? (
-          <img
-            className={commentStyles.profileImg}
-            src={userProfileImg}
-            alt="썸네일"
-            width="100%"
-            height="100%"
-          />
-        ) : (
-          <img src={"/basic/profile.png"} alt="default-user" />
-        )}
-      </div>
-      <div className={commentStyles.commentDetail}>
-        <span className={commentStyles.name}>{commentDetails.nickname}</span>
-        <div className={commentStyles.contents}>
-          <span>{commentDetails.content}</span>
-          {commentDetails.reviewPhotoInfoList && <button>사진보기</button>}
-          <span>{formattedDate}</span>
+      <div className={commentStyles.commentInfo}>
+        <div className={commentStyles.profileImg}>
+          {userProfileImg ? (
+            <img
+              className={commentStyles.profileImg}
+              src={userProfileImg}
+              alt="썸네일"
+              width="100%"
+              height="100%"
+            />
+          ) : (
+            <img src={"/basic/profile.png"} alt="default-user" />
+          )}
+        </div>
+        <div className={commentStyles.commentDetail}>
+          <span className={commentStyles.name}>{commentDetails.nickname}</span>
+          <div className={commentStyles.contents}>
+            <span>{commentDetails.content}</span>
+            {commentDetails.reviewPhotoInfoList && <button>사진보기</button>}
+            <span>{formattedDate}</span>
+          </div>
         </div>
       </div>
       <div onClick={() => setIsActiveHeart((prev) => !prev)}>
         {isActiveHeart ? (
           <img
             src={"/icons/like/selected-heart.png"}
-            style={{ width: "10px", height: "10px" }}
+            style={{ width: "14px", height: "14px" }}
             alt="active-heart"
           />
         ) : (
           <img
             src={"/icons/like/default-heart.png"}
-            style={{ width: "10px", height: "10px" }}
+            style={{ width: "14px", height: "14px" }}
             alt="default-heart"
           />
         )}
