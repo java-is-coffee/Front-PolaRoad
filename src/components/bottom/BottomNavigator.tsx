@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import { useModal } from "hooks/modal/ModalProvider";
 import ModalOption from "enum/modalOptionTypes";
+import useStoreValue from "hooks/storeValue/useStoreValue";
 
 const commonStyles = {
   "&.Mui-selected": { color: "#12b193" },
@@ -21,6 +22,7 @@ const commonStyles = {
 
 const BottomNavigator = () => {
   const navigate = useNavigate();
+  const { isMobileSearchFilter } = useStoreValue();
 
   const { openModal } = useModal();
   const setModal = () => {
@@ -30,23 +32,28 @@ const BottomNavigator = () => {
   const [value, setValue] = useState(null);
   return (
     <div>
-      <div className={styles.midContainer}>
-        <Button
-          variant="contained"
-          disableElevation
-          onClick={setModal}
-          sx={{
-            borderRadius: "20px",
-            fontSize: "1.5rem",
-            backgroundColor: "#13c4a3",
-            ":hover": {
+      {isMobileSearchFilter ? (
+        ""
+      ) : (
+        <div className={styles.midContainer}>
+          <Button
+            variant="contained"
+            disableElevation
+            onClick={setModal}
+            sx={{
+              borderRadius: "20px",
+              fontSize: "1.5rem",
               backgroundColor: "#13c4a3",
-            },
-          }}
-        >
-          New Post
-        </Button>
-      </div>
+              ":hover": {
+                backgroundColor: "#13c4a3",
+              },
+            }}
+          >
+            New Post
+          </Button>
+        </div>
+      )}
+
       <BottomNavigation
         showLabels
         value={value}
