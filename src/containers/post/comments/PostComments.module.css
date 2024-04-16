@@ -26,6 +26,11 @@
   align-items: center;
 }
 
+.commentContainer {
+  padding: 0 10px;
+  overflow: scroll;
+}
+
 .previewImgWrapper {
   width: 100px;
   height: 100px;

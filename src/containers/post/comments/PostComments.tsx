@@ -41,6 +41,7 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
         if (result) {
           setCommentList(result.content);
           setHasNext(result.hasNext);
+          console.log(result.content);
         } else {
           console.log("댓글 불러오기 실패");
         }
@@ -146,26 +147,32 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
         </div>
       )}
       <h2>댓글</h2>
-      {commentList &&
-        commentList.map((comment, index) => (
-          <SingleComment key={comment.reviewId} commentDetails={comment} />
+      <div className={containerStyles.commentContainer}>
+        {commentList &&
+          commentList.map((comment) => (
+            <SingleComment key={comment.reviewId} commentDetails={comment} />
+          ))}
+        {hasNext && (
+          <IoMdAddCircleOutline
+            size={"24px"}
+            style={{ cursor: "pointer" }}
+            onClick={() => getMoreComment()}
+          />
+        )}
+        {imagePreviews.map((src, index) => (
+          <div
+            key={index}
+            className={containerStyles.previewImgWrapper}
+            onClick={() => openModal(src)}
+          >
+            <img
+              src={src}
+              alt="preview"
+              className={containerStyles.previewImg}
+            />
+          </div>
         ))}
-      {hasNext && (
-        <IoMdAddCircleOutline
-          size={"24px"}
-          style={{ cursor: "pointer" }}
-          onClick={() => getMoreComment()}
-        />
-      )}
-      {imagePreviews.map((src, index) => (
-        <div
-          key={index}
-          className={containerStyles.previewImgWrapper}
-          onClick={() => openModal(src)}
-        >
-          <img src={src} alt="preview" className={containerStyles.previewImg} />
-        </div>
-      ))}
+      </div>
       <form onSubmit={handleSubmitComment}>
         <label htmlFor={`file-${postId}`}>
           <AiOutlineCloudUpload size={"24px"} />
