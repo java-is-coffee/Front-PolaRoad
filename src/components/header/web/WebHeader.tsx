@@ -13,6 +13,7 @@ import ModalOption from "enum/modalOptionTypes";
 import useStoreValue from "hooks/storeValue/useStoreValue";
 import { setExplorePostList } from "../../../redux/reducers/explore/explorePostReducer";
 import useExploreHooks from "hooks/explore/useExploreHooks";
+import LoginIcon from "@mui/icons-material/Login";
 
 function WebHeader() {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ function WebHeader() {
   const { setItem } = useExploreHooks();
   const { setValue } = useStoreValue();
   const [query, setQuery] = useSearchParams();
+  const isLogin = secureLocalStorage.getItem("accessToken");
 
   const navigation = (input: string) => {
     navigate(`/${input}`);
@@ -35,7 +37,7 @@ function WebHeader() {
   const { getImage } = useBucket();
 
   useEffect(() => {
-    if (secureLocalStorage.getItem("accessToken")) {
+    if (isLogin) {
       const fetchMemberInfo = async () => {
         const result: IMemberInfoDetails | null = await getMemberInfo();
         if (result) {
@@ -81,39 +83,53 @@ function WebHeader() {
             </span>
           </div>
         </div>
-        <div className={headerStyle.userAction}>
-          <div
-            className={`${headerStyle.searchToggleWrapper} ${headerStyle.searchVisible}`}
-          >
-            <IconButton
-              aria-label="toggle password visibility"
-              edge="end"
-              sx={{
-                backgroundColor: "#13c4a3",
-                marginRight: "-1px",
-              }}
+        {isLogin !== null ? (
+          <div className={headerStyle.userAction}>
+            <div
+              className={`${headerStyle.searchToggleWrapper} ${headerStyle.searchVisible}`}
+            >
+              <IconButton
+                aria-label="toggle password visibility"
+                edge="end"
+                sx={{
+                  backgroundColor: "#13c4a3",
+                  marginRight: "-1px",
+                }}
+                onClick={() => {
+                  openModal(ModalOption.SEARCH);
+                }}
+              >
+                <SearchIcon />
+              </IconButton>
+            </div>
+
+            <GoBell size={"32px"} />
+            <span
               onClick={() => {
-                openModal(ModalOption.SEARCH);
+                navigation("my");
               }}
             >
-              <SearchIcon />
+              <Avatar
+                alt="Travis Howard"
+                src={
+                  profileImgURL !== ""
+                    ? profileImgURL
+                    : `icons/favicon-32x32.png`
+                }
+              />
+            </span>
+          </div>
+        ) : (
+          <div className={headerStyle.userAction}>
+            <IconButton
+              onClick={() => {
+                navigation("login");
+              }}
+            >
+              <LoginIcon sx={{ fontSize: "2.5rem" }} />
             </IconButton>
           </div>
-
-          <GoBell size={"32px"} />
-          <span
-            onClick={() => {
-              navigation("my");
-            }}
-          >
-            <Avatar
-              alt="Travis Howard"
-              src={
-                profileImgURL !== "" ? profileImgURL : `icons/favicon-32x32.png`
-              }
-            />
-          </span>
-        </div>
+        )}
       </div>
     </div>
   );

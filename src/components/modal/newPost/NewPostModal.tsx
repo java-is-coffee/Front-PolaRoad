@@ -6,7 +6,7 @@ import NewPostTheme from "../../form/post/NewPostTheme";
 import NewCardList from "../../form/card/NewCardList";
 import { useModal } from "hooks/modal/ModalProvider";
 import ModalOption from "enum/modalOptionTypes";
-import { Step, StepLabel, Stepper } from "@mui/material";
+import { Step, StepLabel, Stepper, useMediaQuery } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "redux/store/store";
 import INewPost from "interface/post/INewPost";
@@ -39,6 +39,7 @@ function NewPostModal() {
   );
   const modalRef = useRef<HTMLDivElement>(null); // 모달 DOM에 접근하기 위한 ref
   const dispatch = useDispatch();
+  const isSmallScreen = useMediaQuery("(max-width : 767px)");
 
   // Esc 눌렀을때 모달 탈출n
   const handleKeyUp = (event: KeyboardEvent) => {

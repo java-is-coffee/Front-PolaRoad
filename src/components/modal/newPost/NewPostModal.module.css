@@ -45,3 +45,13 @@
   font-size: 1.6rem;
   font-weight: bold;
 }
+
+@media (max-width: 767px) {
+  .modalContent {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
