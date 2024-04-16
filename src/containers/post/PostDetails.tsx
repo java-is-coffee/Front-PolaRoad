@@ -22,7 +22,10 @@ function PostDetail() {
     setPostDetails(result);
   };
   useEffect(() => {
-    if (secureLocalStorage.getItem("accessToken")) {
+    if (
+      secureLocalStorage.getItem("accessToken") &&
+      secureLocalStorage.getItem("refreshToken")
+    ) {
       getPostData();
     } else {
       navigateOnError({ errorType: "AUTH", path: "/login" });
