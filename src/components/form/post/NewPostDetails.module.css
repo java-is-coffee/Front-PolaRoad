@@ -80,3 +80,21 @@
   background-color: var(--main-theme-color);
   color: white;
 }
+
+@media (max-width: 768px) {
+  .postDetailWrapper {
+    width: 100vw;
+    flex-direction: column;
+  }
+  .detailWrapper {
+    padding: 0px !important;
+    margin-top: 15px;
+  }
+
+  .inputContainer {
+    width: 95vw;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+}

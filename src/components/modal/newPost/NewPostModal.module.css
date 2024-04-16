@@ -22,7 +22,7 @@
 .modalContent {
   width: auto;
   height: auto;
-  max-width: 800px;
+  max-width: 750px;
   min-width: 300px;
   max-height: 80vh;
   min-height: 100px;
@@ -47,11 +47,4 @@
 }
 
 @media (max-width: 767px) {
-  .modalContent {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 }
