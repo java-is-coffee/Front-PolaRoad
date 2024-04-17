@@ -48,3 +48,8 @@
 
 @media (max-width: 767px) {
 }
+
+.headerMid {
+  display: flex;
+  align-items: center;
+}

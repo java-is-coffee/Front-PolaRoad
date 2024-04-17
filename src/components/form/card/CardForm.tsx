@@ -11,6 +11,7 @@ import { RootState } from "redux/store/store";
 import { IUploadImage } from "interface/bucket/IUploadImage";
 import { toast } from "react-toastify";
 import { IoMdCloseCircle } from "react-icons/io";
+import { TextField } from "@mui/material";
 
 declare global {
   interface Window {
@@ -156,16 +157,22 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
             overflow: "hidden",
           }}
         >
-          <textarea
+          <TextField
+            placeholder="사진 이름을 입력하세요"
+            className={formStyles.cardContent}
+            onChange={handleContentsChange}
+          />
+
+          {/* <textarea
             className={formStyles.cardContent}
             cols={5}
             placeholder="문구를 입력하세요"
             wrap="hard"
             onChange={handleContentsChange}
-          />
+          /> */}
           <div className={formStyles.locationAction}>
-            <input
-              placeholder="위치추가"
+            <TextField
+              placeholder="위치 찾기"
               onFocus={() => handleMapVisibility(true)}
               onChange={handleSearchValueChange}
               value={searchPlace}

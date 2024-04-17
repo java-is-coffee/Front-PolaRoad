@@ -32,9 +32,11 @@ function CardPaging({
   return (
     <div className={pagingStyles.paging}>
       <ArrowBackIosIcon className={pagingStyles.btn} onClick={handleCardLeft} />
+      뒤로가기
       <div className={pagingStyles.dots} style={{ textAlign: "center" }}>
         {dots}
       </div>
+      앞으로가기
       <ArrowForwardIosIcon
         className={pagingStyles.btn}
         onClick={handleCardRight}
