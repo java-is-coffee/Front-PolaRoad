@@ -22,10 +22,11 @@
 .selectedOptionBtn {
   padding: 5px 14px;
   border: none;
+  width: 9rem;
   border-radius: 4px;
   background-color: var(--main-theme-color);
   color: white;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 500;
   text-align: center;
   cursor: pointer;
@@ -35,10 +36,11 @@
 .optionBtn {
   padding: 5px 14px;
   border: none;
+  width: 9rem;
   border-radius: 4px;
   background-color: #f8f8f8;
   color: black;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 500;
   text-align: center;
   cursor: pointer;
@@ -48,4 +50,10 @@
 .optionBtn:hover {
   background-color: rgba(11, 232, 188, 0.944);
   color: #fff;
+}
+
+@media (max-width: 767px) {
+  .formWrapper {
+    width: 300px;
+  }
 }

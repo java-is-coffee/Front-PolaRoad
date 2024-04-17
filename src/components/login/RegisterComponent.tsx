@@ -1,4 +1,11 @@
-import { Button, Stack, TextField, styled } from "@mui/material";
+import {
+  Button,
+  IconButton,
+  InputAdornment,
+  Stack,
+  TextField,
+  styled,
+} from "@mui/material";
 import React, { useState } from "react";
 import styles from "./Login.module.css";
 // import GoogleIcon from "@mui/icons-material/Google";
@@ -6,6 +13,7 @@ import { RegisterData } from "../../api/login/postRegister";
 import useRegister from "../../hooks/login/useRegister";
 import { toast } from "react-toastify";
 import OauthButton from "./OauthButton";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const InputTextField = styled(TextField)({
   fontSize: "1.5rem",
@@ -49,6 +57,9 @@ function RegisterContainer({
   const [dupCheck, setDupCheck] = useState(true);
   const [regPassword, setRegPassword] = useState(true);
 
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showDupPassword, setDupShowPassword] = useState<boolean>(false);
+
   const { register, checkPassword, dupCheckEmail } = useRegister();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -89,6 +100,11 @@ function RegisterContainer({
       setIsEmail(false);
       toast.error("이메일이 올바르지 않습니다.");
     }
+  };
+
+  const handleVisibility = (type: string) => {
+    if (type === "first") setShowPassword((prev) => !prev);
+    else setDupShowPassword((prev) => !prev);
   };
 
   return (
@@ -143,7 +159,7 @@ function RegisterContainer({
             <InputTextField
               size="small"
               label="비밀번호 입력"
-              type="password"
+              type={showPassword ? "text" : "password"}
               required
               variant="outlined"
               onChange={(value: React.ChangeEvent<HTMLInputElement>) => {
@@ -153,12 +169,20 @@ function RegisterContainer({
               onBlur={checkingPassword}
               error={regPassword ? false : true}
               helperText="8~15자리 대소문자+숫자+특수문자로 이뤄진 비밀번호를 입력해주세요."
-              // sx={{  fontSize: "1.5rem" }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => handleVisibility("first")}>
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <InputTextField
               size="small"
               label="비밀번호 재입력"
-              type="password"
+              type={showDupPassword ? "text" : "password"}
               required
               variant="outlined"
               onChange={(value: React.ChangeEvent<HTMLInputElement>) => {
@@ -166,6 +190,15 @@ function RegisterContainer({
               }}
               onBlur={checkingPassword}
               error={dupCheck ? false : true}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => handleVisibility("second")}>
+                      {showDupPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <InputTextField
               size="small"

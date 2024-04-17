@@ -39,6 +39,7 @@ function NewPostModal() {
   );
   const modalRef = useRef<HTMLDivElement>(null); // 모달 DOM에 접근하기 위한 ref
   const dispatch = useDispatch();
+  // const isSmallScreen = useMediaQuery("(max-width : 767px)");
 
   // Esc 눌렀을때 모달 탈출n
   const handleKeyUp = (event: KeyboardEvent) => {
