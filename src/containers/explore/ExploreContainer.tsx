@@ -48,7 +48,7 @@ function ExploreContainer() {
   return (
     <div className={isSmallScreen ? exploreContainerStyles.wrapper : ""}>
       {!isSmallScreen ? <MainPhoto /> : ""}
-      {!isSmallScreen ? <MainCategory /> : ""}
+      <MainCategory />
       {/* 모바일 화면 + 설정 되어있을때.  */}
       {isMobileSearchFilter && isSmallScreen ? (
         <MobileSearchForm />

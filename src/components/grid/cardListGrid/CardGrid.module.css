@@ -71,3 +71,9 @@
   border: 3px solid rgba(20, 196, 163, 0.7); /* 테두리 */
   filter: brightness(120%); /* 밝기 조절 */
 }
+
+@media (max-width: 768px) {
+  .section {
+    width: 100vw;
+  }
+}

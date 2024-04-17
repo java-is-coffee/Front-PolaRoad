@@ -57,7 +57,11 @@ function ProfileCard({ memberInfo }: ProfileCardProps) {
             name="프로필 변경"
             clickAction={handleEditProfileImg}
           />
-          <IoIosSettings size={"24px"} onClick={handleOpenUserSetting} />
+          <IoIosSettings
+            size={"24px"}
+            onClick={handleOpenUserSetting}
+            style={{ cursor: "pointer" }}
+          />
         </div>
       </div>
       <div className={profileStyles.stat}>

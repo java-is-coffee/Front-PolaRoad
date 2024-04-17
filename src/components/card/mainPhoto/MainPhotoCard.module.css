@@ -15,8 +15,12 @@
 }
 
 .mainPhoto {
-  width: 270px !important;
+  width: 270px;
+  min-width: 270px;
+  max-width: 270px;
   height: 270px;
+  min-height: 270px;
+  max-height: 270px;
   border-radius: 9px;
 }
 
@@ -36,7 +40,7 @@
 .photoButtonRight {
   position: absolute;
   display: none;
-  top: 40%;
+  top: 41%;
   right: 1rem;
 }
 
@@ -47,21 +51,21 @@
   left: 1rem;
 }
 
-.cardImg:hover .photoButtonRight {
+.container:hover .photoButtonRight {
   display: flex !important;
 }
 
-.cardImg:hover .photoButtonLeft {
+.container:hover .photoButtonLeft {
   display: flex !important;
 }
 
-.cardImg:hover .index {
+.container:hover .index {
   display: flex !important;
 }
 
 .photoInfo {
   margin: 5px 1rem;
-  display: block;
+  width: 88%;
 }
 
 .goodNumber {
@@ -98,4 +102,14 @@
   background-color: #13c4a3;
   color: white;
   padding: 5px;
+}
+
+.itemTitle {
+  width: 270px;
+  font-size: 1.7rem;
+  text-wrap: wrap;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 5px;
 }

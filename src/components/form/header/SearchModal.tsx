@@ -1,7 +1,7 @@
 import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import { RecentDTO } from "components/header/mobile/MobileHeader";
 import ModalOption from "enum/modalOptionTypes";
@@ -16,6 +16,8 @@ const SearchModal = () => {
   const [recentData, setRecentData] = useState<RecentDTO[]>([]);
   const { closeModal } = useModal();
   const { setItem } = useExploreHooks();
+
+  const navigate = useNavigate();
 
   const setSearchData = (item: string | null) => {
     //item이 null이면 기본 검색
@@ -35,6 +37,7 @@ const SearchModal = () => {
 
     //item이 null이 아니라면 해당 item을 검색하도록
     query.set("search", item !== null ? item : searchInput);
+    navigate("/explore");
     setQuery(query);
     setItem(setExplorePostList(null));
     closeModal(ModalOption.SEARCH);
@@ -63,8 +66,13 @@ const SearchModal = () => {
   };
 
   return (
-    <div>
-      <form method="get" action="/explore" onSubmit={handleSubmit}>
+    <div className={styles.container}>
+      <form
+        method="get"
+        action="/explore"
+        onSubmit={handleSubmit}
+        className={styles.inputBox}
+      >
         <TextField
           id="outlined-basic"
           variant="outlined"
@@ -79,7 +87,6 @@ const SearchModal = () => {
           autoComplete="off"
           sx={{
             ".MuiOutlinedInput-root": { fontSize: "1.3rem" },
-            width: "20vw",
           }}
           InputProps={{
             endAdornment: (

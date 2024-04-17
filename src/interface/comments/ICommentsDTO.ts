@@ -17,11 +17,6 @@ export interface CommentDetails {
   profileImage: string; // 프로필 이미지
   nickname: string; // 멤버 닉네임
   content: string; // 내용
-  reviewPhotoInfoList: ReviewPhotoInfoDto[]; // 리뷰 사진 정보 리스트
+  reviewPhotoList: string[]; // 리뷰 사진 정보 리스트
   updatedTime: string; // 업데이트된 시간
-}
-
-interface ReviewPhotoInfoDto {
-  reviewPhotoId: number; // 리뷰 사진 Id
-  reviewPhotoUrl: string; // 리뷰 사진 URL
 }

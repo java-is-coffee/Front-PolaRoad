@@ -22,7 +22,7 @@
 .modalContent {
   width: auto;
   height: auto;
-  max-width: 800px;
+  max-width: 750px;
   min-width: 300px;
   max-height: 80vh;
   min-height: 100px;
@@ -44,4 +44,7 @@
 .header span {
   font-size: 1.6rem;
   font-weight: bold;
+}
+
+@media (max-width: 767px) {
 }

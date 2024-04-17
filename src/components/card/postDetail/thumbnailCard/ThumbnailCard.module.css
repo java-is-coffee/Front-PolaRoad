@@ -1,11 +1,11 @@
 .thumbnailCard {
   width: 100%;
+  height: calc(100vh - 100px);
   display: block;
   background: white;
   color: #333;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-top: 10px;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .thumbnailCard .header {
@@ -14,12 +14,14 @@
   justify-content: space-between;
   align-items: flex-end;
   margin: 5px 0;
+  gap: 10px;
 }
 
 .thumbnailCard img {
   display: block;
   width: 100%;
-  height: auto; /* 이미지의 원래 비율을 유지하면서 너비를 맞춤 */
+  height: auto;
+  max-height: 80vh;
   object-fit: cover; /* 이미지가 div를 꽉 채우도록 조정 */
 }
 
@@ -31,6 +33,7 @@
 .thumbnailCard .actionControl {
   display: flex;
   flex-direction: row;
+  gap: 5px;
 }
 
 .thumbnailCard .good {

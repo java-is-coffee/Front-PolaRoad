@@ -15,7 +15,7 @@
   background-color: white;
   padding: 10px 5px;
   border-radius: 10px;
-  max-width: 1100px;
+  max-width: 1200px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
@@ -27,7 +27,10 @@
   justify-content: center;
 }
 
-.sideComponent,
 .mainComponent {
   flex: 1;
+}
+.sideComponent {
+  flex: 2;
+  height: 90vh;
 }
