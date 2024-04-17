@@ -1,6 +1,7 @@
 .wrapper {
+  position: relative;
   width: 100%;
-  height: 100%;
+  height: 85vh;
   padding: 0 10px;
   box-sizing: border-box;
 }
@@ -26,9 +27,29 @@
   align-items: center;
 }
 
+.previewImgContainer {
+  overflow: scroll;
+  position: absolute;
+  bottom: 50px;
+  display: flex;
+  flex-direction: row;
+  gap: 3px;
+}
+
 .commentContainer {
   padding: 0 10px;
   overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: scroll;
+}
+
+.addComments {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
 }
 
 .previewImgWrapper {
@@ -59,4 +80,40 @@
   display: block; /* 이미지를 블록 요소로 처리하여 중앙 정렬 */
   margin-left: auto;
   margin-right: auto;
+}
+
+.commentInput {
+  position: absolute;
+  bottom: 10px; /* 하단에서 10px의 여백을 두어 위치 */
+  left: 0; /* 왼쪽 끝에서 시작 */
+  right: 0; /* 오른쪽 끝까지 이어짐 */
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #ccc;
+}
+
+.commentInput input {
+  border: none;
+  box-sizing: border-box;
+  padding: 5px;
+}
+
+.commentInput input:focus {
+  border-bottom: 2px solid var(--main-theme-color);
+  outline: none;
+}
+
+.commentInput label {
+  cursor: pointer;
+}
+
+.commentInput input {
+  width: 100%;
+}
+
+.commentInput button {
+  width: 40px;
 }
