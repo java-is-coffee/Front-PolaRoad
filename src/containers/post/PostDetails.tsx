@@ -7,7 +7,7 @@ import secureLocalStorage from "react-secure-storage";
 import useError from "hooks/error/useErrorHandler";
 import PostComments from "./comments/PostComments";
 import PostMap from "components/map/PostMap";
-import PostCardList from "./postCardList/web/PostCardList";
+import PostCardListCarousel from "./postCardList/web/PostCardLIstCarousel";
 
 function PostDetail() {
   const { postId } = useParams();
@@ -22,7 +22,10 @@ function PostDetail() {
     setPostDetails(result);
   };
   useEffect(() => {
-    if (secureLocalStorage.getItem("accessToken")) {
+    if (
+      secureLocalStorage.getItem("accessToken") &&
+      secureLocalStorage.getItem("refreshToken")
+    ) {
       getPostData();
     } else {
       navigateOnError({ errorType: "AUTH", path: "/login" });
@@ -38,7 +41,10 @@ function PostDetail() {
         <PostMap cards={postDetails.cards} />
       </article>
       <article className={containerStyles.mainComponent}>
-        <PostCardList postDetails={postDetails} postId={Number(postId)} />
+        <PostCardListCarousel
+          postDetails={postDetails}
+          postId={Number(postId)}
+        />
       </article>
       <article className={containerStyles.sideComponent}>
         <PostComments
