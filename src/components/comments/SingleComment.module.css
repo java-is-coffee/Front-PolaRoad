@@ -1,5 +1,10 @@
 .singleCommentWrapper {
   display: flex;
+  flex-direction: column;
+}
+
+.commentImgWrapper {
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
@@ -28,11 +33,46 @@
   margin-left: 10px;
 }
 
+.imgContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 3px;
+  margin: 0 40px;
+  overflow: scroll;
+}
+
+.commentImg {
+  cursor: pointer;
+  width: 50px;
+  height: 50px; /* 이미지 높이 */
+  overflow: hidden;
+  position: relative; /* 하위 요소 위치 지정 기준점 */
+}
+
+.commentImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 이미지 비율 유지하며 채우기 */
+}
+
 .name {
   font-size: 1.3rem;
   font-weight: bold;
 }
 
+.viewImgButton {
+  font-weight: bold;
+  text-decoration: underline;
+  color: #757272;
+}
+
 .contents {
   font-size: 1.2rem;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.contents {
+  cursor: pointer;
 }

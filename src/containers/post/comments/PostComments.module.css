@@ -1,7 +1,6 @@
 .wrapper {
   position: relative;
   width: 100%;
-  height: 85vh;
   padding: 0 10px;
   box-sizing: border-box;
 }
@@ -36,13 +35,17 @@
   gap: 3px;
 }
 
+.commentWrapper {
+  height: 40vh;
+  overflow: scroll;
+}
+
 .commentContainer {
   padding: 0 10px;
   overflow: scroll;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  overflow: scroll;
 }
 
 .addComments {
@@ -54,7 +57,7 @@
 
 .previewImgWrapper {
   width: 100px;
-  height: 100px;
+  height: 50px;
   overflow: hidden;
   display: block;
 }
@@ -84,7 +87,6 @@
 
 .commentInput {
   position: absolute;
-  bottom: 10px; /* 하단에서 10px의 여백을 두어 위치 */
   left: 0; /* 왼쪽 끝에서 시작 */
   right: 0; /* 오른쪽 끝까지 이어짐 */
   width: 100%;
@@ -93,6 +95,7 @@
   justify-content: space-between;
   align-items: center;
   border-top: 1px solid #ccc;
+  background-color: white;
 }
 
 .commentInput input {

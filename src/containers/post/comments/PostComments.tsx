@@ -34,26 +34,25 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
 
   const [page, setPage] = useState<number>(1);
 
-  useEffect(() => {
-    const fetchComments = async () => {
-      if (postId) {
-        const result: ICommentDTO | null = await getPostComments(postId, 1);
-        if (result) {
-          setCommentList(result.content);
-          setHasNext(result.hasNext);
-          console.log(result.content);
-        } else {
-          console.log("댓글 불러오기 실패");
-        }
+  const fetchComments = async () => {
+    if (postId) {
+      const result: ICommentDTO | null = await getPostComments(postId, 1);
+      if (result) {
+        setCommentList(result.content);
+        setHasNext(result.hasNext);
+      } else {
+        console.log("댓글 불러오기 실패");
       }
-    };
+    }
+  };
+  useEffect(() => {
     fetchComments();
     //eslint-disable-next-line
-  }, [postId]);
+  }, []);
 
   const handleSubmitComment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!postId) return;
+    if (!postId || commentContent === "") return;
     const newComment: INewComment = {
       postId: Number(postId),
       memberId: 0,
@@ -64,6 +63,8 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
     if (result) {
       setCommentList((prev) => [...prev, result]);
       setCommentContent(() => "");
+      setImagePreviews([]);
+      getMoreComment();
     }
   };
 
@@ -147,18 +148,28 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
         </div>
       )}
       <h2>댓글</h2>
-      <div className={containerStyles.commentContainer}>
-        {commentList &&
-          commentList.map((comment) => (
-            <SingleComment key={comment.reviewId} commentDetails={comment} />
-          ))}
-        {hasNext && (
-          <IoMdAddCircleOutline
-            size={"24px"}
-            style={{ cursor: "pointer" }}
-            onClick={() => getMoreComment()}
-          />
-        )}
+      <div className={containerStyles.commentWrapper}>
+        <div className={containerStyles.commentContainer}>
+          {commentList &&
+            commentList.map((comment) => (
+              <SingleComment
+                key={comment.reviewId}
+                commentDetails={comment}
+                handleImgClick={openModal}
+              />
+            ))}
+          {hasNext && (
+            <div className={containerStyles.addComments}>
+              <IoMdAddCircleOutline
+                size={"24px"}
+                style={{ cursor: "pointer" }}
+                onClick={() => getMoreComment()}
+              />
+            </div>
+          )}
+        </div>
+      </div>
+      <div className={containerStyles.previewImgContainer}>
         {imagePreviews.map((src, index) => (
           <div
             key={index}
@@ -173,7 +184,10 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
           </div>
         ))}
       </div>
-      <form onSubmit={handleSubmitComment}>
+      <form
+        onSubmit={handleSubmitComment}
+        className={containerStyles.commentInput}
+      >
         <label htmlFor={`file-${postId}`}>
           <AiOutlineCloudUpload size={"24px"} />
         </label>
@@ -188,6 +202,7 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
         />
         <input
           placeholder="댓글 작성"
+          value={commentContent}
           onChange={handleCommentChange}
           required
         />
