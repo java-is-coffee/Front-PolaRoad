@@ -11,7 +11,7 @@ interface SingleCommentProps {
 function SingleComment({ commentDetails, handleImgClick }: SingleCommentProps) {
   const [userProfileImg, setUserProfileImg] = useState<string | null>("");
   const [isActiveHeart, setIsActiveHeart] = useState<boolean>(false);
-  const [formattedDate, setFormattedDate] = useState<string>("");
+  // const [formattedDate, setFormattedDate] = useState<string>("");ㄴ
   const [commentImg, setCommentImg] = useState<string[]>([]);
   const [showImages, setShowImages] = useState<boolean>(false);
   const { getImage } = useBucket();
@@ -27,15 +27,15 @@ function SingleComment({ commentDetails, handleImgClick }: SingleCommentProps) {
     //eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    const updatedDate = new Date(commentDetails.updatedTime);
-    const formatted = updatedDate.toLocaleDateString("ko-KR", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    });
-    setFormattedDate(formatted);
-  }, [commentDetails.updatedTime]);
+  // useEffect(() => {
+  //   const updatedDate = new Date(commentDetails.updatedTime);
+  //   const formatted = updatedDate.toLocaleDateString("ko-KR", {
+  //     year: "numeric",
+  //     month: "2-digit",
+  //     day: "2-digit",
+  //   });
+  //   setFormattedDate(formatted);
+  // }, [commentDetails.updatedTime]);
 
   useEffect(() => {
     const fetchReviewImg = async () => {
@@ -111,7 +111,7 @@ function SingleComment({ commentDetails, handleImgClick }: SingleCommentProps) {
               className={commentStyles.commentImg}
               onClick={() => handleImgClick(img)}
             >
-              <img src={img} alt="Comment photo" />
+              <img src={img} alt="댓글 사진" />
             </div>
           ))}
         </div>
