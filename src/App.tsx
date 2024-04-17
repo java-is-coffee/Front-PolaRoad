@@ -11,6 +11,7 @@ import Post from "routes/Post";
 
 // 사용되는 모달 등록
 import { ModalProvider } from "hooks/modal/ModalProvider";
+import MapPage from "routes/MapPage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/" element={<Home />}></Route>
             <Route path="/explore" element={<Explore />}></Route>
             <Route path="/my" element={<MyPage />}></Route>
+            <Route path="map" element={<MapPage />}></Route>
             <Route path="/post/:postId" element={<Post />}></Route>
           </Routes>
         </ModalProvider>

@@ -17,6 +17,9 @@ import NewAlbumModal from "components/modal/album/newAlbum/NewAlbumModal";
 import NewWishListModal from "components/modal/wish/newWishList/NewWishListModal";
 import AlbumPreviewModal from "components/modal/album/albumPreview/AlbumPreviewModal";
 import EditAlbumModal from "components/modal/album/editAlbum/EditAlbumModal";
+import { useLocation, useNavigate } from "react-router-dom";
+import secureLocalStorage from "react-secure-storage";
+import { toast } from "react-toastify";
 import DeleteWarningModal from "components/modal/warn/deleteWarning/DeleteWarningModal";
 import AddPostWishList from "components/modal/wish/addPostWishList/AddPostWishList";
 
@@ -53,6 +56,18 @@ function MyPage() {
       closeModal(ModalOption.ALBUM_EDIT);
       closeModal(ModalOption.ADD_TO_WISH);
     };
+    // eslint-disable-next-line
+  }, []);
+
+  // auth 관련
+  const location = useLocation();
+  const nav = useNavigate();
+  useEffect(() => {
+    const token = secureLocalStorage.getItem("accessToken");
+    if (!token) {
+      toast.error("로그인이 필요한 기능입니다.");
+      nav("/login", { state: { from: location }, replace: true });
+    }
     // eslint-disable-next-line
   }, []);
   return (

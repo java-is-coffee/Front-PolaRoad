@@ -33,6 +33,7 @@
   font-weight: 400;
   font-style: normal;
   color: var(--main-theme-color);
+  cursor: pointer;
 }
 
 .action {
@@ -63,6 +64,7 @@
 
 .userAction span {
   font-size: 1.5rem;
+  cursor: pointer;
 }
 
 .searchToggleWrapper {
