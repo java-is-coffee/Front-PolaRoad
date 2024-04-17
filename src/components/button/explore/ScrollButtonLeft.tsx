@@ -11,6 +11,7 @@ const ScrollButtonLeft = ({ handleBack }: ScrollButtonProps) => {
       <IconButton
         size="large"
         sx={{
+          padding: "10px",
           backgroundColor: "white",
           ":hover": { backgroundColor: "white" },
         }}

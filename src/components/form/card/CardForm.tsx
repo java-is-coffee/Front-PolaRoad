@@ -193,8 +193,8 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
             ref={mapContainer}
             style={{
               opacity: isMapVisible ? "1" : "0",
-              width: "370px",
-              height: "200px",
+              width: "100%",
+              height: "20vh",
               overflow: "hidden", // 내용이 넘칠 경우 숨김 처리
             }}
           />

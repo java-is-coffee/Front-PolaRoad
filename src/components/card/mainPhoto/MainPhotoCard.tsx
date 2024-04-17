@@ -8,11 +8,14 @@ import ScrollButtonLeft from "components/button/explore/ScrollButtonLeft";
 import ScrollButtonRight from "components/button/explore/ScrollButtonRight";
 import useBucket from "hooks/bucket/useBucket";
 import { useNavigate } from "react-router-dom";
+import { useMediaQuery } from "@mui/material";
 
 const MainPhotoCard = ({ item }: { item: PostData }) => {
   const [cardImgs, setCardImgs] = useState<string[]>([]);
   const { getImage } = useBucket();
   const navigate = useNavigate();
+
+  const isSmallScreen = useMediaQuery("(max-width: 767px)");
 
   useEffect(() => {
     const fetchMemberInfo = async (src: string) => {
@@ -31,7 +34,7 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
 
   const [activeImgIndex, setActiveImgIndex] = useState<number>(0);
   const handleNext = () => {
-    if (activeImgIndex < cardImgs.length - 1) {
+    if (activeImgIndex < item.images.length - 1) {
       setActiveImgIndex((prevActiveStep) => prevActiveStep + 1);
     }
   };
@@ -51,15 +54,58 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
     navigate(`/post/${id}`);
   };
 
-  console.log(cardImgs);
+  //스크롤 모바일 환경 & 카테고리 버튼 클릭이 아닌 드래그해서 땅기는 형식
+  const [mouseDownClientX, setMouseDownClientX] = useState(0);
+  const [mouseUpClientX, setMouseUpClientX] = useState(0);
+
+  const onMouseDown = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    setMouseDownClientX(e.clientX);
+  };
+  const onMouseUp = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    setMouseUpClientX(e.clientX);
+  };
+
+  const [tochedX, setTochedX] = useState(0);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTochedX(e.changedTouches[0].pageX);
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const distanceX = tochedX - e.changedTouches[0].pageX;
+
+    if (distanceX > 30) {
+      handleNext();
+    } else if (distanceX < -30) {
+      handleBack();
+    }
+  };
+
+  useEffect(() => {
+    const dragSpaceX = Math.abs(mouseDownClientX - mouseUpClientX);
+
+    if (mouseDownClientX !== 0 && dragSpaceX > 30 && isSmallScreen) {
+      if (mouseUpClientX < mouseDownClientX) {
+        handleNext();
+      } else if (mouseUpClientX > mouseDownClientX) {
+        handleBack();
+      }
+    }
+    // eslint-disable-next-line
+  }, [mouseUpClientX]);
 
   return (
     <div key={item.postId} className={styles.container}>
-      <div className={styles.cardImg}>
+      <div
+        className={styles.cardImg}
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
+        onTouchEnd={onTouchEnd}
+        onTouchStart={onTouchStart}
+      >
         <div className={`${styles.carousel}`}>
-          {cardImgs.map((img, index) => (
+          {item.images.map((img, index) => (
             <img
-              key={img}
+              key={item.postId + img + index}
               onClick={() => {
                 goPost(item.postId);
               }}
@@ -89,7 +135,7 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
         )}
 
         <div className={styles.index}>
-          {cardImgs.map((img, index) =>
+          {item.images.map((img, index) =>
             index === activeImgIndex ? (
               <CircleIcon key={img + item.postId} sx={{ color: "#13c4a3" }} />
             ) : (
@@ -119,7 +165,7 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
           </span>
         </div>
 
-        <div style={{ fontSize: "1.7rem" }}>{item.title}</div>
+        <div className={styles.itemTitle}>{item.title}</div>
         <div className={styles.bottomBox}>
           <div className={styles.regionText}>
             <PlaceIcon style={{ color: "#13C4A3" }} />

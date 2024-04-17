@@ -51,7 +51,7 @@ const NewCardDetails = () => {
           className={formStyles.cardList}
           ref={cardCarousel}
           style={{
-            transform: `translate3d(${activeIndex * -750}px, 0, 0)`,
+            transform: `translate3d(-${0 + activeIndex * 100}%, 0, 0)`,
           }}
         >
           {cardList.map((card, index) => {
@@ -64,13 +64,19 @@ const NewCardDetails = () => {
             );
           })}
         </div>
+        <CardPaging
+          totalCardNum={cardList.length}
+          curCardIndex={activeIndex}
+          handleCardLeft={decreaseIndex}
+          handleCardRight={increaseIndex}
+        />
       </div>
-      <CardPaging
+      {/* <CardPaging
         totalCardNum={cardList.length}
         curCardIndex={activeIndex}
         handleCardLeft={decreaseIndex}
         handleCardRight={increaseIndex}
-      />
+      /> */}
     </div>
   );
 };

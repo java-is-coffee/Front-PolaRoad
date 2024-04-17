@@ -1,9 +1,17 @@
-import { Button, Stack, TextField, styled } from "@mui/material";
+import {
+  Button,
+  Stack,
+  TextField,
+  styled,
+  InputAdornment,
+  IconButton,
+} from "@mui/material";
 import React, { useState } from "react";
 import styles from "./Login.module.css";
 import OauthButton from "./OauthButton";
 import useLogin from "../../hooks/login/useLogin";
 import { LoginData } from "../../api/login/postLogin";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 //밖으로 뺸 이유. state 변경 시 리렌더링 되는데 이때, styled도 같이 다시 선언되어 할때마다 리렌더링 되어서 포커스가 자동으로 풀림.
 const InputTextField = styled(TextField)({
@@ -33,6 +41,7 @@ function LoginContainer({
 }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const { Login } = useLogin();
 
@@ -44,6 +53,10 @@ function LoginContainer({
       password: password,
     };
     Login(inputData);
+  };
+
+  const handleVisibility = () => {
+    setShowPassword((prev) => !prev);
   };
 
   return (
@@ -63,15 +76,25 @@ function LoginContainer({
                 setEmail(value.target.value);
               }}
             />
+
             <InputTextField
               label="비밀번호 입력"
-              type="password"
+              type={showPassword ? "text" : "password"}
               color="success"
               required
               variant="outlined"
               value={password}
               onChange={(value: React.ChangeEvent<HTMLInputElement>) => {
                 setPassword(value.target.value);
+              }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleVisibility}>
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
               }}
             />
             <Button
