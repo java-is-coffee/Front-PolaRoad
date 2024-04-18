@@ -11,7 +11,6 @@ import { RootState } from "redux/store/store";
 import { IUploadImage } from "interface/bucket/IUploadImage";
 import { toast } from "react-toastify";
 import { IoMdCloseCircle } from "react-icons/io";
-import { TextField } from "@mui/material";
 
 declare global {
   interface Window {
