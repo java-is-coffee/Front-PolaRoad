@@ -1,3 +1,4 @@
+import getMemberInfo from "api/member/getMemberInfo";
 import Header from "components/header/web/WebHeader";
 import PostOptionModal from "components/modal/option/PostOptionModal";
 import ShareModal from "components/modal/shareModal/ShareModal";
@@ -6,6 +7,7 @@ import PostDetail from "containers/post/PostDetails";
 import ModalOption from "enum/modalOptionTypes";
 import { useModal } from "hooks/modal/ModalProvider";
 import { useEffect } from "react";
+import secureLocalStorage from "react-secure-storage";
 
 function Post() {
   const { registerModal, closeModal } = useModal();
@@ -23,6 +25,16 @@ function Post() {
     //eslint-disable-next-line
     []
   );
+
+  useEffect(() => {
+    const fetchMemberData = async () => {
+      const data = await getMemberInfo();
+      if (data) secureLocalStorage.setItem("member", data.memberId);
+    };
+
+    fetchMemberData();
+    // eslint-disable-next-line
+  }, []);
   return (
     <div>
       <Header />
