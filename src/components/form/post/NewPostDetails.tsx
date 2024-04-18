@@ -27,6 +27,7 @@ function NewPostDetails() {
   };
   const handleAddHashTag = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setNewHashTag("");
     dispatch(addHashTags(newHashTag));
   };
   const handleRemoveHashTag = (tag: string) => {
@@ -48,6 +49,7 @@ function NewPostDetails() {
               id="hashTag"
               placeholder="해시태그를 추가해보세요"
               onChange={(e) => setNewHashTag(e.target.value)}
+              value={newHashTag}
               className={`${formStyles.input} ${formStyles.inputHashTag}`}
             />
             <button className={formStyles.addBtn} type="submit">
