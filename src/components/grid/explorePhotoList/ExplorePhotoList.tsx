@@ -24,13 +24,12 @@ const ExplorePhotoList = () => {
   const { setPostList, addPostList, setFollowPostList } = useExploreHooks();
 
   const navigate = useNavigate();
-
+  const location = useLocation();
   const isSmallScreen = useMediaQuery("(max-width : 767px)");
 
   const dispatch = useDispatch();
 
-  const location = useLocation();
-  const [query] = useSearchParams();
+  const [query, setQuery] = useSearchParams();
 
   const { storePostList, storeEndPoint, storeCurPage } = useStoreValue();
 
@@ -55,18 +54,25 @@ const ExplorePhotoList = () => {
   useEffect(() => {
     console.log("시작");
 
+    console.log(location.state);
+
+    if (location.state !== null) {
+      query.set("search", location.state.searchInput);
+      setQuery(query);
+    }
+
     if (storePostList === null && secureLocalStorage.getItem("accessToken")) {
       if (query.get("follow") === "true") {
         const initPostList: GetFollowListDTO = {
           paging: 1,
-          pagingNumber: 8,
+          pagingNumber: 16,
           concept: query.get("concept"),
         };
         setFollowPostList(initPostList);
       } else {
         const initPostList: GetListDTO = {
           paging: 1,
-          pagingNumber: 8,
+          pagingNumber: 16,
           searchType: "KEYWORD",
           keyword: query.get("search"),
           sortBy: query.get("sort") !== null ? query.get("sort") : "RECENT",
@@ -94,14 +100,14 @@ const ExplorePhotoList = () => {
     if (query.get("follow") === "true") {
       const initPostList: GetFollowListDTO = {
         paging: value + 1,
-        pagingNumber: 8,
+        pagingNumber: 16,
         concept: query.get("concept"),
       };
       setFollowPostList(initPostList);
     } else {
       const addData: GetListDTO = {
         paging: value + 1,
-        pagingNumber: 8,
+        pagingNumber: 16,
         searchType: "KEYWORD",
         keyword: query.get("search"),
         sortBy: query.get("sort") ? query.get("sort") : "RECENT",

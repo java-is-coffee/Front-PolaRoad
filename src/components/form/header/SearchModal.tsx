@@ -36,9 +36,7 @@ const SearchModal = () => {
     }
 
     //item이 null이 아니라면 해당 item을 검색하도록
-    query.set("search", item !== null ? item : searchInput);
-    navigate("/explore");
-    setQuery(query);
+    navigate("/explore", { state: { searchInput: item } });
     setItem(setExplorePostList(null));
     closeModal(ModalOption.SEARCH);
   };
