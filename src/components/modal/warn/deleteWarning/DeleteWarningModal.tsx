@@ -4,6 +4,8 @@ import ModalOption from "../../../../enum/modalOptionTypes";
 import deleteAlbum from "api/album/deleteAlbum";
 import { toast } from "react-toastify";
 import deleteWishList from "api/wishlist/deleteWishsList";
+import { useDispatch } from "react-redux";
+import { removeWishListById } from "../../../../redux/reducers/wishList/wishListReducers";
 
 interface DeleteWarningModalProps {
   type?: "album" | "wishList";
@@ -12,6 +14,7 @@ interface DeleteWarningModalProps {
 
 const DeleteWarningModal = ({ type, targetId }: DeleteWarningModalProps) => {
   const { closeModal } = useModal();
+  const dispatch = useDispatch();
   const title =
     type === "album"
       ? "앨범을 삭제하시겠어요?"
@@ -43,6 +46,7 @@ const DeleteWarningModal = ({ type, targetId }: DeleteWarningModalProps) => {
       closeModal(ModalOption.DELETE_WARNING);
       closeModal(ModalOption.AlBUM_PREVIEW);
     } else if (type === "wishList") {
+      dispatch(removeWishListById(targetId));
       fetchDeleteWishList();
       closeModal(ModalOption.DELETE_WARNING);
     }
