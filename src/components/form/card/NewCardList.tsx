@@ -71,12 +71,6 @@ const NewCardDetails = () => {
           handleCardRight={increaseIndex}
         />
       </div>
-      {/* <CardPaging
-        totalCardNum={cardList.length}
-        curCardIndex={activeIndex}
-        handleCardLeft={decreaseIndex}
-        handleCardRight={increaseIndex}
-      /> */}
     </div>
   );
 };

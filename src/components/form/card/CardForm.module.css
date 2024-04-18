@@ -110,11 +110,12 @@
 .cardContent {
   font-size: 1.4rem;
   overflow-x: hidden;
-  border: 0;
+  border: 1px solid black;
+  border-radius: 8px;
   min-height: 2rem;
   resize: none;
   outline: none;
-  padding: 0;
+  padding: 8px 8px 0px 8px;
 }
 
 .mapAction {
@@ -132,8 +133,9 @@
 
 .locationAction input {
   width: 200px;
-  padding: 3px 0;
-  border: 0;
+  padding: 3px 5px;
+  font-size: 1.3rem;
+  /* border: 0; */
 }
 .selectedPlace {
   font-size: 1.2rem;
@@ -144,6 +146,9 @@
   background-color: var(--main-theme-color);
   color: white;
   margin: 0;
+}
+
+.titleInput {
 }
 
 @media (max-width: 768px) {

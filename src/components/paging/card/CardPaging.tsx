@@ -31,16 +31,17 @@ function CardPaging({
 
   return (
     <div className={pagingStyles.paging}>
-      <ArrowBackIosIcon className={pagingStyles.btn} onClick={handleCardLeft} />
-      뒤로가기
+      <span className={pagingStyles.backIcon} onClick={handleCardLeft}>
+        <ArrowBackIosIcon className={pagingStyles.btn} />
+        뒤로가기
+      </span>
       <div className={pagingStyles.dots} style={{ textAlign: "center" }}>
         {dots}
       </div>
-      앞으로가기
-      <ArrowForwardIosIcon
-        className={pagingStyles.btn}
-        onClick={handleCardRight}
-      />
+      <span className={pagingStyles.backIcon} onClick={handleCardRight}>
+        카드 추가하기
+        <ArrowForwardIosIcon className={pagingStyles.btn} />
+      </span>
     </div>
   );
 }

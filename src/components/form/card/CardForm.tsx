@@ -157,22 +157,15 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
             overflow: "hidden",
           }}
         >
-          <TextField
-            placeholder="사진 이름을 입력하세요"
+          <textarea
             className={formStyles.cardContent}
+            placeholder="사진에 대해서 설명해주세요."
             onChange={handleContentsChange}
           />
-
-          {/* <textarea
-            className={formStyles.cardContent}
-            cols={5}
-            placeholder="문구를 입력하세요"
-            wrap="hard"
-            onChange={handleContentsChange}
-          /> */}
           <div className={formStyles.locationAction}>
-            <TextField
-              placeholder="위치 찾기"
+            <input
+              className={formStyles.cardContent}
+              placeholder="어디서 찍으셨나요?"
               onFocus={() => handleMapVisibility(true)}
               onChange={handleSearchValueChange}
               value={searchPlace}
