@@ -30,7 +30,10 @@ function NewPostDetails() {
     event.preventDefault();
     if (hashTags.includes(newHashTag)) {
       toast.warning("이미 존재하는 해시태그 입니다.");
-    } else dispatch(addHashTags(newHashTag));
+    } else {
+      setNewHashTag("");
+      dispatch(addHashTags(newHashTag));
+    }
   };
   const handleRemoveHashTag = (tag: string) => {
     dispatch(removeHashTags(tag));
@@ -49,6 +52,7 @@ function NewPostDetails() {
           <form onSubmit={handleAddHashTag}>
             <input
               id="hashTag"
+              value={newHashTag}
               placeholder="해시태그를 추가해보세요"
               onChange={(e) => setNewHashTag(e.target.value)}
               className={`${formStyles.input} ${formStyles.inputHashTag}`}

@@ -152,7 +152,7 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
           style={{
             width: newCard.image ? "100%" : "0px",
             height: newCard.image ? "100%" : "0px",
-            padding: newCard.image ? "0 20px" : "0px",
+            padding: newCard.image ? "0px 0px 0px 12px" : "0px",
             overflow: "hidden",
           }}
         >
