@@ -9,6 +9,8 @@ import { IWishListDTO } from "interface/wish/IWishList";
 import postNewWishList from "api/wishlist/postNewWishList";
 import { FaRegEdit } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { setWishLists } from "../../../../redux/reducers/wishList/wishListReducers";
 
 const NewWishListModal = () => {
   const { closeModal } = useModal();
@@ -19,6 +21,7 @@ const NewWishListModal = () => {
   const [memberWishList, setMemberWishList] = useState<IWishListDTO[]>([]);
   const [errorMsg, setErrorMsg] = useState<string>("필수 항목입니다.");
   const [isValidate, setIsValidate] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   const handleChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     checkValidate(e.target.value);
@@ -46,6 +49,8 @@ const NewWishListModal = () => {
     if (isValidate) {
       const result = await postNewWishList(name);
       if (result) {
+        const data = await getWishList();
+        if (data) dispatch(setWishLists(data));
         toast.info("위시리스트가 생성되었습니다.");
         handleClose();
       } else {

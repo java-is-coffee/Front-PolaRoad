@@ -1,11 +1,14 @@
 import gridStyle from "./WishListGrid.module.css";
 import getWishList from "api/wishlist/getWishList";
-import { IWishListDTO } from "interface/wish/IWishList";
 import { useEffect, useState } from "react";
 import WishListPostGrid from "../wishListPost/WishListPostGrid";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "redux/store/store";
+import { setWishLists } from "../../../../redux/reducers/wishList/wishListReducers";
 
 const WishListGrid = () => {
-  const [wishList, setWishList] = useState<IWishListDTO[]>([]);
+  const wishLists = useSelector((root: RootState) => root.wishListReducers);
+  const dispatch = useDispatch();
   const [selectedWishListId, setSelectedWishListId] = useState<number | null>(
     null
   );
@@ -16,7 +19,7 @@ const WishListGrid = () => {
     () => {
       const fetchWishList = async () => {
         const data = await getWishList();
-        if (data) setWishList(data);
+        if (data) dispatch(setWishLists(data));
       };
       fetchWishList();
     },
@@ -30,7 +33,7 @@ const WishListGrid = () => {
   return (
     <div className={gridStyle.gridGallery}>
       <div className={gridStyle.sideBar}>
-        {wishList.map((wishList) => (
+        {wishLists.map((wishList) => (
           <div
             className={
               wishList.wishListId === selectedWishListId

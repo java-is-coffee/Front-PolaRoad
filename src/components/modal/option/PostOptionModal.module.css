@@ -40,6 +40,31 @@
   color: red;
 }
 
+.edit {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 10px 0; /* 상하 여백 */
+  margin: 5px 0; /* 옵션 간격 */
+  font-size: 1.4rem; /* 글씨 크기 */
+  font-weight: bold;
+  text-align: center; /* 텍스트 중앙 정렬 */
+  cursor: pointer; /* 마우스 오버 시 커서 변경 */
+  color: rgb(11, 99, 133);
+}
+
+.delete {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 10px 0; /* 상하 여백 */
+  margin: 5px 0; /* 옵션 간격 */
+  font-size: 1.4rem; /* 글씨 크기 */
+  font-weight: bold;
+  text-align: center; /* 텍스트 중앙 정렬 */
+  cursor: pointer; /* 마우스 오버 시 커서 변경 */
+  color: red;
+}
 .option {
   width: 100%;
   background: transparent;
