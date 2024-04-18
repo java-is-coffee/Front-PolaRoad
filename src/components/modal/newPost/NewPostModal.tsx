@@ -6,7 +6,7 @@ import NewPostTheme from "../../form/post/NewPostTheme";
 import NewCardList from "../../form/card/NewCardList";
 import { useModal } from "hooks/modal/ModalProvider";
 import ModalOption from "enum/modalOptionTypes";
-import { Step, StepLabel, Stepper } from "@mui/material";
+import { IconButton, Step, StepLabel, Stepper } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "redux/store/store";
 import INewPost from "interface/post/INewPost";
@@ -19,6 +19,7 @@ import {
 import { QontoConnector, QontoStepIcon } from "./QontoStepStyle";
 import postNewPost from "api/post/postNewPost";
 import { validateCardList } from "utils/card/validateCardDetails";
+import { Close } from "@mui/icons-material";
 
 interface FormComponentsType {
   name: string;
@@ -126,7 +127,18 @@ function NewPostModal() {
               handleClick={decreaseFromIndex}
               isHidden={postFormIndex > 0 ? false : true}
             />
-            <span>Create New Post</span>
+            <span className={modalStyles.headerMid}>
+              Create New Post
+              <IconButton
+                onClick={() =>
+                  openModal(ModalOption.WARNING, {
+                    modalType: ModalOption.POST,
+                  })
+                }
+              >
+                <Close />
+              </IconButton>
+            </span>
             {postFormIndex < formComponents.length - 1 ? (
               <ActionBtn name="다음" handleClick={increaseFormIndex} />
             ) : (

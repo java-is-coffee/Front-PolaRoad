@@ -69,17 +69,23 @@
 }
 
 .ScrollButtonRight {
-  position: fixed;
+  position: absolute;
   display: flex;
   top: 12%;
-  right: 1rem;
-  z-index: 2;
+  right: 28rem;
+  z-index: 20;
 }
 
 .ScrollButtonLeft {
-  position: fixed;
+  position: absolute;
   display: flex;
   top: 12%;
   left: 1rem;
-  z-index: 2;
+  z-index: 20;
+}
+
+@media (max-width: 940px) {
+  .ScrollButtonRight {
+    right: 7rem;
+  }
 }

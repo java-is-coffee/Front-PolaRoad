@@ -1,7 +1,7 @@
 import { IconButton, InputAdornment, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CloseIcon from "@mui/icons-material/Close";
 import { RecentDTO } from "components/header/mobile/MobileHeader";
 import ModalOption from "enum/modalOptionTypes";
@@ -12,7 +12,6 @@ import useExploreHooks from "hooks/explore/useExploreHooks";
 
 const SearchModal = () => {
   const [searchInput, setSearchInput] = useState("");
-  const [query, setQuery] = useSearchParams();
   const [recentData, setRecentData] = useState<RecentDTO[]>([]);
   const { closeModal } = useModal();
   const { setItem } = useExploreHooks();
@@ -36,9 +35,7 @@ const SearchModal = () => {
     }
 
     //item이 null이 아니라면 해당 item을 검색하도록
-    query.set("search", item !== null ? item : searchInput);
-    navigate("/explore");
-    setQuery(query);
+    navigate("/explore", { state: { searchInput: item } });
     setItem(setExplorePostList(null));
     closeModal(ModalOption.SEARCH);
   };
