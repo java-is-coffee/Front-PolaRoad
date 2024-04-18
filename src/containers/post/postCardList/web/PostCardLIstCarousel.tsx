@@ -47,6 +47,7 @@ const PostCardListCarousel = ({
 }: PostCardListCarouselProps) => {
   const cards = [
     <ThumbnailCard
+      memberId={postDetails.memberInfo.memberId}
       postId={postId}
       title={postDetails.title}
       goodNumber={postDetails.goodNumber}
