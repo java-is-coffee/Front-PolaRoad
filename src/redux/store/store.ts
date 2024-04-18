@@ -3,12 +3,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import newPostReducers from "../reducers/newPost/newPostReducers";
 import explorePostReducer from "../reducers/explore/explorePostReducer";
 import exploreMobileSetting from "../reducers/explore/exploreMobileSetting";
+import wishListReducers from "../reducers/wishList/wishListReducers";
 
 export const rootReducer = configureStore({
   reducer: {
     newPost: newPostReducers,
     explorePost: explorePostReducer,
     exploreMobileSetting: exploreMobileSetting,
+    wishListReducers: wishListReducers,
   },
 });
 

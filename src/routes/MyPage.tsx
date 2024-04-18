@@ -22,6 +22,7 @@ import secureLocalStorage from "react-secure-storage";
 import { toast } from "react-toastify";
 import DeleteWarningModal from "components/modal/warn/deleteWarning/DeleteWarningModal";
 import AddPostWishList from "components/modal/wish/addPostWishList/AddPostWishList";
+import getMemberInfo from "api/member/getMemberInfo";
 
 function MyPage() {
   const { registerModal, closeModal } = useModal();
@@ -70,6 +71,17 @@ function MyPage() {
     }
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    const fetchMemberData = async () => {
+      const data = await getMemberInfo();
+      if (data) secureLocalStorage.setItem("member", data.memberId);
+    };
+
+    fetchMemberData();
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <div>
       <Header />

@@ -7,8 +7,11 @@ import patchPostGoodToggle from "api/post/patchPostGoodToggle";
 import { MdBookmarkAdd } from "react-icons/md";
 import { useModal } from "hooks/modal/ModalProvider";
 import ModalOption from "enum/modalOptionTypes";
+import secureLocalStorage from "react-secure-storage";
+import { toast } from "react-toastify";
 
 interface ThumbnailCardProps {
+  memberId: number;
   postId: number;
   title: string;
   goodNumber: number;
@@ -20,6 +23,7 @@ interface ThumbnailCardProps {
 }
 
 function ThumbnailCard({
+  memberId,
   postId,
   title,
   goodNumber,
@@ -34,6 +38,7 @@ function ThumbnailCard({
   const [isActiveHeart, setIsActiveHeart] = useState<boolean>(memberGood);
   const [likeNum, setLikeNum] = useState<number>(goodNumber);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const hostMemberId = secureLocalStorage.getItem("member");
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -52,6 +57,10 @@ function ThumbnailCard({
   };
 
   const handleHeartClick = () => {
+    if (hostMemberId === memberId) {
+      toast.error("본인 게시글은 좋아요 할 수 없습니다.");
+      return;
+    }
     isActiveHeart
       ? setLikeNum((prev) => prev - 1)
       : setLikeNum((prev) => prev + 1);
