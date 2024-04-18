@@ -35,7 +35,6 @@ function NewPostDetails() {
       setNewHashTag("");
       dispatch(addHashTags(newHashTag));
     }
-
   };
   const handleRemoveHashTag = (tag: string) => {
     dispatch(removeHashTags(tag));
@@ -57,7 +56,6 @@ function NewPostDetails() {
               value={newHashTag}
               placeholder="해시태그를 추가해보세요"
               onChange={(e) => setNewHashTag(e.target.value)}
-              value={newHashTag}
               className={`${formStyles.input} ${formStyles.inputHashTag}`}
               required
             />
