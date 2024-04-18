@@ -60,6 +60,7 @@ const ExplorePhotoList = () => {
         const initPostList: GetFollowListDTO = {
           paging: 1,
           pagingNumber: 8,
+          concept: query.get("concept"),
         };
         setFollowPostList(initPostList);
       } else {
@@ -94,6 +95,7 @@ const ExplorePhotoList = () => {
       const initPostList: GetFollowListDTO = {
         paging: value + 1,
         pagingNumber: 8,
+        concept: query.get("concept"),
       };
       setFollowPostList(initPostList);
     } else {
