@@ -63,26 +63,32 @@ function WebHeader() {
             <span onClick={resetPage}>Home</span>
             <span
               onClick={() => {
-                navigate("/explore?follow=true");
-                setValue(setExplorePostList(null));
-              }}
-            >
-              Follower
-            </span>
-            <span
-              onClick={() => {
                 navigation("map");
               }}
             >
               Map
             </span>
-            <span
-              onClick={() => {
-                openModal(ModalOption.POST);
-              }}
-            >
-              New Post
-            </span>
+            {isLogin ? (
+              <>
+                <span
+                  onClick={() => {
+                    navigate("/explore?follow=true");
+                    setValue(setExplorePostList(null));
+                  }}
+                >
+                  Follower
+                </span>
+                <span
+                  onClick={() => {
+                    openModal(ModalOption.POST);
+                  }}
+                >
+                  New Post
+                </span>
+              </>
+            ) : (
+              ""
+            )}
           </div>
         </div>
         {isLogin !== null ? (
