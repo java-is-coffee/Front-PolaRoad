@@ -110,8 +110,8 @@
 .cardContent {
   font-size: 1.4rem;
   overflow-x: hidden;
-  border: 1px solid black;
-  border-radius: 8px;
+  border: none;
+  border-bottom: 1px solid #ccc;
   min-height: 2rem;
   resize: none;
   outline: none;

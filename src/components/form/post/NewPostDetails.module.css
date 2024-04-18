@@ -22,14 +22,14 @@
   box-sizing: border-box;
   padding: 8px;
   margin-bottom: 15px;
-  border: 1px solid black;
-  border-radius: 4px;
+  border: none;
+  border-bottom: 1px solid #ccc;
   outline: 0;
 }
 
-.input:focus {
+/* .input:focus {
   border: 1px solid var(--main-theme-color);
-}
+} */
 .hashTagContainer {
   width: 100%;
   display: flex;
