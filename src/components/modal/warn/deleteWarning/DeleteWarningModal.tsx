@@ -6,9 +6,10 @@ import { toast } from "react-toastify";
 import deleteWishList from "api/wishlist/deleteWishsList";
 import { useDispatch } from "react-redux";
 import { removeWishListById } from "../../../../redux/reducers/wishList/wishListReducers";
+import deletePost from "api/post/deletePost";
 
 interface DeleteWarningModalProps {
-  type?: "album" | "wishList";
+  type?: "album" | "wishList" | "post";
   targetId?: number;
 }
 
@@ -40,6 +41,15 @@ const DeleteWarningModal = ({ type, targetId }: DeleteWarningModalProps) => {
     }
   };
 
+  const fetchDeletePost = async () => {
+    const result = await deletePost(targetId);
+    if (result) {
+      toast.info("삭제되었습니다.");
+    } else {
+      toast.error("삭제하는 도중 오류가 발생했습니다.");
+    }
+  };
+
   const handleExit = () => {
     if (type === "album") {
       fetchDeleteAlbum();
@@ -49,9 +59,11 @@ const DeleteWarningModal = ({ type, targetId }: DeleteWarningModalProps) => {
       dispatch(removeWishListById(targetId));
       fetchDeleteWishList();
       closeModal(ModalOption.DELETE_WARNING);
+    } else if (type === "post") {
+      fetchDeletePost();
+      closeModal(ModalOption.DELETE_WARNING);
     }
   };
-
   const handleCancel = () => {
     closeModal(ModalOption.DELETE_WARNING); // 경고 모달만 닫음
   };
