@@ -1,0 +1,104 @@
+.card {
+  width: 400px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 10px;
+}
+
+.imgContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.header {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.header span {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.action {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+}
+
+.stat span {
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.username {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.thumbnailGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 5개의 컬럼으로 고정 */
+  gap: 4px;
+}
+
+.thumbnailGrid img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.followButton {
+  margin-top: 10px;
+  cursor: pointer;
+  background-color: var(--main-theme-color);
+  border-radius: 10px;
+  color: white;
+  transition: 0.2s all ease-in;
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0);
+}
+
+.followButton:hover {
+  background-color: white;
+  color: var(--main-theme-color);
+  border: 1px solid var(--main-theme-color);
+  box-sizing: border-box;
+}
+
+.followButton:focus {
+  outline: none;
+}
+
+.unFollowButton {
+  margin-top: 10px;
+  background-color: white;
+  color: tomato;
+  border-radius: 10px;
+  box-sizing: border-box;
+  transition: 0.2s all ease-in;
+  border: 1px solid rgba(0, 0, 0, 0);
+}
+
+.unFollowButton:hover {
+  background-color: tomato;
+  color: white;
+  border: 1px solid tomato;
+  box-sizing: border-box;
+}
+
+.unFollowButton:focus {
+  outline: none;
+}

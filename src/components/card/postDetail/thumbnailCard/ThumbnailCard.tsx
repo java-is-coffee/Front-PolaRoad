@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 
 interface ThumbnailCardProps {
   memberId: number;
+  postUpdatedTime: string;
   postId: number;
   title: string;
   goodNumber: number;
@@ -22,8 +23,18 @@ interface ThumbnailCardProps {
   memberGood: boolean;
 }
 
+const formattedDate = (date: string) => {
+  const updatedDate = new Date(date);
+  return updatedDate.toLocaleDateString("ko-KR", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  });
+};
+
 function ThumbnailCard({
   memberId,
+  postUpdatedTime,
   postId,
   title,
   goodNumber,
@@ -72,7 +83,12 @@ function ThumbnailCard({
     <article className={cardStyles.thumbnailCard}>
       {imageUrl && <img src={imageUrl} alt="썸네일" />}
       <div className={cardStyles.header}>
-        <div className={cardStyles.title}>{title}</div>
+        <div className={cardStyles.title}>
+          <span>{title}</span>
+          <span className={cardStyles.updateTime}>
+            {formattedDate(postUpdatedTime)}
+          </span>
+        </div>
         <div className={cardStyles.actionControl}>
           <MdBookmarkAdd size={"24px"} onClick={handleAddPostWishList} />
           <div onClick={() => handleHeartClick()}>

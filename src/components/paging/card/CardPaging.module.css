@@ -19,6 +19,10 @@
   border: 0;
   cursor: pointer;
   margin: 10px 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 3px;
+  align-items: center;
 }
 
 .backIcon {
@@ -26,4 +30,6 @@
   flex-direction: row;
   align-items: center;
   cursor: pointer;
+  font-size: 1.2rem;
+  text-align: center;
 }
