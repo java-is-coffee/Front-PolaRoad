@@ -19,6 +19,13 @@ interface position {
   lng: number;
 }
 
+const getCardCountByMapLevel = (level: number) => {
+  if (level <= 5) return 50; // 매우 넓은 지역
+  if (level <= 10) return 30; // 넓은 지역
+  if (level <= 15) return 20; // 중간 지역
+  return 10; // 세부 지역
+};
+
 const MapPageContainer = () => {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const { initKakaoMap, registerMapChange, renderMarkerForMapPage, mapReload } =
@@ -40,7 +47,7 @@ const MapPageContainer = () => {
       swLatLng,
       neLatLng,
       conceptKey,
-      mapLevel,
+      getCardCountByMapLevel(mapLevel),
       "KEYWORD",
       searchKeyword
     );
@@ -64,7 +71,6 @@ const MapPageContainer = () => {
   }, [debouncedFetchMapCards]);
 
   useEffect(() => {
-    console.log(mapCards);
     mapReload();
     if (mapCards) renderMarkerForMapPage(mapCards);
     //eslint-disable-next-line
