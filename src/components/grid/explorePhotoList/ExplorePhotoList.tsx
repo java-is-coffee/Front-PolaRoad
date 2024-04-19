@@ -59,10 +59,6 @@ const ExplorePhotoList = () => {
       setQuery(query);
     }
 
-    if (query.get("search")?.includes("#")) {
-      console.log("??");
-    }
-
     if (storePostList === null && secureLocalStorage.getItem("accessToken")) {
       if (query.get("follow") === "true") {
         const initPostList: GetFollowListDTO = {
