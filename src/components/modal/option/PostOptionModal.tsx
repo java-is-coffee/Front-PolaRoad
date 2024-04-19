@@ -23,7 +23,7 @@ const PostOptionModal = ({ memberId, postId }: PostOptionModalProps) => {
   };
 
   const handleFollow = async () => {
-    const result = await postFollowMember(memberId);
+    const result = await postFollowMember(memberId, "팔로우");
     if (result) closeModal(ModalOption.POST_OPTION);
   };
 

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import getOtherMemberInfo from "api/member/getOtherMemberInfo";
 import { IOtherMemberInfo } from "interface/member/IOtherMemberInfo";
 import { useModal } from "hooks/modal/ModalProvider";
-import useBucket from "hooks/bucket/useBucket";
 import ModalOption from "enum/modalOptionTypes";
 import { IoMdClose } from "react-icons/io";
 
@@ -14,7 +13,6 @@ interface MiniProfileModalProps {
 
 const MiniProfileModal = ({ memberId }: MiniProfileModalProps) => {
   const { closeModal } = useModal();
-  const { getImage } = useBucket();
   const [memberInfo, setMemberInfo] = useState<IOtherMemberInfo>();
   useEffect(
     () => {
@@ -39,7 +37,9 @@ const MiniProfileModal = ({ memberId }: MiniProfileModalProps) => {
         onClick={(e) => e.stopPropagation()}
       >
         <IoMdClose size={"24px"} className={modalStyles.closeButton} />
-        {memberInfo && <MiniProfile memberInfo={memberInfo} />}
+        {memberInfo && memberId && (
+          <MiniProfile memberInfo={memberInfo} memberId={memberId} />
+        )}
       </div>
     </div>
   );

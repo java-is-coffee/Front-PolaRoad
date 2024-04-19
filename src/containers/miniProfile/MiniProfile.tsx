@@ -3,18 +3,21 @@ import ProfileImg from "../../components/user/ProfileImg";
 import profileStyles from "./MiniProfile.module.css";
 import useBucket from "hooks/bucket/useBucket";
 import { useEffect, useState } from "react";
-import { useModal } from "hooks/modal/ModalProvider";
 import { IOtherMemberInfo } from "interface/member/IOtherMemberInfo";
+import postFollowMember from "api/follow/postFollowMember";
+import secureLocalStorage from "react-secure-storage";
 
 interface MiniProfileProps {
   memberInfo: IOtherMemberInfo;
+  memberId: number;
 }
 
-function MiniProfile({ memberInfo }: MiniProfileProps) {
+function MiniProfile({ memberInfo, memberId }: MiniProfileProps) {
   const [profileImgURL, setProfileImgURL] = useState<string>("");
   const { getImage } = useBucket();
-  const { openModal } = useModal();
   const [thumbnailImages, setThumbNailImages] = useState<string[]>([]);
+  const [isFollowed, setIsFollowed] = useState<boolean>(false);
+  const hostMemberId = secureLocalStorage.getItem("member");
 
   useEffect(() => {
     const fetchProfileImg = async () => {
@@ -40,6 +43,18 @@ function MiniProfile({ memberInfo }: MiniProfileProps) {
     // eslint-disable-next-line
   }, []);
 
+  const postFollowing = async () => {
+    const data = await postFollowMember(
+      memberId,
+      isFollowed ? "언팔로우" : "팔로우"
+    );
+    if (data) setIsFollowed((prev) => !prev);
+  };
+
+  const handleFollowing = () => {
+    postFollowing();
+  };
+
   return (
     <div className={profileStyles.card}>
       <div className={profileStyles.imgContainer}>
@@ -59,6 +74,18 @@ function MiniProfile({ memberInfo }: MiniProfileProps) {
           <img src={thumbnail} alt="post 썸네일" key={index} />
         ))}
       </div>
+      {hostMemberId !== memberId && (
+        <button
+          className={
+            isFollowed
+              ? profileStyles.unFollowButton
+              : profileStyles.followButton
+          }
+          onClick={handleFollowing}
+        >
+          {isFollowed ? "언팔로우" : "팔로우"}
+        </button>
+      )}
     </div>
   );
 }
