@@ -111,7 +111,7 @@ function WebHeader() {
               </IconButton>
             </div>
 
-            <GoBell size={"32px"} />
+            {/* <GoBell size={"32px"} /> */}
             <span
               onClick={() => {
                 navigation("my");

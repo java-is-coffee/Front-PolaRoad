@@ -22,7 +22,7 @@ const GetPostList = async (inputData: GetListDTO) => {
     const response = await axiosInstance.get(postAPI);
     console.log(postAPI);
 
-    console.log(response.data.posts);
+    console.log(response.data);
 
     return response.data;
   } catch (error) {
