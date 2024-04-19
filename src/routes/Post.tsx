@@ -1,5 +1,6 @@
 import getMemberInfo from "api/member/getMemberInfo";
 import Header from "components/header/web/WebHeader";
+import MiniProfileModal from "components/modal/member/miniProfile/MiniProfileModal";
 import PostOptionModal from "components/modal/option/PostOptionModal";
 import ShareModal from "components/modal/shareModal/ShareModal";
 import DeleteWarningModal from "components/modal/warn/deleteWarning/DeleteWarningModal";
@@ -18,11 +19,13 @@ function Post() {
       registerModal(ModalOption.SHARE, <ShareModal />);
       registerModal(ModalOption.ADD_TO_WISH, <AddPostWishList />);
       registerModal(ModalOption.DELETE_WARNING, <DeleteWarningModal />);
+      registerModal(ModalOption.OTHER_MEMBER_INFO, <MiniProfileModal />);
       return () => {
         closeModal(ModalOption.POST_OPTION);
         closeModal(ModalOption.SHARE);
         closeModal(ModalOption.ADD_TO_WISH);
         closeModal(ModalOption.DELETE_WARNING);
+        closeModal(ModalOption.OTHER_MEMBER_INFO);
       };
     },
     //eslint-disable-next-line
