@@ -90,8 +90,15 @@ function ThumbnailCard({
           </span>
         </div>
         <div className={cardStyles.actionControl}>
-          <MdBookmarkAdd size={"24px"} onClick={handleAddPostWishList} />
-          <div onClick={() => handleHeartClick()}>
+          <MdBookmarkAdd
+            size={"24px"}
+            onClick={handleAddPostWishList}
+            className={cardStyles.actionButton}
+          />
+          <div
+            onClick={() => handleHeartClick()}
+            className={cardStyles.actionButton}
+          >
             {isActiveHeart ? (
               <img
                 src={"/icons/like/selected-heart.png"}
