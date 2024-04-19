@@ -1,6 +1,7 @@
 import pagingStyles from "./CardPaging.module.css";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { IoMdAdd } from "react-icons/io";
 
 interface CardPagingProps {
   totalCardNum: number;
@@ -32,15 +33,21 @@ function CardPaging({
   return (
     <div className={pagingStyles.paging}>
       <span className={pagingStyles.backIcon} onClick={handleCardLeft}>
-        <ArrowBackIosIcon className={pagingStyles.btn} />
-        뒤로가기
+        <div className={pagingStyles.btn}>
+          <ArrowBackIosIcon />
+          {curCardIndex === 0 ? "카드 추가하기" : "이전 카드"}
+          {curCardIndex === 0 ? <IoMdAdd /> : ""}
+        </div>
       </span>
       <div className={pagingStyles.dots} style={{ textAlign: "center" }}>
         {dots}
       </div>
       <span className={pagingStyles.backIcon} onClick={handleCardRight}>
-        카드 추가하기
-        <ArrowForwardIosIcon className={pagingStyles.btn} />
+        <div className={pagingStyles.btn}>
+          {curCardIndex === totalCardNum - 1 ? "카드 추가하기" : "다음 카드"}
+          {curCardIndex === totalCardNum - 1 ? <IoMdAdd /> : ""}
+          <ArrowForwardIosIcon />
+        </div>
       </span>
     </div>
   );

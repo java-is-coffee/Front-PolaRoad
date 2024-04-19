@@ -23,7 +23,7 @@ const PostOptionModal = ({ memberId, postId }: PostOptionModalProps) => {
   };
 
   const handleFollow = async () => {
-    const result = await postFollowMember(memberId);
+    const result = await postFollowMember(memberId, "팔로우");
     if (result) closeModal(ModalOption.POST_OPTION);
   };
 
@@ -47,6 +47,10 @@ const PostOptionModal = ({ memberId, postId }: PostOptionModalProps) => {
 
   const handleDeletePost = () => {
     openModal(ModalOption.DELETE_WARNING, { type: "post", targetId: postId });
+  };
+
+  const handleOpenMiniProfile = () => {
+    openModal(ModalOption.OTHER_MEMBER_INFO, { memberId: memberId });
   };
 
   return (
@@ -76,7 +80,9 @@ const PostOptionModal = ({ memberId, postId }: PostOptionModalProps) => {
         <button className={modalStyles.option} onClick={handleCopyLink}>
           링크 복사
         </button>
-        <button className={modalStyles.option}>계정 정보</button>
+        <button className={modalStyles.option} onClick={handleOpenMiniProfile}>
+          계정 정보
+        </button>
         <button className={modalStyles.option} onClick={handleCancel}>
           취소
         </button>

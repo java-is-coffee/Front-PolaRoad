@@ -34,17 +34,21 @@ function CardListHeader({ memberInfo, postId }: CarsListHeaderProps) {
     });
   };
 
+  const handleShowMemberInfo = () => {
+    openModal(ModalOption.OTHER_MEMBER_INFO, { memberId: memberInfo.memberId });
+  };
+
   return (
     <div className={headerStyles.header}>
       <div className={headerStyles.profile}>
-        <div className={headerStyles.profileImg}>
+        <div className={headerStyles.profileImg} onClick={handleShowMemberInfo}>
           {profileImg ? (
             <img src={profileImg} alt="유저 이미지" />
           ) : (
             <img src="/basic/profile.png" alt="default profile" />
           )}
         </div>
-        <span>{memberInfo.nickname}</span>
+        <span onClick={handleShowMemberInfo}>{memberInfo.nickname}</span>
       </div>
       <IoIosMore
         size={"24px"}
