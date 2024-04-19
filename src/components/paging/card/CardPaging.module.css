@@ -18,5 +18,12 @@
   background-color: white;
   border: 0;
   cursor: pointer;
-  margin: 10px 20px;
+  margin: 10px 10px;
+}
+
+.backIcon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
 }

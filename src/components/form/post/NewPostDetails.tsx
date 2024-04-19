@@ -10,6 +10,7 @@ import {
   setTitle,
 } from "../../../redux/reducers/newPost/newPostReducers";
 import { IoCloseSharp } from "react-icons/io5";
+import { toast } from "react-toastify";
 
 function NewPostDetails() {
   // post redux dispatch
@@ -27,7 +28,13 @@ function NewPostDetails() {
   };
   const handleAddHashTag = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(addHashTags(newHashTag));
+
+    if (hashTags.includes(newHashTag)) {
+      toast.warning("이미 존재하는 해시태그 입니다.");
+    } else {
+      setNewHashTag("");
+      dispatch(addHashTags(newHashTag));
+    }
   };
   const handleRemoveHashTag = (tag: string) => {
     dispatch(removeHashTags(tag));
@@ -46,9 +53,11 @@ function NewPostDetails() {
           <form onSubmit={handleAddHashTag}>
             <input
               id="hashTag"
+              value={newHashTag}
               placeholder="해시태그를 추가해보세요"
               onChange={(e) => setNewHashTag(e.target.value)}
               className={`${formStyles.input} ${formStyles.inputHashTag}`}
+              required
             />
             <button className={formStyles.addBtn} type="submit">
               추가

@@ -29,7 +29,7 @@ const settings = {
       style={{
         width: "100%",
         position: "absolute",
-        bottom: "100px",
+        bottom: "40px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -47,6 +47,7 @@ const PostCardListCarousel = ({
 }: PostCardListCarouselProps) => {
   const cards = [
     <ThumbnailCard
+      memberId={postDetails.memberInfo.memberId}
       postId={postId}
       title={postDetails.title}
       goodNumber={postDetails.goodNumber}

@@ -22,6 +22,7 @@
   min-height: 270px;
   max-height: 270px;
   border-radius: 9px;
+  object-fit: cover;
 }
 
 .carousel {
@@ -29,7 +30,6 @@
   border-radius: 9px;
   overflow: hidden;
   display: flex;
-  object-fit: cover;
   flex-direction: row;
 }
 
