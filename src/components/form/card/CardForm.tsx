@@ -110,7 +110,7 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
       {!newCard.image ? (
         <div className={formStyles.imageWrapper}>
           <img
-            src="./icons/photo/postPhoto.png"
+            src="/icons/photo/postPhoto.png"
             width="100px"
             alt="Placeholder for upload"
           />
