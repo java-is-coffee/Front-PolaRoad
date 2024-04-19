@@ -23,6 +23,7 @@ import { toast } from "react-toastify";
 import DeleteWarningModal from "components/modal/warn/deleteWarning/DeleteWarningModal";
 import AddPostWishList from "components/modal/wish/addPostWishList/AddPostWishList";
 import getMemberInfo from "api/member/getMemberInfo";
+import MiniProfileModal from "components/modal/member/miniProfile/MiniProfileModal";
 
 function MyPage() {
   const { registerModal, closeModal } = useModal();
@@ -41,6 +42,7 @@ function MyPage() {
     registerModal(ModalOption.DELETE_WARNING, <DeleteWarningModal />);
     registerModal(ModalOption.ALBUM_EDIT, <EditAlbumModal />);
     registerModal(ModalOption.ADD_TO_WISH, <AddPostWishList />);
+    registerModal(ModalOption.OTHER_MEMBER_INFO, <MiniProfileModal />);
     return () => {
       closeModal(ModalOption.POST);
       closeModal(ModalOption.WARNING);
@@ -56,6 +58,7 @@ function MyPage() {
       closeModal(ModalOption.DELETE_WARNING);
       closeModal(ModalOption.ALBUM_EDIT);
       closeModal(ModalOption.ADD_TO_WISH);
+      closeModal(ModalOption.OTHER_MEMBER_INFO);
     };
     // eslint-disable-next-line
   }, []);

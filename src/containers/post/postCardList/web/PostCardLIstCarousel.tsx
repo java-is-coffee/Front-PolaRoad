@@ -48,6 +48,7 @@ const PostCardListCarousel = ({
   const cards = [
     <ThumbnailCard
       memberId={postDetails.memberInfo.memberId}
+      postUpdatedTime={postDetails.updatedTime}
       postId={postId}
       title={postDetails.title}
       goodNumber={postDetails.goodNumber}

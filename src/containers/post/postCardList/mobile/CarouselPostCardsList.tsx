@@ -21,6 +21,7 @@ function CarouselPostCardsList({
   const cards = [
     <ThumbnailCard
       memberId={postDetails.memberInfo.memberId}
+      postUpdatedTime={postDetails.updatedTime}
       postId={postId}
       key="thumbnail"
       title={postDetails.title}

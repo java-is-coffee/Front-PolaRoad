@@ -41,7 +41,10 @@ function NewPostDetails() {
   };
   return (
     <div className={formStyles.postDetailWrapper}>
-      <CardGrid cards={cardList} />
+      <div className={formStyles.gridContainer}>
+        <span className={formStyles.gridLabel}>썸네일 카드를 선택해주세요</span>
+        <CardGrid cards={cardList} />
+      </div>
       <div className={formStyles.inputContainer}>
         <input
           id="title"

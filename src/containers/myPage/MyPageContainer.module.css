@@ -14,6 +14,10 @@
   max-width: 600px;
 }
 
+.profileCard {
+  border: 1px solid #ccc;
+}
+
 .userHistoryWrapper {
   flex-grow: 1;
   height: calc(100vh - 75px);

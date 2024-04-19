@@ -18,10 +18,10 @@ export const validateCardList = (cardList: INewCard[]): boolean => {
   for (let i = 0; i < cardList.length; i++) {
     const card = cardList[i];
     if (!card.image) {
-      toast.error(`${i}번째 이미지가 누락되었습니다.`);
-      return false;
-    }
-    if (!card.latitude || !card.location || !card.longitude) {
+      toast.error(
+        `${i + 1}번째 이미지가 누락되었습니다. 해당 카드는 삭제됩니다.`
+      );
+    } else if (!card.latitude || !card.location || !card.longitude) {
       toast.error(`${i}번째 위치정보가 누락되었습니다.`);
       return false;
     }
