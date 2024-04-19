@@ -49,7 +49,7 @@
 
 .thumbnailGrid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 5개의 컬럼으로 고정 */
+  grid-template-columns: repeat(3, 1fr); /* 5개의 컬럼으로 고정 */
   gap: 4px;
 }
 
