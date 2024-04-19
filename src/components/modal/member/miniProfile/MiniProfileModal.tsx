@@ -36,7 +36,11 @@ const MiniProfileModal = ({ memberId }: MiniProfileModalProps) => {
         className={modalStyles.previewModal}
         onClick={(e) => e.stopPropagation()}
       >
-        <IoMdClose size={"24px"} className={modalStyles.closeButton} />
+        <IoMdClose
+          size={"24px"}
+          className={modalStyles.closeButton}
+          onClick={handleCloseModal}
+        />
         {memberInfo && memberId && (
           <MiniProfile memberInfo={memberInfo} memberId={memberId} />
         )}

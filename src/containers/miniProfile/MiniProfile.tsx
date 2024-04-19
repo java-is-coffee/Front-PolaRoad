@@ -13,13 +13,6 @@ interface MiniProfileProps {
   memberId: number;
 }
 
-interface FollowData {
-  memberId: number;
-  nickname: string;
-  profileImage: string;
-  createdTime: string;
-}
-
 function MiniProfile({ memberInfo, memberId }: MiniProfileProps) {
   const [profileImgURL, setProfileImgURL] = useState<string>("");
   const { getImage } = useBucket();
