@@ -6,10 +6,18 @@ import { useEffect, useState } from "react";
 import { IOtherMemberInfo } from "interface/member/IOtherMemberInfo";
 import postFollowMember from "api/follow/postFollowMember";
 import secureLocalStorage from "react-secure-storage";
+import getFollowMemberList from "api/follow/getFollowMemberList";
 
 interface MiniProfileProps {
   memberInfo: IOtherMemberInfo;
   memberId: number;
+}
+
+interface FollowData {
+  memberId: number;
+  nickname: string;
+  profileImage: string;
+  createdTime: string;
 }
 
 function MiniProfile({ memberInfo, memberId }: MiniProfileProps) {
@@ -38,8 +46,26 @@ function MiniProfile({ memberInfo, memberId }: MiniProfileProps) {
         setThumbNailImages(validThumbnails);
       }
     };
+
+    const isFollowed = async () => {
+      if (memberInfo) {
+        const response = await getFollowMemberList();
+        const test: FollowData[] = response.followingMemberInfo;
+        test.forEach((item: FollowData) => {
+          if (item.memberId === memberId) {
+            setIsFollowed(true);
+            return;
+          }
+        });
+        if (response?.hasNext === true) {
+          isFollowed();
+        }
+      }
+    };
+
     fetchProfileImg();
     fetchThumbnails();
+    isFollowed();
     // eslint-disable-next-line
   }, []);
 
