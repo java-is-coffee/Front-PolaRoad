@@ -21,6 +21,7 @@ const postFollowMember = async (
     return false;
   } catch (error) {
     console.error(error);
+    toast.error(`자신을 팔로우 할 수 없습니다.`);
     return false;
   }
 };
