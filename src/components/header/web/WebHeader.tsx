@@ -1,4 +1,4 @@
-import { GoBell } from "react-icons/go";
+// import { GoBell } from "react-icons/go";
 import headerStyle from "./WebHeader.module.css";
 import { Avatar, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -76,7 +76,7 @@ function WebHeader() {
                     setValue(setExplorePostList(null));
                   }}
                 >
-                  Follower
+                  Follow
                 </span>
                 <span
                   onClick={() => {
