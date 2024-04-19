@@ -49,6 +49,10 @@ const PostOptionModal = ({ memberId, postId }: PostOptionModalProps) => {
     openModal(ModalOption.DELETE_WARNING, { type: "post", targetId: postId });
   };
 
+  const handleOpenMiniProfile = () => {
+    openModal(ModalOption.OTHER_MEMBER_INFO, { memberId: memberId });
+  };
+
   return (
     <div className={modalStyles.backdrop} onClick={handleCancel}>
       <div
@@ -76,7 +80,9 @@ const PostOptionModal = ({ memberId, postId }: PostOptionModalProps) => {
         <button className={modalStyles.option} onClick={handleCopyLink}>
           링크 복사
         </button>
-        <button className={modalStyles.option}>계정 정보</button>
+        <button className={modalStyles.option} onClick={handleOpenMiniProfile}>
+          계정 정보
+        </button>
         <button className={modalStyles.option} onClick={handleCancel}>
           취소
         </button>
