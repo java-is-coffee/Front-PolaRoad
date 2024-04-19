@@ -14,14 +14,14 @@ import containerStyles from "./PostComments.module.css";
 import postNewComment from "api/comments/postNewComment";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { IMemberInfoDetails } from "interface/member/IMemberInfoDetails";
-import getMemberInfo from "api/member/getMemberInfo";
 
 interface PostCommentsProps {
   postId: string | undefined;
   memberId: number;
+  userInfo: IMemberInfoDetails | null;
 }
 
-function PostComments({ postId, memberId }: PostCommentsProps) {
+function PostComments({ postId, memberId, userInfo }: PostCommentsProps) {
   // 불러온 댓글
   const [commentList, setCommentList] = useState<CommentDetails[]>([]);
   const [hasNext, setHasNext] = useState<boolean>(false);
@@ -36,8 +36,6 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
 
   const [page, setPage] = useState<number>(1);
 
-  // const [memberId, setMemberInfo] = useState<IMemberInfoDetails>();
-
   const fetchComments = async () => {
     if (postId) {
       const result: ICommentDTO | null = await getPostComments(postId, 1);
@@ -50,10 +48,8 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
     }
   };
   useEffect(() => {
-    // const userInfo = getMemberInfo();
     fetchComments();
     //eslint-disable-next-line
-    console.log(memberId);
   }, []);
 
   const handleSubmitComment = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -162,6 +158,7 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
                 key={comment.reviewId}
                 commentDetails={comment}
                 handleImgClick={openModal}
+                userInfo={userInfo}
               />
             ))}
           {hasNext && (

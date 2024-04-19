@@ -19,6 +19,7 @@ enum ModalOption {
   USER_INFO = "USER_INFO",
   OTHER_MEMBER_INFO = "OTHER_MEMBER_INFO",
   COMMENT_OPTION = "COMMENT_OPTION",
+  COMMENT_EDIT = "COMMENT_EDIT",
 }
 
 export default ModalOption;
