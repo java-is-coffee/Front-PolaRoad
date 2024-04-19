@@ -22,6 +22,7 @@ import useExploreHooks from "hooks/explore/useExploreHooks";
 
 const MainCategory = () => {
   const isSmallScreen = useMediaQuery("(max-width: 767px)");
+  const isMiddleScreen = useMediaQuery("(max-width: 940px)");
   const [query, setQuery] = useSearchParams();
   const { openModal } = useModal();
   const { setItem } = useExploreHooks();
@@ -117,7 +118,7 @@ const MainCategory = () => {
         onTouchEnd={onTouchEnd}
         onTouchStart={onTouchStart}
       >
-        {activeIndex !== 0 && isSmallScreen ? (
+        {activeIndex !== 0 && isMiddleScreen ? (
           <div className={styles.ScrollButtonLeft}>
             <ScrollButtonLeft handleBack={handleBack} />
           </div>
@@ -144,7 +145,7 @@ const MainCategory = () => {
             </label>
           ))}
         </div>
-        {activeIndex !== 1 && isSmallScreen ? (
+        {activeIndex !== 1 && isMiddleScreen ? (
           <div className={styles.ScrollButtonRight}>
             <ScrollButtonRight handleNext={handleNext} />
           </div>

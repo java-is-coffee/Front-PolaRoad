@@ -29,6 +29,7 @@ export interface GetListDTO {
 export interface GetFollowListDTO {
   paging: number;
   pagingNumber: number;
+  concept: string | null;
 }
 
 export const { sortSet, conceptSet, regionSet } = {

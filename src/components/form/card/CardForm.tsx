@@ -152,20 +152,19 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
           style={{
             width: newCard.image ? "100%" : "0px",
             height: newCard.image ? "100%" : "0px",
-            padding: newCard.image ? "0 20px" : "0px",
+            padding: newCard.image ? "0px 0px 0px 12px" : "0px",
             overflow: "hidden",
           }}
         >
           <textarea
             className={formStyles.cardContent}
-            cols={5}
-            placeholder="문구를 입력하세요"
-            wrap="hard"
+            placeholder="사진에 대해서 설명해주세요."
             onChange={handleContentsChange}
           />
           <div className={formStyles.locationAction}>
             <input
-              placeholder="위치추가"
+              className={formStyles.cardContent}
+              placeholder="어디서 찍으셨나요?"
               onFocus={() => handleMapVisibility(true)}
               onChange={handleSearchValueChange}
               value={searchPlace}
@@ -194,7 +193,7 @@ function CardForm({ cardIndex, cardDetails }: CardFormProps) {
             style={{
               opacity: isMapVisible ? "1" : "0",
               width: "100%",
-              height: "20vh",
+              height: "33vh",
               overflow: "hidden", // 내용이 넘칠 경우 숨김 처리
             }}
           />

@@ -1,7 +1,7 @@
 import { GoBell } from "react-icons/go";
 import headerStyle from "./WebHeader.module.css";
 import { Avatar, IconButton } from "@mui/material";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useBucket from "hooks/bucket/useBucket";
 import { IMemberInfoDetails } from "interface/member/IMemberInfoDetails";
@@ -12,15 +12,12 @@ import { useModal } from "hooks/modal/ModalProvider";
 import ModalOption from "enum/modalOptionTypes";
 import useStoreValue from "hooks/storeValue/useStoreValue";
 import { setExplorePostList } from "../../../redux/reducers/explore/explorePostReducer";
-import useExploreHooks from "hooks/explore/useExploreHooks";
 import LoginIcon from "@mui/icons-material/Login";
 
 function WebHeader() {
   const navigate = useNavigate();
   const { openModal } = useModal();
-  const { setItem } = useExploreHooks();
   const { setValue } = useStoreValue();
-  const [query, setQuery] = useSearchParams();
   const isLogin = secureLocalStorage.getItem("accessToken");
 
   const navigation = (input: string) => {
@@ -28,8 +25,8 @@ function WebHeader() {
   };
 
   const resetPage = () => {
-    setValue(setExplorePostList(null));
     navigate("/explore");
+    setValue(setExplorePostList(null));
   };
   //true = pc화면 / false = 모바일 화면 767이하
 
@@ -66,9 +63,8 @@ function WebHeader() {
             <span onClick={resetPage}>Home</span>
             <span
               onClick={() => {
-                query.set("follow", "true");
-                setQuery(query);
-                setItem(setExplorePostList(null));
+                navigate("/explore?follow=true");
+                setValue(setExplorePostList(null));
               }}
             >
               Follower
