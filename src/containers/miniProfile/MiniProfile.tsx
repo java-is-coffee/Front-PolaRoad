@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { IOtherMemberInfo } from "interface/member/IOtherMemberInfo";
 import postFollowMember from "api/follow/postFollowMember";
 import secureLocalStorage from "react-secure-storage";
-import getFollowMemberList from "api/follow/getFollowMemberList";
+import getIsFollowMember from "api/follow/getIsFollowMember";
 
 interface MiniProfileProps {
   memberInfo: IOtherMemberInfo;
@@ -47,18 +47,14 @@ function MiniProfile({ memberInfo, memberId }: MiniProfileProps) {
       }
     };
 
+    //이부분은 수정해야할 것 같습니다. 너무 비효율적입니다.
     const isFollowed = async () => {
       if (memberInfo) {
-        const response = await getFollowMemberList();
-        const test: FollowData[] = response.followingMemberInfo;
-        test.forEach((item: FollowData) => {
-          if (item.memberId === memberId) {
-            setIsFollowed(true);
-            return;
-          }
-        });
-        if (response?.hasNext === true) {
-          isFollowed();
+        const checkFollow: boolean = await getIsFollowMember(memberId);
+        if (checkFollow === true) {
+          setIsFollowed(true);
+        } else {
+          setIsFollowed(false);
         }
       }
     };

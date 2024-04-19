@@ -1,5 +1,6 @@
 import getMemberInfo from "api/member/getMemberInfo";
 import Header from "components/header/web/WebHeader";
+import CommentOptionModal from "components/modal/comment/CommentOptionModal";
 import MiniProfileModal from "components/modal/member/miniProfile/MiniProfileModal";
 import NewPostModal from "components/modal/newPost/NewPostModal";
 import PostOptionModal from "components/modal/option/PostOptionModal";
@@ -24,6 +25,7 @@ function Post() {
       registerModal(ModalOption.DELETE_WARNING, <DeleteWarningModal />);
       registerModal(ModalOption.OTHER_MEMBER_INFO, <MiniProfileModal />);
       registerModal(ModalOption.POST, <NewPostModal />);
+      registerModal(ModalOption.COMMENT_OPTION, <CommentOptionModal />);
 
       return () => {
         closeModal(ModalOption.POST);
@@ -33,6 +35,7 @@ function Post() {
         closeModal(ModalOption.ADD_TO_WISH);
         closeModal(ModalOption.DELETE_WARNING);
         closeModal(ModalOption.OTHER_MEMBER_INFO);
+        closeModal(ModalOption.COMMENT_OPTION);
       };
     },
     //eslint-disable-next-line

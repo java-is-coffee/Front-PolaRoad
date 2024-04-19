@@ -13,6 +13,8 @@ import { toast } from "react-toastify";
 import containerStyles from "./PostComments.module.css";
 import postNewComment from "api/comments/postNewComment";
 import { IoMdAddCircleOutline } from "react-icons/io";
+import { IMemberInfoDetails } from "interface/member/IMemberInfoDetails";
+import getMemberInfo from "api/member/getMemberInfo";
 
 interface PostCommentsProps {
   postId: string | undefined;
@@ -34,6 +36,8 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
 
   const [page, setPage] = useState<number>(1);
 
+  // const [memberId, setMemberInfo] = useState<IMemberInfoDetails>();
+
   const fetchComments = async () => {
     if (postId) {
       const result: ICommentDTO | null = await getPostComments(postId, 1);
@@ -46,8 +50,10 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
     }
   };
   useEffect(() => {
+    // const userInfo = getMemberInfo();
     fetchComments();
     //eslint-disable-next-line
+    console.log(memberId);
   }, []);
 
   const handleSubmitComment = async (e: React.FormEvent<HTMLFormElement>) => {
