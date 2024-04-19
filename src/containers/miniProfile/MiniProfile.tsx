@@ -14,6 +14,7 @@ function MiniProfile({ memberInfo }: MiniProfileProps) {
   const [profileImgURL, setProfileImgURL] = useState<string>("");
   const { getImage } = useBucket();
   const { openModal } = useModal();
+  const [thumbnailImages, setThumbNailImages] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchProfileImg = async () => {
@@ -22,7 +23,20 @@ function MiniProfile({ memberInfo }: MiniProfileProps) {
         if (imgUrl) setProfileImgURL(imgUrl);
       }
     };
+    const fetchThumbnails = async () => {
+      if (memberInfo.thumbnails && memberInfo.thumbnails.length > 0) {
+        const thumbnailPromises = memberInfo.thumbnails.map((thumbnail) =>
+          getImage(thumbnail)
+        );
+        const thumbnails = await Promise.all(thumbnailPromises);
+        const validThumbnails = thumbnails.filter(
+          (url): url is string => url !== null
+        );
+        setThumbNailImages(validThumbnails);
+      }
+    };
     fetchProfileImg();
+    fetchThumbnails();
     // eslint-disable-next-line
   }, []);
 
@@ -40,6 +54,11 @@ function MiniProfile({ memberInfo }: MiniProfileProps) {
         <span>{`팔로우 ${memberInfo.followingNumber}`}</span>
       </div>
       <div className={profileStyles.username}>{memberInfo.name}</div>
+      <div className={profileStyles.thumbnailGrid}>
+        {thumbnailImages.map((thumbnail, index) => (
+          <img src={thumbnail} alt="post 썸네일" key={index} />
+        ))}
+      </div>
     </div>
   );
 }
