@@ -12,6 +12,7 @@ interface PostCardListProps {
 function PostCardList({ postDetails, postId }: PostCardListProps) {
   const cards = [
     <ThumbnailCard
+      postUpdatedTime={postDetails.updatedTime}
       memberId={postDetails.memberInfo.memberId}
       postId={postId}
       title={postDetails.title}
