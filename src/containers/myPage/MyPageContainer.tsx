@@ -21,7 +21,9 @@ function MyPageContainer() {
   return (
     <div className={containerStyle.wrapper}>
       <div className={containerStyle.profileWrapper}>
-        <ProfileCard memberInfo={memberInfo} />
+        <div className={containerStyle.profileCard}>
+          <ProfileCard memberInfo={memberInfo} />
+        </div>
       </div>
       <div className={containerStyle.userHistoryWrapper}>
         <UserHistoryContainer memberId={memberInfo.memberId} />
