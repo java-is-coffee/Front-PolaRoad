@@ -3,8 +3,6 @@ import { GetFollowListDTO } from "interface/explore/ExplorePost";
 
 const getFollwerPostList = async (inputData: GetFollowListDTO) => {
   try {
-    console.log("팔로워 로드 테스트");
-
     let postAPI = `/api/post/following?page=${inputData.paging}&pageSize=${inputData.pagingNumber}`;
 
     if (inputData.concept !== null) {
@@ -12,8 +10,6 @@ const getFollwerPostList = async (inputData: GetFollowListDTO) => {
     }
 
     const response = await axiosInstance.get(postAPI);
-
-    console.log(response.data.posts);
 
     return response.data;
   } catch (error) {

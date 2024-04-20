@@ -1,4 +1,4 @@
-import { GoBell } from "react-icons/go";
+// import { GoBell } from "react-icons/go";
 import headerStyle from "./WebHeader.module.css";
 import { Avatar, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -63,26 +63,32 @@ function WebHeader() {
             <span onClick={resetPage}>Home</span>
             <span
               onClick={() => {
-                navigate("/explore?follow=true");
-                setValue(setExplorePostList(null));
-              }}
-            >
-              Follower
-            </span>
-            <span
-              onClick={() => {
                 navigation("map");
               }}
             >
               Map
             </span>
-            <span
-              onClick={() => {
-                openModal(ModalOption.POST);
-              }}
-            >
-              New Post
-            </span>
+            {isLogin ? (
+              <>
+                <span
+                  onClick={() => {
+                    navigate("/explore?follow=true");
+                    setValue(setExplorePostList(null));
+                  }}
+                >
+                  Follow
+                </span>
+                <span
+                  onClick={() => {
+                    openModal(ModalOption.POST);
+                  }}
+                >
+                  New Post
+                </span>
+              </>
+            ) : (
+              ""
+            )}
           </div>
         </div>
         {isLogin !== null ? (
@@ -105,7 +111,7 @@ function WebHeader() {
               </IconButton>
             </div>
 
-            <GoBell size={"32px"} />
+            {/* <GoBell size={"32px"} /> */}
             <span
               onClick={() => {
                 navigation("my");

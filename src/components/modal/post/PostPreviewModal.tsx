@@ -10,6 +10,8 @@ import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { useModal } from "hooks/modal/ModalProvider";
 import ModalOption from "enum/modalOptionTypes";
 import PostCardListCarousel from "containers/post/postCardList/web/PostCardLIstCarousel";
+import getMemberInfo from "api/member/getMemberInfo";
+import { IMemberInfoDetails } from "interface/member/IMemberInfoDetails";
 
 interface PostPreviewModalProps {
   postId?: string;
@@ -18,6 +20,9 @@ interface PostPreviewModalProps {
 function PostPreviewModal({ postId }: PostPreviewModalProps) {
   const [postDetails, setPostDetails] = useState<IPostDTO | null>(null);
   const [sideContentType, setSideContentType] = useState<string>("comment");
+  //현재 로그인한 유저 정보 저장
+  const [userInfo, setUserInfo] = useState<IMemberInfoDetails | null>(null);
+
   const { closeModal } = useModal();
   useEffect(() => {
     const getPostData = async () => {
@@ -35,6 +40,15 @@ function PostPreviewModal({ postId }: PostPreviewModalProps) {
       toast.error("로그인이 필요합니다.");
     }
   }, [postId]);
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      const curMember = await getMemberInfo();
+      setUserInfo(curMember);
+    };
+    getUserInfo();
+    //eslint-disable-next-line
+  }, []);
 
   const handleChange = (
     event: React.MouseEvent<HTMLElement>,
@@ -72,6 +86,7 @@ function PostPreviewModal({ postId }: PostPreviewModalProps) {
               <PostComments
                 postId={postId}
                 memberId={postDetails.memberInfo.memberId}
+                userInfo={userInfo}
               />
             ) : (
               <PostMap cards={postDetails.cards} />
