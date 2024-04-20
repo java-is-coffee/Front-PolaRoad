@@ -7,6 +7,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useModal } from "hooks/modal/ModalProvider";
 import ModalOption from "enum/modalOptionTypes";
 import secureLocalStorage from "react-secure-storage";
+import patchCommentGood from "api/comments/patchCommentGood";
 
 interface SingleCommentProps {
   commentDetails: CommentDetails;
@@ -22,7 +23,9 @@ function SingleComment({
   commentList,
 }: SingleCommentProps) {
   const [userProfileImg, setUserProfileImg] = useState<string | null>("");
-  const [isActiveHeart, setIsActiveHeart] = useState<boolean>(false);
+  const [isActiveHeart, setIsActiveHeart] = useState<boolean>(
+    commentDetails.memberIsLiked
+  );
   // const [formattedDate, setFormattedDate] = useState<string>("");ㄴ
   const [commentImg, setCommentImg] = useState<string[]>([]);
   const [showImages, setShowImages] = useState<boolean>(false);
@@ -69,6 +72,12 @@ function SingleComment({
 
     //eslint-disable-next-line
   }, []);
+
+  const handleCommentGood = async (commentId: number) => {
+    const result = await patchCommentGood(commentId);
+    if (result === true) setIsActiveHeart(true);
+    else setIsActiveHeart(false);
+  };
 
   return (
     <div className={commentStyles.singleCommentWrapper}>
@@ -125,14 +134,14 @@ function SingleComment({
               src={"/icons/like/selected-heart.png"}
               style={{ width: "14px", height: "14px" }}
               alt="active-heart"
-              onClick={() => setIsActiveHeart((prev) => !prev)}
+              onClick={() => handleCommentGood(commentDetails.reviewId)}
             />
           ) : (
             <img
               src={"/icons/like/default-heart.png"}
               style={{ width: "14px", height: "14px" }}
               alt="default-heart"
-              onClick={() => setIsActiveHeart((prev) => !prev)}
+              onClick={() => handleCommentGood(commentDetails.reviewId)}
             />
           )}
         </div>

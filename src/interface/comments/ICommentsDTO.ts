@@ -19,4 +19,5 @@ export interface CommentDetails {
   content: string; // 내용
   reviewPhotoList: string[]; // 리뷰 사진 정보 리스트
   updatedTime: string; // 업데이트된 시간
+  memberIsLiked: boolean;
 }
