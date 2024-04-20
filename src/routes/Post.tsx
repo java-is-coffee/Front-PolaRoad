@@ -1,3 +1,4 @@
+import { BottomNavigation, useMediaQuery } from "@mui/material";
 import getMemberInfo from "api/member/getMemberInfo";
 import Header from "components/header/web/WebHeader";
 import MiniProfileModal from "components/modal/member/miniProfile/MiniProfileModal";
@@ -48,6 +49,9 @@ function Post() {
     fetchMemberData();
     // eslint-disable-next-line
   }, []);
+
+  const isSmallScreen = useMediaQuery("(max-width: 767px)");
+
   return (
     <div>
       <Header />

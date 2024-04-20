@@ -1,3 +1,4 @@
+import { useMediaQuery } from "@mui/material";
 import Header from "components/header/web/WebHeader";
 import MapPageContainer from "containers/map/MapPageContainer";
 import { useEffect } from "react";
@@ -16,10 +17,20 @@ function MapPage() {
     }
     // eslint-disable-next-line
   }, []);
+
+  const isSmallScreen = useMediaQuery("(max-width: 767px)");
   return (
     <div>
       <Header />
       <MapPageContainer />
+      <div
+        style={{
+          position: "fixed",
+          bottom: "0%",
+          width: "100%",
+          zIndex: "1000",
+        }}
+      ></div>
     </div>
   );
 }
