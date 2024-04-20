@@ -159,6 +159,8 @@ function PostComments({ postId, memberId, userInfo }: PostCommentsProps) {
                 commentDetails={comment}
                 handleImgClick={openModal}
                 userInfo={userInfo}
+                setCommentList={setCommentList}
+                commentList={commentList}
               />
             ))}
           {hasNext && (

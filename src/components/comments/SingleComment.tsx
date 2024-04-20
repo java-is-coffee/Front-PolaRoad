@@ -12,12 +12,16 @@ interface SingleCommentProps {
   commentDetails: CommentDetails;
   handleImgClick: (imgUrl: string) => void;
   userInfo: IMemberInfoDetails | null;
+  setCommentList: React.Dispatch<React.SetStateAction<CommentDetails[]>>;
+  commentList: CommentDetails[];
 }
 
 function SingleComment({
   commentDetails,
   handleImgClick,
   userInfo,
+  setCommentList,
+  commentList,
 }: SingleCommentProps) {
   const [userProfileImg, setUserProfileImg] = useState<string | null>("");
   const [isActiveHeart, setIsActiveHeart] = useState<boolean>(false);
@@ -106,6 +110,8 @@ function SingleComment({
               onClick={() =>
                 openModal(ModalOption.COMMENT_OPTION, {
                   commentDetails: commentDetails,
+                  setCommentList: setCommentList,
+                  commentList: commentList,
                 })
               }
             >

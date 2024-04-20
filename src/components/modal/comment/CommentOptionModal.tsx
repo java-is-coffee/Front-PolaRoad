@@ -7,9 +7,15 @@ import { CommentDetails } from "interface/comments/ICommentsDTO";
 
 interface CommentIdProps {
   commentDetails?: CommentDetails;
+  setCommentList?: React.Dispatch<React.SetStateAction<CommentDetails[]>>;
+  commentList?: CommentDetails[];
 }
 
-const CommentOptionModal = ({ commentDetails }: CommentIdProps) => {
+const CommentOptionModal = ({
+  commentDetails,
+  setCommentList,
+  commentList,
+}: CommentIdProps) => {
   const { openModal, closeModal } = useModal();
 
   // Esc 눌렀을때 모달 탈출n
@@ -32,7 +38,18 @@ const CommentOptionModal = ({ commentDetails }: CommentIdProps) => {
   }, []);
 
   const handleDeleteComment = () => {
-    if (commentDetails !== undefined) deleteComment(commentDetails.reviewId);
+    if (
+      commentDetails !== undefined &&
+      setCommentList !== undefined &&
+      commentList !== undefined
+    ) {
+      const newCommetList = commentList.filter(
+        (item) => item !== commentDetails
+      );
+      deleteComment(commentDetails.reviewId);
+      setCommentList(newCommetList);
+    }
+
     closeModal(ModalOption.COMMENT_OPTION);
     // 삭제 이후, 저는 post를 리덕스로 관리하고 해당 포스트를 초기화 하여 다시 새로 불러오는 형식으로 구현했습니다만. prop 형식으로 구현해볼까요? 삭제 자체는 동작되는 것 확인했습니다.
   };
