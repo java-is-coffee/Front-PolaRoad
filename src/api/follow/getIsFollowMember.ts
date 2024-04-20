@@ -6,8 +6,6 @@ const getIsFollowMember = async (memberId: number): Promise<boolean> => {
 
     const response = await axiosInstance.get(API_URL);
 
-    console.log(response);
-
     return response.data as boolean;
   } catch (error) {
     console.error(error);

@@ -11,7 +11,6 @@ const postFollowMember = async (
     const response = await axiosInstance.post(API_URL);
 
     const { status } = response;
-    console.log(response.data);
     if (status === 200) {
       type === "팔로우"
         ? toast.info(`${type} 완료`)

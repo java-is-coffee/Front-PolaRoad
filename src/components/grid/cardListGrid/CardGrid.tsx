@@ -22,7 +22,6 @@ const CardGrid = ({ cards }: CardProps) => {
     dispatch(removeCardByIndex(index));
   };
   const handleSelectThumbnail = (index: number) => {
-    console.log("dkfjl;s");
     dispatch(setThumbnail(index));
   };
   return (

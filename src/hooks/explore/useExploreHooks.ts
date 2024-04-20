@@ -39,7 +39,6 @@ const useExploreHooks = () => {
       const result = await getFollwerPostList(inputDTO);
       if (result === null) {
         dispatch(addExplorePostList(result.posts));
-        console.log("끝");
         return 0;
       } else {
         dispatch(addExplorePostList(result.posts));
@@ -52,7 +51,6 @@ const useExploreHooks = () => {
     const result = await getPostList(inputDTO);
     if (result.hasNext === false) {
       dispatch(addExplorePostList(result.posts));
-      console.log("끝");
       return 0;
     } else {
       dispatch(addExplorePostList(result.posts));

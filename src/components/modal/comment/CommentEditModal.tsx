@@ -25,12 +25,14 @@ const CommentEditModal = ({ commentDetails }: CommentIdProps) => {
     closeModal(ModalOption.COMMENT_EDIT);
   };
   // 불러온 댓글
+  //eslint-disable-next-line
   const [commentList, setCommentList] = useState<CommentDetails[]>([]);
   const [hasNext, setHasNext] = useState<boolean>(false);
   //새로운 코멘트용 state
   const [commentImgUrls, setCommentImgUrls] = useState<string[]>([]);
   const [commentContent, setCommentContent] = useState<string>("");
-  // 이미지 프로뷰 state
+  // 이미지 프로뷰 state eslint임시용
+  //eslint-disable-next-line
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const { uploadImage } = useBucket();
   const [page, setPage] = useState<number>(1);
@@ -106,9 +108,6 @@ const CommentEditModal = ({ commentDetails }: CommentIdProps) => {
       setHasNext(addComments.hasNext);
     }
   };
-
-  console.log(commentList);
-  console.log(imagePreviews);
 
   return (
     <div className={modalStyles.backdrop} onClick={handleBackdropClick}>

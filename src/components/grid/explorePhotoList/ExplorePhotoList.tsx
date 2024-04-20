@@ -51,7 +51,6 @@ const ExplorePhotoList = () => {
   }, []);
 
   useEffect(() => {
-    console.log("시작");
     const getSearch: string = location.state?.searchInput;
 
     if (getSearch !== undefined) {
@@ -94,7 +93,6 @@ const ExplorePhotoList = () => {
   useEffect(() => {
     //렌더링 시작 시, 해당 view가 바로 포착되어서 .
     if (inView && !storeEndPoint && storePostList !== null) {
-      console.log("추가 로딩");
       dispatch(setCurPage(storeCurPage + 1));
       addPostFunc(storeCurPage);
     }

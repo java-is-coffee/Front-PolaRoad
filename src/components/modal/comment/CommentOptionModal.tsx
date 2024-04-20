@@ -31,12 +31,6 @@ const CommentOptionModal = ({ commentDetails }: CommentIdProps) => {
     // eslint-disable-next-line
   }, []);
 
-  // 모달 생성시 postId 적용
-  useEffect(() => {
-    console.log(commentDetails?.reviewId);
-    //eslint-disable-next-line
-  }, []);
-
   const handleDeleteComment = () => {
     if (commentDetails !== undefined) deleteComment(commentDetails.reviewId);
     closeModal(ModalOption.COMMENT_OPTION);
