@@ -7,6 +7,19 @@ import { rootReducer } from "./redux/store/store";
 import App from "./App";
 import "react-toastify/dist/ReactToastify.css";
 
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/service-worker.js").then(
+    function (registration) {
+      // Registration was successful
+      console.log("Service Worker registered with scope: ", registration.scope);
+    },
+    function (err) {
+      // registration failed :(
+      console.log("Service Worker registration failed: ", err);
+    }
+  );
+}
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
