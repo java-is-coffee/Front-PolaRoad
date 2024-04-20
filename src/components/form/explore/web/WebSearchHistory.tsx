@@ -9,7 +9,6 @@ const WebSearchHistory = () => {
 
   useEffect(() => {
     const result = localStorage.getItem("recentData") || "[]";
-    console.log(result);
     setRecentData(JSON.parse(result));
   }, []);
 

@@ -11,7 +11,6 @@ const postFollowMember = async (
     const response = await axiosInstance.post(API_URL);
 
     const { status } = response;
-    console.log(response.data);
     if (status === 200) {
       type === "팔로우"
         ? toast.info(`${type} 완료`)
@@ -21,6 +20,7 @@ const postFollowMember = async (
     return false;
   } catch (error) {
     console.error(error);
+    toast.error(`자신을 팔로우 할 수 없습니다.`);
     return false;
   }
 };

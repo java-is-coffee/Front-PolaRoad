@@ -30,7 +30,6 @@ const ExplorePhotoList = () => {
   const dispatch = useDispatch();
 
   const [query, setQuery] = useSearchParams();
-
   const { storePostList, storeEndPoint, storeCurPage } = useStoreValue();
 
   //화면이 전부 나와야하며, 1초 딜레이
@@ -52,11 +51,9 @@ const ExplorePhotoList = () => {
   }, []);
 
   useEffect(() => {
-    console.log("시작");
+    const getSearch: string = location.state?.searchInput;
 
-    console.log(location.state);
-
-    if (location.state !== null) {
+    if (getSearch !== undefined) {
       query.set("search", location.state.searchInput);
       setQuery(query);
     }
@@ -73,8 +70,15 @@ const ExplorePhotoList = () => {
         const initPostList: GetListDTO = {
           paging: 1,
           pagingNumber: 16,
-          searchType: "KEYWORD",
-          keyword: query.get("search"),
+          searchType: query.get("search")?.includes("#")
+            ? "HASHTAG"
+            : "KEYWORD",
+          keyword:
+            getSearch !== undefined
+              ? getSearch?.includes("#")
+                ? query.get("search")?.replace("#", "")
+                : query.get("search")
+              : query.get("search"),
           sortBy: query.get("sort") !== null ? query.get("sort") : "RECENT",
           concept: query.get("concept"),
           region: query.get("region"),
@@ -84,12 +88,11 @@ const ExplorePhotoList = () => {
     }
 
     // eslint-disable-next-line
-  }, [query, storePostList]);
+  }, [storePostList]);
 
   useEffect(() => {
     //렌더링 시작 시, 해당 view가 바로 포착되어서 .
     if (inView && !storeEndPoint && storePostList !== null) {
-      console.log("추가 로딩");
       dispatch(setCurPage(storeCurPage + 1));
       addPostFunc(storeCurPage);
     }
@@ -108,7 +111,7 @@ const ExplorePhotoList = () => {
       const addData: GetListDTO = {
         paging: value + 1,
         pagingNumber: 16,
-        searchType: "KEYWORD",
+        searchType: query.get("search")?.includes("#") ? "HASHTAG" : "KEYWORD",
         keyword: query.get("search"),
         sortBy: query.get("sort") ? query.get("sort") : "RECENT",
         concept: query.get("concept"),

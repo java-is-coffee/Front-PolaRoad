@@ -21,9 +21,12 @@ const useExploreHooks = () => {
 
   const setPostList = async (inputDTO: GetListDTO) => {
     const result = await getPostList(inputDTO);
-    dispatch(setExplorePostList(result.posts));
-    dispatch(setCurPage(1));
-    dispatch(setEndPoint(false));
+
+    if (result !== null) {
+      dispatch(setExplorePostList(result.posts));
+      dispatch(setCurPage(1));
+      dispatch(setEndPoint(false));
+    }
   };
 
   const setFollowPostList = async (inputDTO: GetFollowListDTO) => {
@@ -34,9 +37,8 @@ const useExploreHooks = () => {
       dispatch(setEndPoint(false));
     } else {
       const result = await getFollwerPostList(inputDTO);
-      if (result.hasNext === false) {
+      if (result === null) {
         dispatch(addExplorePostList(result.posts));
-        console.log("끝");
         return 0;
       } else {
         dispatch(addExplorePostList(result.posts));
@@ -47,14 +49,11 @@ const useExploreHooks = () => {
 
   const addPostList = async (inputDTO: GetListDTO) => {
     const result = await getPostList(inputDTO);
-
     if (result.hasNext === false) {
       dispatch(addExplorePostList(result.posts));
-      console.log("끝");
       return 0;
     } else {
       dispatch(addExplorePostList(result.posts));
-      return 1;
     }
   };
 

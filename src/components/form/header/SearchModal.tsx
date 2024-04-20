@@ -30,13 +30,14 @@ const SearchModal = () => {
       if (newList.length > 5) {
         deleteData(recentData[4].id);
       }
-
       localStorage.setItem("recentData", JSON.stringify(newList));
+      navigate("/explore", { state: { searchInput: searchInput } });
+      setItem(setExplorePostList(null));
+    } else {
+      navigate("/explore", { state: { searchInput: item } });
+      setItem(setExplorePostList(null));
     }
 
-    //item이 null이 아니라면 해당 item을 검색하도록
-    navigate("/explore", { state: { searchInput: item } });
-    setItem(setExplorePostList(null));
     closeModal(ModalOption.SEARCH);
   };
 

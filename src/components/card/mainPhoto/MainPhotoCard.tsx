@@ -7,11 +7,15 @@ import CircleIcon from "@mui/icons-material/Circle";
 import ScrollButtonLeft from "components/button/explore/ScrollButtonLeft";
 import ScrollButtonRight from "components/button/explore/ScrollButtonRight";
 import useBucket from "hooks/bucket/useBucket";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
+import { setExplorePostList } from "../../../redux/reducers/explore/explorePostReducer";
+import useExploreHooks from "hooks/explore/useExploreHooks";
 
 const MainPhotoCard = ({ item }: { item: PostData }) => {
   const [cardImgs, setCardImgs] = useState<string[]>([]);
+  const [query, setQuery] = useSearchParams();
+  const { setItem } = useExploreHooks();
   const { getImage } = useBucket();
   const navigate = useNavigate();
 
@@ -93,6 +97,15 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
     // eslint-disable-next-line
   }, [mouseUpClientX]);
 
+  const handleClick = (inputData: string) => {
+    const checkDup = inputData === query.get("concept");
+    if (!checkDup) {
+      query.set("concept", inputData);
+      setQuery(query);
+      setItem(setExplorePostList(null));
+    }
+  };
+
   return (
     <div key={item.postId} className={styles.container}>
       <div
@@ -166,14 +179,17 @@ const MainPhotoCard = ({ item }: { item: PostData }) => {
         </div>
 
         <div className={styles.itemTitle}>{item.title}</div>
-        <div className={styles.bottomBox}>
-          <div className={styles.regionText}>
-            <PlaceIcon style={{ color: "#13C4A3" }} />
-            {regionSet.values[regionSet.key.indexOf(item.region)]}
-          </div>
-          <div className={styles.conceptText}>
-            {conceptSet.values[conceptSet.key.indexOf(item.concept)]}
-          </div>
+      </div>
+      <div className={styles.bottomBox}>
+        <div className={styles.regionText}>
+          <PlaceIcon style={{ color: "#13C4A3" }} />
+          {regionSet.values[regionSet.key.indexOf(item.region)]}
+        </div>
+        <div
+          className={styles.conceptText}
+          onClick={() => handleClick(item.concept)}
+        >
+          {conceptSet.values[conceptSet.key.indexOf(item.concept)]}
         </div>
       </div>
     </div>
