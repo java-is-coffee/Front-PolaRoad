@@ -1,6 +1,8 @@
 import { useMediaQuery } from "@mui/material";
+import LogoHeader from "components/header/logoHeader/LogoHeader";
 import Header from "components/header/web/WebHeader";
 import MapPageContainer from "containers/map/MapPageContainer";
+import MapPageContainerMobile from "containers/map/moblie/MapPageContainerMoblie";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import secureLocalStorage from "react-secure-storage";
@@ -21,8 +23,8 @@ function MapPage() {
   const isSmallScreen = useMediaQuery("(max-width: 767px)");
   return (
     <div>
-      <Header />
-      <MapPageContainer />
+      {isSmallScreen ? <LogoHeader /> : <Header />}
+      {isSmallScreen ? <MapPageContainerMobile /> : <MapPageContainer />}
       <div
         style={{
           position: "fixed",

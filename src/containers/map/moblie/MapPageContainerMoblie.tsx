@@ -1,5 +1,5 @@
 import useKakaoMap from "hooks/map/useKakaoMap";
-import containerStyles from "./MapPageContainer.module.css";
+import containerStyles from "./MapPageContainerMobile.module.css";
 import React, {
   ChangeEvent,
   useCallback,
@@ -13,6 +13,7 @@ import MapSideContainer from "containers/map/sideContainer/MapSideConatainer";
 import ConceptType from "enum/ConceptOptionType";
 import MapHeader from "components/map/mapHeader/MapHeader";
 import { debounce } from "lodash";
+import MapSideContainerMobile from "./sideConatainer/MapSideContainerMobile";
 
 interface position {
   lat: number;
@@ -26,7 +27,7 @@ const getCardCountByMapLevel = (level: number) => {
   return 10; // 세부 지역
 };
 
-const MapPageContainer = () => {
+const MapPageContainerMobile = () => {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const { initKakaoMap, registerMapChange, renderMarkerForMapPage, mapReload } =
     useKakaoMap();
@@ -121,7 +122,7 @@ const MapPageContainer = () => {
         />
       }
       {mapCards && (
-        <MapSideContainer
+        <MapSideContainerMobile
           cards={mapCards}
           handleInputChange={handleSearchKeyword}
           handleSearch={handleSearch}
@@ -131,4 +132,4 @@ const MapPageContainer = () => {
   );
 };
 
-export default MapPageContainer;
+export default MapPageContainerMobile;
