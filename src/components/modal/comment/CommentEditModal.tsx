@@ -25,15 +25,23 @@ const CommentEditModal = ({ commentDetails }: CommentIdProps) => {
     closeModal(ModalOption.COMMENT_EDIT);
   };
   // 불러온 댓글
-  //eslint-disable-next-line
-  const [commentList, setCommentList] = useState<CommentDetails[]>([]);
+
   const [hasNext, setHasNext] = useState<boolean>(false);
   //새로운 코멘트용 state
   const [commentImgUrls, setCommentImgUrls] = useState<string[]>([]);
-  const [commentContent, setCommentContent] = useState<string>("");
+  const [commentContent, setCommentContent] = useState<string>(
+    commentDetails !== undefined ? commentDetails.content : ""
+  );
   // 이미지 프로뷰 state eslint임시용
   //eslint-disable-next-line
-  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  // const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const [imagePreviews, setImagePreviews] = useState<string[]>(
+    commentDetails !== undefined ? commentDetails.reviewPhotoList : []
+  );
+  //eslint-disable-next-line
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  //eslint-disable-next-line
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { uploadImage } = useBucket();
   const [page, setPage] = useState<number>(1);
 
@@ -51,7 +59,7 @@ const CommentEditModal = ({ commentDetails }: CommentIdProps) => {
       const uploadPromises = files.map(async (file) => {
         if (commentDetails !== undefined) {
           const imageInfo: IUploadImage = {
-            postUserId: commentDetails!.memberId,
+            postUserId: commentDetails.memberId,
             postId: postId,
             image: file,
           };
@@ -86,7 +94,6 @@ const CommentEditModal = ({ commentDetails }: CommentIdProps) => {
     };
     const result: CommentDetails | null = await postNewComment(newComment);
     if (result) {
-      setCommentList((prev) => [...prev, result]);
       setCommentContent(() => "");
       setImagePreviews([]);
       getMoreComment();
@@ -103,44 +110,83 @@ const CommentEditModal = ({ commentDetails }: CommentIdProps) => {
     const nextPage = page + 1;
     const addComments = await getPostComments(postId, nextPage);
     if (addComments && addComments.content) {
-      setCommentList((prev) => [...prev, ...addComments.content]);
       setPage(nextPage);
       setHasNext(addComments.hasNext);
     }
   };
 
+  const openModal = (imageUrl: string) => {
+    setSelectedImage(imageUrl);
+    setIsModalOpen(true);
+  };
+
+  const closeModal2 = () => {
+    setIsModalOpen(false);
+  };
+
   return (
-    <div className={modalStyles.backdrop} onClick={handleBackdropClick}>
-      <div
-        className={modalStyles.postOptionModal}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <h1>댓글 수정</h1>
-        <div>
-          <form
-            onSubmit={handleSubmitComment}
-            className={modalStyles.commentInput}
+    <div className={modalStyles.wrapper}>
+      {isModalOpen && (
+        <div className={modalStyles.previewBackdrop} onClick={closeModal2}>
+          <div
+            className={modalStyles.previewModal}
+            onClick={(e) => e.stopPropagation()}
           >
-            <label htmlFor={`file-${postId}`}>
-              <AiOutlineCloudUpload size={"24px"} />
-            </label>
-            <input
-              type="file"
-              name={`file-${postId}`}
-              id={`file-${postId}`}
-              accept="image/*"
-              style={{ display: "none" }}
-              multiple
-              onChange={handleImageUpload}
+            <img
+              src={selectedImage || undefined}
+              alt="Selected"
+              className={modalStyles.modalImage}
             />
-            <input
-              placeholder="댓글 작성"
-              value={commentContent}
-              onChange={handleCommentChange}
-              required
-            />
-            <button type="submit">수정</button>
-          </form>
+          </div>
+        </div>
+      )}
+      <div className={modalStyles.backdrop} onClick={handleBackdropClick}>
+        <div
+          className={modalStyles.postOptionModal}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <h1>댓글 수정</h1>
+          <div className={modalStyles.previewImgContainer}>
+            {imagePreviews.map((src, index) => (
+              <div
+                key={index}
+                className={modalStyles.previewImgWrapper}
+                onClick={() => openModal(src)}
+              >
+                <img
+                  src={src}
+                  alt="preview"
+                  className={modalStyles.previewImg}
+                />
+              </div>
+            ))}
+          </div>
+          <div>
+            <form
+              onSubmit={handleSubmitComment}
+              className={modalStyles.commentInput}
+            >
+              <label htmlFor={`file-${commentDetails?.postId}`}>
+                <AiOutlineCloudUpload size={"24px"} />
+              </label>
+              <input
+                type="file"
+                name={`file-${commentDetails?.postId}`}
+                id={`file-${commentDetails?.postId}`}
+                accept="image/*"
+                style={{ display: "none" }}
+                multiple
+                onChange={handleImageUpload}
+              />
+              <input
+                placeholder="댓글 작성"
+                value={commentContent}
+                onChange={handleCommentChange}
+                required
+              />
+              <button type="submit">수정</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
