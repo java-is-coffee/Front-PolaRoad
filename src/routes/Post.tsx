@@ -1,4 +1,4 @@
-import { BottomNavigation, useMediaQuery } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
 import getMemberInfo from "api/member/getMemberInfo";
 import LogoHeader from "components/header/logoHeader/LogoHeader";
 import Header from "components/header/web/WebHeader";
