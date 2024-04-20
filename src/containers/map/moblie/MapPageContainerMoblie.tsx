@@ -9,7 +9,6 @@ import React, {
 } from "react";
 import { IMapCard } from "interface/map/IMapCard";
 import getCardsByMapArea from "api/mapPost/getCardsByMapArea";
-import MapSideContainer from "containers/map/sideContainer/MapSideConatainer";
 import ConceptType from "enum/ConceptOptionType";
 import MapHeader from "components/map/mapHeader/MapHeader";
 import { debounce } from "lodash";
