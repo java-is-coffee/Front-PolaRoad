@@ -1,5 +1,6 @@
 import { BottomNavigation, useMediaQuery } from "@mui/material";
 import getMemberInfo from "api/member/getMemberInfo";
+import LogoHeader from "components/header/logoHeader/LogoHeader";
 import Header from "components/header/web/WebHeader";
 import MiniProfileModal from "components/modal/member/miniProfile/MiniProfileModal";
 import NewPostModal from "components/modal/newPost/NewPostModal";
@@ -8,6 +9,7 @@ import ShareModal from "components/modal/shareModal/ShareModal";
 import DeleteWarningModal from "components/modal/warn/deleteWarning/DeleteWarningModal";
 import WarningModal from "components/modal/warn/WarningModal";
 import AddPostWishList from "components/modal/wish/addPostWishList/AddPostWishList";
+import PostDetailMobile from "containers/post/modlie/PostDetailsMoblie";
 import PostDetail from "containers/post/PostDetails";
 import ModalOption from "enum/modalOptionTypes";
 import { useModal } from "hooks/modal/ModalProvider";
@@ -54,8 +56,8 @@ function Post() {
 
   return (
     <div>
-      <Header />
-      <PostDetail />
+      {isSmallScreen ? <LogoHeader /> : <Header />}
+      {isSmallScreen ? <PostDetailMobile /> : <PostDetail />}
     </div>
   );
 }

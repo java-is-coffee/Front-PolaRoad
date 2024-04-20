@@ -34,3 +34,27 @@
   flex: 2;
   height: 90vh;
 }
+
+@media (max-width: 768px) {
+  .modal {
+    background-color: white;
+    padding: 10px 5px;
+    border-radius: 10px;
+    max-width: 1200px;
+    width: 100vh;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+  }
+  .sideComponent {
+    width: 100%;
+  }
+}

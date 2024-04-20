@@ -6,10 +6,10 @@ import secureLocalStorage from "react-secure-storage";
 import PostMap from "components/map/PostMap";
 import PostComments from "containers/post/comments/PostComments";
 import { toast } from "react-toastify";
-import CarouselPostCardsList from "containers/post/postCardList/mobile/CarouselPostCardsList";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { useModal } from "hooks/modal/ModalProvider";
 import ModalOption from "enum/modalOptionTypes";
+import PostCardListCarousel from "containers/post/postCardList/web/PostCardLIstCarousel";
 
 interface PostPreviewModalProps {
   postId?: string;
@@ -52,7 +52,7 @@ function PostPreviewModal({ postId }: PostPreviewModalProps) {
       <div className={modalStyle.modal} onClick={(e) => e.stopPropagation()}>
         <section className={modalStyle.container}>
           <article className={modalStyle.mainComponent}>
-            <CarouselPostCardsList
+            <PostCardListCarousel
               postDetails={postDetails}
               postId={Number(postId)}
             />
