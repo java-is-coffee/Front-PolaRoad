@@ -57,7 +57,7 @@ const BottomNavigator = () => {
   }
 
   return (
-    <div>
+    <div style={{ borderTop: "1px solid #ccc" }}>
       <BottomNavigation
         value={value}
         onChange={(event, newValue) => {
