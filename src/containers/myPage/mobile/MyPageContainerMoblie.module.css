@@ -1,0 +1,28 @@
+.wrapper {
+  width: 100vw;
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.profileWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 100%;
+  max-width: 600px;
+}
+
+.profileCard {
+  padding: 30px 0px;
+}
+
+.userHistoryWrapper {
+  flex-grow: 1;
+  height: calc(100vh - 75px);
+  overflow: scroll;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+}
