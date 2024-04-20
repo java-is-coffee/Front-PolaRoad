@@ -152,6 +152,7 @@ function RegisterContainer({
               required
               variant="outlined"
               color="success"
+              disabled
               // onChange={(value: React.ChangeEvent<HTMLInputElement>) => {
               //   setCertificationNumber(value.target.value);
               // }}

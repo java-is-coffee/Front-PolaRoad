@@ -88,7 +88,7 @@ const MainCategory = () => {
     //중복 체크 (중복으로 눌려졌는지)
     const checkDup = savedData === query.get("concept");
     if (!checkDup) {
-      query.set("concept", conceptSet.key[number]);
+      query.set("concept", savedData);
       setQuery(query);
       setItem(setExplorePostList(null));
     } else {

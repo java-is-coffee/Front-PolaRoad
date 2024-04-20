@@ -19,7 +19,6 @@ const useLogin = () => {
       const from = location.state?.from
         ? location.state.from + param
         : "/explore"; // 이전 페이지가 없다면 '/explore'로 설정
-      console.log(param);
       navigate(from);
     } else {
       toast.error("로그인 실패");

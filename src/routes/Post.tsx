@@ -1,5 +1,8 @@
 import getMemberInfo from "api/member/getMemberInfo";
+import SearchDropdown from "components/dropDown/search/SearchDropdown";
 import Header from "components/header/web/WebHeader";
+import CommentEditModal from "components/modal/comment/CommentEditModal";
+import CommentOptionModal from "components/modal/comment/CommentOptionModal";
 import MiniProfileModal from "components/modal/member/miniProfile/MiniProfileModal";
 import NewPostModal from "components/modal/newPost/NewPostModal";
 import PostOptionModal from "components/modal/option/PostOptionModal";
@@ -24,6 +27,9 @@ function Post() {
       registerModal(ModalOption.DELETE_WARNING, <DeleteWarningModal />);
       registerModal(ModalOption.OTHER_MEMBER_INFO, <MiniProfileModal />);
       registerModal(ModalOption.POST, <NewPostModal />);
+      registerModal(ModalOption.COMMENT_OPTION, <CommentOptionModal />);
+      registerModal(ModalOption.SEARCH, <SearchDropdown />);
+      registerModal(ModalOption.COMMENT_EDIT, <CommentEditModal />);
 
       return () => {
         closeModal(ModalOption.POST);
@@ -33,6 +39,9 @@ function Post() {
         closeModal(ModalOption.ADD_TO_WISH);
         closeModal(ModalOption.DELETE_WARNING);
         closeModal(ModalOption.OTHER_MEMBER_INFO);
+        closeModal(ModalOption.COMMENT_OPTION);
+        closeModal(ModalOption.SEARCH);
+        closeModal(ModalOption.COMMENT_EDIT);
       };
     },
     //eslint-disable-next-line

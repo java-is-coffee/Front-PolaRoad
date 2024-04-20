@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { IOtherMemberInfo } from "interface/member/IOtherMemberInfo";
 import postFollowMember from "api/follow/postFollowMember";
 import secureLocalStorage from "react-secure-storage";
+import getIsFollowMember from "api/follow/getIsFollowMember";
 
 interface MiniProfileProps {
   memberInfo: IOtherMemberInfo;
@@ -38,8 +39,22 @@ function MiniProfile({ memberInfo, memberId }: MiniProfileProps) {
         setThumbNailImages(validThumbnails);
       }
     };
+
+    //이부분은 수정해야할 것 같습니다. 너무 비효율적입니다.
+    const isFollowed = async () => {
+      if (memberInfo) {
+        const checkFollow: boolean = await getIsFollowMember(memberId);
+        if (checkFollow === true) {
+          setIsFollowed(true);
+        } else {
+          setIsFollowed(false);
+        }
+      }
+    };
+
     fetchProfileImg();
     fetchThumbnails();
+    isFollowed();
     // eslint-disable-next-line
   }, []);
 

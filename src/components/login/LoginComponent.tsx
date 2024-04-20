@@ -116,7 +116,7 @@ function LoginContainer({
         </div>
 
         <OauthButton />
-
+        {/* 
         <div className={styles.center}>
           <Button
             className={styles.bottomButton}
@@ -125,7 +125,7 @@ function LoginContainer({
           >
             비밀번호를 잊으셨나요?
           </Button>
-        </div>
+        </div> */}
 
         <div className={styles.center}>
           <Button

@@ -2,19 +2,31 @@ import useBucket from "hooks/bucket/useBucket";
 import { CommentDetails } from "interface/comments/ICommentsDTO";
 import { useEffect, useState } from "react";
 import commentStyles from "./SingleComment.module.css";
+import { IMemberInfoDetails } from "interface/member/IMemberInfoDetails";
+import { IconButton } from "@mui/material";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { useModal } from "hooks/modal/ModalProvider";
+import ModalOption from "enum/modalOptionTypes";
 
 interface SingleCommentProps {
   commentDetails: CommentDetails;
   handleImgClick: (imgUrl: string) => void;
+  userInfo: IMemberInfoDetails | null;
 }
 
-function SingleComment({ commentDetails, handleImgClick }: SingleCommentProps) {
+function SingleComment({
+  commentDetails,
+  handleImgClick,
+  userInfo,
+}: SingleCommentProps) {
   const [userProfileImg, setUserProfileImg] = useState<string | null>("");
   const [isActiveHeart, setIsActiveHeart] = useState<boolean>(false);
   // const [formattedDate, setFormattedDate] = useState<string>("");ㄴ
   const [commentImg, setCommentImg] = useState<string[]>([]);
   const [showImages, setShowImages] = useState<boolean>(false);
   const { getImage } = useBucket();
+
+  const { openModal } = useModal();
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -50,6 +62,7 @@ function SingleComment({ commentDetails, handleImgClick }: SingleCommentProps) {
     };
 
     fetchReviewImg();
+
     //eslint-disable-next-line
   }, []);
 
@@ -87,18 +100,33 @@ function SingleComment({ commentDetails, handleImgClick }: SingleCommentProps) {
             </div>
           </div>
         </div>
-        <div onClick={() => setIsActiveHeart((prev) => !prev)}>
+        <div className={commentStyles.buttons}>
+          {userInfo?.memberId === commentDetails.memberId ? (
+            <IconButton
+              onClick={() =>
+                openModal(ModalOption.COMMENT_OPTION, {
+                  commentDetails: commentDetails,
+                })
+              }
+            >
+              <MoreHorizIcon />
+            </IconButton>
+          ) : (
+            ""
+          )}
           {isActiveHeart ? (
             <img
               src={"/icons/like/selected-heart.png"}
               style={{ width: "14px", height: "14px" }}
               alt="active-heart"
+              onClick={() => setIsActiveHeart((prev) => !prev)}
             />
           ) : (
             <img
               src={"/icons/like/default-heart.png"}
               style={{ width: "14px", height: "14px" }}
               alt="default-heart"
+              onClick={() => setIsActiveHeart((prev) => !prev)}
             />
           )}
         </div>
