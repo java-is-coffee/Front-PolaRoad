@@ -12,12 +12,12 @@ import ShareModal from "components/modal/shareModal/ShareModal";
 import DeleteWarningModal from "components/modal/warn/deleteWarning/DeleteWarningModal";
 import WarningModal from "components/modal/warn/WarningModal";
 import AddPostWishList from "components/modal/wish/addPostWishList/AddPostWishList";
-import PostDetailMobile from "containers/post/modlie/PostDetailsMoblie";
 import PostDetail from "containers/post/PostDetails";
 import ModalOption from "enum/modalOptionTypes";
 import { useModal } from "hooks/modal/ModalProvider";
 import { useEffect } from "react";
 import secureLocalStorage from "react-secure-storage";
+import PostDetailMobile from "containers/post/mobile/PostDetailsMoblie";
 
 function Post() {
   const { registerModal, closeModal } = useModal();

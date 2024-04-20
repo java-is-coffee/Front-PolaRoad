@@ -8,15 +8,10 @@ import useError from "hooks/error/useErrorHandler";
 import PostComments from "./comments/PostComments";
 import PostMap from "components/map/PostMap";
 import PostCardListCarousel from "./postCardList/web/PostCardLIstCarousel";
-import { IMemberInfoDetails } from "interface/member/IMemberInfoDetails";
-import getMemberInfo from "api/member/getMemberInfo";
 
 function PostDetail() {
   const { postId } = useParams();
   const [postDetails, setPostDetails] = useState<IPostDTO | null>(null);
-
-  //현재 로그인한 유저 정보 저장
-  const [userInfo, setUserInfo] = useState<IMemberInfoDetails | null>(null);
 
   const { navigateOnError } = useError();
   const getPostData = async () => {
@@ -39,15 +34,6 @@ function PostDetail() {
     // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    const getUserInfo = async () => {
-      const curMember = await getMemberInfo();
-      setUserInfo(curMember);
-    };
-    getUserInfo();
-    //eslint-disable-next-line
-  }, []);
-
   if (!postId) return <div></div>;
 
   return postDetails ? (
@@ -65,7 +51,6 @@ function PostDetail() {
         <PostComments
           postId={postId}
           memberId={postDetails.memberInfo.memberId}
-          userInfo={userInfo}
         />
       </article>
     </section>
