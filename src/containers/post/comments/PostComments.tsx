@@ -164,7 +164,6 @@ function PostComments({ postId, memberId, userInfo }: PostCommentsProps) {
                 key={comment.reviewId}
                 commentDetails={comment}
                 handleImgClick={openModal}
-                userInfo={userInfo}
                 setCommentList={setCommentList}
                 commentList={commentList}
               />
