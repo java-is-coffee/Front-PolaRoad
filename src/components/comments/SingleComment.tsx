@@ -29,7 +29,6 @@ function SingleComment({
   // const [formattedDate, setFormattedDate] = useState<string>("");ㄴ
   const [commentImg, setCommentImg] = useState<string[]>([]);
   const [showImages, setShowImages] = useState<boolean>(false);
-  const memberId = secureLocalStorage.getItem("member");
   const { getImage } = useBucket();
   const { openModal } = useModal();
 
