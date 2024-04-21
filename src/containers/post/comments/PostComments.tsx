@@ -74,9 +74,10 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
     if (!event.target.files || event.target.files.length === 0 || !postId) {
       return;
     }
+
     const files = Array.from(event.target.files);
     const previewUrls = files.map((file) => URL.createObjectURL(file));
-    setImagePreviews(previewUrls); // 프리뷰 URL 상태 업데이트
+    setImagePreviews((prev) => [...prev, previewUrls[0]]); // 프리뷰 URL 상태 업데이트
     try {
       // Promise.all을 사용하여 모든 이미지 업로드를 병렬로 처리
       const uploadPromises = files.map(async (file) => {
@@ -148,6 +149,21 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
         </div>
       )}
       <h2>댓글</h2>
+      <div className={containerStyles.previewImgContainer}>
+        {imagePreviews.map((src, index) => (
+          <div
+            key={index}
+            className={containerStyles.previewImgWrapper}
+            onClick={() => openModal(src)}
+          >
+            <img
+              src={src}
+              alt="preview"
+              className={containerStyles.previewImg}
+            />
+          </div>
+        ))}
+      </div>
       <form
         onSubmit={handleSubmitComment}
         className={containerStyles.commentInput}
@@ -170,6 +186,7 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
           onChange={handleCommentChange}
           required
         />
+
         <button type="submit">작성</button>
       </form>
       <div className={containerStyles.commentWrapper}>
@@ -180,6 +197,8 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
                 key={comment.reviewId}
                 commentDetails={comment}
                 handleImgClick={openModal}
+                setCommentList={setCommentList}
+                commentList={commentList}
               />
             ))}
           {hasNext && (
@@ -192,21 +211,6 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
             </div>
           )}
         </div>
-      </div>
-      <div className={containerStyles.previewImgContainer}>
-        {imagePreviews.map((src, index) => (
-          <div
-            key={index}
-            className={containerStyles.previewImgWrapper}
-            onClick={() => openModal(src)}
-          >
-            <img
-              src={src}
-              alt="preview"
-              className={containerStyles.previewImg}
-            />
-          </div>
-        ))}
       </div>
     </div>
   );

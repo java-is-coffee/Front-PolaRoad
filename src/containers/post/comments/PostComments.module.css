@@ -28,8 +28,6 @@
 
 .previewImgContainer {
   overflow: scroll;
-  position: absolute;
-  bottom: 50px;
   display: flex;
   flex-direction: row;
   gap: 3px;
