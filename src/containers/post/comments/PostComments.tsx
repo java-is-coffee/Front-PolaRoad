@@ -148,6 +148,30 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
         </div>
       )}
       <h2>댓글</h2>
+      <form
+        onSubmit={handleSubmitComment}
+        className={containerStyles.commentInput}
+      >
+        <label htmlFor={`file-${postId}`}>
+          <AiOutlineCloudUpload size={"24px"} />
+        </label>
+        <input
+          type="file"
+          name={`file-${postId}`}
+          id={`file-${postId}`}
+          accept="image/*"
+          style={{ display: "none" }}
+          multiple
+          onChange={handleImageUpload}
+        />
+        <input
+          placeholder="댓글 작성"
+          value={commentContent}
+          onChange={handleCommentChange}
+          required
+        />
+        <button type="submit">작성</button>
+      </form>
       <div className={containerStyles.commentWrapper}>
         <div className={containerStyles.commentContainer}>
           {commentList &&
@@ -184,30 +208,6 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
           </div>
         ))}
       </div>
-      <form
-        onSubmit={handleSubmitComment}
-        className={containerStyles.commentInput}
-      >
-        <label htmlFor={`file-${postId}`}>
-          <AiOutlineCloudUpload size={"24px"} />
-        </label>
-        <input
-          type="file"
-          name={`file-${postId}`}
-          id={`file-${postId}`}
-          accept="image/*"
-          style={{ display: "none" }}
-          multiple
-          onChange={handleImageUpload}
-        />
-        <input
-          placeholder="댓글 작성"
-          value={commentContent}
-          onChange={handleCommentChange}
-          required
-        />
-        <button type="submit">작성</button>
-      </form>
     </div>
   );
 }

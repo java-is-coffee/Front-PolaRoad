@@ -86,17 +86,17 @@
 }
 
 .commentInput {
-  position: absolute;
   left: 0; /* 왼쪽 끝에서 시작 */
   right: 0; /* 오른쪽 끝까지 이어짐 */
-  bottom: 10px;
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   background-color: white;
+  margin-bottom: 20px;
 }
 
 .commentInput input {
