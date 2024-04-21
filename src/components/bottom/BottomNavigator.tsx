@@ -49,7 +49,7 @@ const BottomNavigator = () => {
       fetchMemberInfo();
     }
     // eslint-disable-next-line
-  }, []);
+  }, [profileImgURL]);
 
   const location = useLocation();
   if (location.pathname === "/login") {
@@ -113,7 +113,7 @@ const BottomNavigator = () => {
                 src={profileImgURL}
               />
             ) : (
-              <PersonIcon />
+              <PersonIcon sx={{ fontSize: "2.5rem" }} />
             )
           }
         />
