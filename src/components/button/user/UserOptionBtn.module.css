@@ -4,4 +4,5 @@
   padding: 3px 10px;
   font-weight: 600;
   cursor: pointer;
+  color: black; /* 버튼 텍스트의 색상을 검정색으로 지정 */
 }
