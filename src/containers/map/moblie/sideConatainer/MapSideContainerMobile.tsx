@@ -17,10 +17,10 @@ const MapSideContainerMobile = ({
   handleInputChange,
   handleSearch,
 }: MapSideContainerMobileProps) => {
-  const [isMinimized, setIsMinimized] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(true);
   const toggleContainerUP = () => setIsMinimized((prev) => !prev);
   const inlineStyle = {
-    top: isMinimized ? "calc(100vh - 140px)" : "calc(100vh - 90%)", // '100%' 컨테이너 높이만큼 올라옴
+    top: isMinimized ? "calc(100vh - 165px)" : "calc(100vh - 80%)", // '100%' 컨테이너 높이만큼 올라옴
   };
   return (
     <div className={containerStyles.container} style={inlineStyle}>

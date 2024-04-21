@@ -149,29 +149,6 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
         </div>
       )}
       <h2>댓글</h2>
-      <div className={containerStyles.commentWrapper}>
-        <div className={containerStyles.commentContainer}>
-          {commentList &&
-            commentList.map((comment) => (
-              <SingleComment
-                key={comment.reviewId}
-                commentDetails={comment}
-                handleImgClick={openModal}
-                setCommentList={setCommentList}
-                commentList={commentList}
-              />
-            ))}
-          {hasNext && (
-            <div className={containerStyles.addComments}>
-              <IoMdAddCircleOutline
-                size={"24px"}
-                style={{ cursor: "pointer" }}
-                onClick={() => getMoreComment()}
-              />
-            </div>
-          )}
-        </div>
-      </div>
       <form
         onSubmit={handleSubmitComment}
         className={containerStyles.commentInput}
@@ -196,6 +173,29 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
         />
         <button type="submit">작성</button>
       </form>
+      <div className={containerStyles.commentWrapper}>
+        <div className={containerStyles.commentContainer}>
+          {commentList &&
+            commentList.map((comment) => (
+              <SingleComment
+                key={comment.reviewId}
+                commentDetails={comment}
+                handleImgClick={openModal}
+                setCommentList={setCommentList}
+                commentList={commentList}
+              />
+            ))}
+          {hasNext && (
+            <div className={containerStyles.addComments}>
+              <IoMdAddCircleOutline
+                size={"24px"}
+                style={{ cursor: "pointer" }}
+                onClick={() => getMoreComment()}
+              />
+            </div>
+          )}
+        </div>
+      </div>
       <div className={containerStyles.previewImgContainer}>
         {imagePreviews.map((src, index) => (
           <div

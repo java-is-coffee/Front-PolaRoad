@@ -73,6 +73,7 @@ const NewAlbumModal = () => {
     };
     const result = await postNewAlbum(data);
     if (result) {
+      console.log(result);
       toast.info("업로드 성공");
       closeModal(ModalOption.ALBUM);
     } else {
