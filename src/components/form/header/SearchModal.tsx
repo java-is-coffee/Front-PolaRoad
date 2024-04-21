@@ -109,12 +109,14 @@ const SearchModal = () => {
       <div>
         <h2>최근 검색어</h2>
         {recentData.map((item) => (
-          <div
-            key={item.id}
-            className={styles.recentList}
-            onClick={() => repeatRecentData(item.data)}
-          >
-            {item.data}
+          <div key={item.id} className={styles.recentList}>
+            <span
+              className={styles.item}
+              onClick={() => repeatRecentData(item.data)}
+            >
+              {item.data}
+            </span>
+
             <IconButton
               aria-label="delete"
               size="large"
