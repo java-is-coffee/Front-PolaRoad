@@ -32,9 +32,9 @@ function App() {
           <div
             style={{
               position: "fixed",
-              bottom: "0%",
               width: "100%",
               zIndex: "999",
+              paddingBottom: "10px",
             }}
           >
             {isSmallScreen ? <BottomNavigator /> : ""}
