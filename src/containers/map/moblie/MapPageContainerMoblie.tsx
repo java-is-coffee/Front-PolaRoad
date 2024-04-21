@@ -56,6 +56,25 @@ const MapPageContainerMobile = () => {
     }
   }, [swLatLng, neLatLng, concept, mapLevel, searchKeyword]);
 
+  const fetchMapCardsForSearchKeywords = async () => {
+    const swLatLng: position = { lat: 33.0, lng: 124.0 };
+    const neLatLng: position = { lat: 38.6, lng: 132.0 };
+    const conceptKey = Object.keys(ConceptType).find(
+      (key) => ConceptType[key as keyof typeof ConceptType] === concept
+    );
+    const data = await getCardsByMapArea(
+      swLatLng,
+      neLatLng,
+      conceptKey,
+      getCardCountByMapLevel(mapLevel),
+      "KEYWORD",
+      searchKeyword
+    );
+    if (data) {
+      renderMarkerForMapPage(data, "search");
+    }
+  };
+
   const debouncedFetchMapCards = React.useMemo(
     () => debounce(fetchMapCards, 300),
     [fetchMapCards]
@@ -71,7 +90,7 @@ const MapPageContainerMobile = () => {
 
   useEffect(() => {
     mapReload();
-    if (mapCards) renderMarkerForMapPage(mapCards);
+    if (mapCards) renderMarkerForMapPage(mapCards, "default");
     //eslint-disable-next-line
   }, [mapCards]);
 
@@ -109,7 +128,7 @@ const MapPageContainerMobile = () => {
   };
 
   const handleSearch = () => {
-    fetchMapCards();
+    fetchMapCardsForSearchKeywords();
   };
 
   return (

@@ -54,7 +54,9 @@ function ThumbnailCard({
     const fetchImage = async () => {
       if (thumbnailImageURL) {
         const result = await getImage(thumbnailImageURL);
-        setImageUrl(result);
+        if (result) {
+          setImageUrl(result);
+        }
       }
     };
     fetchImage();

@@ -57,7 +57,18 @@ const BottomNavigator = () => {
   }
 
   return (
-    <div style={{ borderTop: "1px solid #ccc" }}>
+    <div
+      style={{
+        position: "fixed",
+        width: "100%",
+        zIndex: "999",
+        bottom: "0%",
+        padding: "10px 0",
+        background: "#fff",
+        boxSizing: "border-box",
+        borderTop: "1px solid #ccc",
+      }}
+    >
       <BottomNavigation
         value={value}
         onChange={(event, newValue) => {
@@ -113,7 +124,7 @@ const BottomNavigator = () => {
                 src={profileImgURL}
               />
             ) : (
-              <PersonIcon />
+              <PersonIcon sx={{ fontSize: "2.5rem" }} />
             )
           }
         />

@@ -33,7 +33,6 @@ const S3 = new AWS.S3({
 const useBucket = () => {
   const uploadImage = async ({ type, imageInfo }: uploadImageProps) => {
     if (!ALBUM_BUCKET_NAME || !REGION || !ACCESS_KEY_ID || !SECRET_ACCESS_KEY) {
-      console.log("버킷 설정을 확인해주세요");
       return null;
     }
     const filePath = pathResolver({ type, imageInfo });
@@ -44,7 +43,6 @@ const useBucket = () => {
         Body: imageInfo.image,
         ACL: "public-read",
       }).promise();
-      console.log("Successfully uploaded photo.");
       return filePath;
     } catch (err) {
       if (err instanceof Error) {
@@ -65,7 +63,6 @@ const useBucket = () => {
         Bucket: ALBUM_BUCKET_NAME,
         Key: filePath,
       }).promise();
-      console.log("이미지 불러오기 성공");
 
       // data.Body가 Uint8Array라고 가정하고 ArrayBuffer로 변환
       if (data.Body instanceof Uint8Array) {
@@ -103,7 +100,6 @@ const useBucket = () => {
         Bucket: ALBUM_BUCKET_NAME,
         Key: filePath,
       }).promise();
-      console.log("Successfully deleted photo.");
       return true;
     } catch (err) {
       if (err instanceof Error) {

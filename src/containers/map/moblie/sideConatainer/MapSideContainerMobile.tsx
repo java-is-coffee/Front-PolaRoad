@@ -52,9 +52,13 @@ const MapSideContainerMobile = ({
           <SearchIcon />
         </IconButton>
       </Paper>
-      <div className={containerStyles.cardList}>
+      <div className={containerStyles.cardListContainer}>
         {cards.length !== 0 ? (
-          cards.map((card) => <MapCard key={card.cardId} card={card} />)
+          <div className={containerStyles.cardList}>
+            {cards.map((card) => (
+              <MapCard key={card.cardId} card={card} />
+            ))}
+          </div>
         ) : (
           <div className={containerStyles.default}>
             <img src="/logo512.png" alt="로고" width={"150px"} />

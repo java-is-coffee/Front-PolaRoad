@@ -11,4 +11,5 @@
   padding: 3px 10px;
   font-size: 1.4rem;
   font-weight: 400;
+  color: black; /* 버튼 텍스트의 색상을 검정색으로 지정 */
 }
