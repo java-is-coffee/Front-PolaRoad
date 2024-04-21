@@ -149,6 +149,21 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
         </div>
       )}
       <h2>댓글</h2>
+      <div className={containerStyles.previewImgContainer}>
+        {imagePreviews.map((src, index) => (
+          <div
+            key={index}
+            className={containerStyles.previewImgWrapper}
+            onClick={() => openModal(src)}
+          >
+            <img
+              src={src}
+              alt="preview"
+              className={containerStyles.previewImg}
+            />
+          </div>
+        ))}
+      </div>
       <form
         onSubmit={handleSubmitComment}
         className={containerStyles.commentInput}
@@ -171,6 +186,7 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
           onChange={handleCommentChange}
           required
         />
+
         <button type="submit">작성</button>
       </form>
       <div className={containerStyles.commentWrapper}>
@@ -195,21 +211,6 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
             </div>
           )}
         </div>
-      </div>
-      <div className={containerStyles.previewImgContainer}>
-        {imagePreviews.map((src, index) => (
-          <div
-            key={index}
-            className={containerStyles.previewImgWrapper}
-            onClick={() => openModal(src)}
-          >
-            <img
-              src={src}
-              alt="preview"
-              className={containerStyles.previewImg}
-            />
-          </div>
-        ))}
       </div>
     </div>
   );
