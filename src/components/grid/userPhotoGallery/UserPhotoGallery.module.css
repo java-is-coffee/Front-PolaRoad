@@ -4,3 +4,19 @@
   grid-gap: 2px;
   padding: 2px;
 }
+/* 화면 폭이 600픽셀 이하일 때 */
+@media (max-width: 600px) {
+  .gridGallery {
+    grid-template-columns: repeat(2, 1fr); /* 모바일 화면에서는 2개의 컬럼 */
+  }
+}
+
+/* 화면 폭이 900픽셀 이하일 때 */
+@media (max-width: 900px) {
+  .gridGallery {
+    grid-template-columns: repeat(
+      3,
+      1fr
+    ); /* 중간 크기의 화면에서는 3개의 컬럼 */
+  }
+}

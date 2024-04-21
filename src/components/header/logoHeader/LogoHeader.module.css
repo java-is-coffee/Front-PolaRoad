@@ -1,0 +1,24 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  transition: all 0.5s ease-in-out;
+  z-index: 1000;
+}
+
+.logoWrapper {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  font-size: 30px;
+  font-family: "Knewave", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  color: var(--main-theme-color);
+  cursor: pointer;
+}

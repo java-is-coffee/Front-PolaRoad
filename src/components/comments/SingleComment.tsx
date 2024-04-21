@@ -2,28 +2,24 @@ import useBucket from "hooks/bucket/useBucket";
 import { CommentDetails } from "interface/comments/ICommentsDTO";
 import { useEffect, useState } from "react";
 import commentStyles from "./SingleComment.module.css";
-import { IMemberInfoDetails } from "interface/member/IMemberInfoDetails";
 import { IconButton } from "@mui/material";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useModal } from "hooks/modal/ModalProvider";
 import ModalOption from "enum/modalOptionTypes";
+import secureLocalStorage from "react-secure-storage";
 
 interface SingleCommentProps {
   commentDetails: CommentDetails;
   handleImgClick: (imgUrl: string) => void;
-  userInfo: IMemberInfoDetails | null;
 }
 
-function SingleComment({
-  commentDetails,
-  handleImgClick,
-  userInfo,
-}: SingleCommentProps) {
+function SingleComment({ commentDetails, handleImgClick }: SingleCommentProps) {
   const [userProfileImg, setUserProfileImg] = useState<string | null>("");
   const [isActiveHeart, setIsActiveHeart] = useState<boolean>(false);
   // const [formattedDate, setFormattedDate] = useState<string>("");ㄴ
   const [commentImg, setCommentImg] = useState<string[]>([]);
   const [showImages, setShowImages] = useState<boolean>(false);
+  const memberId = secureLocalStorage.getItem("member");
   const { getImage } = useBucket();
 
   const { openModal } = useModal();
@@ -101,7 +97,7 @@ function SingleComment({
           </div>
         </div>
         <div className={commentStyles.buttons}>
-          {userInfo?.memberId === commentDetails.memberId ? (
+          {memberId === commentDetails.memberId ? (
             <IconButton
               onClick={() =>
                 openModal(ModalOption.COMMENT_OPTION, {

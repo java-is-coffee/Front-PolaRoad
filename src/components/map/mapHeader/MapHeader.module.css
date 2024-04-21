@@ -2,7 +2,7 @@
   position: absolute;
   z-index: 100;
   padding: 10px;
-  overflow: hidden;
+  width: 100%;
 }
 
 .option {
@@ -12,9 +12,12 @@
   color: var(--main-theme-color);
   align-items: center;
   gap: 10px;
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
 }
 
 .optionItem {
+  flex: 0 0 auto;
   background-color: white;
   border-radius: 12px;
   border: 1px solid var(--main-theme-color);
@@ -28,6 +31,10 @@
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   transition: 0.3s all ease-in-out;
+}
+
+.optionItem span {
+  white-space: nowrap;
 }
 
 .optionItem.active {

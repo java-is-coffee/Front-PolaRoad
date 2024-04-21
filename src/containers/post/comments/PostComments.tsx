@@ -13,15 +13,13 @@ import { toast } from "react-toastify";
 import containerStyles from "./PostComments.module.css";
 import postNewComment from "api/comments/postNewComment";
 import { IoMdAddCircleOutline } from "react-icons/io";
-import { IMemberInfoDetails } from "interface/member/IMemberInfoDetails";
 
 interface PostCommentsProps {
   postId: string | undefined;
   memberId: number;
-  userInfo: IMemberInfoDetails | null;
 }
 
-function PostComments({ postId, memberId, userInfo }: PostCommentsProps) {
+function PostComments({ postId, memberId }: PostCommentsProps) {
   // 불러온 댓글
   const [commentList, setCommentList] = useState<CommentDetails[]>([]);
   const [hasNext, setHasNext] = useState<boolean>(false);
@@ -158,7 +156,6 @@ function PostComments({ postId, memberId, userInfo }: PostCommentsProps) {
                 key={comment.reviewId}
                 commentDetails={comment}
                 handleImgClick={openModal}
-                userInfo={userInfo}
               />
             ))}
           {hasNext && (

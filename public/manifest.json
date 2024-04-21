@@ -1,19 +1,40 @@
 {
-  "name": "",
-  "short_name": "",
+  "name": "polaroad",
+  "short_name": "polaroad",
   "icons": [
+    {
+      "src": "/logo16.png",
+      "sizes": "16x16",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo32.png",
+      "sizes": "32x32",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo-apple.png",
+      "sizes": "76x76",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
     {
       "src": "/logo192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "/logo512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
-  "theme_color": "#ffffff",
+  "start_url": ".",
+  "theme_color": "#13c4a3",
   "background_color": "#ffffff",
   "display": "standalone"
 }
