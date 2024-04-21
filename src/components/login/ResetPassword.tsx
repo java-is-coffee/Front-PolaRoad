@@ -109,6 +109,18 @@ function ResetPasswordContainer({
             >
               비밀번호 변경
             </Button>
+            <div className={styles.center}>
+              <Button
+                className={styles.bottomButton}
+                variant="outlined"
+                fullWidth
+                onClick={() => setOnResetPassword(false)}
+              >
+                <span style={{ color: "#13c4a3", marginLeft: "5PX" }}>
+                  로그인화면으로 돌아가기
+                </span>
+              </Button>
+            </div>
           </Stack>
         </form>
       </Stack>
