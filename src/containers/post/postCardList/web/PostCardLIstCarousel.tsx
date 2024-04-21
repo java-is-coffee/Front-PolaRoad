@@ -67,9 +67,7 @@ const PostCardListCarousel = ({
       <CardListHeader memberInfo={postDetails.memberInfo} postId={postId} />
       <Slider {...settings}>
         {cards.map((card, index) => (
-          <div className={containerStyles.singleCard} key={index}>
-            {card}
-          </div>
+          <div key={index}>{card}</div>
         ))}
       </Slider>
     </section>
