@@ -24,17 +24,20 @@ const WishListPostGrid = ({
   const fetchWishList = async () => {
     const data = await getWishListDetails(wishListId, page, 4);
     if (data) {
-      data.hasNext ? setPage((prev) => prev + 1) : setHasNext(false);
+      console.log(data);
+      if (data.hasNext) {
+        setPage((prev) => prev + 1);
+      } else {
+        setHasNext(false);
+      }
       setWishlistPosts((prev) => [...prev, ...data.posts]);
     }
   };
-
   // 위시리스트 ID가 변경되었을 때 포스트 목록 초기화
   useEffect(() => {
     setWishlistPosts([]);
     setPage(1);
     setHasNext(true);
-    fetchWishList(); // 새 ID에 대한 데이터 바로 로드
     // eslint-disable-next-line
   }, [wishListId]);
 
@@ -43,7 +46,7 @@ const WishListPostGrid = ({
       fetchWishList();
     },
     // eslint-disable-next-line
-    [wishListId, wishListName]
+    []
   );
 
   useEffect(() => {
