@@ -59,7 +59,11 @@ const CommentOptionModal = ({
   };
 
   const handleEdit = () => {
-    openModal(ModalOption.COMMENT_EDIT, { commentDetails: commentDetails });
+    openModal(ModalOption.COMMENT_EDIT, {
+      commentDetails: commentDetails,
+      setCommentList: setCommentList,
+      commentList: commentList,
+    });
   };
 
   return (

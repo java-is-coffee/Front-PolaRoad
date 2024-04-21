@@ -5,12 +5,15 @@ import ModalOption from "enum/modalOptionTypes";
 import { CommentDetails, EditComment } from "interface/comments/ICommentsDTO";
 import patchEditComment from "api/comments/patchEditComment";
 import { toast } from "react-toastify";
+import getSingleCommentInfo from "api/comments/getSingleCommentInfo";
 
 interface CommentIdProps {
   commentDetails?: CommentDetails;
+  setCommentList?: React.Dispatch<React.SetStateAction<CommentDetails[]>>;
+  commentList?: CommentDetails[];
 }
 
-const CommentEditModal = ({ commentDetails }: CommentIdProps) => {
+const CommentEditModal = ({ commentDetails, commentList }: CommentIdProps) => {
   const { closeModal } = useModal();
 
   // 모달 바깥쪽 눌렀을떄 모달 탈출
@@ -22,27 +25,36 @@ const CommentEditModal = ({ commentDetails }: CommentIdProps) => {
     commentDetails !== undefined ? commentDetails.content : ""
   );
 
+  const getBeforComment = async () => {
+    if (commentDetails) {
+      const beforeComment = await getSingleCommentInfo(commentDetails.reviewId);
+      return beforeComment;
+    } else return null;
+  };
+
   const handleSubmitComment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const beforeComment = await getBeforComment();
     if (commentContent === "") return;
-    if (commentDetails !== undefined) {
+    if (commentDetails !== undefined && beforeComment) {
       const newComment: EditComment = {
         content: commentContent,
-        editPhotoList: [
-          {
-            reviewPhotoId: 0,
-            reviewPhotoUrl: "",
-          },
-        ],
+        editPhotoList: beforeComment.reviewPhotoInfoList,
       };
       const result: CommentDetails | null = await patchEditComment(
         newComment,
         commentDetails.reviewId
       );
 
-      if (result) {
+      if (result && commentList) {
         toast.success("수정 완료");
+        commentList.forEach((item) => {
+          if (item.reviewId === commentDetails.reviewId) {
+            item.content = commentContent;
+            return;
+          }
+        });
         closeModal(ModalOption.COMMENT_EDIT);
         closeModal(ModalOption.COMMENT_OPTION);
       }

@@ -75,12 +75,7 @@ function PostComments({ postId, memberId }: PostCommentsProps) {
       return;
     }
 
-    const test = event.target.files;
-
     const files = Array.from(event.target.files);
-
-    console.log(test.item(0));
-    console.log(files);
     const previewUrls = files.map((file) => URL.createObjectURL(file));
     setImagePreviews((prev) => [...prev, previewUrls[0]]); // 프리뷰 URL 상태 업데이트
     try {
