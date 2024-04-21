@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { IRoutesPointType } from "interface/map/IRoutesPointType";
 import { IMapCard } from "interface/map/IMapCard";
+import useBucket from "hooks/bucket/useBucket";
 
 declare global {
   interface Window {
@@ -18,6 +19,7 @@ interface Place {
 }
 
 const useKakaoMap = () => {
+  const { getImage } = useBucket();
   const mapRef = useRef<any>(null); // map 인스턴스를 저장하기 위한 ref
   const infoWindowRef = useRef<any>(null); // infoWindow 인스턴스를 저장하기 위한 ref
   const [selectedPlace, setSelectedPlace] = useState<Place>();
@@ -188,7 +190,10 @@ const useKakaoMap = () => {
   };
 
   // 지도 페이지 마크 랜더링
-  const renderMarkerForMapPage = (mapCards: IMapCard[]) => {
+  const renderMarkerForMapPage = async (
+    mapCards: IMapCard[],
+    type: "search" | "default"
+  ) => {
     removeAllMarkers();
     const bounds = new kakao.maps.LatLngBounds();
     const map = mapRef.current;
@@ -199,23 +204,40 @@ const useKakaoMap = () => {
     const imageSize = new kakao.maps.Size(35, 35); // 마커 이미지의 크기 설정
     const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); // 마커 이미지 객체 생성
 
-    mapCards.forEach((card) => {
+    for (const card of mapCards) {
       const positionKey = `${card.latitude},${card.longitude}`;
       // 이미 해당 위치에 마커가 있는지 확인
       if (existingPositions.has(positionKey)) {
-        return; // 해당 위치에 마커가 이미 있으면 추가하지 않음
+        continue; // 해당 위치에 마커가 이미 있으면 추가하지 않음
       }
       existingPositions.add(positionKey); // 위치를 Set에 추가
 
       // 마커 생성
-      const maker = new kakao.maps.Marker({
+      const marker = new kakao.maps.Marker({
         map: map,
         position: new kakao.maps.LatLng(card.latitude, card.longitude),
         image: markerImage, // 마커 이미지 사용
       });
-      markers.current.push(maker);
+
+      // 카드 이미지 가져오기
+      const cardImageSrc = await getImage(card.image);
+      kakao.maps.event.addListener(marker, "click", () => {
+        // 클릭 시 인포윈도우에 마커 이미지를 포함한 컨텐츠 설정
+        const iwContent = `
+        <div style="padding:5px; border-radius: 8px; transition: all 0.5s ease-in-out;">
+          <img src="${cardImageSrc}" alt="Image" style="width:150px; height:150px;" />
+          <p><a href="/post/${card.postId}" style="text-decoration: none; color: inherit;">${card.content}</a></p>
+        </div>`;
+        infoWindowRef.current.setContent(iwContent);
+        infoWindowRef.current.open(map, marker);
+      });
+
+      markers.current.push(marker);
       bounds.extend(new kakao.maps.LatLng(card.latitude, card.longitude)); // 마커의 위치를 bounds에 추가
-    });
+    }
+    if (type === "search") {
+      mapRef.current.setBounds(bounds);
+    }
   };
 
   return {

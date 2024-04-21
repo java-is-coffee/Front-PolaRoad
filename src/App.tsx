@@ -29,16 +29,8 @@ function App() {
             <Route path="map" element={<MapPage />}></Route>
             <Route path="/post/:postId" element={<Post />}></Route>
           </Routes>
-          <div
-            style={{
-              position: "fixed",
-              bottom: "0%",
-              width: "100%",
-              zIndex: "999",
-            }}
-          >
-            {isSmallScreen ? <BottomNavigator /> : ""}
-          </div>
+
+          {isSmallScreen ? <BottomNavigator /> : ""}
         </ModalProvider>
       </Router>
       <ToastContainer

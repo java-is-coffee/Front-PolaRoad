@@ -78,4 +78,11 @@ self.addEventListener("message", (event) => {
   }
 });
 
+self.addEventListener("fetch", function (event) {
+  if (event.request.method !== "GET") {
+    // 네트워크 요청을 직접 네트워크로 보냅니다.
+    return fetch(event.request);
+  }
+  // GET 요청에 대한 캐싱 전략
+});
 // Any other custom service worker logic can go here.

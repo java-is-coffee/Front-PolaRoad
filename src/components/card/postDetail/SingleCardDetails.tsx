@@ -20,7 +20,7 @@ function SingleCardDetails({ cardDetails }: SingleCardDetailsProps) {
     };
     fetchImage();
     //eslint-disable-next-line
-  }, [cardDetails.image]);
+  }, []);
   return imageUrl ? (
     <article className={cardStyles.cardWrapper}>
       {imageUrl && (

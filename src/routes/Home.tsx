@@ -16,6 +16,8 @@ import PostOptionModal from "components/modal/option/PostOptionModal";
 import UserSettingModal from "components/modal/userSetting/UserSettingModal";
 import NewAlbumModal from "components/modal/album/newAlbum/NewAlbumModal";
 import NewWishListModal from "components/modal/wish/newWishList/NewWishListModal";
+import { useMediaQuery } from "@mui/material";
+import LogoHeader from "components/header/logoHeader/LogoHeader";
 
 function Home() {
   const { registerModal, closeModal } = useModal();
@@ -47,9 +49,10 @@ function Home() {
     //eslint-disable-next-line
     []
   );
+  const isSmallScreen = useMediaQuery("(max-width: 767px)");
   return (
     <div>
-      <Header />
+      {isSmallScreen ? <LogoHeader /> : <Header />}
       <HomeComponent />
       <HomeContainer />
     </div>

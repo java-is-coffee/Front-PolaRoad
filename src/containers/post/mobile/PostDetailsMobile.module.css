@@ -5,6 +5,7 @@
   flex-direction: column;
   margin-top: 70px;
   box-sizing: border-box;
+  align-items: center;
 }
 
 .sideComponent {
@@ -13,10 +14,9 @@
 }
 
 .mainComponent {
-  flex: 2; /* 가운데 주요 컴포넌트의 크기를 사이드 컴포넌트보다 크게 설정 */
+  width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   overflow: hidden;
-  height: calc(100vh - 70px);
 }

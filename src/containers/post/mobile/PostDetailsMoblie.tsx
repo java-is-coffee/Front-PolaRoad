@@ -38,6 +38,7 @@ function PostDetailMobile() {
   return postDetails ? (
     <section className={containerStyles.container}>
       <PostCardListCarousel postDetails={postDetails} postId={Number(postId)} />
+      <div className={containerStyles.mainContents}></div>
       <PostMap cards={postDetails.cards} />
       <PostComments
         postId={postId}
