@@ -5,6 +5,16 @@ export interface INewComment {
   reviewPhotoList: string[];
 }
 
+export interface EditComment {
+  content: string;
+  editPhotoList: [
+    {
+      reviewPhotoId: number;
+      reviewPhotoUrl: string;
+    }
+  ];
+}
+
 export interface ICommentDTO {
   content: CommentDetails[];
   hasNext: boolean;

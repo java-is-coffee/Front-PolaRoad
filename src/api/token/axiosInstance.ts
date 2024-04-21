@@ -18,6 +18,8 @@ axiosInstance.interceptors.request.use(
       config.headers.Authorization = token;
     }
 
+    // console.log(secureLocalStorage.getItem("accessToken"));
+
     return config;
   },
   (error) => {
