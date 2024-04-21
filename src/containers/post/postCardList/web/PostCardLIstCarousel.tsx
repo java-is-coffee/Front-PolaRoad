@@ -29,7 +29,7 @@ const settings = {
       style={{
         width: "100%",
         position: "absolute",
-        bottom: "70px",
+        bottom: "0",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
