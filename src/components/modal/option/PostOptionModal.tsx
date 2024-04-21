@@ -68,9 +68,13 @@ const PostOptionModal = ({ memberId, postId }: PostOptionModalProps) => {
             삭제
           </button>
         )}
-        <button className={modalStyles.option} onClick={handleFollow}>
-          팔로우
-        </button>
+
+        {hostMemberId && hostMemberId !== memberId && (
+          <button className={modalStyles.option} onClick={handleFollow}>
+            팔로우
+          </button>
+        )}
+
         <button className={modalStyles.option} onClick={handleAddWish}>
           위시리스트에 추가
         </button>

@@ -7,22 +7,33 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useModal } from "hooks/modal/ModalProvider";
 import ModalOption from "enum/modalOptionTypes";
 import secureLocalStorage from "react-secure-storage";
+import patchCommentGood from "api/comments/patchCommentGood";
 
 interface SingleCommentProps {
   commentDetails: CommentDetails;
   handleImgClick: (imgUrl: string) => void;
+  setCommentList: React.Dispatch<React.SetStateAction<CommentDetails[]>>;
+  commentList: CommentDetails[];
 }
 
-function SingleComment({ commentDetails, handleImgClick }: SingleCommentProps) {
+function SingleComment({
+  commentDetails,
+  handleImgClick,
+  setCommentList,
+  commentList,
+}: SingleCommentProps) {
   const [userProfileImg, setUserProfileImg] = useState<string | null>("");
-  const [isActiveHeart, setIsActiveHeart] = useState<boolean>(false);
+  const [isActiveHeart, setIsActiveHeart] = useState<boolean>(
+    commentDetails.memberIsLiked
+  );
   // const [formattedDate, setFormattedDate] = useState<string>("");ㄴ
   const [commentImg, setCommentImg] = useState<string[]>([]);
   const [showImages, setShowImages] = useState<boolean>(false);
-  const memberId = secureLocalStorage.getItem("member");
   const { getImage } = useBucket();
-
   const { openModal } = useModal();
+
+  //유저 id
+  const userInfo = secureLocalStorage.getItem("member");
 
   useEffect(() => {
     const fetchImage = async () => {
@@ -62,6 +73,12 @@ function SingleComment({ commentDetails, handleImgClick }: SingleCommentProps) {
     //eslint-disable-next-line
   }, []);
 
+  const handleCommentGood = async (commentId: number) => {
+    const result = await patchCommentGood(commentId);
+    if (result === true) setIsActiveHeart(true);
+    else setIsActiveHeart(false);
+  };
+
   return (
     <div className={commentStyles.singleCommentWrapper}>
       <div className={commentStyles.commentImgWrapper}>
@@ -97,11 +114,13 @@ function SingleComment({ commentDetails, handleImgClick }: SingleCommentProps) {
           </div>
         </div>
         <div className={commentStyles.buttons}>
-          {memberId === commentDetails.memberId ? (
+          {userInfo === commentDetails.memberId ? (
             <IconButton
               onClick={() =>
                 openModal(ModalOption.COMMENT_OPTION, {
                   commentDetails: commentDetails,
+                  setCommentList: setCommentList,
+                  commentList: commentList,
                 })
               }
             >
@@ -115,14 +134,14 @@ function SingleComment({ commentDetails, handleImgClick }: SingleCommentProps) {
               src={"/icons/like/selected-heart.png"}
               style={{ width: "14px", height: "14px" }}
               alt="active-heart"
-              onClick={() => setIsActiveHeart((prev) => !prev)}
+              onClick={() => handleCommentGood(commentDetails.reviewId)}
             />
           ) : (
             <img
               src={"/icons/like/default-heart.png"}
               style={{ width: "14px", height: "14px" }}
               alt="default-heart"
-              onClick={() => setIsActiveHeart((prev) => !prev)}
+              onClick={() => handleCommentGood(commentDetails.reviewId)}
             />
           )}
         </div>
