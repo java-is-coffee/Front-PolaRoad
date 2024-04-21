@@ -14,6 +14,8 @@ import useRegister from "../../hooks/login/useRegister";
 import { toast } from "react-toastify";
 import OauthButton from "./OauthButton";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { EmailDTO } from "api/login/emailCheck";
+import postSendEmail from "api/login/postSendEmail";
 
 const InputTextField = styled(TextField)({
   fontSize: "1.5rem",
@@ -48,8 +50,8 @@ function RegisterContainer({
   setOnRegister: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const [email, setEmail] = useState("");
-  const [isEmail, setIsEmail] = useState(true);
-  // const [certificationNumber, setCertificationNumber] = useState("");
+  const [isEmail, setIsEmail] = useState(false);
+  const [certificationNumber, setCertificationNumber] = useState("");
   const [name, setName] = useState("");
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
@@ -67,7 +69,7 @@ function RegisterContainer({
     const inputData: RegisterData = {
       email: email,
       password: password,
-      // certificationNumber: "",
+      certificationNumber: certificationNumber,
       name: name,
       nickname: nickname,
     };
@@ -98,13 +100,25 @@ function RegisterContainer({
       setIsEmail(true);
     } else {
       setIsEmail(false);
-      toast.error("이메일이 올바르지 않습니다.");
     }
   };
 
   const handleVisibility = (type: string) => {
     if (type === "first") setShowPassword((prev) => !prev);
     else setDupShowPassword((prev) => !prev);
+  };
+
+  const sendEmail = async () => {
+    const targetEmail: EmailDTO = {
+      data: {
+        email: email,
+      },
+    };
+
+    const result = await postSendEmail(targetEmail);
+
+    if (result === true) toast.success("메일을 보냈습니다.");
+    else toast.error("오류 발생.");
   };
 
   return (
@@ -130,6 +144,7 @@ function RegisterContainer({
                   setEmail(value.target.value);
                 }}
                 color="success"
+                onBlur={checkingEmail}
                 error={isEmail ? false : true}
               />
               <Button
@@ -140,7 +155,8 @@ function RegisterContainer({
                   fontSize: "1.5rem",
                   ":hover": { backgroundColor: "#13c4a3", fontSize: "1.5rem" },
                 }}
-                onClick={checkingEmail}
+                disabled={isEmail ? false : true}
+                onClick={sendEmail}
               >
                 인증
               </Button>
@@ -152,10 +168,9 @@ function RegisterContainer({
               required
               variant="outlined"
               color="success"
-              disabled
-              // onChange={(value: React.ChangeEvent<HTMLInputElement>) => {
-              //   setCertificationNumber(value.target.value);
-              // }}
+              onChange={(value: React.ChangeEvent<HTMLInputElement>) => {
+                setCertificationNumber(value.target.value);
+              }}
             />
             <InputTextField
               size="small"

@@ -14,22 +14,27 @@ const useRegister = () => {
   };
 
   const dupCheckEmail = async (input: string) => {
-    const emailCheck = checkEmail(input);
+    if (checkEmail(input) === false) {
+      toast.error("이메일이 올바르지 않습니다.");
+      return false;
+    } else {
+      const EmailData: EmailData = {
+        email: input,
+      };
 
-    const EmailData: EmailData = {
-      email: input,
-    };
+      const EmailDTO: EmailDTO = {
+        data: EmailData,
+      };
 
-    const EmailDTO: EmailDTO = {
-      data: EmailData,
-    };
+      const dupCheck = await EmailCheck(EmailDTO);
 
-    const dupCheck = await EmailCheck(EmailDTO);
-
-    if (dupCheck === true) toast.warn("이미 존재하는 이메일 입니다.");
-
-    //dupCheck가 true 면 중복 // emailCheck가 true여야 이메일 규격
-    return emailCheck && !dupCheck;
+      if (dupCheck === true) {
+        toast.warn("이미 존재하는 이메일 입니다.");
+        return false;
+      }
+      //dupCheck가 true 면 중복 // emailCheck가 true여야 이메일 규격
+      return true;
+    }
   };
 
   const checkPassword = (input: string) => {
@@ -47,6 +52,7 @@ const useRegister = () => {
     const result = await postRegister(inputDTO);
 
     if (result === 200) {
+      toast.success("회원가입 성공");
       return true;
     } else {
       toast.error("회원가입 실패");
