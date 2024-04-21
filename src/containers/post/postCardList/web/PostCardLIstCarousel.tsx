@@ -29,7 +29,7 @@ const settings = {
       style={{
         width: "100%",
         position: "absolute",
-        bottom: "40px",
+        bottom: "70px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -67,9 +67,7 @@ const PostCardListCarousel = ({
       <CardListHeader memberInfo={postDetails.memberInfo} postId={postId} />
       <Slider {...settings}>
         {cards.map((card, index) => (
-          <div className={containerStyles.singleCard} key={index}>
-            {card}
-          </div>
+          <div key={index}>{card}</div>
         ))}
       </Slider>
     </section>

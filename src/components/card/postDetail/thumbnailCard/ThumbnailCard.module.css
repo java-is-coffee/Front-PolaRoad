@@ -80,3 +80,7 @@
   margin-right: 4px;
   font-size: 1.4rem;
 }
+
+.actionButton {
+  cursor: pointer;
+}

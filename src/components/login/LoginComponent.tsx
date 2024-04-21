@@ -36,8 +36,10 @@ const InputTextField = styled(TextField)({
 
 function LoginContainer({
   setOnRegister,
+  setOnResetPassword,
 }: {
   setOnRegister: React.Dispatch<React.SetStateAction<boolean>>;
+  setOnResetPassword: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -137,6 +139,19 @@ function LoginContainer({
             계정이 없으신가요?
             <span style={{ color: "#13c4a3", marginLeft: "5PX" }}>
               가입하기
+            </span>
+          </Button>
+        </div>
+        <div className={styles.center}>
+          <Button
+            className={styles.bottomButton}
+            variant="outlined"
+            fullWidth
+            onClick={() => setOnResetPassword(true)}
+          >
+            비밀번호를 잊으셨나요?
+            <span style={{ color: "#13c4a3", marginLeft: "5PX" }}>
+              비밀번호 찾기
             </span>
           </Button>
         </div>

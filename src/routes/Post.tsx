@@ -1,4 +1,6 @@
+import { useMediaQuery } from "@mui/material";
 import getMemberInfo from "api/member/getMemberInfo";
+import LogoHeader from "components/header/logoHeader/LogoHeader";
 import SearchDropdown from "components/dropDown/search/SearchDropdown";
 import Header from "components/header/web/WebHeader";
 import CommentEditModal from "components/modal/comment/CommentEditModal";
@@ -15,6 +17,7 @@ import ModalOption from "enum/modalOptionTypes";
 import { useModal } from "hooks/modal/ModalProvider";
 import { useEffect } from "react";
 import secureLocalStorage from "react-secure-storage";
+import PostDetailMobile from "containers/post/mobile/PostDetailsMoblie";
 
 function Post() {
   const { registerModal, closeModal } = useModal();
@@ -57,10 +60,13 @@ function Post() {
     fetchMemberData();
     // eslint-disable-next-line
   }, []);
+
+  const isSmallScreen = useMediaQuery("(max-width: 767px)");
+
   return (
     <div>
-      <Header />
-      <PostDetail />
+      {isSmallScreen ? <LogoHeader /> : <Header />}
+      {isSmallScreen ? <PostDetailMobile /> : <PostDetail />}
     </div>
   );
 }

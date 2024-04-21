@@ -6,12 +6,10 @@ import { useModal } from "../hooks/modal/ModalProvider";
 import ModalOption from "../enum/modalOptionTypes";
 import FilterModal from "../components/dropDown/search/FilterModal";
 import { useMediaQuery } from "@mui/material";
-import BottomNavigator from "components/bottom/BottomNavigator";
 import SearchDropdown from "components/dropDown/search/SearchDropdown";
 import NewPostModal from "components/modal/newPost/NewPostModal";
 import WarningModal from "components/modal/warn/WarningModal";
 import ShareModal from "components/modal/shareModal/ShareModal";
-import ExploreFooter from "components/bottom/web/ExploreFooter";
 
 function Explore() {
   const { registerModal, closeModal } = useModal();
@@ -39,9 +37,6 @@ function Explore() {
     <div>
       {isSmallScreen ? <MobileHeader /> : <WebHeader />}
       <ExploreContainer />
-      <div style={{ position: "fixed", bottom: "0%", width: "100%" }}>
-        {isSmallScreen ? <BottomNavigator /> : <ExploreFooter />}
-      </div>
     </div>
   );
 }

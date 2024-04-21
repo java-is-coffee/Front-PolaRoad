@@ -50,17 +50,18 @@ function ThumbnailCard({
   const [likeNum, setLikeNum] = useState<number>(goodNumber);
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const hostMemberId = secureLocalStorage.getItem("member");
-
   useEffect(() => {
     const fetchImage = async () => {
       if (thumbnailImageURL) {
         const result = await getImage(thumbnailImageURL);
-        setImageUrl(result);
+        if (result) {
+          setImageUrl(result);
+        }
       }
     };
     fetchImage();
     //eslint-disable-next-line
-  }, [thumbnailImageURL]);
+  }, []);
 
   const handleAddPostWishList = () => {
     console.log("openModal");
@@ -79,7 +80,7 @@ function ThumbnailCard({
     if (postId) patchPostGoodToggle(Number(postId));
   };
 
-  return (
+  return imageUrl ? (
     <article className={cardStyles.thumbnailCard}>
       {imageUrl && <img src={imageUrl} alt="썸네일" />}
       <div className={cardStyles.header}>
@@ -90,8 +91,15 @@ function ThumbnailCard({
           </span>
         </div>
         <div className={cardStyles.actionControl}>
-          <MdBookmarkAdd size={"24px"} onClick={handleAddPostWishList} />
-          <div onClick={() => handleHeartClick()}>
+          <MdBookmarkAdd
+            size={"24px"}
+            onClick={handleAddPostWishList}
+            className={cardStyles.actionButton}
+          />
+          <div
+            onClick={() => handleHeartClick()}
+            className={cardStyles.actionButton}
+          >
             {isActiveHeart ? (
               <img
                 src={"/icons/like/selected-heart.png"}
@@ -119,6 +127,8 @@ function ThumbnailCard({
         ))}
       </section>
     </article>
+  ) : (
+    <div></div>
   );
 }
 

@@ -1,78 +1,94 @@
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import styles from "./BottomNavigator.module.css";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import PersonIcon from "@mui/icons-material/Person";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import HomeIcon from "@mui/icons-material/Home";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useModal } from "hooks/modal/ModalProvider";
 import ModalOption from "enum/modalOptionTypes";
-import useStoreValue from "hooks/storeValue/useStoreValue";
+import { FaRegSquarePlus } from "react-icons/fa6";
+import useBucket from "hooks/bucket/useBucket";
+import secureLocalStorage from "react-secure-storage";
+import { IMemberInfoDetails } from "interface/member/IMemberInfoDetails";
+import getMemberInfo from "api/member/getMemberInfo";
+import { Avatar } from "@mui/material";
 
 const commonStyles = {
   "&.Mui-selected": { color: "#12b193" },
-  ".MuiBottomNavigationAction-label": { fontSize: "1.5rem" },
+  ".MuiBottomNavigationAction-label": { fontSize: "1.2rem" },
   "&.Mui-selected .MuiBottomNavigationAction-label": {
     fontSize: "1.5rem",
+    fontWeight: "500",
   },
 };
 
 const BottomNavigator = () => {
   const navigate = useNavigate();
-  const { isMobileSearchFilter } = useStoreValue();
 
   const { openModal } = useModal();
-  const setModal = () => {
+  const openNewPostModal = () => {
     openModal(ModalOption.POST);
   };
-
   const [value, setValue] = useState(null);
-  return (
-    <div>
-      {isMobileSearchFilter ? (
-        ""
-      ) : (
-        <div className={styles.midContainer}>
-          <Button
-            variant="contained"
-            disableElevation
-            onClick={setModal}
-            sx={{
-              borderRadius: "20px",
-              fontSize: "1.5rem",
-              backgroundColor: "#13c4a3",
-              ":hover": {
-                backgroundColor: "#13c4a3",
-              },
-            }}
-          >
-            New Post
-          </Button>
-        </div>
-      )}
+  const { getImage } = useBucket();
+  const [profileImgURL, setProfileImgURL] = useState<string>("");
+  const isLogin = secureLocalStorage.getItem("accessToken");
+  useEffect(() => {
+    if (isLogin) {
+      const fetchMemberInfo = async () => {
+        const result: IMemberInfoDetails | null = await getMemberInfo();
+        if (result) {
+          const imgUrl = await getImage(result.profileImage);
+          if (imgUrl) {
+            setProfileImgURL(imgUrl);
+          }
+        }
+      };
+      fetchMemberInfo();
+    }
+    // eslint-disable-next-line
+  }, []);
 
+  const location = useLocation();
+  if (location.pathname === "/login") {
+    return <div></div>; // 로그인 페이지인 경우, 아무것도 렌더링하지 않습니다.
+  }
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        width: "100%",
+        zIndex: "999",
+        bottom: "0%",
+        padding: "10px 0",
+        background: "#fff",
+        boxSizing: "border-box",
+        borderTop: "1px solid #ccc",
+      }}
+    >
       <BottomNavigation
-        showLabels
         value={value}
         onChange={(event, newValue) => {
           event.preventDefault();
-          setValue(newValue);
+          if (newValue === "New") {
+            openNewPostModal();
+            return;
+          }
           navigate(`/${newValue}`);
+          setValue(newValue);
         }}
       >
         <BottomNavigationAction
-          label="Home"
           sx={commonStyles}
           value={"explore"}
           icon={<HomeIcon sx={{ fontSize: "2.5rem" }} />}
         />
         <BottomNavigationAction
-          label="Subscribe"
           sx={commonStyles}
-          value={"Subscribe"}
+          value={"subscribe"}
           icon={
             <FavoriteIcon
               sx={{
@@ -82,9 +98,13 @@ const BottomNavigator = () => {
           }
         />
         <BottomNavigationAction
-          label="Map"
           sx={commonStyles}
-          value={"Map"}
+          value={"New"}
+          icon={<FaRegSquarePlus size="24px" />}
+        />
+        <BottomNavigationAction
+          sx={commonStyles}
+          value={"map"}
           icon={
             <LocationOnIcon
               sx={{
@@ -94,15 +114,18 @@ const BottomNavigator = () => {
           }
         />
         <BottomNavigationAction
-          label="Profile"
           value={"my"}
           sx={commonStyles}
           icon={
-            <PersonIcon
-              sx={{
-                fontSize: "2.5rem",
-              }}
-            />
+            profileImgURL !== "" ? (
+              <Avatar
+                alt="avata"
+                sx={{ width: 24, height: 24 }}
+                src={profileImgURL}
+              />
+            ) : (
+              <PersonIcon sx={{ fontSize: "2.5rem" }} />
+            )
           }
         />
       </BottomNavigation>

@@ -1,5 +1,5 @@
 import useKakaoMap from "hooks/map/useKakaoMap";
-import containerStyles from "./MapPageContainer.module.css";
+import containerStyles from "./MapPageContainerMobile.module.css";
 import React, {
   ChangeEvent,
   useCallback,
@@ -9,10 +9,10 @@ import React, {
 } from "react";
 import { IMapCard } from "interface/map/IMapCard";
 import getCardsByMapArea from "api/mapPost/getCardsByMapArea";
-import MapSideContainer from "containers/map/sideContainer/MapSideConatainer";
 import ConceptType from "enum/ConceptOptionType";
 import MapHeader from "components/map/mapHeader/MapHeader";
 import { debounce } from "lodash";
+import MapSideContainerMobile from "./sideConatainer/MapSideContainerMobile";
 
 interface position {
   lat: number;
@@ -26,7 +26,7 @@ const getCardCountByMapLevel = (level: number) => {
   return 10; // 세부 지역
 };
 
-const MapPageContainer = () => {
+const MapPageContainerMobile = () => {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const { initKakaoMap, registerMapChange, renderMarkerForMapPage, mapReload } =
     useKakaoMap();
@@ -56,25 +56,6 @@ const MapPageContainer = () => {
     }
   }, [swLatLng, neLatLng, concept, mapLevel, searchKeyword]);
 
-  const debouncedFetchMapCards = React.useMemo(
-    () => debounce(fetchMapCards, 300),
-    [fetchMapCards]
-  );
-
-  useEffect(() => {
-    debouncedFetchMapCards();
-    return () => {
-      debouncedFetchMapCards.cancel();
-    };
-    //eslint-disable-next-line
-  }, [debouncedFetchMapCards]);
-
-  useEffect(() => {
-    mapReload();
-    if (mapCards) renderMarkerForMapPage(mapCards, "default");
-    //eslint-disable-next-line
-  }, [mapCards]);
-
   const fetchMapCardsForSearchKeywords = async () => {
     const swLatLng: position = { lat: 33.0, lng: 124.0 };
     const neLatLng: position = { lat: 38.6, lng: 132.0 };
@@ -93,6 +74,25 @@ const MapPageContainer = () => {
       renderMarkerForMapPage(data, "search");
     }
   };
+
+  const debouncedFetchMapCards = React.useMemo(
+    () => debounce(fetchMapCards, 300),
+    [fetchMapCards]
+  );
+
+  useEffect(() => {
+    debouncedFetchMapCards();
+    return () => {
+      debouncedFetchMapCards.cancel();
+    };
+    //eslint-disable-next-line
+  }, [debouncedFetchMapCards]);
+
+  useEffect(() => {
+    mapReload();
+    if (mapCards) renderMarkerForMapPage(mapCards, "default");
+    //eslint-disable-next-line
+  }, [mapCards]);
 
   const getMapArea = (level: number, swLatLng: any, neLatLng: any) => {
     // 상태 업데이트
@@ -140,7 +140,7 @@ const MapPageContainer = () => {
         />
       }
       {mapCards && (
-        <MapSideContainer
+        <MapSideContainerMobile
           cards={mapCards}
           handleInputChange={handleSearchKeyword}
           handleSearch={handleSearch}
@@ -150,4 +150,4 @@ const MapPageContainer = () => {
   );
 };
 
-export default MapPageContainer;
+export default MapPageContainerMobile;

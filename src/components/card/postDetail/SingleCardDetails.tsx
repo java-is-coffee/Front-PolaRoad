@@ -20,8 +20,8 @@ function SingleCardDetails({ cardDetails }: SingleCardDetailsProps) {
     };
     fetchImage();
     //eslint-disable-next-line
-  }, [cardDetails.image]);
-  return (
+  }, []);
+  return imageUrl ? (
     <article className={cardStyles.cardWrapper}>
       {imageUrl && (
         <img
@@ -36,6 +36,8 @@ function SingleCardDetails({ cardDetails }: SingleCardDetailsProps) {
         <div>{cardDetails.content}</div>
       </blockquote>
     </article>
+  ) : (
+    <div></div>
   );
 }
 

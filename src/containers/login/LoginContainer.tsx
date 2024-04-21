@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import styles from "../../components/login/Login.module.css";
 import LoginComponent from "../../components/login/LoginComponent";
 import RegisterComponent from "../../components/login/RegisterComponent";
+import ResetPasswordContainer from "components/login/ResetPassword";
 
 function LoginContainer() {
   const [onRegister, setOnRegister] = useState(false);
+  const [onResetPassword, setOnResetPassword] = useState(false);
 
   return (
     <div className={styles.loginContainer}>
@@ -17,8 +19,13 @@ function LoginContainer() {
       </div>
       {onRegister ? (
         <RegisterComponent setOnRegister={setOnRegister} />
+      ) : onResetPassword ? (
+        <ResetPasswordContainer setOnResetPassword={setOnResetPassword} />
       ) : (
-        <LoginComponent setOnRegister={setOnRegister} />
+        <LoginComponent
+          setOnRegister={setOnRegister}
+          setOnResetPassword={setOnResetPassword}
+        />
       )}
     </div>
   );

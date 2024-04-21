@@ -6,3 +6,11 @@
   display: flex;
   flex-direction: column;
 }
+
+/* 화면 폭이 768px 이하일 때 */
+@media (max-width: 768px) {
+  .wrapper {
+    width: 100vw; /* 모바일 화면에서는 너비를 80%로 조정 */
+    max-width: 600px; /* 모바일 기기에서 적합한 최대 너비 설정 */
+  }
+}
