@@ -12,8 +12,11 @@ import Post from "routes/Post";
 // 사용되는 모달 등록
 import { ModalProvider } from "hooks/modal/ModalProvider";
 import MapPage from "routes/MapPage";
+import { useMediaQuery } from "@mui/material";
+import BottomNavigator from "components/bottom/BottomNavigator";
 
 function App() {
+  const isSmallScreen = useMediaQuery("(max-width: 767px)");
   return (
     <div className="App">
       <Router>
@@ -26,6 +29,16 @@ function App() {
             <Route path="map" element={<MapPage />}></Route>
             <Route path="/post/:postId" element={<Post />}></Route>
           </Routes>
+          <div
+            style={{
+              position: "fixed",
+              bottom: "0%",
+              width: "100%",
+              zIndex: "999",
+            }}
+          >
+            {isSmallScreen ? <BottomNavigator /> : ""}
+          </div>
         </ModalProvider>
       </Router>
       <ToastContainer

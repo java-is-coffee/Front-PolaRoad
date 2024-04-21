@@ -1,15 +1,22 @@
 .container {
   position: absolute;
-  top: 30px;
-  right: 30px;
+  right: 0;
+  top: calc(100vh - 140px);
   padding: 10px;
   border-radius: 10px;
   z-index: 100;
   background-color: white;
-  min-width: 320px;
-  max-height: 80vh;
+  width: 100%;
   overflow: hidden;
-  transition: height 0.5s ease;
+  box-sizing: border-box;
+  transition: top 0.5s ease;
+}
+
+.upButton {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .header {

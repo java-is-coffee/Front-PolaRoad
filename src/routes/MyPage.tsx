@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import Header from "../components/header/web/WebHeader";
 import MyPageContainer from "../containers/myPage/MyPageContainer";
 
 // 사용되는 모달 등록
@@ -24,6 +23,10 @@ import DeleteWarningModal from "components/modal/warn/deleteWarning/DeleteWarnin
 import AddPostWishList from "components/modal/wish/addPostWishList/AddPostWishList";
 import getMemberInfo from "api/member/getMemberInfo";
 import MiniProfileModal from "components/modal/member/miniProfile/MiniProfileModal";
+import { useMediaQuery } from "@mui/material";
+import MyPageContainerMobile from "containers/myPage/mobile/MyPageContainerMoblie";
+import WebHeader from "../components/header/web/WebHeader";
+import LogoHeader from "components/header/logoHeader/LogoHeader";
 
 function MyPage() {
   const { registerModal, closeModal } = useModal();
@@ -85,10 +88,11 @@ function MyPage() {
     // eslint-disable-next-line
   }, []);
 
+  const isSmallScreen = useMediaQuery("(max-width: 767px)");
   return (
     <div>
-      <Header />
-      <MyPageContainer />
+      {isSmallScreen ? <LogoHeader /> : <WebHeader />}
+      {isSmallScreen ? <MyPageContainerMobile /> : <MyPageContainer />}
     </div>
   );
 }

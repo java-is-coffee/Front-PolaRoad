@@ -6,12 +6,10 @@ import secureLocalStorage from "react-secure-storage";
 import PostMap from "components/map/PostMap";
 import PostComments from "containers/post/comments/PostComments";
 import { toast } from "react-toastify";
-import CarouselPostCardsList from "containers/post/postCardList/mobile/CarouselPostCardsList";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { useModal } from "hooks/modal/ModalProvider";
 import ModalOption from "enum/modalOptionTypes";
-import getMemberInfo from "api/member/getMemberInfo";
-import { IMemberInfoDetails } from "interface/member/IMemberInfoDetails";
+import PostCardListCarousel from "containers/post/postCardList/web/PostCardLIstCarousel";
 
 interface PostPreviewModalProps {
   postId?: string;
@@ -20,8 +18,6 @@ interface PostPreviewModalProps {
 function PostPreviewModal({ postId }: PostPreviewModalProps) {
   const [postDetails, setPostDetails] = useState<IPostDTO | null>(null);
   const [sideContentType, setSideContentType] = useState<string>("comment");
-  //현재 로그인한 유저 정보 저장
-  const [userInfo, setUserInfo] = useState<IMemberInfoDetails | null>(null);
 
   const { closeModal } = useModal();
   useEffect(() => {
@@ -41,15 +37,6 @@ function PostPreviewModal({ postId }: PostPreviewModalProps) {
     }
   }, [postId]);
 
-  useEffect(() => {
-    const getUserInfo = async () => {
-      const curMember = await getMemberInfo();
-      setUserInfo(curMember);
-    };
-    getUserInfo();
-    //eslint-disable-next-line
-  }, []);
-
   const handleChange = (
     event: React.MouseEvent<HTMLElement>,
     newAlignment: string
@@ -66,7 +53,7 @@ function PostPreviewModal({ postId }: PostPreviewModalProps) {
       <div className={modalStyle.modal} onClick={(e) => e.stopPropagation()}>
         <section className={modalStyle.container}>
           <article className={modalStyle.mainComponent}>
-            <CarouselPostCardsList
+            <PostCardListCarousel
               postDetails={postDetails}
               postId={Number(postId)}
             />
@@ -86,7 +73,6 @@ function PostPreviewModal({ postId }: PostPreviewModalProps) {
               <PostComments
                 postId={postId}
                 memberId={postDetails.memberInfo.memberId}
-                userInfo={userInfo}
               />
             ) : (
               <PostMap cards={postDetails.cards} />
