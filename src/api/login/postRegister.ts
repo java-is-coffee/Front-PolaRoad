@@ -1,7 +1,7 @@
 import { axiosInstance } from "api/token/axiosInstance";
 export interface RegisterData {
   email: string;
-  //   certificationNumber: string;
+  certificationNumber: string;
   name: string;
   nickname: string;
   password: string;
