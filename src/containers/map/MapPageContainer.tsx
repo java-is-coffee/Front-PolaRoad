@@ -71,9 +71,28 @@ const MapPageContainer = () => {
 
   useEffect(() => {
     mapReload();
-    if (mapCards) renderMarkerForMapPage(mapCards);
+    if (mapCards) renderMarkerForMapPage(mapCards, "default");
     //eslint-disable-next-line
   }, [mapCards]);
+
+  const fetchMapCardsForSearchKeywords = async () => {
+    const swLatLng: position = { lat: 33.0, lng: 124.0 };
+    const neLatLng: position = { lat: 38.6, lng: 132.0 };
+    const conceptKey = Object.keys(ConceptType).find(
+      (key) => ConceptType[key as keyof typeof ConceptType] === concept
+    );
+    const data = await getCardsByMapArea(
+      swLatLng,
+      neLatLng,
+      conceptKey,
+      getCardCountByMapLevel(mapLevel),
+      "KEYWORD",
+      searchKeyword
+    );
+    if (data) {
+      renderMarkerForMapPage(data, "search");
+    }
+  };
 
   const getMapArea = (level: number, swLatLng: any, neLatLng: any) => {
     // 상태 업데이트
@@ -109,7 +128,7 @@ const MapPageContainer = () => {
   };
 
   const handleSearch = () => {
-    fetchMapCards();
+    fetchMapCardsForSearchKeywords();
   };
 
   return (
