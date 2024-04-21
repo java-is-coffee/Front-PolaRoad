@@ -22,7 +22,7 @@ const getCardsByMapArea = async (
     if (searchType && keyWord) {
       API_URI += `&searchType=${encodeURIComponent(
         searchType
-      )}&keyWord=${keyWord}`;
+      )}&keyword=${keyWord}`;
     }
 
     const response = await axiosInstance.get(API_URI);
