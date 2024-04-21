@@ -24,13 +24,19 @@ const WishListPostGrid = ({
   const fetchWishList = async () => {
     const data = await getWishListDetails(wishListId, page, 4);
     if (data) {
-      console.log(data);
       if (data.hasNext) {
         setPage((prev) => prev + 1);
       } else {
         setHasNext(false);
       }
-      setWishlistPosts((prev) => [...prev, ...data.posts]);
+      // 현재 WishlistPosts 상태에서 모든 포스트 ID를 추출하여 Set 객체 생성
+      const currentPostIds = new Set(wishListPosts.map((post) => post.postId));
+      // 새로운 포스트 중 현재 상태에 없는 포스트만 필터링
+      const newPosts = data.posts.filter(
+        (post) => !currentPostIds.has(post.postId)
+      );
+      // 필터링된 새 포스트를 기존 포스트 배열에 추가
+      setWishlistPosts((prev) => [...prev, ...newPosts]);
     }
   };
   // 위시리스트 ID가 변경되었을 때 포스트 목록 초기화
