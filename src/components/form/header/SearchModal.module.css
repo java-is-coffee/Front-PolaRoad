@@ -15,3 +15,7 @@
 .inputBox {
   width: 480px;
 }
+
+.item {
+  cursor: pointer;
+}
